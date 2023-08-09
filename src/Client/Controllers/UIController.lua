@@ -14,7 +14,6 @@ local Signal = require(Shared.Packages.Signal)
 local Icon = require(Shared.ExtPackages.Icon)
 
 local New = Fusion.New
--- local ForPairs = Fusion.ForPairs
 
 local DEFAULT_UIS = {"Topbar", "PromptPopup"}
 

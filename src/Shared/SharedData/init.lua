@@ -9,7 +9,7 @@ return {
   FeatureModulesMap = {
     ProfilesSystem = { "UserProfileService", "UserProfileController" },
     ItemsSystem = { "ItemsService", "ItemsController" },
-    EmotesSystem = { "EmotesController" },
+    EmotesSystem = { "EmotesService", "EmotesController" },
     WorldsSystem = { "WorldsService", "WorldsController" },
     MusicSystem = { "MusicService", "MusicController" },
   },

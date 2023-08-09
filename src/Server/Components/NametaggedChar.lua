@@ -1,13 +1,11 @@
+local Players = game:GetService("Players")
 local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
-local Server = RoRooms.Server
 
 local Component = require(Shared.Packages.Component)
 local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-
-local PlayerChar = require(Server.Components.PlayerChar)
 
 local Value = Fusion.Value
 
@@ -18,13 +16,13 @@ local NametaggedChar = Component.new {
 }
 
 function NametaggedChar:UpdateNickname()
-  local RoRoomsNickname = self.Player:GetAttribute("RR_Nickname") or ""
+  local Nickname = self.Player:GetAttribute("RR_Nickname") or ""
   local DisplayName = ""
-  if self.PlayerChar.Humanoid then
-    DisplayName = self.PlayerChar.Humanoid.DisplayName
+  if self.Humanoid then
+    DisplayName = self.Humanoid.DisplayName
   end
-  if utf8.len(RoRoomsNickname) > 0 then
-    self.Nickname:set(RoRoomsNickname)
+  if utf8.len(Nickname) > 0 then
+    self.Nickname:set(Nickname)
   elseif utf8.len(DisplayName) > 0 then
     self.Nickname:set(DisplayName)
   else
@@ -37,12 +35,6 @@ function NametaggedChar:UpdateStatus()
 end
 
 function NametaggedChar:Start()
-  self.PlayerChar = self:GetComponent(PlayerChar)
-
-  self.Player = self.PlayerChar.Player
-  self.Humanoid = self.Instance:WaitForChild("Humanoid")
-  self.Head = Value(self.Instance:WaitForChild("Head"))
-
   self.Instance.ChildAdded:Connect(function(Child: Instance)
     if Child.Name == "Head" then
       self.Head:set(Child)
@@ -73,7 +65,9 @@ function NametaggedChar:Start()
 end
 
 function NametaggedChar:Construct()
-  
+  self.Player = Players:GetPlayerFromCharacter(self.Instance)
+  self.Humanoid = self.Instance:WaitForChild("Humanoid")
+  self.Head = Value(self.Instance:WaitForChild("Head"))
 end
 
 return NametaggedChar

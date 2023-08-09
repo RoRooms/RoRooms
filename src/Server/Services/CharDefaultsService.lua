@@ -14,7 +14,7 @@ local CharDefaultsService = Knit.CreateService {
 function CharDefaultsService:KnitStart()
     Players.PlayerAdded:Connect(function(Player)
         Player.CharacterAdded:Connect(function(Char)
-            CollectionService:AddTag(Char, "RR_PlayerChar")
+            CollectionService:AddTag(Char, "RR_PlayerCharacter")
             CollectionService:AddTag(Char, "RR_NametaggedChar")
         end)
     end)

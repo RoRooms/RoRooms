@@ -11,7 +11,7 @@ local Hydrate = Fusion.Hydrate
 local Out = Fusion.Out
 
 local CONTROLLERS = {"UIController", "EmotesController", "ItemsController"}
-local SERVICES = {"UserProfileService", "WorldsService", "ItemsService", "PlayerDataService"}
+local SERVICES = {"UserProfileService", "WorldsService", "ItemsService", "PlayerDataService", "EmotesService"}
 
 local States = {
   TopbarIcons = {},
