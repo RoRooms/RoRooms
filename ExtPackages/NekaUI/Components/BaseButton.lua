@@ -28,6 +28,7 @@ local function Button(Props)
     Size = Props.Size,
     AutomaticSize = Props.AutomaticSize or Enum.AutomaticSize.XY,
     ZIndex = Props.ZIndex,
+    Visible = Props.Visible,
 
     Text = "",
     BackgroundTransparency = Props.BackgroundTransparency or 1,

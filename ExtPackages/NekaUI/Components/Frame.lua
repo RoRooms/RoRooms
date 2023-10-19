@@ -16,6 +16,7 @@ local function Frame(Props)
     Size = Props.Size,
     AutomaticSize = Props.AutomaticSize or Enum.AutomaticSize.XY,
     ZIndex = Props.ZIndex,
+    Visible = Props.Visible,
 
     BackgroundTransparency = 1,
 

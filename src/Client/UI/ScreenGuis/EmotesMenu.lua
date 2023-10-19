@@ -30,7 +30,6 @@ return function(Props)
   local EmotesMenu = New "ScreenGui" {
     Name = "EmotesMenu",
     Parent = Props.Parent,
-    ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
     Enabled = MenuOpen,
     ResetOnSpawn = false,
 
@@ -38,7 +37,7 @@ return function(Props)
       AutoScaleFrame {
         AnchorPoint = Vector2.new(0.5, 0),
         Position = Spring(Computed(function()
-          local YPos = States.TopbarBottomPos:get() + 15
+          local YPos = States.TopbarBottomPos:get()
           if not MenuOpen:get() then
             YPos = YPos + 15
           end

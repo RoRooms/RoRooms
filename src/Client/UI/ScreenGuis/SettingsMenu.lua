@@ -30,12 +30,16 @@ return function(Props)
     return States.CurrentMenu:get() == script.Name
   end)
 
-  Observer(States.Settings.HideUI):onChange(function()
+  Observer(States.UserSettings.HideUI):onChange(function()
     for _, CoreGuiType in ipairs(TOGGLEABLE_CORE_GUIS) do
-      StarterGui:SetCoreGuiEnabled(CoreGuiType, not States.Settings.HideUI:get())
+      StarterGui:SetCoreGuiEnabled(CoreGuiType, not States.UserSettings.HideUI:get())
     end
     for _, TopbarIcon in ipairs({States.TopbarIcons.Coins}) do
-      TopbarIcon:setEnabled(not States.Settings.HideUI:get())
+      TopbarIcon:setEnabled(not States.UserSettings.HideUI:get())
+    end
+    States.TopbarVisible:set(not States.UserSettings.HideUI:get())
+    if States.UserSettings.HideUI:get() then
+      States.CurrentMenu:set(nil)
     end
   end)
 
@@ -44,13 +48,12 @@ return function(Props)
     Parent = Props.Parent,
     Enabled = MenuOpen,
     ResetOnSpawn = false,
-    ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
 
     [Children] = {
       AutoScaleFrame {
         AnchorPoint = Vector2.new(0.5, 0),
         Position = Spring(Computed(function()
-          local YPos = States.TopbarBottomPos:get() + 15
+          local YPos = States.TopbarBottomPos:get()
           if not MenuOpen:get() then
             YPos = YPos + 15
           end
@@ -98,11 +101,11 @@ return function(Props)
                   },
                   SettingToggle {
                     Label = "Mute music",
-                    SwitchedOn = States.Settings.MuteMusic,
+                    SwitchedOn = States.UserSettings.MuteMusic,
                   },
                   SettingToggle {
                     Label = "Hide UI",
-                    SwitchedOn = States.Settings.HideUI,
+                    SwitchedOn = States.UserSettings.HideUI,
                   },
                   Text {
                     Text = "[RoRooms v0.0.0]",

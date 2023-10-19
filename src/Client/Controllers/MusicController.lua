@@ -44,8 +44,8 @@ function MusicController:KnitStart()
     self:SetMuted(false)
   end)
 
-  Observer(States.Settings.MuteMusic):onChange(function()
-    self:SetMuted(States.Settings.MuteMusic:get())
+  Observer(States.UserSettings.MuteMusic):onChange(function()
+    self:SetMuted(States.UserSettings.MuteMusic:get())
   end)
 
   self.SoundGroup = RoRooms.Config.MusicSystem.SoundGroup

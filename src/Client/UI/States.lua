@@ -18,11 +18,12 @@ local States = {
   Prompts = Value({}),
   CurrentMenu = Value(),
   TopbarBottomPos = Value(0),
+  TopbarVisible = Value(true),
   ScreenSize = Value(Vector2.new()),
   EquippedItems = Value({}),
   ItemsMenuOpen = Value(false),
   LocalPlayerData = Value({}),
-  Settings = {
+  UserSettings = {
     MuteMusic = Value(false),
     HideUI = Value(false),
   },

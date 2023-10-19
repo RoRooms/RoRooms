@@ -18,15 +18,16 @@ local function Text(Props)
     Size = Props.Size or UDim2.fromOffset(20, 20),
     AutomaticSize = Props.AutomaticSize,
     ZIndex = Props.ZIndex,
+    Rotation = Props.Rotation,
 
     Image = Props.Image,
     ImageColor3 = Props.ImageColor3,
     BackgroundTransparency = 1,
 
     [Children] = {
-      New "UIAspectRatioConstraint" {
-        AspectRatio = 1,
-      },
+      -- New "UIAspectRatioConstraint" {
+      --   AspectRatio = 1,
+      -- },
 
       Props[Children]
     }
