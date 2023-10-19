@@ -138,6 +138,7 @@ return function(Props)
             AutomaticSize = Enum.AutomaticSize.None,
             TextXAlignment = Enum.TextXAlignment.Center,
             TextYAlignment = Enum.TextYAlignment.Center,
+            AutoLocalize = false,
           }
         end
       end, Fusion.cleanup),

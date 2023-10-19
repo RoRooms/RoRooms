@@ -7,8 +7,11 @@ local SoundService = game:GetService("SoundService")
 
 local Knit = require(Shared.Packages.Knit)
 local States = require(Client.UI.States)
+local Fusion = require(Shared.Packages.Fusion)
 
 local MusicService
+
+local Observer = Fusion.Observer
 
 local MusicController = Knit.CreateController {
   Name = "MusicController"
@@ -39,6 +42,10 @@ function MusicController:KnitStart()
   end)
   States.TopbarIcons.Music.deselected:Connect(function()
     self:SetMuted(false)
+  end)
+
+  Observer(States.Settings.MuteMusic):onChange(function()
+    self:SetMuted(States.Settings.MuteMusic:get())
   end)
 
   self.SoundGroup = RoRooms.Config.MusicSystem.SoundGroup

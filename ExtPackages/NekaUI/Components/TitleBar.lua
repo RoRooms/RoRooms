@@ -28,6 +28,7 @@ local function TitleBar(Props)
         Position = UDim2.fromScale(0.5, 0.5),
         Text = Props.Title,
         TextSize = Props.TextSize,
+        AutoLocalize = Props.AutoLocalize,
       },
       Computed(function()
         if not Props.CloseButtonDisabled:get() then

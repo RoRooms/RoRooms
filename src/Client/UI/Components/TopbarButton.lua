@@ -53,7 +53,7 @@ return function(Props)
         VerticalAlignment = Enum.VerticalAlignment.Center,  
       },
       New "UICorner" {
-        CornerRadius = UDim.new(0.5, 0)
+        CornerRadius = UDim.new(0, 25)
       },
       New "UIStroke" {
         ApplyStrokeMode = Enum.ApplyStrokeMode.Border,

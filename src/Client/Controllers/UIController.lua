@@ -74,6 +74,9 @@ function UIController:_StartTopbarIcons()
   States.PlayerDataService.Coins:Observe(function(Coins: number)
     States.TopbarIcons.Coins:setLabel(Coins)
   end)
+
+  States.TopbarIcons.Multipliers:setEnabled(false)
+  States.TopbarIcons.Music:setEnabled(false)
 end
 
 function UIController:_CreateTopbarIcons()

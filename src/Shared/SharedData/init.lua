@@ -12,6 +12,7 @@ return {
     EmotesSystem = { "EmotesService", "EmotesController" },
     WorldsSystem = { "WorldsService", "WorldsController" },
     MusicSystem = { "MusicService", "MusicController" },
+    SettingsSystem = { "SettingsController" },
   },
   ItemEquipResponseCodes = {
     Unpurchased = 1,

@@ -78,6 +78,9 @@ local CONFIG_TEMPLATE = {
 			MultiplierAddon = 0.5
 		}
 	},
+	SettingsSystem = {
+		Enabled = true,
+	},
 	Interface = {
 		TopbarIcons = {
 			Coins = {

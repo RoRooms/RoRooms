@@ -38,6 +38,7 @@ local function Text(Props)
     TextXAlignment = Props.TextXAlignment or Enum.TextXAlignment.Left,
     TextYAlignment = Props.TextYAlignment or Enum.TextYAlignment.Top,
     TextTruncate = Props.TextTruncate,
+    AutoLocalize = Props.AutoLocalize,
 
     [Children] = Props[Children]
   })

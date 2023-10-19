@@ -19,23 +19,27 @@ local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
 
 local TOPBAR_BUTTONS = {
   {
-    MenuName = "WorldsMenu",
-    IconImage = "rbxassetid://7706157512",
-  },
-  {
     MenuName = "ProfileMenu",
-    IconImage = "rbxassetid://11713336301",
-    SizeMultiplier = 1.1
+    IconImage = "rbxassetid://15091717235",
   },
   {
     MenuName = "EmotesMenu",
-    IconImage = "rbxassetid://11713358131",
+    IconImage = "rbxassetid://15091717452",
+  },
+  {
+    MenuName = "WorldsMenu",
+    IconImage = "rbxassetid://15091717321",
+  },
+  {
+    MenuName = "SettingsMenu",
+    IconImage = "rbxassetid://15091717549",
   },
 }
 local FEATURE_MENU_MAP = {
   WorldsSystem = "WorldsMenu",
   ProfilesSystem = "ProfileMenu",
   EmotesSystem = "EmotesMenu",
+  SettingsSystem = "SettingsMenu"
 }
 
 return function(Props)

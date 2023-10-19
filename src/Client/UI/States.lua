@@ -22,6 +22,10 @@ local States = {
   EquippedItems = Value({}),
   ItemsMenuOpen = Value(false),
   LocalPlayerData = Value({}),
+  Settings = {
+    MuteMusic = Value(false),
+    HideUI = Value(false),
+  },
 }
 
 function States:PushPrompt(Prompt: table)

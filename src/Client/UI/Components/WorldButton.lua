@@ -29,7 +29,7 @@ return function(Props)
     BackgroundColor3 = Spring(Computed(function()
       local BaseColor = Color3.fromRGB(41, 41, 41)
       if IsHolding:get() then
-        return ColourUtils.Lighten(BaseColor, 0.1)
+        return ColourUtils.Lighten(BaseColor, 0.02)
       else
         return BaseColor
       end
@@ -108,10 +108,10 @@ return function(Props)
           return Props.World:get().Name or Props.WorldId:get()
         end),
         TextSize = 16,
-        -- TextWrapped = true,
         TextTruncate = Enum.TextTruncate.AtEnd,
         AutomaticSize = Enum.AutomaticSize.Y,
         TextXAlignment = Enum.TextXAlignment.Center,
+        AutoLocalize = false,
       }
     }
   }
