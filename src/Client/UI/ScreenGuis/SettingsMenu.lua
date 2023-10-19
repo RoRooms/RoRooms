@@ -4,6 +4,7 @@ local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 
 local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
 
 local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
 local NekaUI = require(Shared.ExtPackages.NekaUI)
@@ -42,6 +43,11 @@ return function(Props)
       States.CurrentMenu:set(nil)
     end
   end)
+  if Players.LocalPlayer then
+    Players.LocalPlayer.CharacterAdded:Connect(function()
+      States.UserSettings.HideUI:set(false)
+    end)
+  end
 
   local SettingsMenu = New "ScreenGui" {
     Name = "SettingsMenu",
