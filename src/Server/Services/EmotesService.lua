@@ -1,14 +1,14 @@
 local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 
 local Shared = RoRooms.Shared
-local Client = RoRooms.Client
 local Config = RoRooms.Config
 local Server = RoRooms.Server
 
 local Knit = require(Shared.Packages.Knit)
-local States = require(Client.UI.States)
 
 local PlayerCharacterComponent = require(Server.Components.PlayerCharacter)
+
+local PlayerDataService
 
 local EmotesService = Knit.CreateService {
   Name = "EmotesService",
@@ -30,7 +30,12 @@ function EmotesService.Client:PlayEmote(Player: Player, EmoteId: string)
     AbleToUse = true
   end
   if AbleToUse and Emote.LevelRequirement then
-    AbleToUse = States.LocalPlayerData:get().Level >= Emote.LevelRequirement
+    local Profile = PlayerDataService:GetProfile(Player)
+    if Profile then
+      AbleToUse = Profile.Data.Level >= Emote.LevelRequirement
+    else
+      AbleToUse = false
+    end
     FailureReason = not AbleToUse and Emote.Name.." emote requires level "..Emote.LevelRequirement.."."
   end
 
@@ -48,7 +53,7 @@ function EmotesService.Client:PlayEmote(Player: Player, EmoteId: string)
 end
 
 function EmotesService:KnitStart()
-  
+  PlayerDataService = Knit.GetService("PlayerDataService")
 end
 
 function EmotesService:KnitInit()

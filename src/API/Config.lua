@@ -7,7 +7,7 @@ local CONFIG_TEMPLATE = {
 		Enabled = true,
 		MaxItemsEquippable = 5,
 		Categories = {
-			-- "All",
+			-- "General",
 		},
 		Items = {
 			-- ExampleItem = {
@@ -29,7 +29,7 @@ local CONFIG_TEMPLATE = {
 		Enabled = true,
 		EmotesDirectory = nil,
 		Categories = {
-			-- "All",
+			-- "General",
 		},
 		Emotes = {
 			-- ExampleEmote = {
