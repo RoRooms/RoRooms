@@ -27,7 +27,8 @@ function ItemsController:PromptItemPurchase(ItemId: string)
       warn("Item "..ItemId.." has no price set and can not be purchased.")
     end
     States:PushPrompt({
-      PromptText = "Do you want to buy "..Item.Name.." item for "..Item.PriceInCoins.." coins?",
+      Title = "Buy item",
+      Text = "Do you want to buy "..Item.Name.." item for "..Item.PriceInCoins.." coins?",
       Buttons = {
         {
           Primary = false,
@@ -42,7 +43,8 @@ function ItemsController:PromptItemPurchase(ItemId: string)
                 self:ToggleEquipItem(ItemId)
               else
                 States:PushPrompt({
-                  PromptText = "Failed to purchase "..Item.Name.." item. Do you have enough coins?",
+                  Title = "Failure",
+                  Text = "Failed to purchase "..Item.Name.." item. Do you have enough coins?",
                   Buttons = {
                     {
                       Primary = false,
@@ -66,7 +68,8 @@ function ItemsController:ToggleEquipItem(ItemId: string)
         self:PromptItemPurchase(ItemId)
       elseif FailureReason then
         States:PushPrompt({
-          PromptText = FailureReason,
+          Title = "Failure",
+          Text = FailureReason,
           Buttons = {
             {
               Primary = false,

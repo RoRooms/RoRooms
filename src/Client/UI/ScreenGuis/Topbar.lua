@@ -13,6 +13,7 @@ local New = Fusion.New
 local ForValues = Fusion.ForValues
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
+local Value = Fusion.Value
 
 local Components = Client.UI.Components
 local TopbarButton = require(Components.TopbarButton)
@@ -57,6 +58,7 @@ return function(Props)
     end
     return EnabledButtons
   end)
+  local TopbarButtonsHeight = Value(0)
 
   local TopbarInstance = New "ScreenGui" {
     Name = "Topbar",
@@ -71,7 +73,7 @@ return function(Props)
           if States.TopbarVisible:get() then
             return UDim2.new(UDim.new(0.5, 0), UDim.new(0, 10))
           else
-            return UDim2.new(UDim.new(0.5, 0), UDim.new(0, -75+8))
+            return UDim2.new(UDim.new(0.5, 0), UDim.new(0, (-TopbarButtonsHeight:get()) - 2))
           end
         end), 40, 1),
         BaseResolution = Vector2.new(883, 893),
@@ -118,7 +120,7 @@ return function(Props)
             OnActivated = function()
               States.TopbarVisible:set(not States.TopbarVisible:get())
               States.CurrentMenu:set(nil)
-              States.UserSettings.HideUI:set(false)
+              -- States.UserSettings.HideUI:set(false)
             end,
 
             [Children] = {
@@ -149,6 +151,7 @@ return function(Props)
     }
   }
 
+  local TopbarButtons = TopbarInstance.AutoScaleFrame.TopbarButtons
   local TopbarPully = TopbarInstance.AutoScaleFrame.PullButton
 
   local function UpdateTopbarBottomPos()
@@ -158,6 +161,13 @@ return function(Props)
   TopbarPully:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarBottomPos)
   TopbarPully:GetPropertyChangedSignal("AbsolutePosition"):Connect(UpdateTopbarBottomPos)
   UpdateTopbarBottomPos()
+
+  local function UpdateTopbarButtonsHeight()
+    TopbarButtonsHeight:set(TopbarButtons.AbsoluteSize.Y)
+  end
+
+  TopbarButtons:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarButtonsHeight)
+  UpdateTopbarButtonsHeight()
 
   return TopbarInstance
 end

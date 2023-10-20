@@ -19,7 +19,8 @@ function WorldTeleporter:Start()
     if Player and Player == Players.LocalPlayer then
       if #States.Prompts:get() == 0 then
         States:PushPrompt({
-          PromptText = "Do you want to teleport to world "..self.World.Name.."?",
+          Title = "Teleport",
+          Text = "Do you want to teleport to world "..self.World.Name.."?",
           Buttons = {
             {
               Primary = false,

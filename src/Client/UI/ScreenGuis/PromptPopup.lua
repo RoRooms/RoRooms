@@ -30,7 +30,8 @@ return function(Props)
   end)
 
   -- States:PushPrompt({
-  --   PromptText = "Do you want to teleport to a VC-only server?",
+  --   Title = "Do action",
+  --   Text = "Would you like to do this action?",
   --   Buttons = {
   --     {
   --       Primary = false,
@@ -87,19 +88,36 @@ return function(Props)
                 PaddingRight = UDim.new(0, 13),
                 PaddingTop = UDim.new(0, 9),
               },
+              New "UIListLayout" {
+                SortOrder = Enum.SortOrder.LayoutOrder,
+                Padding = UDim.new(0, 8),
+              },
               Text {
-                Name = "Question",
+                Name = "Title",
+                TextWrapped = false,
+                Text = Computed(function()
+                  if CurrentPrompt:get() then
+                    return CurrentPrompt:get().Title
+                  else
+                    return ""
+                  end
+                end),
+                TextSize = 24,
+                FontFace = Font.fromName('GothamSsm', Enum.FontWeight.SemiBold)
+              },
+              Text {
+                Name = "Text",
                 Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 80)),
                 AutomaticSize = Enum.AutomaticSize.None,
                 TextWrapped = true,
                 Text = Computed(function()
                   if CurrentPrompt:get() then
-                    return CurrentPrompt:get().PromptText
+                    return CurrentPrompt:get().Text
                   else
                     return ""
                   end
                 end),
-                TextSize = 22,
+                TextSize = 20,
               },
               Frame {
                 Size = UDim2.fromScale(1, 0),

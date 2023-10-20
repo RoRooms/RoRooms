@@ -4,6 +4,7 @@ local Fusion = require(NekaUI.Packages.Fusion)
 
 local New = Fusion.New
 local Children = Fusion.Children
+local Computed = Fusion.Computed
 
 local Components = script.Parent
 local Frame = require(Components.Frame)
@@ -39,11 +40,21 @@ local function MenuFrame(Props)
         Size = UDim2.fromScale(1, 0),
 
         [Children] = {
-          New "UIListLayout" {
-            SortOrder = Enum.SortOrder.LayoutOrder,
-            Padding = UDim.new(0, 15),
-            HorizontalAlignment = Enum.HorizontalAlignment.Left
-          },
+          Computed(function()
+            local UIListLayout
+            for _, Child in ipairs(Props[Children]) do
+              if Child:IsA("UIListLayout") then
+                UIListLayout = Child
+              end
+            end
+            if not UIListLayout then
+              return New "UIListLayout" {
+                SortOrder = Enum.SortOrder.LayoutOrder,
+                Padding = UDim.new(0, 15),
+                HorizontalAlignment = Enum.HorizontalAlignment.Left
+              }
+            end
+          end, Fusion.cleanup),
 
           Props[Children]
         }

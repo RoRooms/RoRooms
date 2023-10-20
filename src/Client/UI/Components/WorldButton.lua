@@ -44,7 +44,8 @@ return function(Props)
       if States.WorldsService then
         States.CurrentMenu:set()
         States:PushPrompt({
-          PromptText = "Do you want to teleport to world "..Props.World:get().Name.."?",
+          Title = "Teleport",
+          Text = "Do you want to teleport to world "..Props.World:get().Name.."?",
           Buttons = {
             {
               Primary = false,

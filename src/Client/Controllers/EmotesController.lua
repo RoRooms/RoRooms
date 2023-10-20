@@ -19,7 +19,8 @@ function EmotesController:PlayEmote(EmoteId: string)
   EmotesService:PlayEmote(EmoteId):andThen(function(FailureReason: string)
     if typeof(FailureReason) == "string" then
       States:PushPrompt({
-        PromptText = FailureReason,
+        Title = "Failure",
+        Text = FailureReason,
         Buttons = {
           {
             Primary = false,

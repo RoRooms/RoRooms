@@ -31,7 +31,8 @@ local States = {
 
 function States:PushPrompt(Prompt: table)
   local PromptTemplate = {
-    PromptText = "",
+    Title = "",
+    Text = "",
     Buttons = {
       {
         Primary = true,
@@ -52,7 +53,7 @@ function States:PushPrompt(Prompt: table)
   local NewPrompts = States.Prompts:get()
   ReconcileTable(Prompt, PromptTemplate)
   for _, ExistingPrompt in ipairs(NewPrompts) do
-    if ExistingPrompt.PromptText == Prompt.PromptText then
+    if ExistingPrompt.Text == Prompt.Text then
       return      
     end
   end
