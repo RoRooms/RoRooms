@@ -1,14 +1,14 @@
 local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 
+local Server = RoRooms.Server
 local Shared = RoRooms.Shared
 local Config = RoRooms.Config
 
-local Knit = require(Shared.Packages.Knit)
 local SharedData = require(Shared.SharedData)
 
-local PlayerDataService
+local PlayerDataService = require(Server.Services.PlayerDataService)
 
-local ItemsService = Knit.CreateService {
+local ItemsService = {
   Name = "ItemsService",
   Client = {}
 }
@@ -115,7 +115,7 @@ function ItemsService:_PlayerHasItem(Player: Player, ItemId: number)
 end
 
 function ItemsService:KnitStart()
-  PlayerDataService = Knit.GetService("PlayerDataService")
+  
 end
 
 function ItemsService:KnitInit()

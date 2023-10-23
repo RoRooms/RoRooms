@@ -7,10 +7,9 @@ local Server = RoRooms.Server
 local Knit = require(Shared.Packages.Knit)
 
 local PlayerCharacterComponent = require(Server.Components.PlayerCharacter)
+local PlayerDataService = require(Server.Services.PlayerDataService)
 
-local PlayerDataService
-
-local EmotesService = Knit.CreateService {
+local EmotesService = {
   Name = "EmotesService",
   Client = {}
 }
@@ -53,7 +52,7 @@ function EmotesService.Client:PlayEmote(Player: Player, EmoteId: string)
 end
 
 function EmotesService:KnitStart()
-  PlayerDataService = Knit.GetService("PlayerDataService")
+  
 end
 
 function EmotesService:KnitInit()

@@ -30,7 +30,7 @@ local LEADERBOARD_LABELS = {
   Level = "Level"
 }
 
-local PlayerDataService = Knit.CreateService {
+local PlayerDataService = {
   Name = "PlayerDataService",
   Client = {
     XPMultipliers = Knit.CreateProperty({}),

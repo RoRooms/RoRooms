@@ -1,14 +1,12 @@
 local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 
-local Shared = RoRooms.Shared
 local Config = RoRooms.Config
 
 local TeleportService = game:GetService("TeleportService")
 
-local Knit = require(Shared.Packages.Knit)
-
-local WorldsService = Knit.CreateService {
-  Name = "WorldsService"
+local WorldsService = {
+  Name = "WorldsService",
+  Client = {}
 }
 
 function WorldsService.Client:TeleportToSubWorld(Player: Player, SubWorldId: string)

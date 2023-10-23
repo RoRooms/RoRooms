@@ -5,7 +5,7 @@ local Shared = RoRooms.Shared
 
 local Knit = require(Shared.Packages.Knit)
 
-local MusicService = Knit.CreateService {
+local MusicService = {
   Name = "MusicService",
   Client = {
     CurrentSong = Knit.CreateProperty(),
