@@ -12,11 +12,11 @@ local States = require(Client.UI.States)
 local SharedData = require(Shared.SharedData)
 
 local ItemsService
-local UIController
+local UIController = require(Client.Controllers.UIController)
 
 local ItemsMenu = require(Client.UI.ScreenGuis.ItemsMenu)
 
-local ItemsController = Knit.CreateController {
+local ItemsController = {
   Name = "ItemsController"
 }
 

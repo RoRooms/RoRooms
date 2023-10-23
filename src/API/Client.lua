@@ -23,10 +23,10 @@ function RoRoomsClient:Start()
   self.Knit = Knit
 
   Loader.LoadDescendants(Client.Controllers, function(Descendant)
-    if Descendant.Name:match("Controller$") ~= nil then
+    if Descendant:IsA("ModuleScript") and Descendant.Name:match("Controller$") ~= nil then
       local Feature = FindFeatureFromModule(Descendant)
       if table.find(DEFAULT_CONTROLLERS, Descendant.Name) or (Feature and Config[Feature].Enabled == true) then
-        return Descendant
+        return Knit.CreateController(require(Descendant))
       end
     end
   end)

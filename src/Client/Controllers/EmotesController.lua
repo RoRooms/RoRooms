@@ -8,10 +8,10 @@ local States = require(Client.UI.States)
 
 local EmotesMenu = require(Client.UI.ScreenGuis.EmotesMenu)
 
-local UIController
+local UIController = require(Client.Controllers.UIController)
 local EmotesService
 
-local EmotesController = Knit.CreateController {
+local EmotesController = {
   Name = "EmotesController"
 }
 

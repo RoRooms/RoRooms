@@ -102,7 +102,7 @@ return function(Props)
                     return ""
                   end
                 end),
-                TextSize = 24,
+                TextSize = 23,
                 FontFace = Font.fromName('GothamSsm', Enum.FontWeight.SemiBold)
               },
               Text {

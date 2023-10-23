@@ -17,7 +17,7 @@ local New = Fusion.New
 
 local DEFAULT_UIS = {"Topbar", "PromptPopup"}
 
-local UIController = Knit.CreateController {
+local UIController = {
   Name = "UIController",
 }
 

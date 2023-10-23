@@ -7,9 +7,9 @@ local Knit = require(Shared.Packages.Knit)
 
 local WorldsMenu = require(Client.UI.ScreenGuis.WorldsMenu)
 
-local UIController
+local UIController = require(Client.Controllers.UIController)
 
-local WorldsController = Knit.CreateController {
+local WorldsController = {
   Name = "WorldsController"
 }
 

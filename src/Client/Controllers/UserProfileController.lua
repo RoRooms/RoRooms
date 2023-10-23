@@ -7,9 +7,9 @@ local Knit = require(Shared.Packages.Knit)
 
 local ProfileMenu = require(Client.UI.ScreenGuis.ProfileMenu)
 
-local UIController
+local UIController = require(Client.Controllers.UIController)
 
-local UserProfileController = Knit.CreateController {
+local UserProfileController = {
   Name = "UserProfileController"
 }
 

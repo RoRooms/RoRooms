@@ -7,9 +7,9 @@ local Knit = require(Shared.Packages.Knit)
 
 local SettingsMenu = require(Client.UI.ScreenGuis.SettingsMenu)
 
-local UIController
+local UIController = require(Client.Controllers.UIController)
 
-local SettingsController = Knit.CreateController {
+local SettingsController = {
   Name = "SettingsController"
 }
 

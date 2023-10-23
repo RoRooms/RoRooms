@@ -13,7 +13,7 @@ local MusicService
 
 local Observer = Fusion.Observer
 
-local MusicController = Knit.CreateController {
+local MusicController = {
   Name = "MusicController"
 }
 
