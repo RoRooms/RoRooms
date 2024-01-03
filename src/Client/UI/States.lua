@@ -21,6 +21,10 @@ local States = {
   TopbarVisible = Value(true),
   ScreenSize = Value(Vector2.new()),
   EquippedItems = Value({}),
+  ItemsMenu = {
+    Open = Value(false),
+    FocusedCategory = Value(nil),
+  },
   ItemsMenuOpen = Value(false),
   LocalPlayerData = Value({}),
   UserSettings = {

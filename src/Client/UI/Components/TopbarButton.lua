@@ -42,7 +42,7 @@ return function(Props)
       else
         States.CurrentMenu:set(Props.MenuName:get())
         if States.ScreenSize:get().Y < 900 then
-          States.ItemsMenuOpen:set()
+          States.ItemsMenu.Open:set()
         end
       end
     end,

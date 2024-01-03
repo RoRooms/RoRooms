@@ -7,7 +7,7 @@ local Config = RoRooms.Config
 local Knit = require(Shared.Packages.Knit)
 local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
 local Signal = require(Shared.Packages.Signal)
-local NeoHotbar = require(Shared.ExtPackages.NeoHotbar)
+local NeoHotbar = require(Shared.Packages.NeoHotbar)
 local States = require(Client.UI.States)
 local SharedData = require(Shared.SharedData)
 
@@ -102,10 +102,10 @@ end
 
 function ItemsController:_AddItemsMenuButton()
   NeoHotbar:AddCustomButton("ItemsMenuButton", "rbxassetid://6966623635", function()
-    if not States.ItemsMenuOpen:get() then
-      States.ItemsMenuOpen:set(true)
+    if not States.ItemsMenu.Open:get() then
+      States.ItemsMenu.Open:set(true)
     else
-      States.ItemsMenuOpen:set(false)
+      States.ItemsMenu.Open:set(false)
     end
   end)
 end

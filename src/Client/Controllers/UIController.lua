@@ -9,7 +9,7 @@ local Knit = require(Shared.Packages.Knit)
 local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
 local States = require(Client.UI.States)
 local IconController = require(Shared.ExtPackages.Icon.IconController)
-local NeoHotbar = require(Shared.ExtPackages.NeoHotbar)
+local NeoHotbar = require(Shared.Packages.NeoHotbar)
 local Signal = require(Shared.Packages.Signal)
 local Icon = require(Shared.ExtPackages.Icon)
 

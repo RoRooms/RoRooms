@@ -14,19 +14,37 @@ local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Observer = Fusion.Observer
-local ForPairs = Fusion.ForPairs
+local ForValues = Fusion.ForValues
 
 local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
 local MenuFrame = require(NekaUI.Components.MenuFrame)
-local ItemButton = require(Client.UI.Components.ItemButton)
 local ScrollingFrame = require(NekaUI.Components.ScrollingFrame)
+local ItemsCategory = require(Client.UI.Components.ItemsCategory)
 
 return function(Props)
+  local Categories = Computed(function()
+    local CategoriesList = {}
+
+    for _, Item in pairs(Config.ItemsSystem.Items) do
+      local CategoryName
+      if typeof(Item.Category) == "string" then
+        CategoryName = Item.Category
+      elseif Item.Category == nil then
+        CategoryName = "General"
+      end
+      if not table.find(CategoriesList, CategoryName) then
+        table.insert(CategoriesList, CategoryName)
+      end
+    end
+
+    return CategoriesList
+  end)
+
   local ItemsMenu = New "ScreenGui" {
     Name = "ItemsMenu",
     Parent = Props.Parent,
     ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
-    Enabled = States.ItemsMenuOpen,
+    Enabled = States.ItemsMenu.Open,
     ResetOnSpawn = false,
 
     [Children] = {
@@ -34,7 +52,7 @@ return function(Props)
         AnchorPoint = Vector2.new(0.5, 1),
         Position = Spring(Computed(function()
           local YPos = 68+15
-          if not States.ItemsMenuOpen:get() then
+          if not States.ItemsMenu.Open:get() then
             YPos -= 15
           end
           return UDim2.new(UDim.new(0.5, 0), UDim.new(1, -YPos))
@@ -46,7 +64,7 @@ return function(Props)
           MenuFrame {
             Size = UDim2.fromOffset(363, 0),
             GroupTransparency = Spring(Computed(function()
-              if States.ItemsMenuOpen:get() then
+              if States.ItemsMenu.Open:get() then
                 return 0
               else
                 return 1
@@ -60,14 +78,9 @@ return function(Props)
                 PaddingRight = UDim.new(0, 10),
                 PaddingTop = UDim.new(0, 10),
               },
-              -- TitleBar {
-              --   Title = "Items",
-              --   CloseButtonDisabled = true,
-              --   TextSize = 24,
-              -- },
               ScrollingFrame {
-                Name = "EmotesFrame",
-                Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
+                Name = "Items",
+                Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 200)),
 
                 [Children] = {
                   New "UIPadding" {
@@ -76,16 +89,13 @@ return function(Props)
                     PaddingTop = UDim.new(0, 4),
                     PaddingRight = UDim.new(0, 4)
                   },
-                  New "UIGridLayout" {
+                  New "UIListLayout" {
                     SortOrder = Enum.SortOrder.LayoutOrder,
-                    CellSize = UDim2.fromOffset(75, 75),
-                    CellPadding = UDim2.fromOffset(11, 11),
+                    Padding = UDim.new(0, 15),
                   },
-                  ForPairs(Config.ItemsSystem.Items, function(ItemId, Item)
-                    return ItemId, ItemButton {
-                      ItemId = ItemId,
-                      Item = Item,
-                      BaseColor3 = Item.TintColor,
+                  ForValues(Categories, function(CategoryName: string)
+                    return ItemsCategory {
+                      CategoryName = CategoryName
                     }
                   end, Fusion.cleanup)
                 }
@@ -97,9 +107,9 @@ return function(Props)
     }
   }
 
-  local DisconnectOpen = Observer(States.ItemsMenuOpen):onChange(function()
+  local DisconnectOpen = Observer(States.ItemsMenu.Open):onChange(function()
     local TextClasses = {"TextLabel", "TextButton", "TextBox"}
-    if States.ItemsMenuOpen:get() then
+    if States.ItemsMenu.Open:get() then
       if States.ScreenSize:get().Y < 1000 then
         States.CurrentMenu:set()
       end

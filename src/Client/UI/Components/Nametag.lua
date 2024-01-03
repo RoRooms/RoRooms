@@ -38,6 +38,7 @@ return function(Props)
     Name = "Nametag",
     Parent = Props.Parent,
     Adornee = Props.Adornee,
+    Enabled = Props.Enabled,
     Size = UDim2.fromScale(5, 1.55),
     StudsOffset = Vector3.new(0, 2.4, 0),
     LightInfluence = 0,
