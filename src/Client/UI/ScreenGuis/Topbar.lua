@@ -20,8 +20,6 @@ local TopbarButton = require(Components.TopbarButton)
 local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
 local Frame = require(NekaUI.Components.Frame)
 local BaseButton = require(NekaUI.Components.BaseButton)
-local Text = require(NekaUI.Components.Text)
-local Icon = require(NekaUI.Components.Icon)
 
 local TOPBAR_BUTTONS = {
   {

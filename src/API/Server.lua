@@ -1,7 +1,3 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ServerScriptService = game:GetService("ServerScriptService")
-local ServerStorage = game:GetService("ServerStorage")
-
 local ROROOMS_SOURCE = script.Parent.SourceCode
 local DEFAULT_SERVICES = {"PlayerDataService", "CharDefaultsService"}
 
@@ -15,9 +11,7 @@ function RoRoomsServer:Start()
   local Config = require(script.Parent.Config)
 
   local Shared = ROROOMS_SOURCE.Shared
-  local Storage = ROROOMS_SOURCE.Storage
   local Server = ROROOMS_SOURCE.Server
-  local Client = ROROOMS_SOURCE.Client
 
   local Knit = require(Packages.Knit)
   local Loader = require(Packages.Loader)

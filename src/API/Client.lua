@@ -1,6 +1,3 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local StarterPlayerScripts = game:GetService("StarterPlayer"):WaitForChild("StarterPlayerScripts")
-
 local ROROOMS_SOURCE = script.Parent.SourceCode
 local DEFAULT_CONTROLLERS = {"UIController"}
 

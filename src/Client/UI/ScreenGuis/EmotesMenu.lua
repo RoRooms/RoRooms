@@ -14,13 +14,11 @@ local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Observer = Fusion.Observer
-local ForPairs = Fusion.ForPairs
 local ForValues = Fusion.ForValues
 
 local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
 local MenuFrame = require(NekaUI.Components.MenuFrame)
 local TitleBar = require(NekaUI.Components.TitleBar)
-local EmoteButton = require(Client.UI.Components.EmoteButton)
 local ScrollingFrame = require(NekaUI.Components.ScrollingFrame)
 local EmotesCategory = require(Client.UI.Components.EmotesCategory)
 

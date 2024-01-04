@@ -3,7 +3,6 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent)
 local Server = RoRooms.Server
 local Shared = RoRooms.Shared
 local Config = RoRooms.Config
-local Packages = RoRooms.Packages
 
 local SharedData = require(Shared.SharedData)
 

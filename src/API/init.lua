@@ -1,5 +1,4 @@
 local RunService = game:GetService("RunService")
-local ServerStorage = game:GetService("ServerStorage")
 
 local SourceCode = script.SourceCode
 local Config = require(script.Config)

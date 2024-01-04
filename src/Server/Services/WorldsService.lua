@@ -1,7 +1,6 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
 
 local Config = RoRooms.Config
-local Packages = RoRooms.Packages
 
 local TeleportService = game:GetService("TeleportService")
 
