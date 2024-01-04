@@ -1,7 +1,6 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
 local SoundService = game:GetService("SoundService")
 
-local Shared = RoRooms.Shared
 local Packages = RoRooms.Packages
 
 local Knit = require(Packages.Knit)

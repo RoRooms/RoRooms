@@ -1,6 +1,5 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
 
-local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 local Packages = RoRooms.Packages
 

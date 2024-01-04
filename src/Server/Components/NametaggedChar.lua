@@ -7,11 +7,9 @@ local Packages = RoRooms.Packages
 
 local Component = require(Packages.Component)
 local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local States = require(Client.UI.States)
 local Nametag = require(Client.UI.Components.Nametag)
 
 local Value = Fusion.Value
-local Computed = Fusion.Computed
 
 local NametaggedChar = Component.new {
   Tag = "RR_NametaggedChar"
