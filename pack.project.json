@@ -5,26 +5,35 @@
     "Packages": {
       "$path": "Packages",
       "RoRooms": {
-        "$path": "src/API",
-        "Shared": {
-          "$path": "src/Shared",
-          "ExtPackages": {
-            "$path": "ExtPackages"
+        "$path": "Include/Linking.lua",
+        "Packages": {
+          "$path": "Packages",
+          "RoRooms": {
+              "$path": "src/API",
+              "SourceCode": {
+                "$className": "Folder",
+                "Shared": {
+                  "$path": "src/Shared",
+                  "ExtPackages": {
+                    "$path": "ExtPackages"
+                  }
+                },
+                "Storage": {
+                  "$path": "src/Storage",
+                  "ExtPackages": {
+                    "$path": "ExtServerPackages"
+                  }
+                },
+                "Server": {
+                  "$path": "src/Server"
+                },
+                "Client": {
+                  "$path": "src/Client"
+                }
+              }
           }
-        },
-        "Storage": {
-          "$path": "src/Storage",
-          "ExtPackages": {
-            "$path": "ExtServerPackages"
-          }
-        },
-        "Server": {
-          "$path": "src/Server"
-        },
-        "Client": {
-          "$path": "src/Client"
         }
-    }    
+      }
     }
   }
 }

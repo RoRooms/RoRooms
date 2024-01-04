@@ -1,8 +1,15 @@
 [package]
-name = "avafe/rbxtemplate"
-version = "0.1.0"
+name = "imavafe/RoRooms"
+description = "An all-in-one social framework for Roblox"
+version = "0.1.0-dev"
+license = "MIT"
+authors = ["Avafe"]
+
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
+
+exclude = ["**"]
+include = ["src", "src/*", "default.project.json", "wally.lock", "wally.toml"]
 
 [dependencies]
 Knit = "sleitnick/knit@^1.4.7"
