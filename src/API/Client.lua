@@ -1,6 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StarterPlayerScripts = game:GetService("StarterPlayer"):WaitForChild("StarterPlayerScripts")
 
+local ROROOMS_SOURCE = script.Parent.SourceCode
 local DEFAULT_CONTROLLERS = {"UIController"}
 
 local RoRoomsClient = {}
@@ -9,13 +10,11 @@ function RoRoomsClient:Start()
   assert(not self.Started, "RoRooms already started.")
   self.Started = true
 
-  local Shared = ReplicatedStorage:WaitForChild("RoRoomsCode", 10)
-  local Client = StarterPlayerScripts:WaitForChild("RoRoomsCode", 10)
   local Config = require(script.Parent.Config)
   local Packages = script.Parent.Parent
 
-  self.Shared = Shared
-  self.Client = Client
+  local Shared = ROROOMS_SOURCE.Shared
+  local Client = ROROOMS_SOURCE.Client
 
   local Knit = require(Packages.Knit)
   local Loader = require(Packages.Loader)
