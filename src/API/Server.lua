@@ -3,7 +3,7 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local ServerStorage = game:GetService("ServerStorage")
 local StarterPlayerScripts = game:GetService("StarterPlayer"):WaitForChild("StarterPlayerScripts")
 
-local ROROOMS_SOURCE = ServerStorage:FindFirstChild("RoRoomsSource")
+local ROROOMS_SOURCE = script.Parent.Parent
 local DIRECTORY_LOAD_ORDER = {"Shared", "Storage", "Server", "Client"}
 local TARGET_DIRECTORY_MAP = {
   Shared = ReplicatedStorage,
@@ -18,6 +18,8 @@ local RoRoomsServer = {}
 function RoRoomsServer:Start()
   assert(not self.Started, "RoRooms already started.")
   self.Started = true
+
+  local Packages = script.Parent.Parent.Parent
   
   self:_InstallDirectories()
 
@@ -32,8 +34,8 @@ function RoRoomsServer:Start()
   self.Server = Server
   self.Client = Client
 
-  local Knit = require(Shared.Packages.Knit)
-  local Loader = require(Shared.Packages.Loader)
+  local Knit = require(Packages.Knit)
+  local Loader = require(Packages.Loader)
   local FindFeatureFromModule = require(Shared.SharedData.FindFeatureFromModule)
 
   self.Knit = Knit
@@ -58,7 +60,7 @@ end
 
 function RoRoomsServer:_InstallDirectories()
   for _, DirectoryName in ipairs(DIRECTORY_LOAD_ORDER) do
-    local Directory = ROROOMS_SOURCE:FindFirstChild(DirectoryName)
+    local Directory = ROROOMS_SOURCE:FindFirstChild(DirectoryName)  
     local TargetDirectory = TARGET_DIRECTORY_MAP[DirectoryName]
     
     assert(Directory, " directory "..DirectoryName.." not found")
@@ -67,7 +69,7 @@ function RoRoomsServer:_InstallDirectories()
     Directory.Name = "RoRoomsCode"
     Directory.Parent = TargetDirectory
   end
-  ROROOMS_SOURCE:Destroy()
+  -- ROROOMS_SOURCE:Destroy()
 end
 
 function RoRoomsServer:_EnableScripts(Directories)

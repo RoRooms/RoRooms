@@ -1,0 +1,12 @@
+{
+  "name": "RoRooms",
+  "tree": {
+    "$path": "Include/Linking.lua",
+    "Packages": {
+      "$path": "Packages",
+      "RoRooms": {
+          "$path": "src"
+      }        
+    }
+  }
+}

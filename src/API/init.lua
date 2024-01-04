@@ -1,14 +1,16 @@
 local RunService = game:GetService("RunService")
 local ServerStorage = game:GetService("ServerStorage")
 
-local RoRoomsSource = ServerStorage:FindFirstChild("RoRoomsSource")
+local RoRoomsSource = script.Parent
 
 local Config = require(script.Config)
 local ServerAPI = require(script.Server)
 local ClientAPI = require(script.Client)
+local Packages = script.Parent.Parent
 
 local RoRooms = {
-  Config = Config
+  Config = Config,
+  Packages = Packages,
 }
 
 local function InstallRealmAPI(Realm: table)
