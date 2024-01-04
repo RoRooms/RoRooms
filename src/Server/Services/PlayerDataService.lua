@@ -3,16 +3,17 @@ local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 local Shared = RoRooms.Shared
 local Storage = RoRooms.Storage
 local Config = RoRooms.Config
+local Packages = RoRooms.Packages
 
 local Players = game:GetService("Players")
 
-local Knit = require(Shared.Packages.Knit)
+local Knit = require(Packages.Knit)
 local ProfileService = require(Storage.ExtPackages.ProfileService)
 local LeaderStats = require(Storage.ExtPackages.LeaderStats)
 local XPToLevelUp = require(Shared.SharedData.XPToLevelUp)
-local Trove = require(Shared.Packages.Trove)
+local Trove = require(Packages.Trove)
 local SharedData = require(Shared.SharedData)
-local Signal = require(Shared.Packages.Signal)
+local Signal = require(Packages.Signal)
 
 local PROFILE_TEMPLATE = {
   Level = 1,

@@ -2,8 +2,9 @@ local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
+local Packages = RoRooms.Packages
 
-local Knit = require(Shared.Packages.Knit)
+local Knit = require(Packages.Knit)
 
 local WorldsMenu = require(Client.UI.ScreenGuis.WorldsMenu)
 

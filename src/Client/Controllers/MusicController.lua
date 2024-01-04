@@ -2,12 +2,13 @@ local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
+local Packages = RoRooms.Packages
 
 local SoundService = game:GetService("SoundService")
 
-local Knit = require(Shared.Packages.Knit)
+local Knit = require(Packages.Knit)
 local States = require(Client.UI.States)
-local Fusion = require(Shared.Packages.Fusion)
+local Fusion = require(Packages.Fusion)
 
 local MusicService
 

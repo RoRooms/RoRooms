@@ -2,6 +2,7 @@ local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
+local Packages = RoRooms.Packages
 
 local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
 local NekaUI = require(Shared.ExtPackages.NekaUI)

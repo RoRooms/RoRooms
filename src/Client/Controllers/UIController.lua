@@ -4,13 +4,14 @@ local StarterGui = game:GetService("StarterGui")
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 local Config = RoRooms.Config
+local Packages = RoRooms.Packages
 
-local Knit = require(Shared.Packages.Knit)
+local Knit = require(Packages.Knit)
 local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
 local States = require(Client.UI.States)
 local IconController = require(Shared.ExtPackages.Icon.IconController)
-local NeoHotbar = require(Shared.Packages.NeoHotbar)
-local Signal = require(Shared.Packages.Signal)
+local NeoHotbar = require(Packages.NeoHotbar)
+local Signal = require(Packages.Signal)
 local Icon = require(Shared.ExtPackages.Icon)
 
 local New = Fusion.New

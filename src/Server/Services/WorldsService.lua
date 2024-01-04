@@ -1,6 +1,7 @@
 local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 
 local Config = RoRooms.Config
+local Packages = RoRooms.Packages
 
 local TeleportService = game:GetService("TeleportService")
 

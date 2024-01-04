@@ -2,10 +2,11 @@ local Players = game:GetService("Players")
 local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 
 local Shared = RoRooms.Shared
+local Packages = RoRooms.Packages
 
-local Component = require(Shared.Packages.Component)
-local RemoteComponent = require(Shared.Packages.RemoteComponent)
-local Knit = require(Shared.Packages.Knit)
+local Component = require(Packages.Component)
+local RemoteComponent = require(Packages.RemoteComponent)
+local Knit = require(Packages.Knit)
 
 local PlayerCharacter = Component.new {
   Tag = "RR_PlayerCharacter",

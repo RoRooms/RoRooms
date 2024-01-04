@@ -4,8 +4,9 @@ local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 local Config = RoRooms.Config
+local Packages = RoRooms.Packages
 
-local Component = require(Shared.Packages.Component)
+local Component = require(Packages.Component)
 local States = require(Client.UI.States)
 
 local WorldTeleporter = Component.new {

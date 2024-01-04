@@ -2,8 +2,9 @@ local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 local Players = game:GetService("Players")
 
 local Shared = RoRooms.Shared
+local Packages = RoRooms.Packages
 
-local Component = require(Shared.Packages.Component)
+local Component = require(Packages.Component)
 local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
 
 local AnimSeat = Component.new {

@@ -2,8 +2,9 @@ local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 local SoundService = game:GetService("SoundService")
 
 local Shared = RoRooms.Shared
+local Packages = RoRooms.Packages
 
-local Knit = require(Shared.Packages.Knit)
+local Knit = require(Packages.Knit)
 
 local MusicService = {
   Name = "MusicService",

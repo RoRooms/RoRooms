@@ -1,10 +1,11 @@
 local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 
 local Shared = RoRooms.Shared
+local Packages = RoRooms.Packages
 
-local Component = require(Shared.Packages.Component)
+local Component = require(Packages.Component)
 local Zone = require(Shared.ExtPackages.Zone)
-local Knit = require(Shared.Packages.Knit)
+local Knit = require(Packages.Knit)
 
 local PlayerDataService = Knit.GetService("PlayerDataService")
 

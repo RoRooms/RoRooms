@@ -3,11 +3,12 @@ local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 local Config = RoRooms.Config
+local Packages = RoRooms.Packages
 
-local Knit = require(Shared.Packages.Knit)
+local Knit = require(Packages.Knit)
 local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local Signal = require(Shared.Packages.Signal)
-local NeoHotbar = require(Shared.Packages.NeoHotbar)
+local Signal = require(Packages.Signal)
+local NeoHotbar = require(Packages.NeoHotbar)
 local States = require(Client.UI.States)
 local SharedData = require(Shared.SharedData)
 

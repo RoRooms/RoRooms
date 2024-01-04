@@ -12,12 +12,13 @@ function RoRoomsClient:Start()
   local Shared = ReplicatedStorage:WaitForChild("RoRoomsCode", 10)
   local Client = StarterPlayerScripts:WaitForChild("RoRoomsCode", 10)
   local Config = require(script.Parent.Config)
+  local Packages = script.Parent.Parent
 
   self.Shared = Shared
   self.Client = Client
 
-  local Knit = require(Shared.Packages.Knit)
-  local Loader = require(Shared.Packages.Loader)
+  local Knit = require(Packages.Knit)
+  local Loader = require(Packages.Loader)
   local FindFeatureFromModule = require(Shared.SharedData.FindFeatureFromModule)
   
   self.Knit = Knit

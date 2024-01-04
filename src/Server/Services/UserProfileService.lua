@@ -3,8 +3,9 @@ local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 local Server = RoRooms.Server
 local Shared = RoRooms.Shared
 local Storage = RoRooms.Storage
+local Packages = RoRooms.Packages
 
-local Knit = require(Shared.Packages.Knit)
+local Knit = require(Packages.Knit)
 local SharedData = require(Shared.SharedData)
 local FilterString = require(Storage.ExtPackages.FilterString)
 

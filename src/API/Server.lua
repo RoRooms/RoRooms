@@ -3,7 +3,7 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local ServerStorage = game:GetService("ServerStorage")
 local StarterPlayerScripts = game:GetService("StarterPlayer"):WaitForChild("StarterPlayerScripts")
 
-local ROROOMS_SOURCE = script.Parent.Parent
+local ROROOMS_SOURCE = script.Parent.SourceCode
 local DIRECTORY_LOAD_ORDER = {"Shared", "Storage", "Server", "Client"}
 local TARGET_DIRECTORY_MAP = {
   Shared = ReplicatedStorage,
@@ -19,7 +19,8 @@ function RoRoomsServer:Start()
   assert(not self.Started, "RoRooms already started.")
   self.Started = true
 
-  local Packages = script.Parent.Parent.Parent
+  local Packages = script.Parent.Parent
+  local Config = require(script.Parent.Config)
   
   self:_InstallDirectories()
 
@@ -27,7 +28,6 @@ function RoRoomsServer:Start()
   local Storage = ServerStorage.RoRoomsCode
   local Server = ServerScriptService.RoRoomsCode
   local Client = StarterPlayerScripts.RoRoomsCode
-  local Config = require(script.Parent.Config)
 
   self.Shared = Shared
   self.Storage = Storage
@@ -69,7 +69,7 @@ function RoRoomsServer:_InstallDirectories()
     Directory.Name = "RoRoomsCode"
     Directory.Parent = TargetDirectory
   end
-  -- ROROOMS_SOURCE:Destroy()
+  ROROOMS_SOURCE:Destroy()
 end
 
 function RoRoomsServer:_EnableScripts(Directories)

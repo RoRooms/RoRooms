@@ -3,6 +3,7 @@ local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
 local Server = RoRooms.Server
 local Shared = RoRooms.Shared
 local Config = RoRooms.Config
+local Packages = RoRooms.Packages
 
 local SharedData = require(Shared.SharedData)
 
