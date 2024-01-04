@@ -1,4 +1,4 @@
-local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
+local RoRooms = require(script.Parent.Parent.Parent.Parent)
 local Players = game:GetService("Players")
 
 local Shared = RoRooms.Shared
