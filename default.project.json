@@ -1,6 +1,6 @@
 {
 	"name": "RoRooms",
-	"RoRooms": {
+	"tree": {
 		"$path": "Include/Linking.lua",
 		"Packages": {
 			"$path": "Packages",
