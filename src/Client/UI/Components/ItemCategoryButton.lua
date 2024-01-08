@@ -18,7 +18,9 @@ local Value = Fusion.Value
 
 local BaseButton = require(NekaUI.Components.BaseButton)
 local Icon = require(NekaUI.Components.Icon)
- 
+
+local BASE_COLOR = Color3.fromRGB(41, 41, 41)
+
 return function(Props)
   Props.CategoryName = EnsureProp(Props.CategoryName, "string", "Category")
 
@@ -31,42 +33,49 @@ return function(Props)
   return BaseButton {
     Name = "ItemCategoryButton",
     BackgroundColor3 = Spring(Computed(function()
-      local BaseColor = Color3.fromRGB(61, 61, 61)
+      local BaseColor = BASE_COLOR
       if IsHolding:get() then
-        return ColourUtils.Lighten(BaseColor, 0.1)
+        return ColourUtils.Lighten(BASE_COLOR, 0.1)
       else
         return BaseColor
       end
     end), 35, 1),
     BackgroundTransparency = 0,
     LayoutOrder = Computed(function()
-      return Props.Category:get().LayoutOrder or 0
+      if Category:get() then
+        return Category:get().LayoutOrder or 0
+      end
     end),
 
     OnActivated = function()
-      States.ItemsMenu.FocusedCategory:set(Props.CategoryName:get())
+      States.ItemsMenu.FocusedCategory:set(Props.CategoryName:get(), true)
     end,
     IsHolding = IsHolding,
 
     [Children] = {
       New "UICorner" {
-        CornerRadius = UDim.new(0, 5)
+        CornerRadius = UDim.new(0, 8)
       },
       New "UIPadding" {
-        PaddingLeft = UDim.new(0, 3),
-        PaddingBottom = UDim.new(0, 3),
-        PaddingTop = UDim.new(0, 3),
-        PaddingRight = UDim.new(0, 3)
+        PaddingLeft = UDim.new(0, 8),
+        PaddingBottom = UDim.new(0, 8),
+        PaddingTop = UDim.new(0, 8),
+        PaddingRight = UDim.new(0, 8)
+      },
+      New "UIStroke" {
+        ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+        Thickness = 2,
+        Color = Color3.fromRGB(51, 51, 51)
       },
       Icon {
         Image = Computed(function()
           if Category:get() and Category:get().Icon then
-            return Category.Icon
+            return Category:get().Icon
           else
             return "rbxassetid://7058763764"
           end
         end),
-        Size = UDim2.fromOffset(20, 20),
+        Size = UDim2.fromOffset(25, 25),
       }
     }
   }

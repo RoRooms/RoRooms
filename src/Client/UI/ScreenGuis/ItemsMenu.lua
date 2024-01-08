@@ -20,6 +20,7 @@ local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
 local MenuFrame = require(NekaUI.Components.MenuFrame)
 local ScrollingFrame = require(NekaUI.Components.ScrollingFrame)
 local ItemsCategory = require(Client.UI.Components.ItemsCategory)
+local ItemCategoriesSidebar = require(Client.UI.Components.ItemCategoriesSidebar)
 
 return function(Props)
   local Categories = Computed(function()
@@ -62,7 +63,7 @@ return function(Props)
         [Children] = {
           New "UIListLayout" {},
           MenuFrame {
-            Size = UDim2.fromOffset(363, 0),
+            Size = UDim2.fromOffset(410, 0),
             GroupTransparency = Spring(Computed(function()
               if States.ItemsMenu.Open:get() then
                 return 0
@@ -78,9 +79,16 @@ return function(Props)
                 PaddingRight = UDim.new(0, 10),
                 PaddingTop = UDim.new(0, 10),
               },
+              New "UIListLayout" {
+                Padding = UDim.new(0, 10),
+                FillDirection = Enum.FillDirection.Horizontal,
+              },
+              ItemCategoriesSidebar {
+                Size = UDim2.new(UDim.new(0, 47), UDim.new(1, 0)),
+              },
               ScrollingFrame {
                 Name = "Items",
-                Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 200)),
+                Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 220)),
 
                 [Children] = {
                   New "UIPadding" {
@@ -122,9 +130,19 @@ return function(Props)
     end
   end)
 
+  local DisconnectFocusedCategory = Observer(States.ItemsMenu.FocusedCategory):onChange(function()
+    local Items = ItemsMenu.AutoScaleFrame.MenuFrame.Contents.Items
+    local Category = Items.Contents:FindFirstChild(`{States.ItemsMenu.FocusedCategory:get()}ItemsCategory`)
+    if Category then
+      Items.CanvasPosition = Vector2.new(0, 0)
+      Items.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - Items.AbsolutePosition.Y)
+    end
+  end)
+
   ItemsMenu:GetPropertyChangedSignal("Parent"):Connect(function()
     if ItemsMenu.Parent == nil then
       DisconnectOpen()
+      DisconnectFocusedCategory()
     end
   end)
 

@@ -1,5 +1,5 @@
 local ROROOMS_SOURCE = script.Parent.SourceCode
-local DEFAULT_CONTROLLERS = {"UIController"}
+local DEFAULT_CONTROLLERS = {"UIController", "BloxstrapController"}
 
 local RoRoomsClient = {}
 

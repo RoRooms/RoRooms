@@ -48,7 +48,7 @@ return function(Props: table)
   end, Fusion.cleanup)
 
   return Frame {
-    Name = "ItemsCategory",
+    Name = `{Props.CategoryName:get()}ItemsCategory`,
     Size = UDim2.fromScale(1, 0),
     AutomaticSize = Enum.AutomaticSize.Y,
     LayoutOrder = Computed(function()
