@@ -2,6 +2,7 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent)
 local GroupService = game:GetService("GroupService")
 local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
 local Packages = RoRooms.Packages
 
@@ -11,7 +12,7 @@ local BloxstrapController = {
   Name = "BloxstrapController"
 }
 
-function BloxstrapController:KnitStart()
+function BloxstrapController:SetRichPresence()
   local GameIcon = 0
   local CreatorName = "Creator"
   local GameName = "Game"
@@ -40,7 +41,13 @@ function BloxstrapController:KnitStart()
       assetId = 15885967339,
       hoverText = "RoRooms"
     }
-})
+  })
+end
+
+function BloxstrapController:KnitStart()
+  if not RunService:IsStudio() then
+    self:SetRichPresence()
+  end
 end
 
 function BloxstrapController:KnitInit()
