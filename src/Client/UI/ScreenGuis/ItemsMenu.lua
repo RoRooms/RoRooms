@@ -84,7 +84,7 @@ return function(Props)
                 FillDirection = Enum.FillDirection.Horizontal,
               },
               ItemCategoriesSidebar {
-                Size = UDim2.new(UDim.new(0, 47), UDim.new(1, 0)),
+                Size = UDim2.new(UDim.new(0, 46), UDim.new(1, 0)),
               },
               ScrollingFrame {
                 Name = "Items",
