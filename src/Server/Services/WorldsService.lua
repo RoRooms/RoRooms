@@ -22,7 +22,7 @@ function WorldsService.Client:IsWorldRegistered(_Player: Player, PlaceId: number
 	return WorldsService:IsWorldRegistered(PlaceId)
 end
 
-function WorldsService.Client:TeleportToWorld(Player: Player, PlaceId: string)
+function WorldsService.Client:TeleportToWorld(Player: Player, PlaceId: number)
 	if typeof(PlaceId) ~= "number" then
 		return
 	end
@@ -34,7 +34,7 @@ function WorldsService:IsWorldRegistered(PlaceId: number)
 end
 
 function WorldsService:TeleportPlayerToWorld(Player: Player, PlaceId: number)
-	if self.WorldRegistry[PlaceId] then
+	if self.WorldRegistry[PlaceId] ~= nil then
 		TeleportService:Teleport(PlaceId, Player)
 	end
 end

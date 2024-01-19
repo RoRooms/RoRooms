@@ -32,8 +32,16 @@ return function(Props)
 
 	local IsHolding = Value(false)
 	local PlaceInfo = Computed(function()
-		if Props.InRoRooms:get() and Props.PlaceId:get() then
-			return MarketplaceService:GetProductInfo(Props.PlaceId:get())
+		if Props.PlaceId:get() then
+			local Success, Result = pcall(function()
+				return MarketplaceService:GetProductInfo(Props.PlaceId:get())
+			end)
+			if Success then
+				return Result
+			else
+				warn(Result)
+				return {}
+			end
 		else
 			return {}
 		end

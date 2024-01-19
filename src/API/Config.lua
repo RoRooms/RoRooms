@@ -54,23 +54,7 @@ local CONFIG_TEMPLATE = {
 	WorldsSystem = {
 		Enabled = true,
 		VCServersEnabled = true,
-		SubWorlds = {
-			-- ExampleSubWorld = {
-			-- 	Name = "Example Sub-world",
-			-- 	LayoutOrder = 1,
-			-- 	PlaceId = 0,
-			-- 	RequirementCallback = function(Player, SubWorldId) end,
-			--	IconImage = 0,
-			-- }
-		},
-		Worlds = {
-			-- ExampleWorld = {
-			-- 	Name = "Example World",
-			-- 	LayoutOrder = 1,
-			-- 	PlaceId = 0,
-			-- 	RequirementCallback = function(Player, WorldId) end,
-			-- }
-		},
+		FeaturedWorlds = {},
 	},
 	FriendsSystem = {
 		Enabled = true,
