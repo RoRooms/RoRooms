@@ -10,11 +10,11 @@ local States = require(Client.UI.States)
 local AutomaticSizer = require(NekaUI.Utils.AutomaticSizer)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Computed = Fusion.Computed
-local Spring = Fusion.Spring
+local New = Fusion.New
 local Observer = Fusion.Observer
-local ForPairs = Fusion.ForPairs
+local Spring = Fusion.Spring
+local ForValues = Fusion.ForValues
 
 local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
 local MenuFrame = require(NekaUI.Components.MenuFrame)
@@ -26,6 +26,8 @@ return function(Props)
 	local MenuOpen = Computed(function()
 		return States.CurrentMenu:get() == script.Name
 	end)
+
+	print(Config.WorldsSystem.FeaturedWorlds)
 
 	local WorldsMenu = New "ScreenGui" {
 		Name = "WorldsMenu",
@@ -52,7 +54,7 @@ return function(Props)
 				[Children] = {
 					New "UIListLayout" {},
 					MenuFrame {
-						Size = UDim2.fromOffset(353, 0),
+						Size = UDim2.fromOffset(368, 0),
 						GroupTransparency = Spring(
 							Computed(function()
 								if MenuOpen:get() then
@@ -95,8 +97,8 @@ return function(Props)
 										SortOrder = "LayoutOrder",
 										Wraps = true,
 									},
-									ForPairs(Config.WorldsSystem.FeaturedWorlds, function(Index, PlaceId)
-										return Index, WorldButton {
+									ForValues(Config.WorldsSystem.FeaturedWorlds, function(PlaceId: number)
+										return WorldButton {
 											PlaceId = PlaceId,
 										}
 									end, Fusion.cleanup),
@@ -110,13 +112,13 @@ return function(Props)
 	}
 
 	local DisconnectOpen = Observer(MenuOpen):onChange(function()
-		local TextClasses = { "TextLabel", "TextButton", "TextBox" }
-		for _, Descendant in ipairs(WorldsMenu:GetDescendants()) do
-			if table.find(TextClasses, Descendant.ClassName) then
-				task.wait()
-				AutomaticSizer.ApplyLayout(Descendant)
-			end
-		end
+		-- local TextClasses = { "TextLabel", "TextButton", "TextBox" }
+		-- for _, Descendant in ipairs(WorldsMenu:GetDescendants()) do
+		-- 	if table.find(TextClasses, Descendant.ClassName) then
+		-- 		task.wait()
+		-- 		AutomaticSizer.ApplyLayout(Descendant)
+		-- 	end
+		-- end
 	end)
 
 	WorldsMenu:GetPropertyChangedSignal("Parent"):Connect(function()

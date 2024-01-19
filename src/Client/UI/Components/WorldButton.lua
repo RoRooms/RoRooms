@@ -18,6 +18,7 @@ local Value = Fusion.Value
 
 local BaseButton = require(NekaUI.Components.BaseButton)
 local Text = require(NekaUI.Components.Text)
+local Frame = require(NekaUI.Components.Frame)
 
 return function(Props)
 	Props.PlaceId = EnsureProp(Props.PlaceId, "number", nil)
@@ -32,10 +33,7 @@ return function(Props)
 				return Result
 			else
 				warn(Result)
-				return {}
 			end
-		else
-			return {}
 		end
 	end)
 
@@ -55,9 +53,7 @@ return function(Props)
 		),
 		BackgroundTransparency = 0,
 		ClipsDescendants = true,
-		LayoutOrder = Computed(function()
-			return Props.World:get().LayoutOrder or 0
-		end),
+		LayoutOrder = Props.LayoutOrder,
 
 		OnActivated = function()
 			if States.WorldsService then
@@ -88,10 +84,10 @@ return function(Props)
 				CornerRadius = UDim.new(0, 10),
 			},
 			New "UIPadding" {
-				PaddingLeft = UDim.new(0, 5),
-				PaddingBottom = UDim.new(0, 10),
+				PaddingLeft = UDim.new(0, 8),
+				PaddingBottom = UDim.new(0, 8),
 				PaddingTop = UDim.new(0, 8),
-				PaddingRight = UDim.new(0, 5),
+				PaddingRight = UDim.new(0, 8),
 			},
 			New "UIStroke" {
 				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
@@ -104,9 +100,13 @@ return function(Props)
 			},
 			New "ImageLabel" {
 				Name = "GameIcon",
-				Size = UDim2.fromOffset(85, 85),
+				Size = UDim2.fromOffset(95, 95),
 				Image = Computed(function()
-					return "rbxthumb://type=GameIcon&id=" .. (Props.World:get().UniverseId or 1) .. "&w=150&h=150"
+					if PlaceInfo:get() then
+						return `rbxassetid://{PlaceInfo:get().IconImageAssetId}`
+					else
+						return "rbxasset://textures/ui/GuiImagePlaceholder.png"
+					end
 				end),
 				BackgroundTransparency = 1,
 
@@ -119,19 +119,33 @@ return function(Props)
 					},
 				},
 			},
-			Text {
-				Name = "WorldName",
-				AnchorPoint = Vector2.new(0.5, 1),
-				Position = UDim2.fromScale(0.5, 1),
-				Size = UDim2.fromScale(1, 0),
-				Text = Computed(function()
-					return Props.World:get().Name or Props.WorldId:get()
-				end),
-				TextSize = 16,
-				TextTruncate = Enum.TextTruncate.AtEnd,
-				AutomaticSize = Enum.AutomaticSize.Y,
-				TextXAlignment = Enum.TextXAlignment.Center,
-				AutoLocalize = false,
+			Frame {
+				Name = "NameContainer",
+				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 32)),
+				AutomaticSize = Enum.AutomaticSize.None,
+
+				[Children] = {
+					New "UIListLayout" {},
+					Text {
+						Name = "WorldName",
+						Size = UDim2.fromScale(1, 1),
+						AutomaticSize = Enum.AutomaticSize.None,
+						Text = Computed(function()
+							if PlaceInfo:get() then
+								return PlaceInfo:get().Name
+							else
+								return "Name"
+							end
+						end),
+						TextSize = 16,
+						TextTruncate = Enum.TextTruncate.AtEnd,
+						TextWrapped = true,
+						RichText = true,
+						TextXAlignment = Enum.TextXAlignment.Center,
+						TextYAlignment = Enum.TextYAlignment.Top,
+						AutoLocalize = false,
+					},
+				},
 			},
 		},
 	}
