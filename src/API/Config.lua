@@ -3,7 +3,7 @@ local CONFIG_TEMPLATE = {
 		Enabled = true,
 		AvatarEditorCallback = nil,
 	},
-  ItemsSystem = {
+	ItemsSystem = {
 		Enabled = true,
 		MaxItemsEquippable = 5,
 		Categories = {
@@ -20,11 +20,11 @@ local CONFIG_TEMPLATE = {
 			-- 	TintColor = Color3.fromRGB(255, 255, 255),
 			-- 	LayoutOrder = 1,
 			-- 	RequirementCallback = function(Player, ItemId)
-					
+
 			-- 	end,
 			-- }
-		}
-  },
+		},
+	},
 	EmotesSystem = {
 		Enabled = true,
 		EmotesDirectory = nil,
@@ -42,10 +42,10 @@ local CONFIG_TEMPLATE = {
 			-- 	TintColor = Color3.fromRGB(255, 255, 255),
 			-- 	LayoutOrder = 1,
 			-- 	RequirementCallback = function(Player, WorldId)
-					
+
 			-- 	end,
 			-- }
-		}
+		},
 	},
 	MusicSystem = {
 		Enabled = true,
@@ -70,13 +70,16 @@ local CONFIG_TEMPLATE = {
 			-- 	PlaceId = 0,
 			-- 	RequirementCallback = function(Player, WorldId) end,
 			-- }
-		}
+		},
+	},
+	FriendsSystem = {
+		Enabled = true,
 	},
 	ProgressionSystem = {
 		FriendsXPMultiplier = {
 			Enabled = true,
-			MultiplierAddon = 0.5
-		}
+			MultiplierAddon = 0.5,
+		},
 	},
 	SettingsSystem = {
 		Enabled = true,
@@ -86,15 +89,13 @@ local CONFIG_TEMPLATE = {
 			Coins = {
 				Enabled = true,
 				IconImage = 13197401306,
-				ActivationCallback = function()
-					
-				end
+				ActivationCallback = function() end,
 			},
 			Multipliers = {
 				Enabled = true,
-			}
-		}
-	}
+			},
+		},
+	},
 }
 
 local function DeepCopyTable(Table)

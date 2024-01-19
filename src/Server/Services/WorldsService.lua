@@ -4,7 +4,6 @@ local InsertService = game:GetService("InsertService")
 local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
 
-local Config = RoRooms.Config
 local Shared = RoRooms.Shared
 
 local SharedData = require(Shared.SharedData)
@@ -16,51 +15,27 @@ local WorldsService = {
 	Client = {},
 }
 
-function WorldsService.Client:TeleportToSubWorld(Player: Player, SubWorldId: string)
-	if typeof(SubWorldId) ~= "string" then
+function WorldsService.Client:IsWorldRegistered(_Player: Player, PlaceId: number)
+	if typeof(PlaceId) ~= "number" then
 		return
 	end
-	self.Server:TeleportPlayerToSubWorld(Player, SubWorldId)
+	return WorldsService:IsWorldRegistered(PlaceId)
 end
 
-function WorldsService.Client:TeleportToWorld(Player: Player, WorldId: string)
-	if typeof(WorldId) ~= "string" then
+function WorldsService.Client:TeleportToWorld(Player: Player, PlaceId: string)
+	if typeof(PlaceId) ~= "number" then
 		return
 	end
-	self.Server:TeleportPlayerToWorld(Player, WorldId)
+	self.Server:TeleportPlayerToWorld(Player, PlaceId)
 end
 
-function WorldsService:TeleportPlayerToSubWorld(Player: Player, SubWorldId: string)
-	local SubWorld = Config.WorldsSystem.SubWorlds[SubWorldId]
-	if SubWorld then
-		local AbleToJoin = false
-		if SubWorld.RequirementCallback then
-			AbleToJoin = SubWorld.RequirementCallback(Player, SubWorldId)
-		else
-			AbleToJoin = true
-		end
-		if AbleToJoin then
-			if Player then
-				TeleportService:Teleport(SubWorld.PlaceId, Player)
-			end
-		end
-	end
+function WorldsService:IsWorldRegistered(PlaceId: number)
+	return self.WorldRegistry[PlaceId] ~= nil
 end
 
-function WorldsService:TeleportPlayerToWorld(Player: Player, WorldId: string)
-	local World = Config.WorldsSystem.Worlds[WorldId]
-	if World then
-		local AbleToJoin = false
-		if World.RequirementCallback then
-			AbleToJoin = World.RequirementCallback(Player, WorldId)
-		else
-			AbleToJoin = true
-		end
-		if AbleToJoin then
-			if Player then
-				TeleportService:Teleport(World.PlaceId, Player)
-			end
-		end
+function WorldsService:TeleportPlayerToWorld(Player: Player, PlaceId: number)
+	if self.WorldRegistry[PlaceId] then
+		TeleportService:Teleport(PlaceId, Player)
 	end
 end
 
