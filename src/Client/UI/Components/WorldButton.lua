@@ -100,7 +100,7 @@ return function(Props)
 			},
 			New "ImageLabel" {
 				Name = "GameIcon",
-				Size = UDim2.fromOffset(95, 95),
+				Size = UDim2.fromOffset(85, 85),
 				Image = Computed(function()
 					if PlaceInfo:get() then
 						return `rbxassetid://{PlaceInfo:get().IconImageAssetId}`

@@ -54,7 +54,7 @@ return function(Props)
 				[Children] = {
 					New "UIListLayout" {},
 					MenuFrame {
-						Size = UDim2.fromOffset(383, 0),
+						Size = UDim2.fromOffset(353, 0),
 						GroupTransparency = Spring(
 							Computed(function()
 								if MenuOpen:get() then
