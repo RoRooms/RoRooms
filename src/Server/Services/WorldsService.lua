@@ -1,6 +1,7 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
 local DataStoreService = game:GetService("DataStoreService")
 local InsertService = game:GetService("InsertService")
+local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
 
@@ -8,7 +9,7 @@ local Shared = RoRooms.Shared
 
 local SharedData = require(Shared.SharedData)
 
-local WORLD_REGISTRY_UPDATE_DELAY = 60 * 60
+local WORLD_REGISTRY_UPDATE_DELAY = 10 * 60
 
 local WorldsService = {
 	Name = "WorldsService",
@@ -40,13 +41,32 @@ function WorldsService:TeleportPlayerToWorld(Player: Player, PlaceId: number)
 end
 
 function WorldsService:UpdateWorldRegistry()
-	local Success, Result = pcall(function()
-		return require(InsertService:LoadAsset(SharedData.WorldRegistryAssetId):GetChildren()[1])
-	end)
-	if Success then
-		self.WorldRegistry = Result
-	else
-		warn(Result)
+	local function GetRegistryUpdateStamp()
+		local Success, Result = pcall(function()
+			return MarketplaceService:GetProductInfo(SharedData.WorldRegistryAssetId).Updated
+		end)
+		if Success then
+			return Result
+		else
+			warn(Result)
+		end
+	end
+
+	local function GetRegistryModule()
+		local Success, Result = pcall(function()
+			return InsertService:LoadAsset(SharedData.WorldRegistryAssetId):GetChildren()[1]
+		end)
+		if Success then
+			return Result
+		else
+			warn(Result)
+		end
+	end
+
+	local UpdateStamp = GetRegistryUpdateStamp()
+	if UpdateStamp ~= self.LastWorldRegistryUpdateStamp then
+		self.WorldRegistry = require(GetRegistryModule())
+		self.LastWorldRegistryUpdateStamp = UpdateStamp
 	end
 end
 
@@ -72,6 +92,7 @@ end
 
 function WorldsService:KnitInit()
 	self.WorldRegistry = {}
+	self.LastWorldRegistryUpdateStamp = nil
 
 	self.WorldTeleportsStore =
 		DataStoreService:GetOrderedDataStore("WorldTeleports", tostring(math.floor(os.time() / 86400)))
