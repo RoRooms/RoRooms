@@ -21,6 +21,8 @@ local MenuFrame = require(NekaUI.Components.MenuFrame)
 local TitleBar = require(NekaUI.Components.TitleBar)
 local ScrollingFrame = require(NekaUI.Components.ScrollingFrame)
 local EmotesCategory = require(Client.UI.Components.EmotesCategory)
+local EmoteCategoriesSidebar = require(Client.UI.Components.EmoteCategoriesSidebar)
+local Frame = require(NekaUI.Components.Frame)
 
 return function(Props)
 	local MenuOpen = Computed(function()
@@ -70,7 +72,7 @@ return function(Props)
 				[Children] = {
 					New "UIListLayout" {},
 					MenuFrame {
-						Size = UDim2.fromOffset(362, 0),
+						Size = UDim2.fromOffset(330, 0),
 						GroupTransparency = Spring(
 							Computed(function()
 								if MenuOpen:get() then
@@ -90,31 +92,51 @@ return function(Props)
 								PaddingRight = UDim.new(0, 11),
 								PaddingTop = UDim.new(0, 9),
 							},
+
 							TitleBar {
 								Title = "Emotes",
 								CloseButtonDisabled = true,
 								TextSize = 24,
 							},
-							ScrollingFrame {
-								Name = "EmotesList",
+							Frame {
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 200)),
+								AutomaticSize = Enum.AutomaticSize.None,
 
 								[Children] = {
-									New "UIPadding" {
-										PaddingLeft = UDim.new(0, 2),
-										PaddingBottom = UDim.new(0, 2),
-										PaddingTop = UDim.new(0, 2),
-										PaddingRight = UDim.new(0, 2),
-									},
 									New "UIListLayout" {
 										SortOrder = Enum.SortOrder.LayoutOrder,
-										Padding = UDim.new(0, 15),
+										Padding = UDim.new(0, 10),
+										FillDirection = Enum.FillDirection.Horizontal,
 									},
-									ForValues(Categories, function(CategoryName: string)
-										return EmotesCategory {
-											CategoryName = CategoryName,
-										}
-									end, Fusion.cleanup),
+
+									EmoteCategoriesSidebar {
+										Size = UDim2.new(UDim.new(0, 46), UDim.new(1, 0)),
+									},
+									ScrollingFrame {
+										Name = "EmotesList",
+										Size = UDim2.new(UDim.new(0, 253), UDim.new(1, 0)),
+
+										[Children] = {
+											New "UIPadding" {
+												PaddingLeft = UDim.new(0, 2),
+												PaddingBottom = UDim.new(0, 2),
+												PaddingTop = UDim.new(0, 2),
+												PaddingRight = UDim.new(0, 2),
+											},
+											New "UIListLayout" {
+												SortOrder = Enum.SortOrder.LayoutOrder,
+												Padding = UDim.new(0, 15),
+												FillDirection = Enum.FillDirection.Horizontal,
+												Wraps = true,
+											},
+
+											ForValues(Categories, function(CategoryName: string)
+												return EmotesCategory {
+													CategoryName = CategoryName,
+												}
+											end, Fusion.cleanup),
+										},
+									},
 								},
 							},
 						},

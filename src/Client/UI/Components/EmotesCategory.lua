@@ -81,6 +81,7 @@ return function(Props: table)
 					New "UIListLayout" {
 						SortOrder = Enum.SortOrder.LayoutOrder,
 						Padding = UDim.new(0, 12),
+						FillDirection = Enum.FillDirection.Horizontal,
 						Wraps = true,
 					},
 					EmoteButtons,

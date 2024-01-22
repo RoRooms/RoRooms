@@ -12,11 +12,11 @@ local Children = Fusion.Children
 local Computed = Fusion.Computed
 
 local ScrollingFrame = require(NekaUI.Components.ScrollingFrame)
-local ItemCategoryButton = require(Client.UI.Components.ItemCategoryButton)
+local EmoteCategoryButton = require(Client.UI.Components.EmoteCategoryButton)
 
 return function(Props: table)
 	return ScrollingFrame {
-		Name = "ItemCategoriesSidebar",
+		Name = "EmoteCategoriesSidebar",
 		Size = Props.Size,
 
 		[Children] = {
@@ -33,10 +33,10 @@ return function(Props: table)
 			},
 			Computed(function()
 				local Categories = {}
-				for CategoryName, _ in Config.ItemsSystem.Categories do
+				for CategoryName, _ in Config.EmotesSystem.Categories do
 					table.insert(
 						Categories,
-						ItemCategoryButton {
+						EmoteCategoryButton {
 							CategoryName = CategoryName,
 						}
 					)

@@ -8,7 +8,6 @@ local Knit = require(Packages.Knit)
 local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
 local ReconcileTable = require(Shared.ExtPackages.ReconcileTable)
 
-local computed = Fusion.Computed
 local Hydrate = Fusion.Hydrate
 local Out = Fusion.Out
 local Value = Fusion.Value
@@ -25,6 +24,9 @@ local States = {
 	EquippedItems = Value({}),
 	ItemsMenu = {
 		Open = Value(false),
+		FocusedCategory = Value(nil),
+	},
+	EmotesMenu = {
 		FocusedCategory = Value(nil),
 	},
 	ItemsMenuOpen = Value(false),
