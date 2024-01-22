@@ -22,6 +22,7 @@ local Frame = require(NekaUI.Components.Frame)
 
 return function(Props)
 	Props.PlaceId = EnsureProp(Props.PlaceId, "number", nil)
+	Props.BaseColor3 = EnsureProp(Props.BaseColor3, "Color3", Color3.fromRGB(41, 41, 41))
 
 	local IsHolding = Value(false)
 	local PlaceInfo = Computed(function()
@@ -41,11 +42,10 @@ return function(Props)
 		Name = "WorldButton",
 		BackgroundColor3 = Spring(
 			Computed(function()
-				local BaseColor = Color3.fromRGB(41, 41, 41)
 				if IsHolding:get() then
-					return ColourUtils.Lighten(BaseColor, 0.02)
+					return ColourUtils.Lighten(Props.BaseColor3:get(), 0.02)
 				else
-					return BaseColor
+					return Props.BaseColor3:get()
 				end
 			end),
 			35,
@@ -92,7 +92,7 @@ return function(Props)
 			New "UIStroke" {
 				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 				Thickness = 2,
-				Color = Color3.fromRGB(51, 51, 51),
+				Color = ColourUtils.Lighten(Props.BaseColor3:get(), 0.05),
 			},
 			New "UIListLayout" {
 				Padding = UDim.new(0, 8),

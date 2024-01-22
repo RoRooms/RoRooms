@@ -54,7 +54,7 @@ return function(Props)
 			Computed(function()
 				local BaseColor = Props.BaseColor3:get()
 				if IsHolding:get() then
-					return ColourUtils.Lighten(BaseColor, 0.03)
+					return ColourUtils.Lighten(BaseColor, 0.05)
 				else
 					return BaseColor
 				end
