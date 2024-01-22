@@ -52,7 +52,7 @@ return function(Props: table)
 	end, Fusion.cleanup)
 
 	return Frame {
-		Name = "EmotesCategory",
+		Name = `{Props.CategoryName:get()}EmotesCategory`,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		LayoutOrder = Computed(function()

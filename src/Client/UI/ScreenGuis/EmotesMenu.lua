@@ -105,7 +105,7 @@ return function(Props)
 								[Children] = {
 									New "UIListLayout" {
 										SortOrder = Enum.SortOrder.LayoutOrder,
-										Padding = UDim.new(0, 10),
+										Padding = UDim.new(0, 7),
 										FillDirection = Enum.FillDirection.Horizontal,
 									},
 
@@ -156,9 +156,19 @@ return function(Props)
 		end
 	end)
 
+	local DisconnectFocusedCategory = Observer(States.EmotesMenu.FocusedCategory):onChange(function()
+		local Emotes = EmotesMenu.AutoScaleFrame.MenuFrame.Contents.Frame.EmotesList
+		local Category = Emotes.Contents:FindFirstChild(`{States.EmotesMenu.FocusedCategory:get()}EmotesCategory`)
+		if Category then
+			Emotes.CanvasPosition = Vector2.new(0, 0)
+			Emotes.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - Emotes.AbsolutePosition.Y)
+		end
+	end)
+
 	EmotesMenu:GetPropertyChangedSignal("Parent"):Connect(function()
 		if EmotesMenu.Parent == nil then
 			DisconnectOpen()
+			DisconnectFocusedCategory()
 		end
 	end)
 
