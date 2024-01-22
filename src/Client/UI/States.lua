@@ -15,7 +15,6 @@ local CONTROLLERS = { "UIController", "EmotesController", "ItemsController", "Fr
 local SERVICES = { "UserProfileService", "WorldsService", "ItemsService", "PlayerDataService", "EmotesService" }
 
 local States = {
-	TopbarIcons = {},
 	Prompts = Value({}),
 	CurrentMenu = Value(),
 	TopbarBottomPos = Value(0),

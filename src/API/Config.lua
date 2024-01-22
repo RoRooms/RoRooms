@@ -67,18 +67,7 @@ local CONFIG_TEMPLATE = {
 	SettingsSystem = {
 		Enabled = true,
 	},
-	Interface = {
-		TopbarIcons = {
-			Coins = {
-				Enabled = true,
-				IconImage = 13197401306,
-				ActivationCallback = function() end,
-			},
-			Multipliers = {
-				Enabled = true,
-			},
-		},
-	},
+	Interface = {},
 }
 
 local function DeepCopyTable(Table)
