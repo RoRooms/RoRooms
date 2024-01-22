@@ -54,7 +54,7 @@ return function(Props)
 				[Children] = {
 					New "UIListLayout" {},
 					MenuFrame {
-						Size = UDim2.fromOffset(368, 0),
+						Size = UDim2.fromOffset(380, 0),
 						GroupTransparency = Spring(
 							Computed(function()
 								if MenuOpen:get() then
@@ -91,7 +91,7 @@ return function(Props)
 										PaddingRight = UDim.new(0, 2),
 									},
 									New "UIListLayout" {
-										Padding = UDim.new(0, 15),
+										Padding = UDim.new(0, 12),
 										FillDirection = "Horizontal",
 										HorizontalAlignment = "Left",
 										SortOrder = "LayoutOrder",

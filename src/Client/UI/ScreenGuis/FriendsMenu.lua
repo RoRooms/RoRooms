@@ -92,7 +92,7 @@ return function(Props)
 										SortOrder = Enum.SortOrder.LayoutOrder,
 										FillDirection = Enum.FillDirection.Horizontal,
 										Wraps = true,
-										Padding = UDim.new(0, 15),
+										Padding = UDim.new(0, 12),
 									},
 
 									ForValues(States.Friends.InRoRooms, function(Friend)
