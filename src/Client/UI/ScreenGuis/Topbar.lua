@@ -9,9 +9,10 @@ local NekaUI = require(Shared.ExtPackages.NekaUI)
 local States = require(Client.UI.States)
 
 local Children = Fusion.Children
-local New = Fusion.New
-local ForValues = Fusion.ForValues
 local Computed = Fusion.Computed
+local ForValues = Fusion.ForValues
+local New = Fusion.New
+local Observer = Fusion.Observer
 local Spring = Fusion.Spring
 local Value = Fusion.Value
 
@@ -62,6 +63,9 @@ return function(Props)
 		return EnabledButtons
 	end)
 	local TopbarButtonsHeight = Value(0)
+	local IsUnibarOpen = Computed(function()
+		return States.TopbarInset:get().Min.X > 250
+	end)
 
 	local TopbarInstance = New "ScreenGui" {
 		Name = "Topbar",
@@ -75,7 +79,7 @@ return function(Props)
 				Position = Spring(
 					Computed(function()
 						if States.TopbarVisible:get() then
-							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, 10))
+							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, 14))
 						else
 							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, (-TopbarButtonsHeight:get()) - 2))
 						end
@@ -175,6 +179,13 @@ return function(Props)
 
 	TopbarButtons:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarButtonsHeight)
 	UpdateTopbarButtonsHeight()
+
+	Observer(IsUnibarOpen):onChange(function()
+		States.TopbarVisible:set(not IsUnibarOpen:get())
+		if IsUnibarOpen:get() then
+			States.CurrentMenu:set(nil)
+		end
+	end)
 
 	return TopbarInstance
 end

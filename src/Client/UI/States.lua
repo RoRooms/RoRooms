@@ -1,3 +1,4 @@
+local GuiService = game:GetService("GuiService")
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
 
 local Shared = RoRooms.Shared
@@ -7,9 +8,10 @@ local Knit = require(Packages.Knit)
 local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
 local ReconcileTable = require(Shared.ExtPackages.ReconcileTable)
 
-local Value = Fusion.Value
+local computed = Fusion.Computed
 local Hydrate = Fusion.Hydrate
 local Out = Fusion.Out
+local Value = Fusion.Value
 
 local CONTROLLERS = { "UIController", "EmotesController", "ItemsController", "FriendsController" }
 local SERVICES = { "UserProfileService", "WorldsService", "ItemsService", "PlayerDataService", "EmotesService" }
@@ -36,6 +38,7 @@ local States = {
 		InRoRooms = Value({}),
 		NotInRoRooms = Value({}),
 	},
+	TopbarInset = Value(Rect.new(Vector2.new(), Vector2.new())),
 }
 
 function States:PushPrompt(Prompt: table)
@@ -79,6 +82,11 @@ function States:Start()
 	Hydrate(workspace.CurrentCamera) {
 		[Out "ViewportSize"] = States.ScreenSize,
 	}
+
+	self.TopbarInset:set(GuiService.TopbarInset)
+	GuiService:GetPropertyChangedSignal("TopbarInset"):Connect(function()
+		self.TopbarInset:set(GuiService.TopbarInset)
+	end)
 
 	Knit.OnStart():andThen(function()
 		States.ItemsController.EquippedItemsUpdated:Connect(function(EquippedItems)
