@@ -6,10 +6,8 @@ local Client = RoRooms.Client
 local NekaUI = require(Shared.ExtPackages.NekaUI)
 local Fusion = require(NekaUI.Packages.Fusion)
 local States = require(Client.UI.States)
-local AutomaticSizer = require(NekaUI.Utils.AutomaticSizer)
 
 local Children = Fusion.Children
-local clean = Fusion.cleanup
 local Computed = Fusion.Computed
 local ForValues = Fusion.ForValues
 local New = Fusion.New
