@@ -50,18 +50,18 @@ function ItemGiver:Construct()
 		Name = "ItemGiverPrompt",
 		Parent = self.Instance,
 		Enabled = Computed(function()
-			return ItemGiver.Item:get() ~= nil and ItemsController ~= nil
+			return self.Item:get() ~= nil and ItemsController ~= nil
 		end),
 		ActionText = Computed(function()
-			if ItemGiver.Equipped:get() then
+			if self.Equipped:get() then
 				return "Unequip"
 			else
 				return "Equip"
 			end
 		end),
 		ObjectText = Computed(function()
-			if ItemGiver.Item:get() then
-				return ItemGiver.Item:get().Name
+			if self.Item:get() then
+				return self.Item:get().Name
 			else
 				return "Item"
 			end
