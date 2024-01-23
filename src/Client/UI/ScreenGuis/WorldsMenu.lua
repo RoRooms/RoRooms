@@ -7,7 +7,6 @@ local Config = RoRooms.Config
 local NekaUI = require(Shared.ExtPackages.NekaUI)
 local Fusion = require(NekaUI.Packages.Fusion)
 local States = require(Client.UI.States)
-local AutomaticSizer = require(NekaUI.Utils.AutomaticSizer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -26,8 +25,6 @@ return function(Props)
 	local MenuOpen = Computed(function()
 		return States.CurrentMenu:get() == script.Name
 	end)
-
-	print(Config.WorldsSystem.FeaturedWorlds)
 
 	local WorldsMenu = New "ScreenGui" {
 		Name = "WorldsMenu",
