@@ -99,7 +99,7 @@ return function(Props)
 								TextSize = 24,
 							},
 							Frame {
-								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 200)),
+								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 196)),
 								AutomaticSize = Enum.AutomaticSize.None,
 
 								[Children] = {

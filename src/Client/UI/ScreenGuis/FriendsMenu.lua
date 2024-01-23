@@ -79,7 +79,7 @@ return function(Props)
 							},
 							ScrollingFrame {
 								Name = "FriendsList",
-								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 200)),
+								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
 
 								[Children] = {
 									New "UIPadding" {
