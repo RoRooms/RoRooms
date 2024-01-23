@@ -41,6 +41,7 @@ local States = {
 		NotInRoRooms = Value({}),
 	},
 	TopbarInset = Value(Rect.new(Vector2.new(), Vector2.new())),
+	RobloxMenuOpen = Value(false),
 }
 
 function States:PushPrompt(Prompt: table)
@@ -88,6 +89,10 @@ function States:Start()
 	self.TopbarInset:set(GuiService.TopbarInset)
 	GuiService:GetPropertyChangedSignal("TopbarInset"):Connect(function()
 		self.TopbarInset:set(GuiService.TopbarInset)
+	end)
+
+	GuiService:GetPropertyChangedSignal("MenuIsOpen"):Connect(function()
+		self.RobloxMenuOpen:set(GuiService.MenuIsOpen)
 	end)
 
 	Knit.OnStart():andThen(function()

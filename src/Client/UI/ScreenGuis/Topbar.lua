@@ -15,6 +15,7 @@ local New = Fusion.New
 local Observer = Fusion.Observer
 local Spring = Fusion.Spring
 local Value = Fusion.Value
+local Cleanup = Fusion.Cleanup
 
 local Components = Client.UI.Components
 local TopbarButton = require(Components.TopbarButton)
@@ -67,11 +68,17 @@ return function(Props)
 		return States.TopbarInset:get().Min.X > 250
 	end)
 
+	local Observers = {}
+
 	local TopbarInstance = New "ScreenGui" {
 		Name = "Topbar",
 		Parent = Props.Parent,
 		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
 		ResetOnSpawn = false,
+
+		[Cleanup] = {
+			Observers,
+		},
 
 		[Children] = {
 			AutoScaleFrame {
@@ -169,23 +176,32 @@ return function(Props)
 		States.TopbarBottomPos:set(TopbarPully.AbsolutePosition.Y)
 	end
 
-	TopbarPully:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarBottomPos)
-	TopbarPully:GetPropertyChangedSignal("AbsolutePosition"):Connect(UpdateTopbarBottomPos)
+	table.insert(Observers, TopbarPully:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarBottomPos))
+	table.insert(Observers, TopbarPully:GetPropertyChangedSignal("AbsolutePosition"):Connect(UpdateTopbarBottomPos))
 	UpdateTopbarBottomPos()
 
 	local function UpdateTopbarButtonsHeight()
 		TopbarButtonsHeight:set(TopbarButtons.AbsoluteSize.Y)
 	end
 
-	TopbarButtons:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarButtonsHeight)
+	table.insert(Observers, TopbarButtons:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarButtonsHeight))
 	UpdateTopbarButtonsHeight()
 
-	Observer(IsUnibarOpen):onChange(function()
-		States.TopbarVisible:set(not IsUnibarOpen:get())
-		if IsUnibarOpen:get() then
-			States.CurrentMenu:set(nil)
-		end
-	end)
+	table.insert(
+		Observers,
+		Observer(IsUnibarOpen):onChange(function()
+			States.TopbarVisible:set(not IsUnibarOpen:get())
+			if IsUnibarOpen:get() then
+				States.CurrentMenu:set(nil)
+			end
+		end)
+	)
+	table.insert(
+		Observers,
+		Observer(States.RobloxMenuOpen):onChange(function()
+			States.TopbarVisible:set(not States.RobloxMenuOpen:get())
+		end)
+	)
 
 	return TopbarInstance
 end
