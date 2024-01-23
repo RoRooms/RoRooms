@@ -12,7 +12,6 @@ local Children = Fusion.Children
 local Computed = Fusion.Computed
 local ForValues = Fusion.ForValues
 local New = Fusion.New
-local Observer = Fusion.Observer
 local Spring = Fusion.Spring
 local Value = Fusion.Value
 local Cleanup = Fusion.Cleanup
@@ -64,11 +63,8 @@ return function(Props)
 		return EnabledButtons
 	end)
 	local TopbarButtonsHeight = Value(0)
-	local IsUnibarOpen = Computed(function()
-		return States.TopbarInset:get().Min.X > 250
-	end)
 
-	local Observers = {}
+	local CleanupHolder = {}
 
 	local TopbarInstance = New "ScreenGui" {
 		Name = "Topbar",
@@ -77,7 +73,7 @@ return function(Props)
 		ResetOnSpawn = false,
 
 		[Cleanup] = {
-			Observers,
+			CleanupHolder,
 		},
 
 		[Children] = {
@@ -176,32 +172,19 @@ return function(Props)
 		States.TopbarBottomPos:set(TopbarPully.AbsolutePosition.Y)
 	end
 
-	table.insert(Observers, TopbarPully:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarBottomPos))
-	table.insert(Observers, TopbarPully:GetPropertyChangedSignal("AbsolutePosition"):Connect(UpdateTopbarBottomPos))
+	table.insert(CleanupHolder, TopbarPully:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarBottomPos))
+	table.insert(CleanupHolder, TopbarPully:GetPropertyChangedSignal("AbsolutePosition"):Connect(UpdateTopbarBottomPos))
 	UpdateTopbarBottomPos()
 
 	local function UpdateTopbarButtonsHeight()
 		TopbarButtonsHeight:set(TopbarButtons.AbsoluteSize.Y)
 	end
 
-	table.insert(Observers, TopbarButtons:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarButtonsHeight))
+	table.insert(
+		CleanupHolder,
+		TopbarButtons:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarButtonsHeight)
+	)
 	UpdateTopbarButtonsHeight()
-
-	table.insert(
-		Observers,
-		Observer(IsUnibarOpen):onChange(function()
-			States.TopbarVisible:set(not IsUnibarOpen:get())
-			if IsUnibarOpen:get() then
-				States.CurrentMenu:set(nil)
-			end
-		end)
-	)
-	table.insert(
-		Observers,
-		Observer(States.RobloxMenuOpen):onChange(function()
-			States.TopbarVisible:set(not States.RobloxMenuOpen:get())
-		end)
-	)
 
 	return TopbarInstance
 end

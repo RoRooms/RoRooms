@@ -11,6 +11,8 @@ local ReconcileTable = require(Shared.ExtPackages.ReconcileTable)
 local Hydrate = Fusion.Hydrate
 local Out = Fusion.Out
 local Value = Fusion.Value
+local Computed = Fusion.Computed
+local Observer = Fusion.Observer
 
 local CONTROLLERS = { "UIController", "EmotesController", "ItemsController", "FriendsController" }
 local SERVICES = { "UserProfileService", "WorldsService", "ItemsService", "PlayerDataService", "EmotesService" }
@@ -86,13 +88,29 @@ function States:Start()
 		[Out "ViewportSize"] = States.ScreenSize,
 	}
 
-	self.TopbarInset:set(GuiService.TopbarInset)
+	States.TopbarInset:set(GuiService.TopbarInset)
 	GuiService:GetPropertyChangedSignal("TopbarInset"):Connect(function()
-		self.TopbarInset:set(GuiService.TopbarInset)
+		States.TopbarInset:set(GuiService.TopbarInset)
+	end)
+	self.IsUnibarOpen = Computed(function()
+		return States.TopbarInset:get().Min.X > 250
 	end)
 
 	GuiService:GetPropertyChangedSignal("MenuIsOpen"):Connect(function()
-		self.RobloxMenuOpen:set(GuiService.MenuIsOpen)
+		States.RobloxMenuOpen:set(GuiService.MenuIsOpen)
+	end)
+
+	Observer(States.IsUnibarOpen):onChange(function()
+		States.TopbarVisible:set(not States.IsUnibarOpen:get())
+		if States.IsUnibarOpen:get() then
+			States.CurrentMenu:set(nil)
+		end
+	end)
+	Observer(States.RobloxMenuOpen):onChange(function()
+		States.TopbarVisible:set(not States.RobloxMenuOpen:get())
+		if States.RobloxMenuOpen:get() then
+			States.CurrentMenu:set(nil)
+		end
 	end)
 
 	Knit.OnStart():andThen(function()
