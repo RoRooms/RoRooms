@@ -110,6 +110,7 @@ function States:Start()
 		States.TopbarVisible:set(not States.RobloxMenuOpen:get())
 		if States.RobloxMenuOpen:get() then
 			States.CurrentMenu:set(nil)
+			States.ItemsMenu.Open:set(false)
 		end
 	end)
 
