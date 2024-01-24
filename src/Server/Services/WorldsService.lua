@@ -35,8 +35,11 @@ function WorldsService:GetWorlds(CurrentPage: number, PageSize: number)
 	local Results = {}
 
 	local TopWorldsPageCount = math.ceil(#self.TopWorlds / PageSize)
+	if TopWorldsPageCount == 0 then
+		TopWorldsPageCount = 1
+	end
 
-	if CurrentPage > TopWorldsPageCount then
+	if CurrentPage >= TopWorldsPageCount then
 		local PagesPastTopWorlds = CurrentPage - TopWorldsPageCount
 		local CurrentRandomWorldsIndex = PagesPastTopWorlds * PageSize
 
@@ -152,7 +155,7 @@ end
 
 function WorldsService:KnitStart()
 	task.delay(3, function()
-		print(self:GetWorlds(0, 40))
+		print(self:GetWorlds(1, 40))
 	end)
 
 	self:StartWorldRegistryUpdateLoop()
