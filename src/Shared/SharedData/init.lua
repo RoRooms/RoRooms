@@ -14,6 +14,7 @@ return {
 		MusicSystem = { "MusicService", "MusicController" },
 		SettingsSystem = { "SettingsController" },
 		FriendsSystem = { "FriendsController" },
+		VRSystem = { "NexusVRService" },
 	},
 	ItemEquipResponseCodes = {
 		Unpurchased = 1,

@@ -68,6 +68,9 @@ local CONFIG_TEMPLATE = {
 		Enabled = true,
 	},
 	Interface = {},
+	VRSystem = {
+		Enabled = true,
+	},
 }
 
 local function DeepCopyTable(Table)
