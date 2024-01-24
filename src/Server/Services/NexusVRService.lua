@@ -83,7 +83,7 @@ local NEXUS_VR_CONFIGURATION = {
 		--If true, Nexus VR Backpack (https://github.com/TheNexusAvenger/Nexus-VR-Backpack)
 		--will be inserted into the game and loaded. This replaces
 		--the default Roblox backpack.
-		NexusVRBackpackEnabled = false,
+		NexusVRBackpackEnabled = true,
 
 		--If true, version information will be hidden on the client.
 		--Version information may be detectable based on behavior, or by exploiters decompiling
