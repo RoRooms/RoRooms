@@ -24,6 +24,7 @@ local function ScrollingFrame(Props)
 		Size = Props.Size,
 		AutomaticSize = Props.AutomaticSize,
 		ZIndex = Props.ZIndex,
+		Selectable = false,
 
 		BackgroundTransparency = 1,
 		ScrollBarThickness = 0,
