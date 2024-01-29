@@ -159,7 +159,23 @@ return function(Props)
 
 								OnActivated = function()
 									if States.WorldsService then
-										States.WorldsService:TeleportToWorld(States.WorldPageMenu.PlaceId:get())
+										States.WorldsService
+											:TeleportToWorld(States.WorldPageMenu.PlaceId:get())
+											:andThen(function(Success: boolean, Message: string)
+												States.CurrentMenu:set(nil)
+												if not Success then
+													States:PushPrompt({
+														Title = "Error",
+														Text = Message,
+														Buttons = {
+															{
+																Primary = false,
+																Contents = { "Dismiss" },
+															},
+														},
+													})
+												end
+											end)
 									end
 								end,
 							},

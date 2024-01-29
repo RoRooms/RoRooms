@@ -28,7 +28,7 @@ function WorldsService.Client:TeleportToWorld(Player: Player, PlaceId: number)
 	if typeof(PlaceId) ~= "number" then
 		return
 	end
-	self.Server:TeleportPlayerToWorld(Player, PlaceId)
+	return self.Server:TeleportPlayerToWorld(Player, PlaceId)
 end
 
 function WorldsService:GetWorlds(CurrentPage: number, PageSize: number)
@@ -98,8 +98,11 @@ function WorldsService:IsWorldRegistered(PlaceId: number)
 end
 
 function WorldsService:TeleportPlayerToWorld(Player: Player, PlaceId: number)
-	if self.WorldRegistry[PlaceId] ~= nil then
+	if self:IsWorldRegistered(PlaceId) then
 		TeleportService:Teleport(PlaceId, Player)
+		return true
+	else
+		return false, "World not registered."
 	end
 end
 
