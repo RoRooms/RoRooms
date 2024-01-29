@@ -1,0 +1,174 @@
+local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
+local MarketplaceService = game:GetService("MarketplaceService")
+
+local Shared = RoRooms.Shared
+local Client = RoRooms.Client
+
+local NekaUI = require(Shared.ExtPackages.NekaUI)
+local Fusion = require(NekaUI.Packages.Fusion)
+local States = require(Client.UI.States)
+
+local Children = Fusion.Children
+local Computed = Fusion.Computed
+local New = Fusion.New
+local Spring = Fusion.Spring
+
+local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
+local MenuFrame = require(NekaUI.Components.MenuFrame)
+local TitleBar = require(NekaUI.Components.TitleBar)
+local Text = require(NekaUI.Components.Text)
+local Button = require(NekaUI.Components.Button)
+local Frame = require(NekaUI.Components.Frame)
+
+return function(Props)
+	local MenuOpen = Computed(function()
+		-- return true
+		return States.CurrentMenu:get() == script.Name
+	end)
+	local PlaceInfo = Computed(function()
+		if States.WorldPageMenu.PlaceId:get() then
+			local Success, Result = pcall(function()
+				return MarketplaceService:GetProductInfo(States.WorldPageMenu.PlaceId:get())
+			end)
+			if Success then
+				return Result
+			else
+				warn(Result)
+			end
+		end
+	end)
+
+	local WorldPageMenu = New "ScreenGui" {
+		Name = "WorldPageMenu",
+		Parent = Props.Parent,
+		Enabled = MenuOpen,
+		ResetOnSpawn = false,
+
+		[Children] = {
+			AutoScaleFrame {
+				AnchorPoint = Vector2.new(0.5, 0),
+				Position = Spring(
+					Computed(function()
+						local YPos = States.TopbarBottomPos:get()
+						if not MenuOpen:get() then
+							YPos = YPos + 15
+						end
+						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
+					end),
+					37,
+					1
+				),
+				BaseResolution = Vector2.new(883, 893),
+
+				[Children] = {
+					New "UIListLayout" {},
+					MenuFrame {
+						Size = UDim2.fromOffset(353, 0),
+						GroupTransparency = Spring(
+							Computed(function()
+								if MenuOpen:get() then
+									return 0
+								else
+									return 1
+								end
+							end),
+							40,
+							1
+						),
+
+						[Children] = {
+							New "UIPadding" {
+								PaddingBottom = UDim.new(0, 11),
+								PaddingLeft = UDim.new(0, 11),
+								PaddingRight = UDim.new(0, 11),
+								PaddingTop = UDim.new(0, 9),
+							},
+							TitleBar {
+								Title = "World",
+								CloseButtonDisabled = true,
+								TextSize = 24,
+							},
+							New "ImageLabel" {
+								Name = "Thumbnail",
+								Image = Computed(function()
+									if PlaceInfo:get() then
+										return `rbxassetid://{PlaceInfo:get().IconImageAssetId}`
+									else
+										return "rbxasset://textures/ui/GuiImagePlaceholder.png"
+									end
+								end),
+								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 80)),
+								ScaleType = Enum.ScaleType.Crop,
+
+								[Children] = {
+									New "UICorner" {
+										CornerRadius = UDim.new(0, 8),
+									},
+								},
+							},
+							Frame {
+								Name = "WorldInfo",
+								Size = UDim2.fromScale(1, 0),
+								AutomaticSize = Enum.AutomaticSize.Y,
+
+								[Children] = {
+									New "UIListLayout" {
+										SortOrder = Enum.SortOrder.LayoutOrder,
+										Padding = UDim.new(0, 5),
+									},
+									Text {
+										Size = UDim2.fromScale(1, 0),
+										AutomaticSize = Enum.AutomaticSize.Y,
+										Text = Computed(function()
+											if PlaceInfo:get() and PlaceInfo:get().Name then
+												return PlaceInfo:get().Name
+											else
+												return "World Name"
+											end
+										end),
+										TextSize = 25,
+										TextTruncate = Enum.TextTruncate.AtEnd,
+										RichText = true,
+										AutoLocalize = false,
+									},
+									Text {
+										Name = "Description",
+										Text = Computed(function()
+											if PlaceInfo:get() and PlaceInfo:get().Description then
+												return PlaceInfo:get().Description
+											else
+												return "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+											end
+										end),
+										TextWrapped = true,
+										RichText = true,
+										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 35)),
+										AutomaticSize = Enum.AutomaticSize.None,
+										TextTruncate = Enum.TextTruncate.AtEnd,
+										AutoLocalize = false,
+									},
+								},
+							},
+							Button {
+								Name = "PlayButton",
+								Size = UDim2.fromScale(1, 0),
+								AutomaticSize = Enum.AutomaticSize.Y,
+								Contents = { "rbxassetid://10392248278" },
+								ContentSize = 25,
+								Style = "Filled",
+
+								OnActivated = function()
+									if States.WorldsService then
+										States.WorldsService:TeleportToWorld(States.WorldPageMenu.PlaceId:get())
+									end
+								end,
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	return WorldPageMenu
+end

@@ -31,6 +31,9 @@ local States = {
 	EmotesMenu = {
 		FocusedCategory = Value(nil),
 	},
+	WorldPageMenu = {
+		PlaceId = Value(8310127828),
+	},
 	ItemsMenuOpen = Value(false),
 	LocalPlayerData = Value({}),
 	UserSettings = {

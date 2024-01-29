@@ -54,6 +54,7 @@ local CONFIG_TEMPLATE = {
 	WorldsSystem = {
 		Enabled = true,
 		VCServersEnabled = true,
+		-- FeaturedWorlds = {},
 	},
 	FriendsSystem = {
 		Enabled = true,

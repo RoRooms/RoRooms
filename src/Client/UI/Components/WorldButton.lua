@@ -56,26 +56,8 @@ return function(Props)
 		LayoutOrder = Props.LayoutOrder,
 
 		OnActivated = function()
-			if States.WorldsService then
-				States.CurrentMenu:set()
-				States:PushPrompt({
-					Title = "Teleport",
-					Text = "Do you want to teleport to world " .. PlaceInfo:get().Name .. "?",
-					Buttons = {
-						{
-							Primary = false,
-							Contents = { "Cancel" },
-						},
-						{
-							Primary = true,
-							Contents = { "Teleport" },
-							Callback = function()
-								States.WorldsService:TeleportToWorld(Props.PlaceId:get())
-							end,
-						},
-					},
-				})
-			end
+			States.WorldPageMenu.PlaceId:set(Props.PlaceId:get())
+			States.CurrentMenu:set("WorldPageMenu")
 		end,
 		IsHolding = IsHolding,
 
