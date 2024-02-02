@@ -22,6 +22,7 @@ local States = {
 	CurrentMenu = Value(),
 	TopbarBottomPos = Value(0),
 	TopbarVisible = Value(true),
+	TopbarButtons = Value({}),
 	ScreenSize = Value(Vector2.new()),
 	EquippedItems = Value({}),
 	ItemsMenu = {
@@ -48,6 +49,22 @@ local States = {
 	TopbarInset = Value(Rect.new(Vector2.new(), Vector2.new())),
 	RobloxMenuOpen = Value(false),
 }
+
+function States:AddTopbarButton(Name: string, Button: table)
+	local TopbarButtons = States.TopbarButtons:get()
+
+	TopbarButtons[Name] = Button
+
+	States.TopbarButtons:set(TopbarButtons)
+end
+
+function States:RemoveTopbarButton(Name: string)
+	local TopbarButtons = States.TopbarButtons:get()
+
+	TopbarButtons[Name] = nil
+
+	States.TopbarButtons:set(TopbarButtons)
+end
 
 function States:PushPrompt(Prompt: table)
 	local PromptTemplate = {

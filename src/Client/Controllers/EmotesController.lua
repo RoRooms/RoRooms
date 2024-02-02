@@ -12,35 +12,39 @@ local UIController = require(Client.Controllers.UIController)
 local EmotesService
 
 local EmotesController = {
-  Name = "EmotesController"
+	Name = "EmotesController",
 }
 
 function EmotesController:PlayEmote(EmoteId: string)
-  EmotesService:PlayEmote(EmoteId):andThen(function(FailureReason: string)
-    if typeof(FailureReason) == "string" then
-      States:PushPrompt({
-        Title = "Failure",
-        Text = FailureReason,
-        Buttons = {
-          {
-            Primary = false,
-            Contents = {"Close"},
-          },
-        }
-      })
-    end
-  end)
+	EmotesService:PlayEmote(EmoteId):andThen(function(FailureReason: string)
+		if typeof(FailureReason) == "string" then
+			States:PushPrompt({
+				Title = "Failure",
+				Text = FailureReason,
+				Buttons = {
+					{
+						Primary = false,
+						Contents = { "Close" },
+					},
+				},
+			})
+		end
+	end)
 end
 
 function EmotesController:KnitStart()
-  UIController = Knit.GetController("UIController")
-  EmotesService = Knit.GetService("EmotesService")
+	UIController = Knit.GetController("UIController")
+	EmotesService = Knit.GetService("EmotesService")
 
-  UIController:MountUI(EmotesMenu {})
+	UIController:MountUI(EmotesMenu {})
+
+	States:AddTopbarButton("Emotes", {
+		MenuName = "EmotesMenu",
+		IconImage = "rbxassetid://15091717452",
+		LayoutOrder = 3,
+	})
 end
 
-function EmotesController:KnitInit()
-  
-end
+function EmotesController:KnitInit() end
 
 return EmotesController

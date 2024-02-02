@@ -67,6 +67,13 @@ end
 function FriendsController:KnitStart()
 	WorldsService = Knit.GetService("WorldsService")
 
+	UIController:MountUI(FriendsMenu {})
+	States:AddTopbarButton("Friends", {
+		MenuName = "FriendsMenu",
+		IconImage = "rbxassetid://16037713145",
+		LayoutOrder = 2,
+	})
+
 	self:UpdateFriends(true)
 
 	while task.wait(1) do
@@ -82,8 +89,6 @@ function FriendsController:KnitInit()
 	self.FriendsInRoRooms = {}
 	self.FriendsNotInGame = {}
 	self.FriendsOnlineLastUpdated = os.time()
-
-	UIController:MountUI(FriendsMenu {})
 end
 
 return FriendsController

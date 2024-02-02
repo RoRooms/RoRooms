@@ -22,46 +22,7 @@ local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
 local Frame = require(NekaUI.Components.Frame)
 local BaseButton = require(NekaUI.Components.BaseButton)
 
-local TOPBAR_BUTTONS = {
-	{
-		MenuName = "ProfileMenu",
-		IconImage = "rbxassetid://15091717235",
-	},
-	{
-		MenuName = "FriendsMenu",
-		IconImage = "rbxassetid://16037713145",
-	},
-	{
-		MenuName = "EmotesMenu",
-		IconImage = "rbxassetid://15091717452",
-	},
-	{
-		MenuName = "WorldsMenu",
-		IconImage = "rbxassetid://15091717321",
-	},
-	{
-		MenuName = "SettingsMenu",
-		IconImage = "rbxassetid://15091717549",
-	},
-}
-local FEATURE_MENU_MAP = {
-	WorldsSystem = "WorldsMenu",
-	ProfilesSystem = "ProfileMenu",
-	EmotesSystem = "EmotesMenu",
-	SettingsSystem = "SettingsMenu",
-	FriendsSystem = "FriendsMenu",
-}
-
 return function(Props)
-	local EnabledTopbarButtons = Computed(function()
-		local EnabledButtons = {}
-		for FeatureName, MenuName in pairs(FEATURE_MENU_MAP) do
-			if Config[FeatureName].Enabled then
-				table.insert(EnabledButtons, MenuName)
-			end
-		end
-		return EnabledButtons
-	end)
 	local TopbarButtonsHeight = Value(0)
 
 	local CleanupHolder = {}
@@ -101,7 +62,6 @@ return function(Props)
 					},
 					Frame {
 						Name = "TopbarButtons",
-						-- Visible = States.TopbarVisible,
 
 						[Children] = {
 							New "UIListLayout" {
@@ -110,16 +70,14 @@ return function(Props)
 								FillDirection = Enum.FillDirection.Horizontal,
 								VerticalAlignment = Enum.VerticalAlignment.Center,
 							},
-							ForValues(TOPBAR_BUTTONS, function(Button)
-								return Computed(function()
-									if table.find(EnabledTopbarButtons:get(), Button.MenuName) then
-										return TopbarButton {
-											MenuName = Button.MenuName,
-											IconImage = Button.IconImage,
-											SizeMultiplier = Button.SizeMultiplier,
-										}
-									end
-								end, Fusion.cleanup)
+
+							ForValues(States.TopbarButtons, function(Button)
+								return TopbarButton {
+									MenuName = Button.MenuName,
+									IconImage = Button.IconImage,
+									SizeMultiplier = Button.SizeMultiplier,
+									LayoutOrder = Button.LayoutOrder,
+								}
 							end, Fusion.cleanup),
 						},
 					},
