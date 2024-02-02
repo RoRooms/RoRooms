@@ -11,6 +11,7 @@ local AttributeValue = require(Shared.ExtPackages.AttributeValue)
 local Value = Fusion.Value
 local New = Fusion.New
 local Computed = Fusion.Computed
+local Hydrate = Fusion.Hydrate
 
 local AnimatedSeat = Component.new {
 	Tag = "RR_AnimatedSeat",
@@ -64,11 +65,15 @@ function AnimatedSeat:GetProximityPrompt()
 			ActionText = "",
 			RequiresLineOfSight = false,
 			MaxActivationDistance = 7.5,
-			Enabled = Computed(function()
-				return self.Occupant:get() == nil
-			end),
 		}
 	end
+
+	Hydrate(ProximityPrompt) {
+		Enabled = Computed(function()
+			return self.Occupant:get() == nil
+		end),
+	}
+
 	return ProximityPrompt
 end
 
