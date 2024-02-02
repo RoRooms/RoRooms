@@ -6,16 +6,16 @@ local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 
 local CharDefaultsService = {
-    Name = "CharDefaultsService";
+	Name = "CharDefaultsService",
 }
 
 function CharDefaultsService:KnitStart()
-    Players.PlayerAdded:Connect(function(Player)
-        Player.CharacterAdded:Connect(function(Char)
-            CollectionService:AddTag(Char, "RR_PlayerCharacter")
-            CollectionService:AddTag(Char, "RR_NametaggedChar")
-        end)
-    end)
+	Players.PlayerAdded:Connect(function(Player)
+		Player.CharacterAdded:Connect(function(Char)
+			CollectionService:AddTag(Char, "RR_PlayerCharacter")
+			CollectionService:AddTag(Char, "RR_NametaggedCharacter")
+		end)
+	end)
 end
 
 return CharDefaultsService
