@@ -1,4 +1,5 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local Players = game:GetService("Players")
 
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
@@ -7,50 +8,41 @@ local Packages = RoRooms.Packages
 
 local Component = require(Packages.Component)
 local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local Knit = require(Packages.Knit)
 local States = require(Client.UI.States)
+local ItemsController = require(Client.Controllers.ItemsController)
+local AttributeValue = require(Shared.ExtPackages.AttributeValue)
 
 local New = Fusion.New
 local Computed = Fusion.Computed
-
-local ItemsController = Knit.GetController("ItemsController")
+local Hydrate = Fusion.Hydrate
 
 local ItemGiver = Component.new {
 	Tag = "RR_ItemGiver",
 }
 
-function ItemGiver:Start()
-	self.ProximityPrompt.Triggered:Connect(function(Player: Player)
-		if Player ~= Knit.Player then
-			return
+function ItemGiver:GiveItem(Player: Player)
+	if Player == Players.LocalPlayer then
+		if self.Item:get() then
+			ItemsController:ToggleEquipItem(self.ItemId:get())
 		end
-		if self.Item:get() and ItemsController then
-			ItemsController:ToggleEquipItem(self.ItemId)
-		end
-	end)
+	end
 end
 
-function ItemGiver:Construct()
-	self.ItemId = self.Instance:GetAttribute("RR_ItemId")
-	self.Item = Computed(function()
-		return Config.ItemsSystem.Items[self.ItemId]
-	end)
-	self.Equipped = Computed(function()
-		return table.find(States.EquippedItems:get(), self.ItemId) ~= nil
-	end)
-
-	if not self.ItemId then
-		warn("No RR_ItemId attribute defined for ItemGiver", self.Instance)
-	end
-	if not self.Item then
-		warn("Could not find item by ItemId " .. self.ItemId, self.Instance)
+function ItemGiver:GetProximityPrompt()
+	local ProximityPrompt = self.Instance:FindFirstChild("RR_ItemPrompt")
+	if not ProximityPrompt then
+		ProximityPrompt = New "ProximityPrompt" {
+			Name = "RR_ItemPrompt",
+			Parent = self.Instance,
+			ActionText = "",
+			RequiresLineOfSight = false,
+			MaxActivationDistance = 7.5,
+		}
 	end
 
-	self.ProximityPrompt = New "ProximityPrompt" {
-		Name = "ItemGiverPrompt",
-		Parent = self.Instance,
+	Hydrate(ProximityPrompt) {
 		Enabled = Computed(function()
-			return self.Item:get() ~= nil and ItemsController ~= nil
+			return self.Item:get() ~= nil
 		end),
 		ActionText = Computed(function()
 			if self.Equipped:get() then
@@ -66,8 +58,34 @@ function ItemGiver:Construct()
 				return "Item"
 			end
 		end),
-		MaxActivationDistance = self.Instance:GetAttribute("RR_MaxActivationDistance") or 7,
 	}
+
+	return ProximityPrompt
+end
+
+function ItemGiver:Start()
+	self.ProximityPrompt = self:GetProximityPrompt()
+
+	self.ProximityPrompt.Triggered:Connect(function(Player: Player)
+		self:GiveItem(Player)
+	end)
+end
+
+function ItemGiver:Construct()
+	self.ItemId = AttributeValue(self.Instance, "RR_ItemId")
+	self.Item = Computed(function()
+		return Config.ItemsSystem.Items[self.ItemId:get()]
+	end)
+	self.Equipped = Computed(function()
+		return table.find(States.EquippedItems:get(), self.ItemId:get()) ~= nil
+	end)
+
+	if not self.ItemId:get() then
+		warn("No RR_ItemId attribute defined for ItemGiver", self.Instance)
+	end
+	if not self.Item:get() then
+		warn("Could not find item from ItemId", self.ItemId:get(), self.Instance)
+	end
 end
 
 return ItemGiver
