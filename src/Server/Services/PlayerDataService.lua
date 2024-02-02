@@ -26,7 +26,7 @@ local PROFILE_TEMPLATE = {
 }
 local KICK_MESSAGE = "Data failure. Please rejoin."
 local LEADERBOARD_LABELS = {
-	Level = "Level",
+	Level = "Level ⇵",
 }
 
 local PlayerDataService = {
