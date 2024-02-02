@@ -1,47 +1,42 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
 
 local Packages = RoRooms.Packages
+local Shared = RoRooms.Shared
+local Client = RoRooms.Client
 
 local Component = require(Packages.Component)
-local Knit = require(Packages.Knit)
+local NekaUI = require(Shared.ExtPackages.NekaUI)
+local Fusion = require(NekaUI.Packages.Fusion)
+local AttributeValue = require(Shared.ExtPackages.AttributeValue)
+local States = require(Client.UI.States)
 
-local PlayerDataService = Knit.GetService("PlayerDataService")
+local Computed = Fusion.Computed
+local Observer = Fusion.Observer
 
 local LevelDoor = Component.new {
-  Tag = "RR_LevelDoor"
+	Tag = "RR_LevelDoor",
 }
 
-function LevelDoor:_UpdateOpen()
-  self.Open = self.Level >= self.LevelRequirement
-  self.Instance.CanCollide = not self.Open
-end
-
-function LevelDoor:_UpdateLevelRequirement()
-  self.LevelRequirement = self.Instance:GetAttribute("RR_LevelRequirement") or 0
-  self:_UpdateOpen()
-end
-
 function LevelDoor:Start()
-  self:_UpdateOpen(false)
-
-  PlayerDataService.Level:Observe(function(Level)
-    self.Level = Level
-    self:_UpdateOpen()
-  end)
+	self.DisconnectLevelMetObserver = Observer(self.LevelMet):onChange(function()
+		self.Instance.CanCollide = self.LevelMet:get() == false
+	end)
 end
 
 function LevelDoor:Construct()
-  if not self.Instance:IsA("BasePart") then
-    warn("LevelDoor must be a BasePart object --", self.Instance)
-    return
-  end
+	self.LevelRequirement = AttributeValue(self.Instance, "RR_LevelRequirement", 0)
+	self.LevelMet = Computed(function()
+		if States.LocalPlayerData:get() and States.LocalPlayerData:get().Level then
+			return States.LocalPlayerData:get().Level >= self.LevelRequirement:get()
+		else
+			return false
+		end
+	end)
 
-  self.Level = 0
-
-  self:_UpdateLevelRequirement()
-  self.Instance:GetAttributeChangedSignal("RR_LevelRequirement"):Connect(function()
-    self:_UpdateLevelRequirement()
-  end)
+	if not self.Instance:IsA("BasePart") then
+		warn("LevelDoor must be a BasePart object", self.Instance)
+		return
+	end
 end
 
 return LevelDoor

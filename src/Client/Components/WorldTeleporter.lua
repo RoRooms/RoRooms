@@ -9,7 +9,8 @@ local Shared = RoRooms.Shared
 local Component = require(Packages.Component)
 local States = require(Client.UI.States)
 local AttributeValue = require(Shared.ExtPackages.AttributeValue)
-local Fusion = require(Packages.Fusion)
+local NekaUI = require(Shared.ExtPackages.NekaUI)
+local Fusion = require(NekaUI.Packages.Fusion)
 
 local Computed = Fusion.Computed
 

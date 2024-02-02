@@ -2,12 +2,14 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent)
 
 local Client = RoRooms.Client
 local Packages = RoRooms.Packages
+local Shared = RoRooms.Shared
 
 local SoundService = game:GetService("SoundService")
 
 local Knit = require(Packages.Knit)
 local States = require(Client.UI.States)
-local Fusion = require(Packages.Fusion)
+local NekaUI = require(Shared.ExtPackages.NekaUI)
+local Fusion = require(NekaUI.Packages.Fusion)
 
 local MusicService
 

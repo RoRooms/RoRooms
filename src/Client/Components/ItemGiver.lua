@@ -88,4 +88,8 @@ function ItemGiver:Construct()
 	end
 end
 
+function ItemGiver:Stop()
+	self.DisconnectLevelMetObserver()
+end
+
 return ItemGiver
