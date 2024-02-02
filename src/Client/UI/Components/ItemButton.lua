@@ -36,8 +36,6 @@ return function(Props)
 			return Item.LabelIcon
 		elseif Item.LevelRequirement then
 			return "rbxassetid://5743022869"
-		elseif Item.PriceInCoins then
-			return ""
 		else
 			return ""
 		end
@@ -48,8 +46,6 @@ return function(Props)
 			return Item.LabelText
 		elseif Item.LevelRequirement then
 			return Item.LevelRequirement
-		elseif Item.PriceInCoins then
-			return "$" .. Item.PriceInCoins
 		else
 			return ""
 		end

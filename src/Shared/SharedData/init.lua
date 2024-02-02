@@ -1,7 +1,6 @@
 return {
 	TimeRewards = {
 		XPPerMinute = 30,
-		CoinsPerMinute = 5,
 	},
 	BaseLevelUpXP = 35,
 	NicknameCharLimit = 20,
@@ -17,9 +16,8 @@ return {
 		VRSystem = { "NexusVRService" },
 	},
 	ItemEquipResponseCodes = {
-		Unpurchased = 1,
-		RequirementFailure = 2,
-		LevelRequirementFailure = 3,
+		RequirementFailure = 1,
+		LevelRequirementFailure = 2,
 	},
 	WorldRegistryAssetId = 16007140043,
 }
