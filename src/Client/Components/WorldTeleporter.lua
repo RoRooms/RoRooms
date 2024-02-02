@@ -37,7 +37,7 @@ function WorldTeleporter:PromptTeleport(PlaceId: number, PlaceInfo: table)
 	})
 end
 
-function WorldTeleporter:GetInfoFromPlaceId(PlaceId: number)
+function WorldTeleporter:GetPlaceInfo(PlaceId: number)
 	if PlaceId then
 		local Success, Result = pcall(function()
 			return MarketplaceService:GetProductInfo(self.PlaceId:get())
@@ -54,10 +54,10 @@ function WorldTeleporter:GetInfoFromPlaceId(PlaceId: number)
 end
 
 function WorldTeleporter:Start()
-	self.Instance.Touched:Connect(function(Hit)
-		local Char = Hit:FindFirstAncestorOfClass("Model")
-		local Player = Players:GetPlayerFromCharacter(Char)
-		if Player and Player == Players.LocalPlayer then
+	self.Instance.Touched:Connect(function(TouchedPart: BasePart)
+		local Character = TouchedPart:FindFirstAncestorOfClass("Model")
+		local Player = Players:GetPlayerFromCharacter(Character)
+		if Player == Players.LocalPlayer then
 			if #States.Prompts:get() == 0 then
 				self:PromptTeleport(self.PlaceId:get(), self.PlaceInfo:get())
 			end
@@ -83,12 +83,12 @@ function WorldTeleporter:Construct()
 		end
 	end)
 
-	if not self.PlaceId then
-		warn("No RR_PlaceId attribute defined for WorldTeleporter", self.Instance)
-		return
-	end
 	if not self.Instance:IsA("BasePart") then
 		warn("WorldTeleporter must be a BasePart object --", self.Instance)
+		return
+	end
+	if not self.PlaceId:get() then
+		warn("No RR_PlaceId attribute defined for WorldTeleporter", self.Instance)
 		return
 	end
 end
