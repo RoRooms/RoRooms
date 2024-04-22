@@ -24,17 +24,15 @@ function RoRoomsClient:Start()
 			local Feature = FindFeatureFromModule(Descendant)
 			if table.find(DEFAULT_CONTROLLERS, Descendant.Name) or (Feature and Config[Feature].Enabled == true) then
 				return Knit.CreateController(require(Descendant))
+			else
+				return false
 			end
+		else
+			return false
 		end
 	end)
 
-	Knit.Start():andThen(function()
-		print("RoRooms client start!")
-
-		Loader.LoadDescendants(Client.Components, function(Descendant)
-			return Descendant:IsA("ModuleScript")
-		end)
-	end)
+	Knit.Start()
 end
 
 return RoRoomsClient
