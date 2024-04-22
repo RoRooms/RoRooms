@@ -50,7 +50,7 @@ local States = {
 	RobloxMenuOpen = Value(false),
 }
 
-function States:AddTopbarButton(Name: string, Button: table)
+function States:AddTopbarButton(Name: string, Button: { [any]: any })
 	local TopbarButtons = States.TopbarButtons:get()
 
 	TopbarButtons[Name] = Button
@@ -66,7 +66,7 @@ function States:RemoveTopbarButton(Name: string)
 	States.TopbarButtons:set(TopbarButtons)
 end
 
-function States:PushPrompt(Prompt: table)
+function States:PushPrompt(Prompt: { [any]: any })
 	local PromptTemplate = {
 		Title = "",
 		Text = "",

@@ -18,7 +18,7 @@ local WorldTeleporter = Component.new {
 	Tag = "RR_WorldTeleporter",
 }
 
-function WorldTeleporter:PromptTeleport(PlaceId: number, PlaceInfo: table)
+function WorldTeleporter:PromptTeleport(PlaceId: number, PlaceInfo: { [any]: any })
 	States:PushPrompt({
 		Title = "Teleport",
 		Text = `Do you want to teleport to world {PlaceInfo.Name}?`,

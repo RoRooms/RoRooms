@@ -38,7 +38,7 @@ local PlayerDataService = {
 	},
 }
 
-function PlayerDataService:ChangeProfile(Player: Player, ProfileChanges: table)
+function PlayerDataService:ChangeProfile(Player: Player, ProfileChanges: { [any]: any })
 	local Profile = self:GetProfile(Player)
 	if Profile then
 		for ChangeKey, ChangeValue in pairs(ProfileChanges) do
@@ -152,7 +152,7 @@ function PlayerDataService:_PlayerAdded(Player: Player)
 		Profile.Processes = Trove.new()
 		Profile.Processes:Add(task.spawn(function()
 			while task.wait(1 * 60) do
-				local function CalculateTotal(BaseNum: number, MultiplierAddons: table)
+				local function CalculateTotal(BaseNum: number, MultiplierAddons: { [any]: any })
 					local Total = BaseNum
 					local TotalMultiplier = 1
 					for _, MultiplierAddon in pairs(MultiplierAddons) do

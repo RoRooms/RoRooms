@@ -14,7 +14,7 @@ local Computed = Fusion.Computed
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local ItemCategoryButton = require(Client.UI.Components.ItemCategoryButton)
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	return ScrollingFrame {
 		Name = "ItemCategoriesSidebar",
 		Size = Props.Size,

@@ -17,7 +17,7 @@ local Frame = require(OnyxUI.Components.Frame)
 local Text = require(OnyxUI.Components.Text)
 local EmoteButton = require(Client.UI.Components.EmoteButton)
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	Props.CategoryName = EnsureProp(Props.CategoryName, "string", "Category")
 
 	local Category = Computed(function()

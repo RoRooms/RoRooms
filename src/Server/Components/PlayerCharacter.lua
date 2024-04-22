@@ -16,7 +16,7 @@ PlayerCharacter.Client = {
 	PlayEmote = Knit.CreateSignal(),
 }
 
-function PlayerCharacter:PlayEmote(EmoteId: string, Emote: table)
+function PlayerCharacter:PlayEmote(EmoteId: string, Emote: { [any]: any })
 	if self.Player then
 		self.Client.PlayEmote:Fire(self.Player, EmoteId, Emote)
 

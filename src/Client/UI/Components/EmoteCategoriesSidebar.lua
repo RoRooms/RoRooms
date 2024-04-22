@@ -14,7 +14,7 @@ local Computed = Fusion.Computed
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local EmoteCategoryButton = require(Client.UI.Components.EmoteCategoryButton)
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	return ScrollingFrame {
 		Name = "EmoteCategoriesSidebar",
 		Size = Props.Size,

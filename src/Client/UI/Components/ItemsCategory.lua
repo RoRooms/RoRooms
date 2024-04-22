@@ -16,7 +16,7 @@ local Frame = require(OnyxUI.Components.Frame)
 local Text = require(OnyxUI.Components.Text)
 local ItemButton = require(Client.UI.Components.ItemButton)
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	Props.CategoryName = EnsureProp(Props.CategoryName, "string", "Category")
 
 	local Category = Computed(function()

@@ -12,7 +12,7 @@ local PlayerCharacter = Component.new {
 }
 PlayerCharacter.RemoteNamespace = PlayerCharacter.Tag
 
-function PlayerCharacter:_PlayEmote(EmoteId: string, Emote: table)
+function PlayerCharacter:_PlayEmote(EmoteId: string, Emote: { [any]: any })
 	if self.Player ~= Players.LocalPlayer then
 		return
 	end
@@ -28,7 +28,7 @@ function PlayerCharacter:_PlayEmote(EmoteId: string, Emote: table)
 end
 
 function PlayerCharacter:Start()
-	self.Server.PlayEmote:Connect(function(EmoteName: string, Emote: table)
+	self.Server.PlayEmote:Connect(function(EmoteName: string, Emote: { [any]: any })
 		self:_PlayEmote(EmoteName, Emote)
 	end)
 end
