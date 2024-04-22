@@ -19,7 +19,7 @@ function UserProfileController:KnitStart()
 
 	UIController:MountUI(ProfileMenu {})
 
-	Topbar:AddTopbarButton(Topbar.NativeButtons.Profile)
+	Topbar:AddTopbarButton("Profile", Topbar.NativeButtons.Profile)
 end
 
 function UserProfileController:KnitInit() end

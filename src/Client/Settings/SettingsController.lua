@@ -19,7 +19,7 @@ function SettingsController:KnitStart()
 
 	UIController:MountUI(SettingsMenu {})
 
-	Topbar:AddTopbarButton(Topbar.NativeButtons.Settings)
+	Topbar:AddTopbarButton("Settings", Topbar.NativeButtons.Settings)
 end
 
 function SettingsController:KnitInit() end

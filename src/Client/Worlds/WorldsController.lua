@@ -21,7 +21,7 @@ function WorldsController:KnitStart()
 	UIController:MountUI(WorldsMenu {})
 	UIController:MountUI(WorldPageMenu {})
 
-	Topbar:AddTopbarButton(Topbar.NativeButtons.Worlds)
+	Topbar:AddTopbarButton("Worlds", Topbar.NativeButtons.Worlds)
 end
 
 function WorldsController:KnitInit() end
