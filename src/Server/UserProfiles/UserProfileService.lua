@@ -9,7 +9,7 @@ local Knit = require(Packages.Knit)
 local SharedData = require(Shared.SharedData)
 local FilterString = require(Storage.ExtPackages.FilterString)
 
-local PlayerDataService = require(Server.Services.PlayerDataService)
+local PlayerDataService = require(Server.PlayerData.PlayerDataService)
 
 local UserProfileService = {
 	Name = "UserProfileService",

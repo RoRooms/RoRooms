@@ -9,7 +9,7 @@ local States = require(Client.UI.States)
 local WorldsMenu = require(Client.UI.ScreenGuis.WorldsMenu)
 local WorldPageMenu = require(Client.UI.ScreenGuis.WorldPageMenu)
 
-local UIController = require(Client.Controllers.UIController)
+local UIController = require(Client.UI.UIController)
 
 local WorldsController = {
 	Name = "WorldsController",

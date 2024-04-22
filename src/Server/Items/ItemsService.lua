@@ -6,7 +6,7 @@ local Config = RoRooms.Config
 
 local SharedData = require(Shared.SharedData)
 
-local PlayerDataService = require(Server.Services.PlayerDataService)
+local PlayerDataService = require(Server.PlayerData.PlayerDataService)
 
 local ItemsService = {
 	Name = "ItemsService",

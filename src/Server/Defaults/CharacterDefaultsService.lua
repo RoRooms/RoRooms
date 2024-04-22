@@ -1,15 +1,11 @@
--- local RoRooms = require(game:GetService("ReplicatedStorage").RoRooms)
-
--- local Shared = RoRooms.Shared
-
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 
-local CharDefaultsService = {
-	Name = "CharDefaultsService",
+local CharacterDefaultsService = {
+	Name = "CharacterDefaultsService",
 }
 
-function CharDefaultsService:KnitStart()
+function CharacterDefaultsService:KnitStart()
 	Players.PlayerAdded:Connect(function(Player)
 		Player.CharacterAdded:Connect(function(Char)
 			CollectionService:AddTag(Char, "RR_PlayerCharacter")
@@ -18,4 +14,4 @@ function CharDefaultsService:KnitStart()
 	end)
 end
 
-return CharDefaultsService
+return CharacterDefaultsService

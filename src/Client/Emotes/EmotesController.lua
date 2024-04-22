@@ -8,7 +8,7 @@ local States = require(Client.UI.States)
 
 local EmotesMenu = require(Client.UI.ScreenGuis.EmotesMenu)
 
-local UIController = require(Client.Controllers.UIController)
+local UIController = require(Client.UI.UIController)
 local EmotesService
 
 local EmotesController = {

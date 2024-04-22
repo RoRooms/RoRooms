@@ -9,7 +9,7 @@ local Packages = RoRooms.Packages
 local Component = require(Packages.Component)
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local States = require(Client.UI.States)
-local ItemsController = require(Client.Controllers.ItemsController)
+local ItemsController = require(Client.Items.ItemsController)
 local AttributeValue = require(Shared.ExtPackages.AttributeValue)
 
 local New = Fusion.New

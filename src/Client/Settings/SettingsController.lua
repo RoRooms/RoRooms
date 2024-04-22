@@ -8,7 +8,7 @@ local States = require(Client.UI.States)
 
 local SettingsMenu = require(Client.UI.ScreenGuis.SettingsMenu)
 
-local UIController = require(Client.Controllers.UIController)
+local UIController = require(Client.UI.UIController)
 
 local SettingsController = {
 	Name = "SettingsController",

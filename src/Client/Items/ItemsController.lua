@@ -12,7 +12,7 @@ local NeoHotbar = require(Packages.NeoHotbar)
 local States = require(Client.UI.States)
 
 local ItemsService
-local UIController = require(Client.Controllers.UIController)
+local UIController = require(Client.UI.UIController)
 
 local ItemsMenu = require(Client.UI.ScreenGuis.ItemsMenu)
 

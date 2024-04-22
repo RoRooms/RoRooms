@@ -8,7 +8,7 @@ local States = require(Client.UI.States)
 
 local ProfileMenu = require(Client.UI.ScreenGuis.ProfileMenu)
 
-local UIController = require(Client.Controllers.UIController)
+local UIController = require(Client.UI.UIController)
 
 local UserProfileController = {
 	Name = "UserProfileController",

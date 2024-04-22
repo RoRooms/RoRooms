@@ -4,7 +4,7 @@ local Players = game:GetService("Players")
 local Client = RoRooms.Client
 local Packages = RoRooms.Packages
 
-local UIController = require(Client.Controllers.UIController)
+local UIController = require(Client.UI.UIController)
 local FriendsMenu = require(Client.UI.ScreenGuis.FriendsMenu)
 local States = require(Client.UI.States)
 local Knit = require(Packages.Knit)
