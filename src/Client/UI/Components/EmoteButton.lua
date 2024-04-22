@@ -5,7 +5,7 @@ local Client = RoRooms.Client
 
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(Client.UI.States)
 local ColourUtils = require(OnyxUI._Packages.ColourUtils)
 
@@ -21,9 +21,9 @@ local Icon = require(OnyxUI.Components.Icon)
 local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
-	Props.EmoteId = EnsureProp(Props.EmoteId, "string", "EmoteId")
-	Props.Emote = EnsureProp(Props.Emote, "table", {})
-	Props.BaseColor3 = EnsureProp(Props.BaseColor3, "Color3", Color3.fromRGB(41, 41, 41))
+	Props.EmoteId = EnsureValue(Props.EmoteId, "string", "EmoteId")
+	Props.Emote = EnsureValue(Props.Emote, "table", {})
+	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Color3.fromRGB(41, 41, 41))
 
 	local IsHolding = Value(false)
 

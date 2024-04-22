@@ -6,7 +6,7 @@ local Client = RoRooms.Client
 
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(Client.UI.States)
 
 local Children = Fusion.Children
@@ -18,7 +18,7 @@ local Text = require(OnyxUI.Components.Text)
 local EmoteButton = require(Client.UI.Components.EmoteButton)
 
 return function(Props: { [any]: any })
-	Props.CategoryName = EnsureProp(Props.CategoryName, "string", "Category")
+	Props.CategoryName = EnsureValue(Props.CategoryName, "string", "Category")
 
 	local Category = Computed(function()
 		return Config.EmotesSystem.Categories[Props.CategoryName:get()]

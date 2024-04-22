@@ -6,7 +6,7 @@ local Client = RoRooms.Client
 
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(Client.UI.States)
 local ColourUtils = require(OnyxUI._Packages.ColourUtils)
 
@@ -21,8 +21,8 @@ local Text = require(OnyxUI.Components.Text)
 local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
-	Props.PlaceId = EnsureProp(Props.PlaceId, "number", nil)
-	Props.BaseColor3 = EnsureProp(Props.BaseColor3, "Color3", Color3.fromRGB(41, 41, 41))
+	Props.PlaceId = EnsureValue(Props.PlaceId, "number", nil)
+	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Color3.fromRGB(41, 41, 41))
 
 	local IsHolding = Value(false)
 	local PlaceInfo = Computed(function()

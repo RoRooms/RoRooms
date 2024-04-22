@@ -6,7 +6,7 @@ local Config = RoRooms.Config
 
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(Client.UI.States)
 local ColourUtils = require(OnyxUI._Packages.ColourUtils)
 
@@ -22,7 +22,7 @@ local Icon = require(OnyxUI.Components.Icon)
 local BASE_COLOR = Color3.fromRGB(41, 41, 41)
 
 return function(Props)
-	Props.CategoryName = EnsureProp(Props.CategoryName, "string", "Category")
+	Props.CategoryName = EnsureValue(Props.CategoryName, "string", "Category")
 
 	local Category = Computed(function()
 		return Config.ItemsSystem.Categories[Props.CategoryName:get()]

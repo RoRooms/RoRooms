@@ -8,7 +8,7 @@ local Client = RoRooms.Client
 
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local ColourUtils = require(OnyxUI._Packages.ColourUtils)
 local States = require(Client.UI.States)
 
@@ -23,12 +23,12 @@ local Text = require(OnyxUI.Components.Text)
 local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
-	Props.UserId = EnsureProp(Props.UserId, "number", 1)
-	Props.DisplayName = EnsureProp(Props.DisplayName, "string", "DisplayName")
-	Props.PlaceId = EnsureProp(Props.PlaceId, "number", nil)
-	Props.JobId = EnsureProp(Props.JobId, "string", nil)
-	Props.InRoRooms = EnsureProp(Props.InRoRooms, "boolean", false)
-	Props.BaseColor3 = EnsureProp(Props.BaseColor3, "Color3", Color3.fromRGB(41, 41, 41))
+	Props.UserId = EnsureValue(Props.UserId, "number", 1)
+	Props.DisplayName = EnsureValue(Props.DisplayName, "string", "DisplayName")
+	Props.PlaceId = EnsureValue(Props.PlaceId, "number", nil)
+	Props.JobId = EnsureValue(Props.JobId, "string", nil)
+	Props.InRoRooms = EnsureValue(Props.InRoRooms, "boolean", false)
+	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Color3.fromRGB(41, 41, 41))
 
 	local IsHolding = Value(false)
 	local PlaceInfo = Computed(function()

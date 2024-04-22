@@ -5,7 +5,7 @@ local Client = RoRooms.Client
 
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(Client.UI.States)
 
 local Children = Fusion.Children
@@ -18,9 +18,9 @@ local BaseButton = require(OnyxUI.Components.BaseButton)
 local Icon = require(OnyxUI.Components.Icon)
 
 return function(Props)
-	Props.SizeMultiplier = EnsureProp(Props.SizeMultiplier, "number", 1)
-	Props.IconImage = EnsureProp(Props.IconImage, "string", "")
-	Props.MenuName = EnsureProp(Props.MenuName, "string", "")
+	Props.SizeMultiplier = EnsureValue(Props.SizeMultiplier, "number", 1)
+	Props.IconImage = EnsureValue(Props.IconImage, "string", "")
+	Props.MenuName = EnsureValue(Props.MenuName, "string", "")
 
 	local IsHolding = Value(false)
 

@@ -6,7 +6,7 @@ local Client = RoRooms.Client
 
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -17,7 +17,7 @@ local Text = require(OnyxUI.Components.Text)
 local ItemButton = require(Client.UI.Components.ItemButton)
 
 return function(Props: { [any]: any })
-	Props.CategoryName = EnsureProp(Props.CategoryName, "string", "Category")
+	Props.CategoryName = EnsureValue(Props.CategoryName, "string", "Category")
 
 	local Category = Computed(function()
 		return Config.ItemsSystem.Categories[Props.CategoryName:get()]
