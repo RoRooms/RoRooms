@@ -10,9 +10,10 @@ local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local Signal = require(Packages.Signal)
 local NeoHotbar = require(Packages.NeoHotbar)
 local States = require(Client.UI.States)
+local Prompts = require(Client.UI.States.Prompts)
+local UIController = require(Client.UI.UIController)
 
 local ItemsService
-local UIController = require(Client.UI.UIController)
 
 local ItemsMenu = require(Client.UI.ScreenGuis.ItemsMenu)
 
@@ -23,7 +24,7 @@ local ItemsController = {
 function ItemsController:ToggleEquipItem(ItemId: string)
 	ItemsService:ToggleEquipItem(ItemId):andThen(function(Equipped: boolean, FailureReason: string)
 		if not Equipped and FailureReason then
-			States:PushPrompt({
+			Prompts:PushPrompt({
 				Title = "Failure",
 				Text = FailureReason,
 				Buttons = {

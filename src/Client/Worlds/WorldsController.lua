@@ -4,7 +4,7 @@ local Client = RoRooms.Client
 local Packages = RoRooms.Packages
 
 local Knit = require(Packages.Knit)
-local States = require(Client.UI.States)
+local Topbar = require(Client.UI.States.Topbar)
 
 local WorldsMenu = require(Client.UI.ScreenGuis.WorldsMenu)
 local WorldPageMenu = require(Client.UI.ScreenGuis.WorldPageMenu)
@@ -21,7 +21,7 @@ function WorldsController:KnitStart()
 	UIController:MountUI(WorldsMenu {})
 	UIController:MountUI(WorldPageMenu {})
 
-	States:AddTopbarButton("Worlds", {
+	Topbar:AddTopbarButton("Worlds", {
 		MenuName = "WorldsMenu",
 		IconImage = "rbxassetid://15091717321",
 		LayoutOrder = 4,

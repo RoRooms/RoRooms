@@ -27,7 +27,7 @@ return function(Props)
 		return CurrentPrompt:get() ~= nil
 	end)
 
-	-- States:PushPrompt({
+	-- Prompts:PushPrompt({
 	--   Title = "Do action",
 	--   Text = "Would you like to do this action?",
 	--   Buttons = {

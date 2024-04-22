@@ -7,6 +7,7 @@ local Client = RoRooms.Client
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Fusion = require(OnyxUI._Packages.Fusion)
 local States = require(Client.UI.States)
+local Prompts = require(Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -164,7 +165,7 @@ return function(Props)
 											:andThen(function(Success: boolean, Message: string)
 												States.CurrentMenu:set(nil)
 												if not Success then
-													States:PushPrompt({
+													Prompts:PushPrompt({
 														Title = "Error",
 														Text = Message,
 														Buttons = {

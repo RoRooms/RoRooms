@@ -11,6 +11,7 @@ local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local ColourUtils = require(OnyxUI._Packages.ColourUtils)
 local States = require(Client.UI.States)
+local Prompts = require(Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -71,7 +72,7 @@ return function(Props)
 
 			if Props.InRoRooms:get() then
 				if Props.JobId:get() == game.JobId then
-					States:PushPrompt({
+					Prompts:PushPrompt({
 						Title = "Failure",
 						Text = "You're already in the same server as this person.",
 						Buttons = {
@@ -82,7 +83,7 @@ return function(Props)
 						},
 					})
 				else
-					States:PushPrompt({
+					Prompts:PushPrompt({
 						Title = "Teleport",
 						Text = `Do you want to join friend in {PlaceInfo:get().Name}?`,
 						Buttons = {

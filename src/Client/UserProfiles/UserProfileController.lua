@@ -4,7 +4,7 @@ local Client = RoRooms.Client
 local Packages = RoRooms.Packages
 
 local Knit = require(Packages.Knit)
-local States = require(Client.UI.States)
+local Topbar = require(Client.UI.States.Topbar)
 
 local ProfileMenu = require(Client.UI.ScreenGuis.ProfileMenu)
 
@@ -19,7 +19,7 @@ function UserProfileController:KnitStart()
 
 	UIController:MountUI(ProfileMenu {})
 
-	States:AddTopbarButton("Profile", {
+	Topbar:AddTopbarButton("Profile", {
 		MenuName = "ProfileMenu",
 		IconImage = "rbxassetid://15091717235",
 		LayoutOrder = 1,

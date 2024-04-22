@@ -4,11 +4,12 @@ local Client = RoRooms.Client
 local Packages = RoRooms.Packages
 
 local Knit = require(Packages.Knit)
-local States = require(Client.UI.States)
+local Topbar = require(Client.UI.States.Topbar)
+local Prompts = require(Client.UI.States.Prompts)
+local UIController = require(Client.UI.UIController)
 
 local EmotesMenu = require(Client.UI.ScreenGuis.EmotesMenu)
 
-local UIController = require(Client.UI.UIController)
 local EmotesService
 
 local EmotesController = {
@@ -18,7 +19,7 @@ local EmotesController = {
 function EmotesController:PlayEmote(EmoteId: string)
 	EmotesService:PlayEmote(EmoteId):andThen(function(FailureReason: string)
 		if typeof(FailureReason) == "string" then
-			States:PushPrompt({
+			Prompts:PushPrompt({
 				Title = "Failure",
 				Text = FailureReason,
 				Buttons = {
@@ -38,7 +39,7 @@ function EmotesController:KnitStart()
 
 	UIController:MountUI(EmotesMenu {})
 
-	States:AddTopbarButton("Emotes", {
+	Topbar:AddTopbarButton("Emotes", {
 		MenuName = "EmotesMenu",
 		IconImage = "rbxassetid://15091717452",
 		LayoutOrder = 3,

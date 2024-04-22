@@ -4,7 +4,7 @@ local Client = RoRooms.Client
 local Packages = RoRooms.Packages
 
 local Knit = require(Packages.Knit)
-local States = require(Client.UI.States)
+local Topbar = require(Client.UI.States.Topbar)
 
 local SettingsMenu = require(Client.UI.ScreenGuis.SettingsMenu)
 
@@ -19,7 +19,7 @@ function SettingsController:KnitStart()
 
 	UIController:MountUI(SettingsMenu {})
 
-	States:AddTopbarButton("Settings", {
+	Topbar:AddTopbarButton("Settings", {
 		MenuName = "SettingsMenu",
 		IconImage = "rbxassetid://15091717549",
 		LayoutOrder = 5,
