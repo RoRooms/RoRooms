@@ -21,11 +21,7 @@ function WorldsController:KnitStart()
 	UIController:MountUI(WorldsMenu {})
 	UIController:MountUI(WorldPageMenu {})
 
-	Topbar:AddTopbarButton("Worlds", {
-		MenuName = "WorldsMenu",
-		IconImage = "rbxassetid://15091717321",
-		LayoutOrder = 4,
-	})
+	Topbar:AddTopbarButton(Topbar.NativeButtons.Worlds)
 end
 
 function WorldsController:KnitInit() end

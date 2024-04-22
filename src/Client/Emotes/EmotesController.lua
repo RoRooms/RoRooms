@@ -39,11 +39,7 @@ function EmotesController:KnitStart()
 
 	UIController:MountUI(EmotesMenu {})
 
-	Topbar:AddTopbarButton("Emotes", {
-		MenuName = "EmotesMenu",
-		IconImage = "rbxassetid://15091717452",
-		LayoutOrder = 3,
-	})
+	Topbar:AddTopbarButton(Topbar.NativeButtons.Emotes)
 end
 
 function EmotesController:KnitInit() end

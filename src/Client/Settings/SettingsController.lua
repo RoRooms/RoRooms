@@ -19,11 +19,7 @@ function SettingsController:KnitStart()
 
 	UIController:MountUI(SettingsMenu {})
 
-	Topbar:AddTopbarButton("Settings", {
-		MenuName = "SettingsMenu",
-		IconImage = "rbxassetid://15091717549",
-		LayoutOrder = 5,
-	})
+	Topbar:AddTopbarButton(Topbar.NativeButtons.Settings)
 end
 
 function SettingsController:KnitInit() end

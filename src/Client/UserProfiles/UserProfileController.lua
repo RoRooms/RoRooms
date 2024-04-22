@@ -19,11 +19,7 @@ function UserProfileController:KnitStart()
 
 	UIController:MountUI(ProfileMenu {})
 
-	Topbar:AddTopbarButton("Profile", {
-		MenuName = "ProfileMenu",
-		IconImage = "rbxassetid://15091717235",
-		LayoutOrder = 1,
-	})
+	Topbar:AddTopbarButton(Topbar.NativeButtons.Profile)
 end
 
 function UserProfileController:KnitInit() end
