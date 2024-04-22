@@ -1,5 +1,5 @@
 local ROROOMS_SOURCE = script.Parent.SourceCode
-local DEFAULT_SERVICES = { "PlayerDataService", "CharDefaultsService" }
+local DEFAULT_SERVICES = { "PlayerDataService", "CharDefaultsService", "ComponentsService" }
 
 local RoRoomsServer = {}
 
@@ -19,7 +19,7 @@ function RoRoomsServer:Start()
 
 	self.Knit = Knit
 
-	Loader.LoadDescendants(Server.Services, function(Descendant)
+	Loader.LoadDescendants(Server, function(Descendant)
 		if Descendant:IsA("ModuleScript") and Descendant.Name:match("Service$") ~= nil then
 			local Feature = FindFeatureFromModule(Descendant)
 			if table.find(DEFAULT_SERVICES, Descendant.Name) or (Feature and Config[Feature].Enabled == true) then

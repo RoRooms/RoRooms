@@ -19,7 +19,7 @@ function RoRoomsClient:Start()
 
 	self.Knit = Knit
 
-	Loader.LoadDescendants(Client.Controllers, function(Descendant)
+	Loader.LoadDescendants(Client, function(Descendant)
 		if Descendant:IsA("ModuleScript") and Descendant.Name:match("Controller$") ~= nil then
 			local Feature = FindFeatureFromModule(Descendant)
 			if table.find(DEFAULT_CONTROLLERS, Descendant.Name) or (Feature and Config[Feature].Enabled == true) then
