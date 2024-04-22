@@ -19,7 +19,7 @@ local Observer = Fusion.Observer
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local TitleBar = require(OnyxUI.Components.TitleBar)
-local SettingToggle = require(OnyxUI.Extras.SettingToggle)
+local SettingToggle = require(OnyxUI.Components.SettingToggle)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local Text = require(OnyxUI.Components.Text)
 
