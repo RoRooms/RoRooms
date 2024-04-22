@@ -8,14 +8,12 @@ local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local States = require(Client.UI.States)
 local SharedData = require(Shared.SharedData)
-local AutomaticSizer = require(OnyxUI.Utils.AutomaticSizer)
 
 local Children = Fusion.Children
 local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Value = Fusion.Value
-local Observer = Fusion.Observer
 
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
@@ -41,7 +39,6 @@ return function(Props)
 	local ProfileMenu = New "ScreenGui" {
 		Name = "ProfileMenu",
 		Parent = Props.Parent,
-		-- ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
 		Enabled = MenuOpen,
 		ResetOnSpawn = false,
 
@@ -134,22 +131,6 @@ return function(Props)
 			},
 		},
 	}
-
-	local DisconnectOpen = Observer(MenuOpen):onChange(function()
-		local TextClasses = { "TextLabel", "TextButton", "TextBox" }
-		for _, Descendant in ipairs(ProfileMenu:GetDescendants()) do
-			if table.find(TextClasses, Descendant.ClassName) then
-				task.wait()
-				AutomaticSizer.ApplyLayout(Descendant)
-			end
-		end
-	end)
-
-	ProfileMenu:GetPropertyChangedSignal("Parent"):Connect(function()
-		if ProfileMenu.Parent == nil then
-			DisconnectOpen()
-		end
-	end)
 
 	return ProfileMenu
 end

@@ -7,7 +7,6 @@ local Config = RoRooms.Config
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Fusion = require(OnyxUI._Packages.Fusion)
 local States = require(Client.UI.States)
-local AutomaticSizer = require(OnyxUI.Utils.AutomaticSizer)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -133,7 +132,6 @@ return function(Props)
 		for _, Descendant in ipairs(ItemsMenu:GetDescendants()) do
 			if table.find(TextClasses, Descendant.ClassName) then
 				task.wait()
-				AutomaticSizer.ApplyLayout(Descendant)
 			end
 		end
 	end)

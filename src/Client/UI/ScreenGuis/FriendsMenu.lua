@@ -121,14 +121,6 @@ return function(Props)
 	}
 
 	local DisconnectOpen = Observer(MenuOpen):onChange(function()
-		-- local TextClasses = { "TextLabel", "TextButton", "TextBox" }
-		-- for _, Descendant in ipairs(FriendsMenu:GetDescendants()) do
-		-- 	if table.find(TextClasses, Descendant.ClassName) then
-		-- 		task.wait()
-		-- 		AutomaticSizer.ApplyLayout(Descendant)
-		-- 	end
-		-- end
-
 		if MenuOpen:get() then
 			if States.FriendsController then
 				States.FriendsController:UpdateFriends()

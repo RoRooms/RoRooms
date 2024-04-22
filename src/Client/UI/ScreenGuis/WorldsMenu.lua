@@ -11,7 +11,6 @@ local States = require(Client.UI.States)
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 local New = Fusion.New
-local Observer = Fusion.Observer
 local Spring = Fusion.Spring
 local ForValues = Fusion.ForValues
 
@@ -107,22 +106,6 @@ return function(Props)
 			},
 		},
 	}
-
-	local DisconnectOpen = Observer(MenuOpen):onChange(function()
-		-- local TextClasses = { "TextLabel", "TextButton", "TextBox" }
-		-- for _, Descendant in ipairs(WorldsMenu:GetDescendants()) do
-		-- 	if table.find(TextClasses, Descendant.ClassName) then
-		-- 		task.wait()
-		-- 		AutomaticSizer.ApplyLayout(Descendant)
-		-- 	end
-		-- end
-	end)
-
-	WorldsMenu:GetPropertyChangedSignal("Parent"):Connect(function()
-		if WorldsMenu.Parent == nil then
-			DisconnectOpen()
-		end
-	end)
 
 	return WorldsMenu
 end

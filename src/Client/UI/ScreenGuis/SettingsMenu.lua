@@ -9,7 +9,6 @@ local Players = game:GetService("Players")
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local States = require(Client.UI.States)
-local AutomaticSizer = require(OnyxUI.Utils.AutomaticSizer)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -130,22 +129,6 @@ return function(Props)
 			},
 		},
 	}
-
-	local DisconnectOpen = Observer(MenuOpen):onChange(function()
-		local TextClasses = { "TextLabel", "TextButton", "TextBox" }
-		for _, Descendant in ipairs(SettingsMenu:GetDescendants()) do
-			if table.find(TextClasses, Descendant.ClassName) then
-				task.wait()
-				AutomaticSizer.ApplyLayout(Descendant)
-			end
-		end
-	end)
-
-	SettingsMenu:GetPropertyChangedSignal("Parent"):Connect(function()
-		if SettingsMenu.Parent == nil then
-			DisconnectOpen()
-		end
-	end)
 
 	return SettingsMenu
 end

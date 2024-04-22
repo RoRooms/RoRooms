@@ -7,7 +7,6 @@ local Config = RoRooms.Config
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Fusion = require(OnyxUI._Packages.Fusion)
 local States = require(Client.UI.States)
-local AutomaticSizer = require(OnyxUI.Utils.AutomaticSizer)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -146,16 +145,6 @@ return function(Props)
 		},
 	}
 
-	local DisconnectOpen = Observer(MenuOpen):onChange(function()
-		local TextClasses = { "TextLabel", "TextButton", "TextBox" }
-		for _, Descendant in ipairs(EmotesMenu:GetDescendants()) do
-			if table.find(TextClasses, Descendant.ClassName) then
-				task.wait()
-				AutomaticSizer.ApplyLayout(Descendant)
-			end
-		end
-	end)
-
 	local DisconnectFocusedCategory = Observer(States.EmotesMenu.FocusedCategory):onChange(function()
 		local Emotes = EmotesMenu.AutoScaleFrame.MenuFrame.Contents.Frame.EmotesList
 		local Category = Emotes.Contents:FindFirstChild(`{States.EmotesMenu.FocusedCategory:get()}EmotesCategory`)
@@ -167,7 +156,6 @@ return function(Props)
 
 	EmotesMenu:GetPropertyChangedSignal("Parent"):Connect(function()
 		if EmotesMenu.Parent == nil then
-			DisconnectOpen()
 			DisconnectFocusedCategory()
 		end
 	end)
