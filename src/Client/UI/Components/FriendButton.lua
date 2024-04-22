@@ -9,7 +9,7 @@ local Client = RoRooms.Client
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local EnsureProp = require(OnyxUI.Utils.EnsureProp)
-local ColourUtils = require(OnyxUI.Packages.ColourUtils)
+local ColourUtils = require(OnyxUI._Packages.ColourUtils)
 local States = require(Client.UI.States)
 
 local Children = Fusion.Children

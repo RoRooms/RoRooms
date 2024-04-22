@@ -7,7 +7,7 @@ local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local EnsureProp = require(OnyxUI.Utils.EnsureProp)
 local States = require(Client.UI.States)
-local ColourUtils = require(OnyxUI.Packages.ColourUtils)
+local ColourUtils = require(OnyxUI._Packages.ColourUtils)
 
 local Children = Fusion.Children
 local New = Fusion.New

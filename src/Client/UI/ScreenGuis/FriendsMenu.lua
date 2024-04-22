@@ -4,7 +4,7 @@ local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local Fusion = require(OnyxUI._Packages.Fusion)
 local States = require(Client.UI.States)
 
 local Children = Fusion.Children

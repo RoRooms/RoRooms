@@ -9,7 +9,7 @@ local SoundService = game:GetService("SoundService")
 local Knit = require(Packages.Knit)
 local States = require(Client.UI.States)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local Fusion = require(OnyxUI._Packages.Fusion)
 
 local MusicService
 

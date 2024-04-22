@@ -10,7 +10,7 @@ local Component = require(Packages.Component)
 local States = require(Client.UI.States)
 local AttributeValue = require(Shared.ExtPackages.AttributeValue)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local Fusion = require(OnyxUI._Packages.Fusion)
 
 local Computed = Fusion.Computed
 
