@@ -1,10 +1,9 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
 
-local Packages = RoRooms.Packages
 local Shared = RoRooms.Shared
 
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local Fusion = require(NekaUI.Packages.Fusion)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local Fusion = require(OnyxUI._Packages.Fusion)
 
 local Value = Fusion.Value
 
