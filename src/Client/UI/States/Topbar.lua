@@ -31,8 +31,8 @@ local Topbar = {
 }
 
 function Topbar:AddDefaultButtons()
-	for Name, Button in ipairs(self.DefaultButtons) do
-		self:AddDefaultButtons(Name, Button)
+	for Name, Button in pairs(self.NativeButtons) do
+		self:AddTopbarButton(Name, Button)
 	end
 end
 

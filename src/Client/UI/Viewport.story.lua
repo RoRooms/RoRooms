@@ -1,3 +1,9 @@
+local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
+
+local Client = RoRooms.Client
+
+local Topbar = require(Client.UI.States.Topbar)
+
 local Viewport = function(Props)
 	local ReturnedGuis = {}
 
@@ -24,6 +30,8 @@ return function(Target)
 	local ViewportGuis = Viewport {
 		Target = Target,
 	}
+
+	Topbar:AddDefaultButtons()
 
 	return function()
 		for _, Gui in ipairs(ViewportGuis) do
