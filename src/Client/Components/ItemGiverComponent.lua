@@ -83,7 +83,7 @@ function ItemGiver:Construct()
 	if not self.ItemId:get() then
 		warn("No RR_ItemId attribute defined for ItemGiver", self.Instance)
 	end
-	if not self.Item:get() then
+	if not ItemGiver.Item:get() then
 		warn("Could not find item from ItemId", self.ItemId:get(), self.Instance)
 	end
 end
