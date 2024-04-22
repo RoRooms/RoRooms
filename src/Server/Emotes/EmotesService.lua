@@ -6,7 +6,7 @@ local Packages = RoRooms.Packages
 
 local Knit = require(Packages.Knit)
 
-local PlayerCharacterComponent = require(Server.Components.PlayerCharacter)
+local PlayerCharacterComponent = require(Server.Components.PlayerCharacterComponent)
 local PlayerDataService = require(Server.PlayerData.PlayerDataService)
 
 local EmotesService = {
