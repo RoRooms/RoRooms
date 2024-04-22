@@ -7,16 +7,16 @@ local Component = require(Packages.Component)
 local RemoteComponent = require(Packages.RemoteComponent)
 local Knit = require(Packages.Knit)
 
-local PlayerCharacter = Component.new {
+local PlayerCharacterComponent = Component.new {
 	Tag = "RR_PlayerCharacter",
 	Extensions = { RemoteComponent },
 }
-PlayerCharacter.RemoteNamespace = PlayerCharacter.Tag
-PlayerCharacter.Client = {
+PlayerCharacterComponent.RemoteNamespace = PlayerCharacterComponent.Tag
+PlayerCharacterComponent.Client = {
 	PlayEmote = Knit.CreateSignal(),
 }
 
-function PlayerCharacter:PlayEmote(EmoteId: string, Emote: { [any]: any })
+function PlayerCharacterComponent:PlayEmote(EmoteId: string, Emote: { [any]: any })
 	if self.Player then
 		self.Client.PlayEmote:Fire(self.Player, EmoteId, Emote)
 
@@ -26,11 +26,11 @@ function PlayerCharacter:PlayEmote(EmoteId: string, Emote: { [any]: any })
 	end
 end
 
-function PlayerCharacter:Start() end
+function PlayerCharacterComponent:Start() end
 
-function PlayerCharacter:Construct()
+function PlayerCharacterComponent:Construct()
 	self.Player = Players:GetPlayerFromCharacter(self.Instance)
 	self.Humanoid = self.Instance:WaitForChild("Humanoid")
 end
 
-return PlayerCharacter
+return PlayerCharacterComponent

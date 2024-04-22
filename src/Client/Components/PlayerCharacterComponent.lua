@@ -6,13 +6,13 @@ local Packages = RoRooms.Packages
 local Component = require(Packages.Component)
 local RemoteComponent = require(Packages.RemoteComponent)
 
-local PlayerCharacter = Component.new {
+local PlayerCharacterComponent = Component.new {
 	Tag = "RR_PlayerCharacter",
 	Extensions = { RemoteComponent },
 }
-PlayerCharacter.RemoteNamespace = PlayerCharacter.Tag
+PlayerCharacterComponent.RemoteNamespace = PlayerCharacterComponent.Tag
 
-function PlayerCharacter:_PlayEmote(EmoteId: string, Emote: { [any]: any })
+function PlayerCharacterComponent:_PlayEmote(EmoteId: string, Emote: { [any]: any })
 	if self.Player ~= Players.LocalPlayer then
 		return
 	end
@@ -27,15 +27,15 @@ function PlayerCharacter:_PlayEmote(EmoteId: string, Emote: { [any]: any })
 	self.Humanoid:PlayEmote(EmoteId)
 end
 
-function PlayerCharacter:Start()
+function PlayerCharacterComponent:Start()
 	self.Server.PlayEmote:Connect(function(EmoteName: string, Emote: { [any]: any })
 		self:_PlayEmote(EmoteName, Emote)
 	end)
 end
 
-function PlayerCharacter:Construct()
+function PlayerCharacterComponent:Construct()
 	self.Player = Players:GetPlayerFromCharacter(self.Instance)
 	self.Humanoid = self.Instance:WaitForChild("Humanoid")
 end
 
-return PlayerCharacter
+return PlayerCharacterComponent

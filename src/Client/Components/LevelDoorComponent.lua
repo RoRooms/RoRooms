@@ -13,17 +13,17 @@ local States = require(Client.UI.States)
 local Computed = Fusion.Computed
 local Observer = Fusion.Observer
 
-local LevelDoor = Component.new {
+local LevelDoorComponent = Component.new {
 	Tag = "RR_LevelDoor",
 }
 
-function LevelDoor:Start()
+function LevelDoorComponent:Start()
 	self.DisconnectLevelMetObserver = Observer(self.LevelMet):onChange(function()
 		self.Instance.CanCollide = self.LevelMet:get() == false
 	end)
 end
 
-function LevelDoor:Construct()
+function LevelDoorComponent:Construct()
 	self.LevelRequirement = AttributeValue(self.Instance, "RR_LevelRequirement", 0)
 	self.LevelMet = Computed(function()
 		if States.LocalPlayerData:get() and States.LocalPlayerData:get().Level then
@@ -39,4 +39,4 @@ function LevelDoor:Construct()
 	end
 end
 
-return LevelDoor
+return LevelDoorComponent

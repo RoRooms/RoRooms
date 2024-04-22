@@ -11,11 +11,11 @@ local Nametag = require(Client.UI.Components.Nametag)
 
 local Value = Fusion.Value
 
-local NametaggedCharacter = Component.new {
+local NametaggedCharacterComponent = Component.new {
 	Tag = "RR_NametaggedCharacter",
 }
 
-function NametaggedCharacter:UpdateNickname()
+function NametaggedCharacterComponent:UpdateNickname()
 	local Nickname = self.Player:GetAttribute("RR_Nickname") or ""
 	local DisplayName = ""
 
@@ -32,11 +32,11 @@ function NametaggedCharacter:UpdateNickname()
 	end
 end
 
-function NametaggedCharacter:UpdateStatus()
+function NametaggedCharacterComponent:UpdateStatus()
 	self.Status:set(self.Player:GetAttribute("RR_Status") or "")
 end
 
-function NametaggedCharacter:Start()
+function NametaggedCharacterComponent:Start()
 	self.Instance.ChildAdded:Connect(function(Child: Instance)
 		if Child.Name == "Head" then
 			self.Head:set(Child)
@@ -64,7 +64,7 @@ function NametaggedCharacter:Start()
 	}
 end
 
-function NametaggedCharacter:Construct()
+function NametaggedCharacterComponent:Construct()
 	self.Nickname = Value("")
 	self.Status = Value("")
 
@@ -73,4 +73,4 @@ function NametaggedCharacter:Construct()
 	self.Head = Value(self.Instance:WaitForChild("Head"))
 end
 
-return NametaggedCharacter
+return NametaggedCharacterComponent

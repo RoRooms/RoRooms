@@ -16,11 +16,11 @@ local New = Fusion.New
 local Computed = Fusion.Computed
 local Hydrate = Fusion.Hydrate
 
-local ItemGiver = Component.new {
+local ItemGiverComponent = Component.new {
 	Tag = "RR_ItemGiver",
 }
 
-function ItemGiver:GiveItem(Player: Player)
+function ItemGiverComponent:GiveItem(Player: Player)
 	if Player == Players.LocalPlayer then
 		if self.Item:get() then
 			ItemsController:ToggleEquipItem(self.ItemId:get())
@@ -28,7 +28,7 @@ function ItemGiver:GiveItem(Player: Player)
 	end
 end
 
-function ItemGiver:GetProximityPrompt()
+function ItemGiverComponent:GetProximityPrompt()
 	local ProximityPrompt = self.Instance:FindFirstChild("RR_ItemPrompt")
 	if not ProximityPrompt then
 		ProximityPrompt = New "ProximityPrompt" {
@@ -63,7 +63,7 @@ function ItemGiver:GetProximityPrompt()
 	return ProximityPrompt
 end
 
-function ItemGiver:Start()
+function ItemGiverComponent:Start()
 	self.ProximityPrompt = self:GetProximityPrompt()
 
 	self.ProximityPrompt.Triggered:Connect(function(Player: Player)
@@ -71,7 +71,7 @@ function ItemGiver:Start()
 	end)
 end
 
-function ItemGiver:Construct()
+function ItemGiverComponent:Construct()
 	self.ItemId = AttributeValue(self.Instance, "RR_ItemId")
 	self.Item = Computed(function()
 		return Config.ItemsSystem.Items[self.ItemId:get()]
@@ -83,13 +83,13 @@ function ItemGiver:Construct()
 	if not self.ItemId:get() then
 		warn("No RR_ItemId attribute defined for ItemGiver", self.Instance)
 	end
-	if not ItemGiver.Item:get() then
+	if not ItemGiverComponent.Item:get() then
 		warn("Could not find item from ItemId", self.ItemId:get(), self.Instance)
 	end
 end
 
-function ItemGiver:Stop()
+function ItemGiverComponent:Stop()
 	self.DisconnectLevelMetObserver()
 end
 
-return ItemGiver
+return ItemGiverComponent

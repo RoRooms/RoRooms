@@ -10,11 +10,11 @@ local AttributeValue = require(Shared.ExtPackages.AttributeValue)
 
 local PlayerDataService = Knit.GetService("PlayerDataService")
 
-local LevelZone = Component.new {
+local LevelZoneComponent = Component.new {
 	Tag = "RR_LevelZone",
 }
 
-function LevelZone:Start()
+function LevelZoneComponent:Start()
 	self.Zone.playerEntered:Connect(function(Player: Player)
 		local Profile = PlayerDataService:GetProfile(Player)
 		if Profile then
@@ -25,11 +25,11 @@ function LevelZone:Start()
 	end)
 end
 
-function LevelZone:Construct()
+function LevelZoneComponent:Construct()
 	self.LevelRequirement = AttributeValue(self.Instance, "RR_LevelRequirement", 0)
 
 	self.Zone = Zone.new(self.Instance)
 	self.Zone:setAccuracy("Low")
 end
 
-return LevelZone
+return LevelZoneComponent

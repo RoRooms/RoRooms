@@ -15,11 +15,11 @@ local Prompts = require(Client.UI.States.Prompts)
 
 local Computed = Fusion.Computed
 
-local WorldTeleporter = Component.new {
+local WorldTeleporterComponent = Component.new {
 	Tag = "RR_WorldTeleporter",
 }
 
-function WorldTeleporter:PromptTeleport(PlaceId: number, PlaceInfo: { [any]: any })
+function WorldTeleporterComponent:PromptTeleport(PlaceId: number, PlaceInfo: { [any]: any })
 	Prompts:PushPrompt({
 		Title = "Teleport",
 		Text = `Do you want to teleport to world {PlaceInfo.Name}?`,
@@ -39,7 +39,7 @@ function WorldTeleporter:PromptTeleport(PlaceId: number, PlaceInfo: { [any]: any
 	})
 end
 
-function WorldTeleporter:GetPlaceInfo(PlaceId: number)
+function WorldTeleporterComponent:GetPlaceInfo(PlaceId: number)
 	if PlaceId then
 		local Success, Result = pcall(function()
 			return MarketplaceService:GetProductInfo(self.PlaceId:get())
@@ -55,7 +55,7 @@ function WorldTeleporter:GetPlaceInfo(PlaceId: number)
 	end
 end
 
-function WorldTeleporter:Start()
+function WorldTeleporterComponent:Start()
 	self.Instance.Touched:Connect(function(TouchedPart: BasePart)
 		local Character = TouchedPart:FindFirstAncestorOfClass("Model")
 		local Player = Players:GetPlayerFromCharacter(Character)
@@ -67,7 +67,7 @@ function WorldTeleporter:Start()
 	end)
 end
 
-function WorldTeleporter:Construct()
+function WorldTeleporterComponent:Construct()
 	self.PlaceId = AttributeValue(self.Instance, "RR_PlaceId")
 	self.PlaceInfo = Computed(function()
 		if self.PlaceId:get() then
@@ -95,4 +95,4 @@ function WorldTeleporter:Construct()
 	end
 end
 
-return WorldTeleporter
+return WorldTeleporterComponent

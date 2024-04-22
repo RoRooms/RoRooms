@@ -13,11 +13,11 @@ local New = Fusion.New
 local Computed = Fusion.Computed
 local Hydrate = Fusion.Hydrate
 
-local AnimatedSeat = Component.new {
+local AnimatedSeatComponent = Component.new {
 	Tag = "RR_AnimatedSeat",
 }
 
-function AnimatedSeat:UpdateOccupant()
+function AnimatedSeatComponent:UpdateOccupant()
 	if self.LastAnimationTrack then
 		self.LastAnimationTrack:Stop()
 		self.LastAnimationTrack = nil
@@ -44,7 +44,7 @@ function AnimatedSeat:UpdateOccupant()
 	end
 end
 
-function AnimatedSeat:OnPromptTriggered(Player: Player)
+function AnimatedSeatComponent:OnPromptTriggered(Player: Player)
 	if Player == Players.LocalPlayer then
 		local Char = Players.LocalPlayer.Character
 		if Char then
@@ -56,7 +56,7 @@ function AnimatedSeat:OnPromptTriggered(Player: Player)
 	end
 end
 
-function AnimatedSeat:GetProximityPrompt()
+function AnimatedSeatComponent:GetProximityPrompt()
 	local ProximityPrompt = self.Instance:FindFirstChild("RR_SitPrompt")
 	if not ProximityPrompt then
 		ProximityPrompt = New "ProximityPrompt" {
@@ -77,7 +77,7 @@ function AnimatedSeat:GetProximityPrompt()
 	return ProximityPrompt
 end
 
-function AnimatedSeat:Start()
+function AnimatedSeatComponent:Start()
 	self.Instance.Disabled = not self.SitOnTouch:get()
 
 	if self.PromptToSit:get() then
@@ -93,7 +93,7 @@ function AnimatedSeat:Start()
 	end)
 end
 
-function AnimatedSeat:Construct()
+function AnimatedSeatComponent:Construct()
 	self.PromptToSit = AttributeValue(self.Instance, "RR_PromptToSit", true)
 	self.SitOnTouch = AttributeValue(self.Instance, "RR_SitOnTouch", false)
 	self.Occupant = Value(nil)
@@ -112,4 +112,4 @@ function AnimatedSeat:Construct()
 	end
 end
 
-return AnimatedSeat
+return AnimatedSeatComponent
