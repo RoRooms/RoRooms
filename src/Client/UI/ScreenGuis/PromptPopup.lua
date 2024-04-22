@@ -3,10 +3,10 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local NekaUI = require(Shared.ExtPackages.NekaUI)
+local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local States = require(Client.UI.States)
-local AutomaticSizer = require(NekaUI.Utils.AutomaticSizer)
+local AutomaticSizer = require(OnyxUI.Utils.AutomaticSizer)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -15,11 +15,11 @@ local Spring = Fusion.Spring
 local Observer = Fusion.Observer
 local ForValues = Fusion.ForValues
 
-local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
-local MenuFrame = require(NekaUI.Components.MenuFrame)
-local Text = require(NekaUI.Components.Text)
-local Button = require(NekaUI.Components.Button)
-local Frame = require(NekaUI.Components.Frame)
+local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
+local MenuFrame = require(OnyxUI.Components.MenuFrame)
+local Text = require(OnyxUI.Components.Text)
+local Button = require(OnyxUI.Components.Button)
+local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
   local CurrentPrompt = Computed(function()

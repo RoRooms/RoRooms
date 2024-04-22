@@ -4,16 +4,16 @@ local Shared = RoRooms.Shared
 local Config = RoRooms.Config
 local Client = RoRooms.Client
 
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
+local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local EnsureProp = require(OnyxUI.Utils.EnsureProp)
 
 local Children = Fusion.Children
 local New = Fusion.New
 local Computed = Fusion.Computed
 
-local Frame = require(NekaUI.Components.Frame)
-local Text = require(NekaUI.Components.Text)
+local Frame = require(OnyxUI.Components.Frame)
+local Text = require(OnyxUI.Components.Text)
 local ItemButton = require(Client.UI.Components.ItemButton)
 
 return function(Props: table)

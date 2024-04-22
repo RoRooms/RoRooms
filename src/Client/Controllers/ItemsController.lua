@@ -6,7 +6,7 @@ local Config = RoRooms.Config
 local Packages = RoRooms.Packages
 
 local Knit = require(Packages.Knit)
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
+local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local Signal = require(Packages.Signal)
 local NeoHotbar = require(Packages.NeoHotbar)
 local States = require(Client.UI.States)

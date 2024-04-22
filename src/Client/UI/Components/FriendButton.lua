@@ -6,10 +6,10 @@ local SocialService = game:GetService("SocialService")
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
-local ColourUtils = require(NekaUI.Packages.ColourUtils)
+local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local ColourUtils = require(OnyxUI.Packages.ColourUtils)
 local States = require(Client.UI.States)
 
 local Children = Fusion.Children
@@ -18,9 +18,9 @@ local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
 
-local BaseButton = require(NekaUI.Components.BaseButton)
-local Text = require(NekaUI.Components.Text)
-local Frame = require(NekaUI.Components.Frame)
+local BaseButton = require(OnyxUI.Components.BaseButton)
+local Text = require(OnyxUI.Components.Text)
+local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
 	Props.UserId = EnsureProp(Props.UserId, "number", 1)

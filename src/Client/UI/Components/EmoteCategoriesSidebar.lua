@@ -4,14 +4,14 @@ local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 local Config = RoRooms.Config
 
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local Fusion = require(NekaUI.Packages.Fusion)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local Fusion = require(OnyxUI.Packages.Fusion)
 
 local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local ScrollingFrame = require(NekaUI.Components.ScrollingFrame)
+local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local EmoteCategoryButton = require(Client.UI.Components.EmoteCategoryButton)
 
 return function(Props: table)

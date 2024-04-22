@@ -2,14 +2,14 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 
 local Shared = RoRooms.Shared
 
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local Fusion = require(NekaUI.Packages.Fusion)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local Fusion = require(OnyxUI.Packages.Fusion)
 
 local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local Text = require(NekaUI.Components.Text)
+local Text = require(OnyxUI.Components.Text)
 
 local function NametagText(Props)
   return Text {

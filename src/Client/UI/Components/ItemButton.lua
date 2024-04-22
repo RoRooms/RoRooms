@@ -3,11 +3,11 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
+local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local EnsureProp = require(OnyxUI.Utils.EnsureProp)
 local States = require(Client.UI.States)
-local ColourUtils = require(NekaUI.Packages.ColourUtils)
+local ColourUtils = require(OnyxUI.Packages.ColourUtils)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -15,10 +15,10 @@ local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
 
-local BaseButton = require(NekaUI.Components.BaseButton)
-local Text = require(NekaUI.Components.Text)
-local Icon = require(NekaUI.Components.Icon)
-local Frame = require(NekaUI.Components.Frame)
+local BaseButton = require(OnyxUI.Components.BaseButton)
+local Text = require(OnyxUI.Components.Text)
+local Icon = require(OnyxUI.Components.Icon)
+local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
 	Props.ItemId = EnsureProp(Props.ItemId, "string", "ItemId")

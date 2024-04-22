@@ -4,8 +4,8 @@ local MarketplaceService = game:GetService("MarketplaceService")
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local Fusion = require(NekaUI.Packages.Fusion)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local States = require(Client.UI.States)
 
 local Children = Fusion.Children
@@ -13,12 +13,12 @@ local Computed = Fusion.Computed
 local New = Fusion.New
 local Spring = Fusion.Spring
 
-local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
-local MenuFrame = require(NekaUI.Components.MenuFrame)
-local TitleBar = require(NekaUI.Components.TitleBar)
-local Text = require(NekaUI.Components.Text)
-local Button = require(NekaUI.Components.Button)
-local Frame = require(NekaUI.Components.Frame)
+local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
+local MenuFrame = require(OnyxUI.Components.MenuFrame)
+local TitleBar = require(OnyxUI.Components.TitleBar)
+local Text = require(OnyxUI.Components.Text)
+local Button = require(OnyxUI.Components.Button)
+local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
 	local MenuOpen = Computed(function()

@@ -7,7 +7,7 @@ local Config = RoRooms.Config
 local Packages = RoRooms.Packages
 
 local Component = require(Packages.Component)
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
+local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local States = require(Client.UI.States)
 local ItemsController = require(Client.Controllers.ItemsController)
 local AttributeValue = require(Shared.ExtPackages.AttributeValue)

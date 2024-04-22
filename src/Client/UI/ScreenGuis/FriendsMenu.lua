@@ -3,8 +3,8 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local Fusion = require(NekaUI.Packages.Fusion)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local States = require(Client.UI.States)
 
 local Children = Fusion.Children
@@ -14,10 +14,10 @@ local New = Fusion.New
 local Observer = Fusion.Observer
 local Spring = Fusion.Spring
 
-local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
-local MenuFrame = require(NekaUI.Components.MenuFrame)
-local TitleBar = require(NekaUI.Components.TitleBar)
-local ScrollingFrame = require(NekaUI.Components.ScrollingFrame)
+local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
+local MenuFrame = require(OnyxUI.Components.MenuFrame)
+local TitleBar = require(OnyxUI.Components.TitleBar)
+local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local FriendButton = require(Client.UI.Components.FriendButton)
 
 return function(Props)

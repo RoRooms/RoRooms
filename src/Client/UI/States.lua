@@ -5,7 +5,7 @@ local Shared = RoRooms.Shared
 local Packages = RoRooms.Packages
 
 local Knit = require(Packages.Knit)
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
+local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local ReconcileTable = require(Shared.ExtPackages.ReconcileTable)
 
 local Hydrate = Fusion.Hydrate

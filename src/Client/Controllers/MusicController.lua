@@ -8,8 +8,8 @@ local SoundService = game:GetService("SoundService")
 
 local Knit = require(Packages.Knit)
 local States = require(Client.UI.States)
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local Fusion = require(NekaUI.Packages.Fusion)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local Fusion = require(OnyxUI.Packages.Fusion)
 
 local MusicService
 

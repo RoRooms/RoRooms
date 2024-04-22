@@ -3,8 +3,8 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local NekaUI = require(Shared.ExtPackages.NekaUI)
+local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local States = require(Client.UI.States)
 
 local Children = Fusion.Children
@@ -17,9 +17,9 @@ local Cleanup = Fusion.Cleanup
 
 local Components = Client.UI.Components
 local TopbarButton = require(Components.TopbarButton)
-local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
-local Frame = require(NekaUI.Components.Frame)
-local BaseButton = require(NekaUI.Components.BaseButton)
+local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
+local Frame = require(OnyxUI.Components.Frame)
+local BaseButton = require(OnyxUI.Components.BaseButton)
 
 return function(Props)
 	local TopbarButtonsHeight = Value(0)

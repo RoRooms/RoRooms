@@ -6,7 +6,7 @@ local Client = RoRooms.Client
 local Packages = RoRooms.Packages
 
 local Component = require(Packages.Component)
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
+local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local Nametag = require(Client.UI.Components.Nametag)
 
 local Value = Fusion.Value
