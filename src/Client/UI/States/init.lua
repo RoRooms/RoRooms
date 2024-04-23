@@ -4,7 +4,6 @@ local Shared = RoRooms.Shared
 local Packages = RoRooms.Packages
 
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
-local ReconcileTable = require(Shared.ExtPackages.ReconcileTable)
 local Loader = require(Packages.Loader)
 
 local Value = Fusion.Value
@@ -53,6 +52,7 @@ local States = {
 	},
 	TopbarInset = Value(Rect.new(Vector2.new(), Vector2.new())),
 	RobloxMenuOpen = Value(false),
+	PreferredTransparency = Value(0.25),
 }
 
 function States:_StartExtensions()

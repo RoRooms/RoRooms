@@ -41,6 +41,16 @@ function CoreGui:Start()
 			States.ItemsMenu.Open:set(false)
 		end
 	end)
+
+	function UpdatePrefferedTransparency()
+		local Transparency = math.clamp(GuiService.PreferredTransparency / 3, 0, 0.2)
+		States.PreferredTransparency:set(Transparency)
+	end
+
+	UpdatePrefferedTransparency()
+	GuiService:GetPropertyChangedSignal("PreferredTransparency"):Connect(function()
+		UpdatePrefferedTransparency()
+	end)
 end
 
 return CoreGui
