@@ -9,20 +9,19 @@ local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(Client.UI.States)
 local ColourUtils = require(OnyxUI._Packages.ColourUtils)
+local Modifier = require(OnyxUI.Utils.Modifier)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
 
-local BaseButton = require(OnyxUI.Components.BaseButton)
-local Icon = require(OnyxUI.Components.Icon)
-
-local BASE_COLOR = Color3.fromRGB(41, 41, 41)
+local IconButton = require(OnyxUI.Components.IconButton)
 
 return function(Props)
 	Props.CategoryName = EnsureValue(Props.CategoryName, "string", "Category")
+	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Themer.Theme.Colors.Base.Light)
 
 	local Category = Computed(function()
 		return Config.ItemsSystem.Categories[Props.CategoryName:get()]
@@ -30,26 +29,42 @@ return function(Props)
 
 	local IsHolding = Value(false)
 
-	return BaseButton {
+	return IconButton {
 		Name = "ItemCategoryButton",
 		BackgroundColor3 = Spring(
 			Computed(function()
-				local BaseColor = BASE_COLOR
+				local BaseColor = Props.BaseColor3:get()
 				if IsHolding:get() then
-					return ColourUtils.Lighten(BASE_COLOR, 0.1)
+					return ColourUtils.Lighten(Props.BaseColor3:get(), 0.1)
 				else
 					return BaseColor
 				end
 			end),
-			35,
-			1
+			Themer.Theme.SpringSpeed["1"],
+			Themer.Theme.SpringDampening
 		),
 		BackgroundTransparency = 0,
 		LayoutOrder = Computed(function()
-			if Category:get() then
-				return Category:get().LayoutOrder or 0
+			if Category:get() and Category:get().LayoutOrder then
+				return Category:get().LayoutOrder
+			else
+				return 0
 			end
 		end),
+		Image = Computed(function()
+			if Category:get() and Category:get().Icon then
+				return Category:get().Icon
+			else
+				return "rbxassetid://7058763764"
+			end
+		end),
+		ContentSize = 25,
+		Color = Props.BaseColor3,
+		Padding = Modifier.Padding {
+			Padding = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			end),
+		},
 
 		OnActivated = function()
 			States.ItemsMenu.FocusedCategory:set(Props.CategoryName:get(), true)
@@ -57,29 +72,8 @@ return function(Props)
 		IsHolding = IsHolding,
 
 		[Children] = {
-			New "UICorner" {
-				CornerRadius = UDim.new(0, 8),
-			},
-			New "UIPadding" {
-				PaddingLeft = UDim.new(0, 8),
-				PaddingBottom = UDim.new(0, 8),
-				PaddingTop = UDim.new(0, 8),
-				PaddingRight = UDim.new(0, 8),
-			},
-			New "UIStroke" {
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Thickness = 2,
-				Color = Color3.fromRGB(51, 51, 51),
-			},
-			Icon {
-				Image = Computed(function()
-					if Category:get() and Category:get().Icon then
-						return Category:get().Icon
-					else
-						return "rbxassetid://7058763764"
-					end
-				end),
-				Size = UDim2.fromOffset(25, 25),
+			Modifier.Stroke {
+				Color = Themer.Theme.Colors.Neutral.Light,
 			},
 		},
 	}

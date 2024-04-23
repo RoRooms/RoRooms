@@ -12,6 +12,9 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local ColourUtils = require(OnyxUI._Packages.ColourUtils)
 local States = require(Client.UI.States)
 local Prompts = require(Client.UI.States.Prompts)
+local Modifier = require(OnyxUI.Utils.Modifier)
+local Themer = require(OnyxUI.Utils.Themer)
+local Colors = require(OnyxUI.Utils.Colors)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -22,6 +25,7 @@ local Value = Fusion.Value
 local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)
 local Frame = require(OnyxUI.Components.Frame)
+local Avatar = require(OnyxUI.Components.Avatar)
 
 return function(Props)
 	Props.UserId = EnsureValue(Props.UserId, "number", 1)
@@ -29,7 +33,7 @@ return function(Props)
 	Props.PlaceId = EnsureValue(Props.PlaceId, "number", nil)
 	Props.JobId = EnsureValue(Props.JobId, "string", nil)
 	Props.InRoRooms = EnsureValue(Props.InRoRooms, "boolean", false)
-	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Color3.fromRGB(41, 41, 41))
+	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Themer.Theme.Colors.Base.Light)
 
 	local IsHolding = Value(false)
 	local PlaceInfo = Computed(function()
@@ -47,6 +51,13 @@ return function(Props)
 			return {}
 		end
 	end)
+	local StatusColor = Computed(function()
+		if Props.InRoRooms:get() then
+			return Color3.fromRGB(2, 183, 87)
+		else
+			return Color3.fromRGB(0, 162, 255)
+		end
+	end)
 
 	return BaseButton {
 		Name = "FriendButton",
@@ -60,8 +71,8 @@ return function(Props)
 					return BaseColor
 				end
 			end),
-			35,
-			1
+			Themer.Theme.SpringSpeed["1"],
+			Themer.Theme.SpringDampening
 		),
 		BackgroundTransparency = 0,
 		ClipsDescendants = true,
@@ -113,81 +124,68 @@ return function(Props)
 		IsHolding = IsHolding,
 
 		[Children] = {
-			New "UICorner" {
-				CornerRadius = UDim.new(0, 10),
+			Modifier.Corner {
+				CornerRadius = Computed(function()
+					return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+				end),
 			},
-			New "UIPadding" {
-				PaddingLeft = UDim.new(0, 10),
-				PaddingBottom = UDim.new(0, 10),
-				PaddingTop = UDim.new(0, 10),
-				PaddingRight = UDim.new(0, 10),
+			Modifier.Padding {
+				Padding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+				end),
 			},
-			New "UIStroke" {
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Thickness = 2,
-				Color = ColourUtils.Lighten(Props.BaseColor3:get(), 0.05),
+			Modifier.ListLayout {
+				HorizontalAlignment = Enum.HorizontalAlignment.Center,
 			},
-			New "UIListLayout" {
-				Padding = UDim.new(0, 10),
-				FillDirection = "Vertical",
-				HorizontalAlignment = "Center",
-				SortOrder = "LayoutOrder",
+			Modifier.Stroke {
+				Color = Themer.Theme.Colors.Neutral.Main,
 			},
 
-			New "ImageLabel" {
-				Name = "AvatarHeadshot",
+			Avatar {
 				Size = UDim2.fromOffset(80, 80),
 				BackgroundColor3 = ColourUtils.Lighten(Props.BaseColor3:get(), 0.06),
 				Image = Computed(function()
 					return `rbxthumb://type=AvatarHeadShot&id={Props.UserId:get()}&w=150&h=150`
 				end),
-
-				[Children] = {
-					New "UICorner" {
-						CornerRadius = UDim.new(0.5, 0),
-					},
-					New "UIStroke" {
-						Color = Color3.fromRGB(2, 183, 87),
-						Thickness = 2,
-						Enabled = Props.InRoRooms,
-					},
-				},
+				CornerRadius = Themer.Theme.CornerRadius.Full,
+				RingEnabled = Props.InRoRooms,
+				RingColor = Colors.Green["500"],
+				IndicatorEnabled = Computed(function()
+					return not Props.InRoRooms:get()
+				end),
+				IndicatorColor = StatusColor,
 			},
 			Frame {
-				Name = "FriendInfo",
-				Size = UDim2.fromScale(1, 0),
+				Name = "Details",
+				Size = UDim2.fromOffset(80, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
 
 				[Children] = {
-					New "UIListLayout" {
-						Padding = UDim.new(0, 4),
+					Modifier.ListLayout {
+						Padding = UDim.new(0, 0),
 					},
+
 					Text {
 						Name = "DisplayName",
 						Text = Props.DisplayName,
 						TextTruncate = Enum.TextTruncate.AtEnd,
-						TextSize = 17,
 						Size = UDim2.fromScale(1, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						TextXAlignment = Enum.TextXAlignment.Center,
+						TextWrapped = false,
 					},
 					Text {
 						Name = "Status",
 						Text = Computed(function()
 							return (Props.InRoRooms:get() and PlaceInfo:get().Name) or "Online"
 						end),
-						TextColor3 = Computed(function()
-							if Props.InRoRooms:get() then
-								return Color3.fromRGB(2, 183, 87)
-							else
-								return Color3.fromRGB(0, 162, 255)
-							end
-						end),
-						TextSize = 15,
+						TextColor3 = StatusColor,
+						TextSize = Themer.Theme.TextSize["0.875"],
 						TextTruncate = Enum.TextTruncate.AtEnd,
 						Size = UDim2.fromScale(1, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						TextXAlignment = Enum.TextXAlignment.Center,
+						TextWrapped = false,
 					},
 				},
 			},

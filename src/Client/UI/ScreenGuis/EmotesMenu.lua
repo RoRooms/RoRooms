@@ -7,6 +7,8 @@ local Config = RoRooms.Config
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Fusion = require(OnyxUI._Packages.Fusion)
 local States = require(Client.UI.States)
+local Modifier = require(OnyxUI.Utils.Modifier)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -27,7 +29,6 @@ return function(Props)
 	local MenuOpen = Computed(function()
 		return States.CurrentMenu:get() == script.Name
 	end)
-
 	local Categories = Computed(function()
 		local CategoriesList = {}
 
@@ -63,15 +64,14 @@ return function(Props)
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
 					end),
-					37,
-					1
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening
 				),
-				BaseResolution = Vector2.new(883, 893),
+				BaseResolution = Vector2.new(739, 789),
 
 				[Children] = {
-					New "UIListLayout" {},
 					MenuFrame {
-						Size = UDim2.fromOffset(330, 0),
+						Size = UDim2.fromOffset(0, 0),
 						GroupTransparency = Spring(
 							Computed(function()
 								if MenuOpen:get() then
@@ -80,51 +80,50 @@ return function(Props)
 									return 1
 								end
 							end),
-							40,
-							1
+							Themer.Theme.SpringSpeed["1"],
+							Themer.Theme.SpringDampening
 						),
+						BackgroundTransparency = States.PreferredTransparency,
+						AutomaticSize = Enum.AutomaticSize.XY,
 
 						[Children] = {
-							New "UIPadding" {
-								PaddingBottom = UDim.new(0, 11),
-								PaddingLeft = UDim.new(0, 11),
-								PaddingRight = UDim.new(0, 11),
-								PaddingTop = UDim.new(0, 9),
-							},
+							Modifier.ListLayout {},
 
 							TitleBar {
 								Title = "Emotes",
 								CloseButtonDisabled = true,
-								TextSize = 24,
 							},
 							Frame {
-								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 196)),
-								AutomaticSize = Enum.AutomaticSize.None,
+								Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 196)),
+								AutomaticSize = Enum.AutomaticSize.X,
 
 								[Children] = {
-									New "UIListLayout" {
-										SortOrder = Enum.SortOrder.LayoutOrder,
-										Padding = UDim.new(0, 7),
+									Modifier.ListLayout {
 										FillDirection = Enum.FillDirection.Horizontal,
+										Padding = Computed(function()
+											return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+										end),
 									},
 
 									EmoteCategoriesSidebar {
-										Size = UDim2.new(UDim.new(0, 46), UDim.new(1, 0)),
+										Size = UDim2.fromScale(0, 1),
 									},
 									ScrollingFrame {
 										Name = "EmotesList",
-										Size = UDim2.new(UDim.new(0, 253), UDim.new(1, 0)),
+										Size = Computed(function()
+											return UDim2.new(UDim.new(0, 270), UDim.new(1, 0))
+										end),
 
 										[Children] = {
-											New "UIPadding" {
-												PaddingLeft = UDim.new(0, 2),
-												PaddingBottom = UDim.new(0, 2),
-												PaddingTop = UDim.new(0, 2),
-												PaddingRight = UDim.new(0, 2),
+											Modifier.Padding {
+												Padding = Computed(function()
+													return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+												end),
 											},
-											New "UIListLayout" {
-												SortOrder = Enum.SortOrder.LayoutOrder,
-												Padding = UDim.new(0, 15),
+											Modifier.ListLayout {
+												Padding = Computed(function()
+													return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+												end),
 												FillDirection = Enum.FillDirection.Horizontal,
 												Wraps = true,
 											},

@@ -7,6 +7,8 @@ local Config = RoRooms.Config
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Fusion = require(OnyxUI._Packages.Fusion)
 local States = require(Client.UI.States)
+local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -58,13 +60,12 @@ return function(Props)
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(1, -YPos))
 					end),
-					37,
-					1
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening
 				),
-				BaseResolution = Vector2.new(883, 893),
+				BaseResolution = Vector2.new(739, 789),
 
 				[Children] = {
-					New "UIListLayout" {},
 					MenuFrame {
 						Size = UDim2.fromOffset(400, 0),
 						GroupTransparency = Spring(
@@ -75,39 +76,35 @@ return function(Props)
 									return 1
 								end
 							end),
-							40,
-							1
+							Themer.Theme.SpringSpeed["1"],
+							Themer.Theme.SpringDampening
 						),
+						BackgroundTransparency = States.PreferredTransparency,
 
 						[Children] = {
-							New "UIPadding" {
-								PaddingBottom = UDim.new(0, 10),
-								PaddingLeft = UDim.new(0, 10),
-								PaddingRight = UDim.new(0, 10),
-								PaddingTop = UDim.new(0, 10),
-							},
-							New "UIListLayout" {
-								Padding = UDim.new(0, 7),
+							Modifier.ListLayout {
 								FillDirection = Enum.FillDirection.Horizontal,
 							},
+
 							ItemCategoriesSidebar {
-								Size = UDim2.new(UDim.new(0, 46), UDim.new(1, 0)),
+								Size = UDim2.fromScale(0, 1),
 							},
 							ScrollingFrame {
 								Name = "Items",
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 220)),
 
 								[Children] = {
-									New "UIPadding" {
-										PaddingLeft = UDim.new(0, 3),
-										PaddingBottom = UDim.new(0, 3),
-										PaddingTop = UDim.new(0, 3),
-										PaddingRight = UDim.new(0, 3),
+									Modifier.Padding {
+										Padding = Computed(function()
+											return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+										end),
 									},
-									New "UIListLayout" {
-										SortOrder = Enum.SortOrder.LayoutOrder,
-										Padding = UDim.new(0, 15),
+									Modifier.ListLayout {
+										Padding = Computed(function()
+											return UDim.new(0, Themer.Theme.Spacing["2"]:get())
+										end),
 									},
+
 									ForValues(Categories, function(CategoryName: string)
 										return ItemsCategory {
 											CategoryName = CategoryName,

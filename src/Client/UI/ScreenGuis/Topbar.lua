@@ -6,6 +6,8 @@ local Client = RoRooms.Client
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local States = require(Client.UI.States)
+local Modifier = require(OnyxUI.Utils.Modifier)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -50,22 +52,22 @@ return function(Props)
 					40,
 					1
 				),
-				BaseResolution = Vector2.new(883, 893),
+				BaseResolution = Vector2.new(739, 789),
 				ScaleClamps = { Min = 0.75, Max = math.huge },
 
 				[Children] = {
-					New "UIListLayout" {
-						SortOrder = Enum.SortOrder.LayoutOrder,
-						Padding = UDim.new(0, 15),
+					Modifier.ListLayout {
+						Padding = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+						end),
 						HorizontalAlignment = Enum.HorizontalAlignment.Center,
 					},
+
 					Frame {
 						Name = "TopbarButtons",
 
 						[Children] = {
-							New "UIListLayout" {
-								SortOrder = Enum.SortOrder.LayoutOrder,
-								Padding = UDim.new(0, 13),
+							Modifier.ListLayout {
 								FillDirection = Enum.FillDirection.Horizontal,
 								VerticalAlignment = Enum.VerticalAlignment.Center,
 							},
@@ -82,38 +84,46 @@ return function(Props)
 					},
 					BaseButton {
 						Name = "PullButton",
-						BackgroundTransparency = 0,
-						BackgroundColor3 = Color3.fromRGB(26, 26, 26),
+						BackgroundTransparency = States.PreferredTransparency,
+						BackgroundColor3 = Themer.Theme.Colors.Base.Main,
 						Visible = Computed(function()
-							return (typeof(States.CurrentMenu:get()) == "string") == false
+							return not (typeof(States.CurrentMenu:get()) == "string")
 						end),
+						TextSize = 0,
 
 						OnActivated = function()
 							States.TopbarVisible:set(not States.TopbarVisible:get())
 							States.CurrentMenu:set(nil)
-							-- States.UserSettings.HideUI:set(false)
 						end,
 
 						[Children] = {
-							New "UICorner" {
-								CornerRadius = UDim.new(0, 25),
+							Modifier.Corner {
+								CornerRadius = Computed(function()
+									return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+								end),
 							},
-							New "UIStroke" {
-								ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-								Thickness = 3,
-								Color = Color3.fromRGB(56, 56, 56),
+							Modifier.Padding {
+								PaddingTop = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+								end),
+								PaddingLeft = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+								end),
+								PaddingRight = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+								end),
+								PaddingBottom = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+								end),
 							},
-							New "UIPadding" {
-								PaddingLeft = UDim.new(0, 16),
-								PaddingBottom = UDim.new(0, 8),
-								PaddingTop = UDim.new(0, 8),
-								PaddingRight = UDim.new(0, 16),
-							},
-							New "Frame" {
-								Size = UDim2.fromOffset(120, 3),
+
+							Frame {
+								Size = Computed(function()
+									return UDim2.fromOffset(120, Themer.Theme.StrokeThickness["1"]:get())
+								end),
 								AutomaticSize = Enum.AutomaticSize.None,
 								BackgroundTransparency = 0,
-								BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+								BackgroundColor3 = Themer.Theme.Colors.BaseContent.Main,
 							},
 						},
 					},

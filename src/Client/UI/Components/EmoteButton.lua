@@ -8,9 +8,10 @@ local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(Client.UI.States)
 local ColourUtils = require(OnyxUI._Packages.ColourUtils)
+local Modifier = require(OnyxUI.Utils.Modifier)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
@@ -23,7 +24,7 @@ local Frame = require(OnyxUI.Components.Frame)
 return function(Props)
 	Props.EmoteId = EnsureValue(Props.EmoteId, "string", "EmoteId")
 	Props.Emote = EnsureValue(Props.Emote, "table", {})
-	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Color3.fromRGB(41, 41, 41))
+	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Themer.Theme.Colors.Base.Light)
 
 	local IsHolding = Value(false)
 
@@ -37,8 +38,8 @@ return function(Props)
 					return Props.BaseColor3:get()
 				end
 			end),
-			35,
-			1
+			Themer.Theme.SpringSpeed["1"],
+			Themer.Theme.SpringDampening
 		),
 		BackgroundTransparency = 0,
 		Size = UDim2.fromOffset(75, 75),
@@ -59,29 +60,30 @@ return function(Props)
 		IsHolding = IsHolding,
 
 		[Children] = {
-			New "UICorner" {
-				CornerRadius = UDim.new(0, 10),
+			Modifier.Corner {
+				CornerRadius = Computed(function()
+					return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+				end),
 			},
-			New "UIPadding" {
-				PaddingLeft = UDim.new(0, 5),
-				PaddingBottom = UDim.new(0, 5),
-				PaddingTop = UDim.new(0, 5),
-				PaddingRight = UDim.new(0, 5),
+			Modifier.Padding {
+				Padding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+				end),
 			},
-			New "UIStroke" {
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Thickness = 2,
-				Color = ColourUtils.Lighten(Props.BaseColor3:get(), 0.05),
+			Modifier.Stroke {
+				Color = Themer.Theme.Colors.Neutral.Main,
 			},
+
 			Text {
 				Name = "Emoji",
-				LayoutOrder = 1,
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Position = UDim2.fromScale(0.5, 0.45),
 				Text = Computed(function()
 					return Props.Emote:get().Emoji or "🪩"
 				end),
-				TextSize = 36,
+				TextSize = Themer.Theme.TextSize["2.25"],
+				LayoutOrder = 1,
+				RichText = false,
 				ClipsDescendants = false,
 			},
 			Frame {
@@ -89,11 +91,10 @@ return function(Props)
 				ZIndex = 2,
 
 				[Children] = {
-					New "UIListLayout" {
-						Padding = UDim.new(0, 3),
+					Modifier.ListLayout {
 						FillDirection = Enum.FillDirection.Horizontal,
-						VerticalAlignment = Enum.VerticalAlignment.Center,
 					},
+
 					Icon {
 						Name = "LabelIcon",
 						AnchorPoint = Vector2.new(0, 0),

@@ -1,4 +1,5 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
+local Frame = require(script.Parent.Parent.Parent.Parent.Shared.ExtPackages.OnyxUI.Packages.OnyxUI.Components.Frame)
 
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
@@ -8,6 +9,8 @@ local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local States = require(Client.UI.States)
 local SharedData = require(Shared.SharedData)
+local Modifier = require(OnyxUI.Utils.Modifier)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -53,13 +56,12 @@ return function(Props)
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
 					end),
-					37,
-					1
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening
 				),
-				BaseResolution = Vector2.new(883, 893),
+				BaseResolution = Vector2.new(739, 789),
 
 				[Children] = {
-					New "UIListLayout" {},
 					MenuFrame {
 						Size = UDim2.fromOffset(305, 0),
 						GroupTransparency = Spring(
@@ -70,56 +72,68 @@ return function(Props)
 									return 1
 								end
 							end),
-							40,
-							1
+							Themer.Theme.SpringSpeed["1"],
+							Themer.Theme.SpringDampening
 						),
+						BackgroundTransparency = States.PreferredTransparency,
 
 						[Children] = {
-							New "UIPadding" {
-								PaddingBottom = UDim.new(0, 13),
-								PaddingLeft = UDim.new(0, 13),
-								PaddingRight = UDim.new(0, 13),
-								PaddingTop = UDim.new(0, 9),
+							Modifier.ListLayout {
+								Padding = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+								end),
 							},
+
 							TitleBar {
 								Title = "Profile",
 								CloseButtonDisabled = true,
-								TextSize = 24,
 							},
-							TextInput {
-								Name = "NicknameInput",
-								PlaceholderText = "Nickname",
-								CharacterLimit = SharedData.NicknameCharLimit,
+							Frame {
 								Size = UDim2.fromScale(1, 0),
-								AutomaticSize = Enum.AutomaticSize.Y,
-								Text = NicknameText,
-								OnFocusLost = function()
-									if States.UserProfileService then
-										States.UserProfileService:SetNickname(NicknameText:get())
-									end
-								end,
-							},
-							TextInput {
-								Name = "StatusInput",
-								PlaceholderText = "Status",
-								CharacterLimit = SharedData.StatusCharLimit,
-								TextWrapped = true,
-								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 55)),
-								AutomaticSize = Enum.AutomaticSize.None,
-								Text = StatusText,
-								OnFocusLost = function()
-									if States.UserProfileService then
-										States.UserProfileService:SetStatus(StatusText:get())
-									end
-								end,
+
+								[Children] = {
+									Modifier.ListLayout {
+										Padding = Computed(function()
+											return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+										end),
+									},
+
+									TextInput {
+										Name = "NicknameInput",
+										PlaceholderText = "Nickname",
+										CharacterLimit = SharedData.NicknameCharLimit,
+										Size = UDim2.fromScale(1, 0),
+										AutomaticSize = Enum.AutomaticSize.Y,
+										Text = NicknameText,
+										OnFocusLost = function()
+											if States.UserProfileService then
+												States.UserProfileService:SetNickname(NicknameText:get())
+											end
+										end,
+									},
+									TextInput {
+										Name = "StatusInput",
+										PlaceholderText = "Status",
+										Text = StatusText,
+										CharacterLimit = SharedData.StatusCharLimit,
+										TextWrapped = true,
+										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 55)),
+										AutomaticSize = Enum.AutomaticSize.None,
+
+										OnFocusLost = function()
+											if States.UserProfileService then
+												States.UserProfileService:SetStatus(StatusText:get())
+											end
+										end,
+									},
+								},
 							},
 							Button {
 								Name = "EditAvatarButton",
 								Contents = { "rbxassetid://13285615740", "Edit Avatar" },
-								BackgroundColor3 = Color3.fromRGB(82, 82, 82),
-								ContentColor3 = Color3.fromRGB(240, 240, 240),
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
+
 								OnActivated = function()
 									States.CurrentMenu:set()
 									Config.ProfilesSystem.AvatarEditorCallback()

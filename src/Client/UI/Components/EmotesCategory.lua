@@ -8,9 +8,10 @@ local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(Client.UI.States)
+local Modifier = require(OnyxUI.Utils.Modifier)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Computed = Fusion.Computed
 
 local Frame = require(OnyxUI.Components.Frame)
@@ -64,10 +65,8 @@ return function(Props: { [any]: any })
 		end),
 
 		[Children] = {
-			New "UIListLayout" {
-				Padding = UDim.new(0, 8),
-				SortOrder = Enum.SortOrder.LayoutOrder,
-			},
+			Modifier.ListLayout {},
+
 			Text {
 				Text = Props.CategoryName,
 				TextSize = 20,
@@ -78,12 +77,14 @@ return function(Props: { [any]: any })
 				AutomaticSize = Enum.AutomaticSize.Y,
 
 				[Children] = {
-					New "UIListLayout" {
-						SortOrder = Enum.SortOrder.LayoutOrder,
-						Padding = UDim.new(0, 12),
+					Modifier.ListLayout {
+						Padding = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+						end),
 						FillDirection = Enum.FillDirection.Horizontal,
 						Wraps = true,
 					},
+
 					EmoteButtons,
 				},
 			},

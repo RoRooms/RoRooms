@@ -6,6 +6,9 @@ local Client = RoRooms.Client
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local States = require(Client.UI.States)
+local Modifier = require(OnyxUI.Utils.Modifier)
+local Themer = require(OnyxUI.Utils.Themer)
+local Prompts = require(Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -28,24 +31,24 @@ return function(Props)
 	end)
 
 	-- Prompts:PushPrompt({
-	--   Title = "Do action",
-	--   Text = "Would you like to do this action?",
-	--   Buttons = {
-	--     {
-	--       Primary = false,
-	--       Contents = {"Cancel"},
-	--       Callback = function()
-	--         print('cancelled')
-	--       end
-	--     },
-	--     {
-	--       Primary = true,
-	--       Contents = {"Confirm"},
-	--       Callback = function()
-	--         print('confirmed')
-	--       end
-	--     },
-	--   }
+	-- 	Title = "Do action",
+	-- 	Text = "Would you like to do this action?",
+	-- 	Buttons = {
+	-- 		{
+	-- 			Primary = false,
+	-- 			Contents = { "Cancel" },
+	-- 			Callback = function()
+	-- 				print("cancelled")
+	-- 			end,
+	-- 		},
+	-- 		{
+	-- 			Primary = true,
+	-- 			Contents = { "Confirm" },
+	-- 			Callback = function()
+	-- 				print("confirmed")
+	-- 			end,
+	-- 		},
+	-- 	},
 	-- })
 
 	local PromptPopup = New "ScreenGui" {
@@ -66,13 +69,12 @@ return function(Props)
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0.5, YPos))
 					end),
-					37,
-					1
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening
 				),
-				BaseResolution = Vector2.new(883, 893),
+				BaseResolution = Vector2.new(739, 789),
 
 				[Children] = {
-					New "UIListLayout" {},
 					MenuFrame {
 						Size = UDim2.fromOffset(305, 0),
 						GroupTransparency = Spring(
@@ -83,21 +85,14 @@ return function(Props)
 									return 1
 								end
 							end),
-							40,
-							1
+							Themer.Theme.SpringSpeed["1"],
+							Themer.Theme.SpringDampening
 						),
 
 						[Children] = {
-							New "UIPadding" {
-								PaddingBottom = UDim.new(0, 13),
-								PaddingLeft = UDim.new(0, 13),
-								PaddingRight = UDim.new(0, 13),
-								PaddingTop = UDim.new(0, 9),
-							},
-							New "UIListLayout" {
-								SortOrder = Enum.SortOrder.LayoutOrder,
-								Padding = UDim.new(0, 8),
-							},
+							Modifier.Padding {},
+							Modifier.ListLayout {},
+
 							Text {
 								Name = "Title",
 								TextWrapped = false,
@@ -130,11 +125,14 @@ return function(Props)
 								AutomaticSize = Enum.AutomaticSize.Y,
 
 								[Children] = {
-									New "UIListLayout" {
-										Padding = UDim.new(0, 10),
+									Modifier.ListLayout {
+										Padding = Computed(function()
+											return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+										end),
 										FillDirection = Enum.FillDirection.Horizontal,
 										HorizontalAlignment = Enum.HorizontalAlignment.Center,
 									},
+
 									ForValues(
 										Computed(function()
 											if CurrentPrompt:get() then

@@ -9,6 +9,8 @@ local Players = game:GetService("Players")
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local States = require(Client.UI.States)
+local Modifier = require(OnyxUI.Utils.Modifier)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -58,17 +60,18 @@ return function(Props)
 					Computed(function()
 						local YPos = States.TopbarBottomPos:get()
 						if not MenuOpen:get() then
-							YPos = YPos + 15
+							YPos = YPos + Themer.Theme.Spacing["1"]:get()
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
 					end),
 					37,
 					1
 				),
-				BaseResolution = Vector2.new(883, 893),
+				BaseResolution = Vector2.new(739, 789),
 
 				[Children] = {
-					New "UIListLayout" {},
+					Modifier.ListLayout {},
+
 					MenuFrame {
 						Size = UDim2.fromOffset(305, 0),
 						GroupTransparency = Spring(
@@ -79,36 +82,33 @@ return function(Props)
 									return 1
 								end
 							end),
-							40,
-							1
+							Themer.Theme.SpringSpeed["1"],
+							Themer.Theme.SpringDampening
 						),
+						BackgroundTransparency = States.PreferredTransparency,
 
 						[Children] = {
-							New "UIPadding" {
-								PaddingBottom = UDim.new(0, 13),
-								PaddingLeft = UDim.new(0, 13),
-								PaddingRight = UDim.new(0, 13),
-								PaddingTop = UDim.new(0, 9),
-							},
+							Modifier.ListLayout {},
+
 							TitleBar {
 								Title = "Settings",
 								CloseButtonDisabled = true,
-								TextSize = 24,
 							},
 							ScrollingFrame {
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 135)),
 								AutomaticSize = Enum.AutomaticSize.None,
 
 								[Children] = {
-									New "UIListLayout" {
-										SortOrder = Enum.SortOrder.LayoutOrder,
-										Padding = UDim.new(0, 10),
+									Modifier.ListLayout {},
+									Modifier.Padding {
+										PaddingTop = Computed(function()
+											return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+										end),
+										PaddingRight = Computed(function()
+											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+										end),
 									},
-									New "UIPadding" {
-										PaddingTop = UDim.new(0, 2),
-										PaddingBottom = UDim.new(0, 3),
-										PaddingRight = UDim.new(0, 2),
-									},
+
 									SettingToggle {
 										Label = "Mute music",
 										SwitchedOn = States.UserSettings.MuteMusic,
@@ -119,7 +119,7 @@ return function(Props)
 									},
 									Text {
 										Text = "[RoRooms v0.0.0]",
-										TextColor3 = Color3.fromRGB(124, 124, 124),
+										TextColor3 = Themer.Theme.Colors.NeutralContent.Dark,
 									},
 								},
 							},

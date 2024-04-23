@@ -7,6 +7,8 @@ local Config = RoRooms.Config
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Fusion = require(OnyxUI._Packages.Fusion)
 local States = require(Client.UI.States)
+local Modifier = require(OnyxUI.Utils.Modifier)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -45,10 +47,9 @@ return function(Props)
 					37,
 					1
 				),
-				BaseResolution = Vector2.new(883, 893),
+				BaseResolution = Vector2.new(739, 789),
 
 				[Children] = {
-					New "UIListLayout" {},
 					MenuFrame {
 						Size = UDim2.fromOffset(353, 0),
 						GroupTransparency = Spring(
@@ -59,40 +60,33 @@ return function(Props)
 									return 1
 								end
 							end),
-							40,
-							1
+							Themer.Theme.SpringSpeed["1"],
+							Themer.Theme.SpringDampening
 						),
+						BackgroundTransparency = States.PreferredTransparency,
 
 						[Children] = {
-							New "UIPadding" {
-								PaddingBottom = UDim.new(0, 11),
-								PaddingLeft = UDim.new(0, 11),
-								PaddingRight = UDim.new(0, 11),
-								PaddingTop = UDim.new(0, 9),
-							},
+							Modifier.ListLayout {},
+
 							TitleBar {
 								Title = "Worlds",
 								CloseButtonDisabled = true,
-								TextSize = 24,
 							},
 							ScrollingFrame {
 								Name = "WorldsList",
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
 
 								[Children] = {
-									New "UIPadding" {
-										PaddingLeft = UDim.new(0, 2),
-										PaddingBottom = UDim.new(0, 2),
-										PaddingTop = UDim.new(0, 2),
-										PaddingRight = UDim.new(0, 2),
+									Modifier.Padding {
+										Padding = Computed(function()
+											return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+										end),
 									},
-									New "UIListLayout" {
-										Padding = UDim.new(0, 12),
-										FillDirection = "Horizontal",
-										HorizontalAlignment = "Left",
-										SortOrder = "LayoutOrder",
+									Modifier.ListLayout {
+										FillDirection = Enum.FillDirection.Horizontal,
 										Wraps = true,
 									},
+
 									ForValues(Config.WorldsSystem.FeaturedWorlds, function(PlaceId: number)
 										return WorldButton {
 											PlaceId = PlaceId,

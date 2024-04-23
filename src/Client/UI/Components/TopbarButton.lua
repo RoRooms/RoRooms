@@ -7,9 +7,10 @@ local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(Client.UI.States)
+local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
@@ -23,13 +24,16 @@ return function(Props)
 	Props.MenuName = EnsureValue(Props.MenuName, "string", "")
 
 	local IsHolding = Value(false)
+	local MenuOpen = Computed(function()
+		return States.CurrentMenu:get() == Props.MenuName:get()
+	end)
 
 	return BaseButton {
 		Name = "TopbarButton",
-		BackgroundColor3 = Color3.fromRGB(26, 26, 26),
-		BackgroundTransparency = 0,
+		BackgroundColor3 = Themer.Theme.Colors.Base.Main,
+		BackgroundTransparency = States.PreferredTransparency,
 		Size = Computed(function()
-			local BaseSize = UDim2.fromOffset(75, 75)
+			local BaseSize = UDim2.fromOffset(65, 65)
 			local SizeMultiplier = Props.SizeMultiplier:get()
 			return UDim2.fromOffset(BaseSize.X.Offset * SizeMultiplier, BaseSize.Y.Offset * SizeMultiplier)
 		end),
@@ -49,39 +53,26 @@ return function(Props)
 		end,
 
 		[Children] = {
-			New "UIListLayout" {
+			Modifier.ListLayout {
 				HorizontalAlignment = Enum.HorizontalAlignment.Center,
 				VerticalAlignment = Enum.VerticalAlignment.Center,
 			},
-			New "UICorner" {
-				CornerRadius = UDim.new(0, 25),
+			Modifier.Corner {
+				CornerRadius = Computed(function()
+					return UDim.new(0, Themer.Theme.CornerRadius["4"]:get())
+				end),
 			},
-			New "UIStroke" {
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Thickness = 3,
-				Color = Spring(
-					Computed(function()
-						if States.CurrentMenu:get() == Props.MenuName:get() then
-							return Color3.fromRGB(207, 207, 207)
-						else
-							return Color3.fromRGB(56, 56, 56)
-						end
-					end),
-					32,
-					1
-				),
+			Modifier.Stroke {
+				Thickness = Themer.Theme.StrokeThickness["1"],
+				Color = Themer.Theme.Colors.Primary.Main,
+				Enabled = MenuOpen,
 			},
-			New "UIPadding" {
-				PaddingLeft = UDim.new(0, 13),
-				PaddingBottom = UDim.new(0, 13),
-				PaddingTop = UDim.new(0, 13),
-				PaddingRight = UDim.new(0, 13),
-			},
+
 			Icon {
 				Image = Props.IconImage,
 				Size = Spring(
 					Computed(function()
-						local BaseSize = 51
+						local BaseSize = 40
 						BaseSize = BaseSize * Props.SizeMultiplier:get()
 						if not IsHolding:get() then
 							return UDim2.fromOffset(BaseSize, BaseSize)

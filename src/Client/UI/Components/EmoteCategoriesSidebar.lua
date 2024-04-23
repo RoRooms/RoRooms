@@ -1,48 +1,40 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 
 local Shared = RoRooms.Shared
-local Client = RoRooms.Client
 local Config = RoRooms.Config
+local Client = RoRooms.Client
 
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Fusion = require(OnyxUI._Packages.Fusion)
+local States = require(Client.UI.States)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
-local New = Fusion.New
+local ForPairs = Fusion.ForPairs
 local Children = Fusion.Children
-local Computed = Fusion.Computed
 
-local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
-local EmoteCategoryButton = require(Client.UI.Components.EmoteCategoryButton)
+local CategoriesSidebar = require(script.Parent.CategoriesSidebar)
+local CategoryButton = require(script.Parent.CategoryButton)
 
-return function(Props: { [any]: any })
-	return ScrollingFrame {
-		Name = "EmoteCategoriesSidebar",
+return function(Props)
+	Props.Name = EnsureValue(Props.Name, "string", "EmoteCategoriesSidebar")
+
+	return CategoriesSidebar {
+		Name = Props.Name,
 		Size = Props.Size,
 
 		[Children] = {
-			New "UIListLayout" {
-				Padding = UDim.new(0, 10),
-				FillDirection = Enum.FillDirection.Vertical,
-				SortOrder = Enum.SortOrder.LayoutOrder,
-			},
-			New "UIPadding" {
-				PaddingLeft = UDim.new(0, 2),
-				PaddingBottom = UDim.new(0, 2),
-				PaddingTop = UDim.new(0, 2),
-				PaddingRight = UDim.new(0, 2),
-			},
-			Computed(function()
-				local Categories = {}
-				for CategoryName, _ in Config.EmotesSystem.Categories do
-					table.insert(
-						Categories,
-						EmoteCategoryButton {
-							CategoryName = CategoryName,
-						}
-					)
-				end
-				return Categories
-			end),
+			ForPairs(Config.EmotesSystem.Categories, function(Name: string, Category)
+				return CategoryButton {
+					Name = "EmoteCategoryButton",
+					Category = Name,
+					Icon = Category.Icon,
+					Color = Category.TintColor,
+
+					OnActivated = function()
+						States.EmotesMenu.FocusedCategory:set(Props.CategoryName:get(), true)
+					end,
+				}
+			end, Fusion.cleanup),
 		},
 	}
 end

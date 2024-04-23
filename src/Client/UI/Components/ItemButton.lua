@@ -8,6 +8,8 @@ local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(Client.UI.States)
 local ColourUtils = require(OnyxUI._Packages.ColourUtils)
+local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -19,11 +21,12 @@ local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 local Frame = require(OnyxUI.Components.Frame)
+local Image = require(OnyxUI.Components.Image)
 
 return function(Props)
 	Props.ItemId = EnsureValue(Props.ItemId, "string", "ItemId")
 	Props.Item = EnsureValue(Props.Item, "table", {})
-	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Color3.fromRGB(41, 41, 41))
+	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Themer.Theme.Colors.Base.Light)
 
 	local IsHolding = Value(false)
 	local Equipped = Computed(function()
@@ -62,8 +65,8 @@ return function(Props)
 					return BaseColor
 				end
 			end),
-			35,
-			1
+			Themer.Theme.SpringSpeed["1"],
+			Themer.Theme.SpringDampening
 		),
 		BackgroundTransparency = 0,
 		ClipsDescendants = true,
@@ -82,41 +85,39 @@ return function(Props)
 		IsHolding = IsHolding,
 
 		[Children] = {
-			New "UICorner" {
-				CornerRadius = UDim.new(0, 10),
+			Modifier.Corner {
+				CornerRadius = Computed(function()
+					return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+				end),
 			},
-			New "UIPadding" {
-				PaddingLeft = UDim.new(0, 5),
-				PaddingBottom = UDim.new(0, 5),
-				PaddingTop = UDim.new(0, 5),
-				PaddingRight = UDim.new(0, 5),
-			},
-			New "UIStroke" {
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Thickness = 2,
+			Modifier.Padding {},
+			Modifier.Stroke {
 				Color = Spring(
 					Computed(function()
 						if Equipped:get() then
-							return ColourUtils.Lighten(Props.BaseColor3:get(), 0.16)
+							return ColourUtils.Lighten(Props.BaseColor3:get(), 0.1)
 						else
 							return Props.BaseColor3:get()
 						end
 					end),
-					40,
-					1
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening
 				),
 			},
+
 			Computed(function()
 				local Tool = Props.Item:get().Tool
 				if not Tool then
 					return
 				end
+
 				local Size = UDim2.fromOffset(60, 60)
 				local AnchorPoint = Vector2.new(0.5, 0.5)
 				local Position = UDim2.fromScale(0.5, 0.5)
 				local LayoutOrder = 2
+
 				if string.len(Tool.TextureId) >= 1 then
-					return New "ImageLabel" {
+					return Image {
 						Name = "Icon",
 						LayoutOrder = LayoutOrder,
 						AnchorPoint = AnchorPoint,

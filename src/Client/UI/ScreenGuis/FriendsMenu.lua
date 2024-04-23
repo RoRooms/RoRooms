@@ -6,6 +6,8 @@ local Client = RoRooms.Client
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Fusion = require(OnyxUI._Packages.Fusion)
 local States = require(Client.UI.States)
+local Modifier = require(OnyxUI.Utils.Modifier)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -42,15 +44,14 @@ return function(Props)
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
 					end),
-					37,
-					1
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening
 				),
-				BaseResolution = Vector2.new(883, 893),
+				BaseResolution = Vector2.new(739, 789),
 
 				[Children] = {
-					New "UIListLayout" {},
 					MenuFrame {
-						Size = UDim2.fromOffset(350, 0),
+						Size = UDim2.fromOffset(390, 0),
 						GroupTransparency = Spring(
 							Computed(function()
 								if MenuOpen:get() then
@@ -59,38 +60,34 @@ return function(Props)
 									return 1
 								end
 							end),
-							40,
-							1
+							Themer.Theme.SpringSpeed["1"],
+							Themer.Theme.SpringDampening
 						),
+						BackgroundTransparency = States.PreferredTransparency,
 
 						[Children] = {
-							New "UIPadding" {
-								PaddingBottom = UDim.new(0, 11),
-								PaddingLeft = UDim.new(0, 11),
-								PaddingRight = UDim.new(0, 11),
-								PaddingTop = UDim.new(0, 9),
-							},
+							Modifier.ListLayout {},
+
 							TitleBar {
 								Title = "Friends",
 								CloseButtonDisabled = true,
-								TextSize = 24,
 							},
 							ScrollingFrame {
 								Name = "FriendsList",
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
 
 								[Children] = {
-									New "UIPadding" {
-										PaddingLeft = UDim.new(0, 2),
-										PaddingBottom = UDim.new(0, 2),
-										PaddingTop = UDim.new(0, 2),
-										PaddingRight = UDim.new(0, 2),
+									Modifier.Padding {
+										Padding = Computed(function()
+											return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+										end),
 									},
-									New "UIListLayout" {
-										SortOrder = Enum.SortOrder.LayoutOrder,
+									Modifier.ListLayout {
+										Padding = Computed(function()
+											return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+										end),
 										FillDirection = Enum.FillDirection.Horizontal,
 										Wraps = true,
-										Padding = UDim.new(0, 12),
 									},
 
 									ForValues(States.Friends.InRoRooms, function(Friend)

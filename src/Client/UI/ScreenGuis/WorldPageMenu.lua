@@ -8,6 +8,8 @@ local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Fusion = require(OnyxUI._Packages.Fusion)
 local States = require(Client.UI.States)
 local Prompts = require(Client.UI.States.Prompts)
+local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -20,10 +22,10 @@ local TitleBar = require(OnyxUI.Components.TitleBar)
 local Text = require(OnyxUI.Components.Text)
 local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
+local Image = require(OnyxUI.Components.Image)
 
 return function(Props)
 	local MenuOpen = Computed(function()
-		-- return true
 		return States.CurrentMenu:get() == script.Name
 	end)
 	local PlaceInfo = Computed(function()
@@ -56,13 +58,12 @@ return function(Props)
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
 					end),
-					37,
-					1
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening
 				),
-				BaseResolution = Vector2.new(883, 893),
+				BaseResolution = Vector2.new(739, 789),
 
 				[Children] = {
-					New "UIListLayout" {},
 					MenuFrame {
 						Size = UDim2.fromOffset(353, 0),
 						GroupTransparency = Spring(
@@ -78,18 +79,17 @@ return function(Props)
 						),
 
 						[Children] = {
-							New "UIPadding" {
-								PaddingBottom = UDim.new(0, 11),
-								PaddingLeft = UDim.new(0, 11),
-								PaddingRight = UDim.new(0, 11),
-								PaddingTop = UDim.new(0, 9),
+							Modifier.Padding {
+								Padding = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+								end),
 							},
+
 							TitleBar {
 								Title = "World",
 								CloseButtonDisabled = true,
-								TextSize = 24,
 							},
-							New "ImageLabel" {
+							Image {
 								Name = "Thumbnail",
 								Image = Computed(function()
 									if PlaceInfo:get() then
@@ -102,8 +102,10 @@ return function(Props)
 								ScaleType = Enum.ScaleType.Crop,
 
 								[Children] = {
-									New "UICorner" {
-										CornerRadius = UDim.new(0, 8),
+									Modifier.Corner {
+										CornerRadius = Computed(function()
+											return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+										end),
 									},
 								},
 							},
@@ -113,10 +115,8 @@ return function(Props)
 								AutomaticSize = Enum.AutomaticSize.Y,
 
 								[Children] = {
-									New "UIListLayout" {
-										SortOrder = Enum.SortOrder.LayoutOrder,
-										Padding = UDim.new(0, 5),
-									},
+									Modifier.ListLayout {},
+
 									Text {
 										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,
