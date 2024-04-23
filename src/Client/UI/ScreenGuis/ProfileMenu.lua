@@ -63,7 +63,7 @@ return function(Props)
 
 				[Children] = {
 					MenuFrame {
-						Size = UDim2.fromOffset(305, 0),
+						Size = UDim2.fromOffset(270, 0),
 						GroupTransparency = Spring(
 							Computed(function()
 								if MenuOpen:get() then
@@ -92,11 +92,7 @@ return function(Props)
 								Size = UDim2.fromScale(1, 0),
 
 								[Children] = {
-									Modifier.ListLayout {
-										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-										end),
-									},
+									Modifier.ListLayout {},
 
 									TextInput {
 										Name = "NicknameInput",
@@ -105,6 +101,7 @@ return function(Props)
 										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,
 										Text = NicknameText,
+
 										OnFocusLost = function()
 											if States.UserProfileService then
 												States.UserProfileService:SetNickname(NicknameText:get())
@@ -117,8 +114,8 @@ return function(Props)
 										Text = StatusText,
 										CharacterLimit = SharedData.StatusCharLimit,
 										TextWrapped = true,
-										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 55)),
-										AutomaticSize = Enum.AutomaticSize.None,
+										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 60)),
+										AutomaticSize = Enum.AutomaticSize.Y,
 
 										OnFocusLost = function()
 											if States.UserProfileService then
@@ -133,6 +130,9 @@ return function(Props)
 								Contents = { "rbxassetid://13285615740", "Edit Avatar" },
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
+								Visible = Computed(function()
+									return Config.ProfilesSystem.AvatarEditorCallback ~= nil
+								end),
 
 								OnActivated = function()
 									States.CurrentMenu:set()
