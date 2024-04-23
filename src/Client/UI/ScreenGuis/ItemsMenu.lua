@@ -92,6 +92,8 @@ return function(Props)
 							ScrollingFrame {
 								Name = "Items",
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 220)),
+								ScrollBarThickness = Themer.Theme.StrokeThickness["1"],
+								ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
 
 								[Children] = {
 									Modifier.Padding {

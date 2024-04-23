@@ -51,7 +51,7 @@ return function(Props)
 
 				[Children] = {
 					MenuFrame {
-						Size = UDim2.fromOffset(390, 0),
+						Size = UDim2.fromOffset(365, 0),
 						GroupTransparency = Spring(
 							Computed(function()
 								if MenuOpen:get() then
@@ -75,6 +75,8 @@ return function(Props)
 							ScrollingFrame {
 								Name = "FriendsList",
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
+								ScrollBarThickness = Themer.Theme.StrokeThickness["1"],
+								ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
 
 								[Children] = {
 									Modifier.Padding {
@@ -84,7 +86,7 @@ return function(Props)
 									},
 									Modifier.ListLayout {
 										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+											return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 										end),
 										FillDirection = Enum.FillDirection.Horizontal,
 										Wraps = true,

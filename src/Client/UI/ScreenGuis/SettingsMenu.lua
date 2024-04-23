@@ -97,6 +97,8 @@ return function(Props)
 							ScrollingFrame {
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 135)),
 								AutomaticSize = Enum.AutomaticSize.None,
+								ScrollBarThickness = Themer.Theme.StrokeThickness["1"],
+								ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
 
 								[Children] = {
 									Modifier.ListLayout {},
