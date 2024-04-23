@@ -12,9 +12,18 @@ local Theme = require(script.Parent.OnyxUITheme)
 local ROROOMS_CONFIG = {
 	ItemsSystem = {
 		Categories = {
-			"General",
-			"Test",
-			"Bla",
+			General = {
+				LayoutOrder = 1,
+				Icon = "rbxassetid://12988755627",
+			},
+			Unlockable = {
+				LayoutOrder = 2,
+				Icon = "rbxassetid://5743022869",
+			},
+			Robux = {
+				LayoutOrder = 3,
+				Icon = "rbxassetid://7058763764",
+			},
 		},
 		Items = {
 			ExampleItem = {
@@ -26,9 +35,18 @@ local ROROOMS_CONFIG = {
 	},
 	EmotesSystem = {
 		Categories = {
-			"General",
-			"Test",
-			"Bla",
+			General = {
+				LayoutOrder = 1,
+				Icon = "rbxassetid://12988755627",
+			},
+			Unlockable = {
+				LayoutOrder = 2,
+				Icon = "rbxassetid://5743022869",
+			},
+			Robux = {
+				LayoutOrder = 3,
+				Icon = "rbxassetid://7058763764",
+			},
 		},
 		Emotes = {
 			ExampleEmote = {
@@ -39,7 +57,11 @@ local ROROOMS_CONFIG = {
 		},
 	},
 	WorldsSystem = {
-		FeaturedWorlds = {},
+		FeaturedWorlds = {
+			8310127828,
+			4960160668,
+			9298624201,
+		},
 	},
 }
 
