@@ -2,11 +2,46 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
 
 local Client = RoRooms.Client
 local Shared = RoRooms.Shared
+local Config = RoRooms.Config
 
 local Topbar = require(Client.UI.States.Topbar)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Themer = require(OnyxUI.Utils.Themer)
 local Theme = require(script.Parent.OnyxUITheme)
+
+local ROROOMS_CONFIG = {
+	ItemsSystem = {
+		Categories = {
+			"General",
+			"Test",
+			"Bla",
+		},
+		Items = {
+			ExampleItem = {
+				Name = "Item",
+				Tool = Instance.new("Tool"),
+				LayoutOrder = 1,
+			},
+		},
+	},
+	EmotesSystem = {
+		Categories = {
+			"General",
+			"Test",
+			"Bla",
+		},
+		Emotes = {
+			ExampleEmote = {
+				Name = "Emote",
+				Emoji = "😼",
+				Animation = Instance.new("Animation"),
+			},
+		},
+	},
+	WorldsSystem = {
+		FeaturedWorlds = {},
+	},
+}
 
 local Viewport = function(Props)
 	local ReturnedGuis = {}
@@ -34,6 +69,8 @@ return function(Target)
 	local ViewportGuis = Viewport {
 		Target = Target,
 	}
+
+	Config:Update(ROROOMS_CONFIG)
 
 	Themer:Set(Theme)
 
