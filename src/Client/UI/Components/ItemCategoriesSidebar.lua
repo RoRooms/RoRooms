@@ -1,45 +1,41 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 
 local Shared = RoRooms.Shared
-local Client = RoRooms.Client
 local Config = RoRooms.Config
+local Client = RoRooms.Client
 
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Fusion = require(OnyxUI._Packages.Fusion)
-local Modifier = require(OnyxUI.Utils.Modifier)
-local Themer = require(OnyxUI.Utils.Themer)
+local States = require(Client.UI.States)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
+local ForPairs = Fusion.ForPairs
 local Children = Fusion.Children
-local Computed = Fusion.Computed
 
-local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
-local ItemCategoryButton = require(Client.UI.Components.ItemCategoryButton)
+local CategoriesSidebar = require(script.Parent.CategoriesSidebar)
+local CategoryButton = require(script.Parent.CategoryButton)
 
-return function(Props: { [any]: any })
-	return ScrollingFrame {
-		Name = "ItemCategoriesSidebar",
+return function(Props)
+	Props.Name = EnsureValue(Props.Name, "string", "ItemCategoriesSidebar")
+
+	return CategoriesSidebar {
+		Name = Props.Name,
 		Size = Props.Size,
 
 		[Children] = {
-			Modifier.ListLayout {},
-			Modifier.Padding {
-				Padding = Computed(function()
-					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-				end),
-			},
+			ForPairs(Config.ItemsSystem.Categories, function(Name: string, Category)
+				return Name,
+					CategoryButton {
+						Name = "ItemCategoryButton",
+						Category = Name,
+						Icon = Category.Icon,
+						Color = Category.TintColor,
 
-			Computed(function()
-				local Categories = {}
-				for CategoryName, _ in Config.ItemsSystem.Categories do
-					table.insert(
-						Categories,
-						ItemCategoryButton {
-							CategoryName = CategoryName,
-						}
-					)
-				end
-				return Categories
-			end),
+						OnActivated = function()
+							States.ItemsSystem.FocusedCategory:set(Props.CategoryName:get(), true)
+						end,
+					}
+			end, Fusion.cleanup),
 		},
 	}
 end

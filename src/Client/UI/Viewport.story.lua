@@ -26,10 +26,41 @@ local ROROOMS_CONFIG = {
 			},
 		},
 		Items = {
-			ExampleItem = {
-				Name = "Item",
+			Item1 = {
+				Name = "Bloxy Cola",
 				Tool = Instance.new("Tool"),
-				LayoutOrder = 1,
+			},
+			Item2 = {
+				Name = "Camera",
+				Tool = Instance.new("Tool"),
+			},
+			Item3 = {
+				Name = "Flash Light",
+				Tool = Instance.new("Tool"),
+			},
+			Item4 = {
+				Name = "Frog",
+				Tool = Instance.new("Tool"),
+			},
+			Item5 = {
+				Name = "Sharky",
+				Tool = Instance.new("Tool"),
+			},
+			Item6 = {
+				Name = "Sword",
+				Tool = Instance.new("Tool"),
+			},
+			Item7 = {
+				Name = "Test",
+				Tool = Instance.new("Tool"),
+				Category = "Unlockable",
+				LevelRequirement = 55,
+			},
+			Item8 = {
+				Name = "Blabla",
+				Tool = Instance.new("Tool"),
+				Category = "Unlockable",
+				LevelRequirement = 100,
 			},
 		},
 	},

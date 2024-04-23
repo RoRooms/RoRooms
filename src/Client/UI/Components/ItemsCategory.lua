@@ -1,4 +1,5 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
+local Modifier = require(script.Parent.Parent.Parent.Parent.Shared.ExtPackages.OnyxUI.Packages.OnyxUI.Utils.Modifier)
 
 local Shared = RoRooms.Shared
 local Config = RoRooms.Config
@@ -11,6 +12,7 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Children = Fusion.Children
 local New = Fusion.New
 local Computed = Fusion.Computed
+local ForPairs = Fusion.ForPairs
 
 local Frame = require(OnyxUI.Components.Frame)
 local Text = require(OnyxUI.Components.Text)
@@ -22,33 +24,6 @@ return function(Props: { [any]: any })
 	local Category = Computed(function()
 		return Config.ItemsSystem.Categories[Props.CategoryName:get()]
 	end)
-
-	local ItemButtons = Computed(function()
-		local List = {}
-
-		for ItemId, Item in pairs(Config.ItemsSystem.Items) do
-			if Item.Category == nil then
-				Item.Category = "General"
-			end
-			if Item.Category == Props.CategoryName:get() then
-				table.insert(
-					List,
-					ItemButton {
-						ItemId = ItemId,
-						Item = Item,
-						BaseColor3 = Item.TintColor,
-						-- Callback = function()
-						--   if States.ScreenSize:get().Y <= 500 then
-						--     States.CurrentMenu:set()
-						--   end
-						-- end
-					}
-				)
-			end
-		end
-
-		return List
-	end, Fusion.cleanup)
 
 	return Frame {
 		Name = `{Props.CategoryName:get()}ItemsCategory`,
@@ -69,7 +44,6 @@ return function(Props: { [any]: any })
 			},
 			Text {
 				Text = Props.CategoryName,
-				TextSize = 20,
 			},
 			Frame {
 				Name = "Items",
@@ -77,13 +51,28 @@ return function(Props: { [any]: any })
 				AutomaticSize = Enum.AutomaticSize.Y,
 
 				[Children] = {
-					New "UIListLayout" {
-						SortOrder = Enum.SortOrder.LayoutOrder,
-						Padding = UDim.new(0, 12),
-						FillDirection = Enum.FillDirection.Horizontal,
+					Modifier.ListLayout {
 						Wraps = true,
+						FillDirection = Enum.FillDirection.Horizontal,
 					},
-					ItemButtons,
+
+					ForPairs(Config.ItemsSystem.Items, function(ItemId, Item)
+						local ItemCategory = Item.Category
+						if ItemCategory == nil then
+							ItemCategory = "General"
+						end
+
+						if ItemCategory == Props.CategoryName:get() then
+							return ItemId,
+								ItemButton {
+									ItemId = ItemId,
+									Item = Item,
+									BaseColor3 = Item.TintColor,
+								}
+						else
+							return ItemId, nil
+						end
+					end, Fusion.cleanup),
 				},
 			},
 		},

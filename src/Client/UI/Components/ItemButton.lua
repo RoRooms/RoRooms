@@ -8,11 +8,10 @@ local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(Client.UI.States)
 local ColourUtils = require(OnyxUI._Packages.ColourUtils)
-local Themer = require(OnyxUI.Utils.Themer)
 local Modifier = require(OnyxUI.Utils.Modifier)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
@@ -29,46 +28,23 @@ return function(Props)
 	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Themer.Theme.Colors.Base.Light)
 
 	local IsHolding = Value(false)
-	local Equipped = Computed(function()
-		return table.find(States.EquippedItems:get(), Props.ItemId:get()) ~= nil
-	end)
-
-	local LabelIconImage = Computed(function()
-		local Item = Props.Item:get()
-		if Item.LabelIcon then
-			return Item.LabelIcon
-		elseif Item.LevelRequirement then
-			return "rbxassetid://5743022869"
-		else
-			return ""
-		end
-	end)
-	local LabelTextText = Computed(function()
-		local Item = Props.Item:get()
-		if Item.LabelText then
-			return Item.LabelText
-		elseif Item.LevelRequirement then
-			return Item.LevelRequirement
-		else
-			return ""
-		end
-	end)
 
 	return BaseButton {
 		Name = "ItemButton",
 		BackgroundColor3 = Spring(
 			Computed(function()
-				local BaseColor = Props.BaseColor3:get()
 				if IsHolding:get() then
-					return ColourUtils.Lighten(BaseColor, 0.05)
+					return ColourUtils.Lighten(Props.BaseColor3:get(), 0.05)
 				else
-					return BaseColor
+					return Props.BaseColor3:get()
 				end
 			end),
 			Themer.Theme.SpringSpeed["1"],
 			Themer.Theme.SpringDampening
 		),
 		BackgroundTransparency = 0,
+		Size = UDim2.fromOffset(70, 70),
+		AutomaticSize = Enum.AutomaticSize.None,
 		ClipsDescendants = true,
 		LayoutOrder = Computed(function()
 			return Props.Item:get().LayoutOrder or 0
@@ -90,19 +66,13 @@ return function(Props)
 					return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
 				end),
 			},
-			Modifier.Padding {},
+			Modifier.Padding {
+				Padding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+				end),
+			},
 			Modifier.Stroke {
-				Color = Spring(
-					Computed(function()
-						if Equipped:get() then
-							return ColourUtils.Lighten(Props.BaseColor3:get(), 0.1)
-						else
-							return Props.BaseColor3:get()
-						end
-					end),
-					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
-				),
+				Color = Themer.Theme.Colors.Neutral.Main,
 			},
 
 			Computed(function()
@@ -114,35 +84,36 @@ return function(Props)
 				local Size = UDim2.fromOffset(60, 60)
 				local AnchorPoint = Vector2.new(0.5, 0.5)
 				local Position = UDim2.fromScale(0.5, 0.5)
-				local LayoutOrder = 2
 
 				if string.len(Tool.TextureId) >= 1 then
 					return Image {
 						Name = "Icon",
-						LayoutOrder = LayoutOrder,
+						Image = Tool.TextureId,
+						BackgroundTransparency = 1,
 						AnchorPoint = AnchorPoint,
 						Position = Position,
 						Size = Size,
-						Image = Tool.TextureId,
-						BackgroundTransparency = 1,
 					}
 				else
 					return Text {
 						Name = "ItemName",
-						LayoutOrder = LayoutOrder,
+						Text = Computed(function()
+							if Props.Item:get() and Props.Item:get().Name then
+								return Props.Item:get().Name
+							else
+								return Props.ItemId:get()
+							end
+						end),
+						TextSize = Themer.Theme.TextSize["1"],
 						AnchorPoint = AnchorPoint,
 						Position = Position,
 						Size = Size,
-						Text = Computed(function()
-							return Props.Item:get().Name or Props.ItemId:get()
-						end),
-						TextSize = 16,
 						TextTruncate = Enum.TextTruncate.AtEnd,
-						TextWrapped = true,
 						AutomaticSize = Enum.AutomaticSize.None,
 						TextXAlignment = Enum.TextXAlignment.Center,
 						TextYAlignment = Enum.TextYAlignment.Center,
 						AutoLocalize = false,
+						TextWrapped = true,
 					}
 				end
 			end, Fusion.cleanup),
@@ -151,41 +122,58 @@ return function(Props)
 				ZIndex = 2,
 
 				[Children] = {
-					New "UIListLayout" {
-						Padding = UDim.new(0, 3),
+					Modifier.ListLayout {
 						FillDirection = Enum.FillDirection.Horizontal,
-						VerticalAlignment = Enum.VerticalAlignment.Center,
+						Padding = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+						end),
 					},
-					Computed(function()
-						if string.len(LabelIconImage:get()) > 0 then
-							return Icon {
-								Name = "LabelIcon",
-								AnchorPoint = Vector2.new(0, 0),
-								Position = UDim2.fromScale(0, 0),
-								Size = UDim2.fromOffset(13, 13),
-								Image = LabelIconImage,
-								ImageColor3 = Computed(function()
-									return ColourUtils.Lighten(Props.BaseColor3:get(), 0.25)
-								end),
-							}
-						end
-					end, Fusion.cleanup),
-					Computed(function()
-						if string.len(LabelTextText:get()) > 0 then
-							return Text {
-								Name = "LabelText",
-								AnchorPoint = Vector2.new(0, 0),
-								Position = UDim2.fromScale(0, 0),
-								Text = LabelTextText,
-								TextSize = 13,
-								TextColor3 = Computed(function()
-									return ColourUtils.Lighten(Props.BaseColor3:get(), 0.5)
-								end),
-								ClipsDescendants = false,
-								AutoLocalize = false,
-							}
-						end
-					end, Fusion.cleanup),
+
+					Icon {
+						Name = "LabelIcon",
+						Size = Computed(function()
+							return UDim2.fromOffset(
+								Themer.Theme.TextSize["0.875"]:get(),
+								Themer.Theme.TextSize["0.875"]:get()
+							)
+						end),
+						Image = Computed(function()
+							local LabelIcon = Props.Item:get().LabelIcon
+							local LevelRequirement = Props.Item:get().LevelRequirement
+
+							if LabelIcon then
+								return LabelIcon
+							elseif LevelRequirement then
+								return "rbxassetid://5743022869"
+							else
+								return ""
+							end
+						end),
+						ImageColor3 = Computed(function()
+							return ColourUtils.Lighten(Props.BaseColor3:get(), 0.25)
+						end),
+					},
+					Text {
+						Name = "LabelText",
+						Text = Computed(function()
+							if Props.Item:get() then
+								if Props.Item:get().LabelText then
+									return Props.Item:get().LabelText
+								elseif Props.Item:get().LevelRequirement then
+									return Props.Item:get().LevelRequirement
+								else
+									return ""
+								end
+							else
+								return ""
+							end
+						end),
+						TextSize = Themer.Theme.TextSize["0.875"],
+						TextColor3 = Computed(function()
+							return ColourUtils.Lighten(Props.BaseColor3:get(), 0.5)
+						end),
+						AutoLocalize = false,
+					},
 				},
 			},
 		},

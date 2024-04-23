@@ -15,7 +15,7 @@ local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Observer = Fusion.Observer
-local ForValues = Fusion.ForValues
+local ForPairs = Fusion.ForPairs
 
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
@@ -24,24 +24,6 @@ local ItemsCategory = require(Client.UI.Components.ItemsCategory)
 local ItemCategoriesSidebar = require(Client.UI.Components.ItemCategoriesSidebar)
 
 return function(Props)
-	local Categories = Computed(function()
-		local CategoriesList = {}
-
-		for _, Item in pairs(Config.ItemsSystem.Items) do
-			local CategoryName
-			if typeof(Item.Category) == "string" then
-				CategoryName = Item.Category
-			elseif Item.Category == nil then
-				CategoryName = "General"
-			end
-			if not table.find(CategoriesList, CategoryName) then
-				table.insert(CategoriesList, CategoryName)
-			end
-		end
-
-		return CategoriesList
-	end)
-
 	local ItemsMenu = New "ScreenGui" {
 		Name = "ItemsMenu",
 		Parent = Props.Parent,
@@ -67,7 +49,7 @@ return function(Props)
 
 				[Children] = {
 					MenuFrame {
-						Size = UDim2.fromOffset(400, 0),
+						Size = UDim2.fromOffset(385, 0),
 						GroupTransparency = Spring(
 							Computed(function()
 								if States.ItemsMenu.Open:get() then
@@ -103,14 +85,16 @@ return function(Props)
 									},
 									Modifier.ListLayout {
 										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["2"]:get())
+											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
 										end),
 									},
 
-									ForValues(Categories, function(CategoryName: string)
-										return ItemsCategory {
-											CategoryName = CategoryName,
-										}
+									ForPairs(Config.ItemsSystem.Categories, function(Name: string, Category)
+										return Name,
+											ItemsCategory {
+												CategoryName = Name,
+												LayoutOrder = Category.LayoutOrder,
+											}
 									end, Fusion.cleanup),
 								},
 							},
