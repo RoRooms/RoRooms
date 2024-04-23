@@ -1,8 +1,12 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
 
 local Client = RoRooms.Client
+local Shared = RoRooms.Shared
 
 local Topbar = require(Client.UI.States.Topbar)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local Themer = require(OnyxUI.Utils.Themer)
+local Theme = require(script.Parent.OnyxUITheme)
 
 local Viewport = function(Props)
 	local ReturnedGuis = {}
@@ -30,6 +34,8 @@ return function(Target)
 	local ViewportGuis = Viewport {
 		Target = Target,
 	}
+
+	Themer:Set(Theme)
 
 	Topbar:AddDefaultButtons()
 

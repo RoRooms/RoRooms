@@ -10,6 +10,9 @@ local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local States = require(Client.UI.States)
 local NeoHotbar = require(Packages.NeoHotbar)
 local Signal = require(Packages.Signal)
+local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local Themer = require(OnyxUI.Utils.Themer)
+local Theme = require(script.Parent.OnyxUITheme)
 
 local New = Fusion.New
 
@@ -47,6 +50,8 @@ end
 
 function UIController:KnitStart()
 	States:Start()
+
+	Themer:Set(Theme)
 
 	for _, GuiName in ipairs(DEFAULT_UIS) do
 		local GuiModule = Client.UI.ScreenGuis:FindFirstChild(GuiName)
