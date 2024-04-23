@@ -15,7 +15,7 @@ local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Observer = Fusion.Observer
-local ForValues = Fusion.ForValues
+local ForPairs = Fusion.ForPairs
 
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
@@ -28,23 +28,6 @@ local Frame = require(OnyxUI.Components.Frame)
 return function(Props)
 	local MenuOpen = Computed(function()
 		return States.CurrentMenu:get() == script.Name
-	end)
-	local Categories = Computed(function()
-		local CategoriesList = {}
-
-		for _, Emote in pairs(Config.EmotesSystem.Emotes) do
-			local CategoryName
-			if typeof(Emote.Category) == "string" then
-				CategoryName = Emote.Category
-			elseif Emote.Category == nil then
-				CategoryName = "General"
-			end
-			if not table.find(CategoriesList, CategoryName) then
-				table.insert(CategoriesList, CategoryName)
-			end
-		end
-
-		return CategoriesList
 	end)
 
 	local EmotesMenu = New "ScreenGui" {
@@ -94,7 +77,7 @@ return function(Props)
 								CloseButtonDisabled = true,
 							},
 							Frame {
-								Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 196)),
+								Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 185)),
 								AutomaticSize = Enum.AutomaticSize.X,
 
 								[Children] = {
@@ -111,7 +94,7 @@ return function(Props)
 									ScrollingFrame {
 										Name = "EmotesList",
 										Size = Computed(function()
-											return UDim2.new(UDim.new(0, 270), UDim.new(1, 0))
+											return UDim2.new(UDim.new(0, 255), UDim.new(1, 0))
 										end),
 
 										[Children] = {
@@ -122,16 +105,18 @@ return function(Props)
 											},
 											Modifier.ListLayout {
 												Padding = Computed(function()
-													return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+													return UDim.new(0, Themer.Theme.Spacing["1"]:get())
 												end),
 												FillDirection = Enum.FillDirection.Horizontal,
 												Wraps = true,
 											},
 
-											ForValues(Categories, function(CategoryName: string)
-												return EmotesCategory {
-													CategoryName = CategoryName,
-												}
+											ForPairs(Config.EmotesSystem.Categories, function(Name: string, Category)
+												return Name,
+													EmotesCategory {
+														CategoryName = Name,
+														LayoutOrder = Category.LayoutOrder,
+													}
 											end, Fusion.cleanup),
 										},
 									},

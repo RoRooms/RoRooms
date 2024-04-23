@@ -49,10 +49,48 @@ local ROROOMS_CONFIG = {
 			},
 		},
 		Emotes = {
-			ExampleEmote = {
+			Emote1 = {
 				Name = "Emote",
 				Emoji = "😼",
 				Animation = Instance.new("Animation"),
+			},
+			Emote2 = {
+				Name = "Emote",
+				Emoji = "🤞",
+				Animation = Instance.new("Animation"),
+			},
+			Emote3 = {
+				Name = "Emote",
+				Emoji = "💖",
+				Animation = Instance.new("Animation"),
+			},
+			Emote4 = {
+				Name = "Emote",
+				Emoji = "⭐",
+				Animation = Instance.new("Animation"),
+			},
+			Emote5 = {
+				Name = "Emote",
+				Emoji = "🛍️",
+				Animation = Instance.new("Animation"),
+			},
+			Emote6 = {
+				Name = "Emote",
+				Emoji = "💖",
+				Animation = Instance.new("Animation"),
+				Category = "Unlockable",
+			},
+			Emote7 = {
+				Name = "Emote",
+				Emoji = "⭐",
+				Animation = Instance.new("Animation"),
+				Category = "Unlockable",
+			},
+			Emote8 = {
+				Name = "Emote",
+				Emoji = "🛍️",
+				Animation = Instance.new("Animation"),
+				Category = "Unlockable",
 			},
 		},
 	},

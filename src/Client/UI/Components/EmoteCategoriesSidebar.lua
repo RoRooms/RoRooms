@@ -24,16 +24,17 @@ return function(Props)
 
 		[Children] = {
 			ForPairs(Config.EmotesSystem.Categories, function(Name: string, Category)
-				return CategoryButton {
-					Name = "EmoteCategoryButton",
-					Category = Name,
-					Icon = Category.Icon,
-					Color = Category.TintColor,
+				return Name,
+					CategoryButton {
+						Name = "EmoteCategoryButton",
+						Category = Name,
+						Icon = Category.Icon,
+						Color = Category.TintColor,
 
-					OnActivated = function()
-						States.EmotesMenu.FocusedCategory:set(Props.CategoryName:get(), true)
-					end,
-				}
+						OnActivated = function()
+							States.EmotesMenu.FocusedCategory:set(Props.CategoryName:get(), true)
+						end,
+					}
 			end, Fusion.cleanup),
 		},
 	}

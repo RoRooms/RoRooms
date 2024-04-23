@@ -42,7 +42,7 @@ return function(Props)
 			Themer.Theme.SpringDampening
 		),
 		BackgroundTransparency = 0,
-		Size = UDim2.fromOffset(75, 75),
+		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
 		ClipsDescendants = true,
 		LayoutOrder = Computed(function()
