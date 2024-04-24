@@ -32,7 +32,7 @@ return function(Props)
 
 	return BaseButton {
 		Name = "TopbarButton",
-		BackgroundColor3 = Themer.Theme.Colors.Primary.Main,
+		BackgroundColor3 = Themer.Theme.Colors.BaseContent.Main,
 		BackgroundTransparency = Computed(function()
 			if IsHovering:get() or MenuOpen:get() then
 				return 0.9
