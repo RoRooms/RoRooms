@@ -103,8 +103,8 @@ return function(Props)
 										Text = NicknameText,
 
 										OnFocusLost = function()
-											if States.UserProfileService then
-												States.UserProfileService:SetNickname(NicknameText:get())
+											if States.Services.UserProfileService then
+												States.Services.UserProfileService:SetNickname(NicknameText:get())
 											end
 										end,
 									},
@@ -118,8 +118,8 @@ return function(Props)
 										AutomaticSize = Enum.AutomaticSize.Y,
 
 										OnFocusLost = function()
-											if States.UserProfileService then
-												States.UserProfileService:SetStatus(StatusText:get())
+											if States.Services.UserProfileService then
+												States.Services.UserProfileService:SetStatus(StatusText:get())
 											end
 										end,
 									},
@@ -136,7 +136,10 @@ return function(Props)
 
 								OnActivated = function()
 									States.CurrentMenu:set()
-									Config.ProfilesSystem.AvatarEditorCallback()
+
+									if Config.ProfilesSystem.AvatarEditorCallback then
+										Config.ProfilesSystem.AvatarEditorCallback()
+									end
 								end,
 							},
 						},
