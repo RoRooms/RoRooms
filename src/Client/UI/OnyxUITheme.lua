@@ -18,7 +18,7 @@ return {
 		},
 
 		Neutral = {
-			Main = Colors.Stone["800"],
+			Main = Colors.Stone["700"],
 		},
 		NeutralContent = {
 			Main = Colors.Stone["300"],
@@ -61,7 +61,7 @@ return {
 		Base = 6,
 	},
 	StrokeThickness = {
-		Base = 2,
+		Base = 1,
 	},
 	Spacing = {
 		Base = 14,
