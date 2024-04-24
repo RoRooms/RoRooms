@@ -72,7 +72,9 @@ return function(Props)
 				end),
 			},
 			Modifier.Stroke {
-				Color = Themer.Theme.Colors.Neutral.Main,
+				Color = Computed(function()
+					return ColourUtils.Lighten(Props.BaseColor3:get(), 0.2)
+				end),
 			},
 
 			Computed(function()

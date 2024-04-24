@@ -51,7 +51,7 @@ return function(Props)
 		[Children] = {
 			Modifier.Stroke {
 				Color = Computed(function()
-					return ColourUtils.Lighten(Props.Color:get(), 0.1)
+					return ColourUtils.Lighten(Props.Color:get(), 0.2)
 				end),
 			},
 			Modifier.Padding {

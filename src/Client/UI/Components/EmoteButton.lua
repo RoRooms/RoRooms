@@ -67,11 +67,13 @@ return function(Props)
 			},
 			Modifier.Padding {
 				Padding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 				end),
 			},
 			Modifier.Stroke {
-				Color = Themer.Theme.Colors.Neutral.Main,
+				Color = Computed(function()
+					return ColourUtils.Lighten(Props.BaseColor3:get(), 0.2)
+				end),
 			},
 
 			Text {
