@@ -62,7 +62,6 @@ function UIController:KnitStart()
 	end
 
 	NeoHotbar:Start()
-	NeoHotbar:OverrideGui(Client.UI.NeoHotbarGui, true)
 	self.NeoHotbarOnStart:Fire()
 
 	self:_StartACM()
