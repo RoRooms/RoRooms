@@ -32,8 +32,8 @@ return function(Props)
 	local NicknameText = Value("")
 	local StatusText = Value("")
 
-	if States.PlayerDataService then
-		States.PlayerDataService.UserProfile:Observe(function(UserProfile: { [any]: any })
+	if States.Services.PlayerDataService then
+		States.Services.PlayerDataService.UserProfile:Observe(function(UserProfile: { [any]: any })
 			NicknameText:set(UserProfile.Nickname)
 			StatusText:set(UserProfile.Status)
 		end)

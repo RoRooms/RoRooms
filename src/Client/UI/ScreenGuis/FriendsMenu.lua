@@ -121,8 +121,8 @@ return function(Props)
 
 	local DisconnectOpen = Observer(MenuOpen):onChange(function()
 		if MenuOpen:get() then
-			if States.FriendsController then
-				States.FriendsController:UpdateFriends()
+			if States.Controllers.FriendsController then
+				States.Controllers.FriendsController:UpdateFriends()
 			end
 		end
 	end)

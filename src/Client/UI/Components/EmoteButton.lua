@@ -53,8 +53,8 @@ return function(Props)
 			if Props.Callback then
 				Props.Callback()
 			end
-			if States.EmotesController then
-				States.EmotesController:PlayEmote(Props.EmoteId:get())
+			if States.Controllers.EmotesController then
+				States.Controllers.EmotesController:PlayEmote(Props.EmoteId:get())
 			end
 		end,
 		IsHolding = IsHolding,

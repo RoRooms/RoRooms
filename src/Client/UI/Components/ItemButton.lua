@@ -54,8 +54,8 @@ return function(Props)
 			if Props.Callback then
 				Props.Callback()
 			end
-			if States.ItemsController then
-				States.ItemsController:ToggleEquipItem(Props.ItemId:get())
+			if States.Controllers.ItemsController then
+				States.Controllers.ItemsController:ToggleEquipItem(Props.ItemId:get())
 			end
 		end,
 		IsHolding = IsHolding,
