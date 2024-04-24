@@ -8,8 +8,6 @@ local Packages = RoRooms.Packages
 local Knit = require(Packages.Knit)
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local States = require(Client.UI.States)
-local NeoHotbar = require(Packages.NeoHotbar)
-local Signal = require(Packages.Signal)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Themer = require(OnyxUI.Utils.Themer)
 local Theme = require(script.Parent.OnyxUITheme)
@@ -61,9 +59,6 @@ function UIController:KnitStart()
 		end
 	end
 
-	NeoHotbar:Start()
-	self.NeoHotbarOnStart:Fire()
-
 	self:_StartACM()
 end
 
@@ -73,8 +68,6 @@ function UIController:KnitInit()
 		Parent = Knit.Player:WaitForChild("PlayerGui"),
 		ResetOnSpawn = false,
 	}
-
-	self.NeoHotbarOnStart = Signal.new()
 
 	self.XPMultiplierDropdownIcons = {}
 end
