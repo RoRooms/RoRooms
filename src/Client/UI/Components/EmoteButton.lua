@@ -81,12 +81,31 @@ return function(Props)
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Position = UDim2.fromScale(0.5, 0.45),
 				Text = Computed(function()
-					return Props.Emote:get().Emoji or "🪩"
+					if Props.Emote:get() and Props.Emote:get().Emoji then
+						return Props.Emote:get().Emoji
+					else
+						return "🪩"
+					end
 				end),
-				TextSize = Themer.Theme.TextSize["2.25"],
+				TextSize = Themer.Theme.TextSize["1.875"],
 				LayoutOrder = 1,
 				RichText = false,
 				ClipsDescendants = false,
+			},
+			Text {
+				Name = "EmoteName",
+				LayoutOrder = 3,
+				AnchorPoint = Vector2.new(0.5, 1),
+				Position = UDim2.fromScale(0.5, 1),
+				Size = UDim2.fromScale(1, 0),
+				Text = Computed(function()
+					return Props.Emote:get().Name or Props.EmoteId:get()
+				end),
+				TextSize = Themer.Theme.TextSize["0.875"],
+				TextTruncate = Enum.TextTruncate.AtEnd,
+				AutomaticSize = Enum.AutomaticSize.Y,
+				TextXAlignment = Enum.TextXAlignment.Center,
+				TextWrapped = false,
 			},
 			Frame {
 				Name = "Label",
@@ -140,20 +159,6 @@ return function(Props)
 						AutoLocalize = false,
 					},
 				},
-			},
-			Text {
-				Name = "EmoteName",
-				LayoutOrder = 3,
-				AnchorPoint = Vector2.new(0.5, 1),
-				Position = UDim2.fromScale(0.5, 1),
-				Size = UDim2.fromScale(1, 0),
-				Text = Computed(function()
-					return Props.Emote:get().Name or Props.EmoteId:get()
-				end),
-				TextSize = 14,
-				TextTruncate = Enum.TextTruncate.AtEnd,
-				AutomaticSize = Enum.AutomaticSize.Y,
-				TextXAlignment = Enum.TextXAlignment.Center,
 			},
 		},
 	}

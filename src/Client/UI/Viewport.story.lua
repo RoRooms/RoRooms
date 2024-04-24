@@ -96,7 +96,7 @@ local ROROOMS_CONFIG = {
 				Animation = Instance.new("Animation"),
 			},
 			Emote4 = {
-				Name = "Emote",
+				Name = "Emote Gaga",
 				Emoji = "⭐",
 				Animation = Instance.new("Animation"),
 			},
