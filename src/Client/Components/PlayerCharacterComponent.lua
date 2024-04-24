@@ -28,8 +28,8 @@ function PlayerCharacterComponent:_PlayEmote(EmoteId: string, Emote: { [any]: an
 end
 
 function PlayerCharacterComponent:Start()
-	self.Server.PlayEmote:Connect(function(EmoteName: string, Emote: { [any]: any })
-		self:_PlayEmote(EmoteName, Emote)
+	self.Server.PlayEmote:Connect(function(EmoteId: string, Emote: { [any]: any })
+		self:_PlayEmote(EmoteId, Emote)
 	end)
 end
 

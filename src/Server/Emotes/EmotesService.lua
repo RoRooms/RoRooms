@@ -2,9 +2,6 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent)
 
 local Config = RoRooms.Config
 local Server = RoRooms.Server
-local Packages = RoRooms.Packages
-
-local Knit = require(Packages.Knit)
 
 local PlayerCharacterComponent = require(Server.Components.PlayerCharacterComponent)
 local PlayerDataService = require(Server.PlayerData.PlayerDataService)
@@ -15,42 +12,52 @@ local EmotesService = {
 }
 
 function EmotesService.Client:PlayEmote(Player: Player, EmoteId: string)
-	local Emote = Config.EmotesSystem.Emotes[EmoteId]
-	if not Emote then
-		return
-	end
+	return self.Server:PlayEmote(Player, EmoteId)
+end
 
-	local AbleToUse = true
-	local FailureReason
-	if Emote.RequirementCallback then
-		AbleToUse, FailureReason = Emote.RequirementCallback(Knit.Player, EmoteId, Emote)
-		if not AbleToUse and not FailureReason then
-			FailureReason = "Insuffient requirements to use " .. Emote.Name .. " emote."
+function EmotesService:PlayEmote(Player: Player, EmoteId: string)
+	local Emote = Config.EmotesSystem.Emotes[EmoteId]
+	if Emote then
+		local CanUse, FailureReason = self:CanPlayerUseEmote(Player, EmoteId, Emote)
+		if CanUse then
+			local Character = Player.Character
+			if Character then
+				local CharacterClass = PlayerCharacterComponent:FromInstance(Character)
+				if CharacterClass then
+					CharacterClass:PlayEmote(EmoteId, Emote)
+				end
+			end
+		else
+			return CanUse, FailureReason
 		end
 	else
-		AbleToUse = true
+		return false, "Emote does not exist."
 	end
-	if AbleToUse and Emote.LevelRequirement then
+end
+
+function EmotesService:CanPlayerUseEmote(Player: Player, EmoteId: string, Emote)
+	local CanUse = true
+	local FailureReason = nil
+
+	if Emote.LevelRequirement then
 		local Profile = PlayerDataService:GetProfile(Player)
 		if Profile then
-			AbleToUse = Profile.Data.Level >= Emote.LevelRequirement
+			CanUse = Profile.Data.Level >= Emote.LevelRequirement
 		else
-			AbleToUse = false
+			CanUse = false
+			FailureReason = `Emote requires level {Emote.LevelRequirement}.`
 		end
-		FailureReason = not AbleToUse and Emote.Name .. " emote requires level " .. Emote.LevelRequirement .. "."
 	end
 
-	if AbleToUse then
-		local Character = Player.Character
-		if Character then
-			local CharacterClass = PlayerCharacterComponent:FromInstance(Character)
-			if CharacterClass then
-				CharacterClass:PlayEmote(EmoteId, Emote)
-			end
+	if Emote.RequirementCallback then
+		CanUse, FailureReason = Emote.RequirementCallback(Player, EmoteId, Emote)
+
+		if (not CanUse) and (FailureReason == nil) then
+			FailureReason = `Insuffient requirements to use {Emote.Name} emote.`
 		end
-	elseif FailureReason then
-		return FailureReason
 	end
+
+	return CanUse, FailureReason
 end
 
 function EmotesService:KnitStart() end
