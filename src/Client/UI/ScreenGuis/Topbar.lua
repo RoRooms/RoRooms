@@ -53,23 +53,38 @@ return function(Props)
 					1
 				),
 				BaseResolution = Vector2.new(739, 789),
-				ScaleClamps = { Min = 0.75, Max = math.huge },
+				ScaleClamps = { Min = 1, Max = math.huge },
 
 				[Children] = {
 					Modifier.ListLayout {
 						Padding = Computed(function()
-							return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+							return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 						end),
 						HorizontalAlignment = Enum.HorizontalAlignment.Center,
 					},
 
 					Frame {
 						Name = "TopbarButtons",
+						BackgroundColor3 = Themer.Theme.Colors.Base.Main,
+						BackgroundTransparency = States.PreferredTransparency,
 
 						[Children] = {
 							Modifier.ListLayout {
+								Padding = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+								end),
 								FillDirection = Enum.FillDirection.Horizontal,
 								VerticalAlignment = Enum.VerticalAlignment.Center,
+							},
+							Modifier.Corner {
+								CornerRadius = Computed(function()
+									return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+								end),
+							},
+							Modifier.Padding {
+								Padding = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["0.5"]:get() / 1.25)
+								end),
 							},
 
 							ForValues(States.TopbarButtons, function(Button)
@@ -122,7 +137,7 @@ return function(Props)
 
 							Frame {
 								Size = Computed(function()
-									return UDim2.fromOffset(120, Themer.Theme.StrokeThickness["1"]:get())
+									return UDim2.fromOffset(100, Themer.Theme.StrokeThickness["1"]:get())
 								end),
 								AutomaticSize = Enum.AutomaticSize.None,
 								BackgroundTransparency = 0,

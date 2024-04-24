@@ -30,10 +30,16 @@ return function(Props)
 
 	return BaseButton {
 		Name = "TopbarButton",
-		BackgroundColor3 = Themer.Theme.Colors.Base.Main,
-		BackgroundTransparency = States.PreferredTransparency,
+		BackgroundColor3 = Themer.Theme.Colors.Primary.Main,
+		BackgroundTransparency = Computed(function()
+			if MenuOpen:get() then
+				return 0.9
+			else
+				return 1
+			end
+		end),
 		Size = Computed(function()
-			local BaseSize = UDim2.fromOffset(65, 65)
+			local BaseSize = UDim2.fromOffset(45, 45)
 			local SizeMultiplier = Props.SizeMultiplier:get()
 			return UDim2.fromOffset(BaseSize.X.Offset * SizeMultiplier, BaseSize.Y.Offset * SizeMultiplier)
 		end),
@@ -59,39 +65,15 @@ return function(Props)
 			},
 			Modifier.Corner {
 				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius["4"]:get())
+					return UDim.new(0, Themer.Theme.CornerRadius["Full"]:get())
 				end),
-			},
-			Modifier.Stroke {
-				Thickness = Spring(
-					Computed(function()
-						if MenuOpen:get() then
-							return Themer.Theme.StrokeThickness["2"]:get()
-						else
-							return Themer.Theme.StrokeThickness["1"]:get()
-						end
-					end),
-					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
-				),
-				Color = Spring(
-					Computed(function()
-						if MenuOpen:get() then
-							return Themer.Theme.Colors.Primary.Main:get()
-						else
-							return Themer.Theme.Colors.Neutral.Main:get()
-						end
-					end),
-					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
-				),
 			},
 
 			Icon {
 				Image = Props.IconImage,
 				Size = Spring(
 					Computed(function()
-						local BaseSize = 40
+						local BaseSize = 30
 						BaseSize = BaseSize * Props.SizeMultiplier:get()
 						if not IsHolding:get() then
 							return UDim2.fromOffset(BaseSize, BaseSize)
