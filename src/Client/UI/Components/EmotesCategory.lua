@@ -17,6 +17,7 @@ local ForPairs = Fusion.ForPairs
 
 local Frame = require(OnyxUI.Components.Frame)
 local Text = require(OnyxUI.Components.Text)
+local Icon = require(OnyxUI.Components.Icon)
 local EmoteButton = require(Client.UI.Components.EmoteButton)
 
 return function(Props: { [any]: any })
@@ -25,6 +26,10 @@ return function(Props: { [any]: any })
 	Props.Size = EnsureValue(Props.Size, "UDim2", UDim2.fromScale(1, 0))
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
 	Props.LayoutOrder = EnsureValue(Props.LayoutOrder, "number", 0)
+
+	local Category = Computed(function()
+		return Config.EmotesSystem.Categories[Props.CategoryName:get()]
+	end)
 
 	return Frame {
 		Name = Props.Name,
@@ -35,8 +40,33 @@ return function(Props: { [any]: any })
 		[Children] = {
 			Modifier.ListLayout {},
 
-			Text {
-				Text = Props.CategoryName,
+			Frame {
+				Name = "Title",
+
+				[Children] = {
+					Modifier.ListLayout {
+						FillDirection = Enum.FillDirection.Horizontal,
+						Padding = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+						end),
+					},
+
+					Icon {
+						Image = Computed(function()
+							if Category:get() and Category:get().Icon then
+								return Category:get().Icon
+							else
+								return "rbxassetid://17266112920"
+							end
+						end),
+						Size = Computed(function()
+							return UDim2.fromOffset(Themer.Theme.TextSize["1"]:get(), Themer.Theme.TextSize["1"]:get())
+						end),
+					},
+					Text {
+						Text = Props.CategoryName,
+					},
+				},
 			},
 			Frame {
 				Name = "Emotes",

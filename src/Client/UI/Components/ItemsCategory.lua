@@ -8,6 +8,7 @@ local Client = RoRooms.Client
 local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -16,6 +17,7 @@ local ForPairs = Fusion.ForPairs
 
 local Frame = require(OnyxUI.Components.Frame)
 local Text = require(OnyxUI.Components.Text)
+local Icon = require(OnyxUI.Components.Icon)
 local ItemButton = require(Client.UI.Components.ItemButton)
 
 return function(Props: { [any]: any })
@@ -42,8 +44,34 @@ return function(Props: { [any]: any })
 				Padding = UDim.new(0, 8),
 				SortOrder = Enum.SortOrder.LayoutOrder,
 			},
-			Text {
-				Text = Props.CategoryName,
+
+			Frame {
+				Name = "Title",
+
+				[Children] = {
+					Modifier.ListLayout {
+						FillDirection = Enum.FillDirection.Horizontal,
+						Padding = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+						end),
+					},
+
+					Icon {
+						Image = Computed(function()
+							if Category:get() and Category:get().Icon then
+								return Category:get().Icon
+							else
+								return "rbxassetid://17266112920"
+							end
+						end),
+						Size = Computed(function()
+							return UDim2.fromOffset(Themer.Theme.TextSize["1"]:get(), Themer.Theme.TextSize["1"]:get())
+						end),
+					},
+					Text {
+						Text = Props.CategoryName,
+					},
+				},
 			},
 			Frame {
 				Name = "Items",
