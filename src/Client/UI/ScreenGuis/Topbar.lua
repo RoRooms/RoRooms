@@ -116,6 +116,9 @@ return function(Props)
 									return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 								end),
 							},
+							Modifier.Stroke {
+								Color = Themer.Theme.Colors.Neutral.Main,
+							},
 
 							Frame {
 								Size = Computed(function()

@@ -63,9 +63,28 @@ return function(Props)
 				end),
 			},
 			Modifier.Stroke {
-				Thickness = Themer.Theme.StrokeThickness["1"],
-				Color = Themer.Theme.Colors.Primary.Main,
-				Enabled = MenuOpen,
+				Thickness = Spring(
+					Computed(function()
+						if MenuOpen:get() then
+							return Themer.Theme.StrokeThickness["2"]:get()
+						else
+							return Themer.Theme.StrokeThickness["1"]:get()
+						end
+					end),
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening
+				),
+				Color = Spring(
+					Computed(function()
+						if MenuOpen:get() then
+							return Themer.Theme.Colors.Primary.Main:get()
+						else
+							return Themer.Theme.Colors.Neutral.Main:get()
+						end
+					end),
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening
+				),
 			},
 
 			Icon {
