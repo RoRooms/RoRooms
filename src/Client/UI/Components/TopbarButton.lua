@@ -11,7 +11,6 @@ local Themer = require(OnyxUI.Utils.Themer)
 local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
-local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
 
@@ -22,7 +21,10 @@ return function(Props)
 	Props.SizeMultiplier = EnsureValue(Props.SizeMultiplier, "number", 1)
 	Props.IconImage = EnsureValue(Props.IconImage, "string", "")
 	Props.MenuName = EnsureValue(Props.MenuName, "string", "")
+	Props.Icon = EnsureValue(Props.Icon, "string", "")
+	Props.IconFilled = EnsureValue(Props.IconFilled, "string", "")
 
+	local IsHovering = Value(false)
 	local IsHolding = Value(false)
 	local MenuOpen = Computed(function()
 		return States.CurrentMenu:get() == Props.MenuName:get()
@@ -32,7 +34,7 @@ return function(Props)
 		Name = "TopbarButton",
 		BackgroundColor3 = Themer.Theme.Colors.Primary.Main,
 		BackgroundTransparency = Computed(function()
-			if MenuOpen:get() then
+			if IsHovering:get() or MenuOpen:get() then
 				return 0.9
 			else
 				return 1
@@ -46,6 +48,7 @@ return function(Props)
 		AutomaticSize = Enum.AutomaticSize.None,
 		LayoutOrder = Props.LayoutOrder,
 
+		IsHovering = IsHovering,
 		IsHolding = IsHolding,
 		OnActivated = function()
 			if States.CurrentMenu:get() == Props.MenuName:get() then
@@ -70,20 +73,18 @@ return function(Props)
 			},
 
 			Icon {
-				Image = Props.IconImage,
-				Size = Spring(
-					Computed(function()
-						local BaseSize = 30
-						BaseSize = BaseSize * Props.SizeMultiplier:get()
-						if not IsHolding:get() then
-							return UDim2.fromOffset(BaseSize, BaseSize)
-						else
-							return UDim2.fromOffset(BaseSize * 0.9, BaseSize * 0.9)
-						end
-					end),
-					40,
-					1
-				),
+				Name = "Icon",
+				Visible = Computed(function()
+					return not MenuOpen:get()
+				end),
+				Image = Props.Icon,
+				Size = UDim2.fromOffset(30, 30),
+			},
+			Icon {
+				Name = "IconFilled",
+				Visible = MenuOpen,
+				Image = Props.IconFilled,
+				Size = UDim2.fromOffset(30, 30),
 			},
 		},
 	}

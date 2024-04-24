@@ -88,12 +88,7 @@ return function(Props)
 							},
 
 							ForValues(States.TopbarButtons, function(Button)
-								return TopbarButton {
-									MenuName = Button.MenuName,
-									IconImage = Button.IconImage,
-									SizeMultiplier = Button.SizeMultiplier,
-									LayoutOrder = Button.LayoutOrder,
-								}
+								return TopbarButton(Button)
 							end, Fusion.cleanup),
 						},
 					},

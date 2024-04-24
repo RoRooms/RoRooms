@@ -4,27 +4,32 @@ local Topbar = {
 	NativeButtons = {
 		Settings = {
 			MenuName = "SettingsMenu",
-			IconImage = "rbxassetid://15091717549",
+			Icon = "rbxassetid://17273236509",
+			IconFilled = "rbxassetid://17273236289",
 			LayoutOrder = 5,
 		},
 		Emotes = {
 			MenuName = "EmotesMenu",
-			IconImage = "rbxassetid://15091717452",
+			Icon = "rbxassetid://17273236115",
+			IconFilled = "rbxassetid://17273235955",
 			LayoutOrder = 3,
 		},
 		Friends = {
 			MenuName = "FriendsMenu",
-			IconImage = "rbxassetid://16037713145",
+			Icon = "rbxassetid://17273235804",
+			IconFilled = "rbxassetid://17273235655",
 			LayoutOrder = 2,
 		},
 		Profile = {
 			MenuName = "ProfileMenu",
-			IconImage = "rbxassetid://15091717235",
+			Icon = "rbxassetid://17273235245",
+			IconFilled = "rbxassetid://17273235099",
 			LayoutOrder = 1,
 		},
 		Worlds = {
 			MenuName = "WorldsMenu",
-			IconImage = "rbxassetid://15091717321",
+			Icon = "rbxassetid://17273758646",
+			IconFilled = "rbxassetid://17273758509",
 			LayoutOrder = 4,
 		},
 	},
@@ -41,7 +46,7 @@ function Topbar:AddTopbarButton(
 	Button: {
 		[string]: {
 			MenuName: string,
-			IconImage: string,
+			Icon: string,
 			SizeMultiplier: number,
 			LayoutOrder: number,
 		},
