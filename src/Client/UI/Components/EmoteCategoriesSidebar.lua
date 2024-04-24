@@ -30,6 +30,7 @@ return function(Props)
 						Category = Name,
 						Icon = Category.Icon,
 						Color = Category.TintColor,
+						LayoutOrder = Category.LayoutOrder,
 
 						OnActivated = function()
 							States.EmotesMenu.FocusedCategory:set(Props.CategoryName:get(), true)
