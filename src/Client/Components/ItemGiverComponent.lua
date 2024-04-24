@@ -22,17 +22,15 @@ local ItemGiverComponent = Component.new {
 
 function ItemGiverComponent:GiveItem(Player: Player)
 	if Player == Players.LocalPlayer then
-		if self.Item:get() then
-			ItemsController:ToggleEquipItem(self.ItemId:get())
-		end
+		ItemsController:ToggleEquipItem(self.ItemId:get())
 	end
 end
 
 function ItemGiverComponent:GetProximityPrompt()
-	local ProximityPrompt = self.Instance:FindFirstChild("RR_ItemPrompt")
+	local ProximityPrompt = self.Instance:FindFirstChild("RR_ItemGiverPrompt")
 	if not ProximityPrompt then
 		ProximityPrompt = New "ProximityPrompt" {
-			Name = "RR_ItemPrompt",
+			Name = "RR_ItemGiverPrompt",
 			Parent = self.Instance,
 			ActionText = "",
 			RequiresLineOfSight = false,
@@ -45,17 +43,21 @@ function ItemGiverComponent:GetProximityPrompt()
 			return self.Item:get() ~= nil
 		end),
 		ActionText = Computed(function()
-			if self.Equipped:get() then
-				return "Unequip"
+			if self.Item:get() then
+				if self.Equipped:get() then
+					return "Unequip"
+				else
+					return "Equip"
+				end
 			else
-				return "Equip"
+				return self.ItemId:get()
 			end
 		end),
 		ObjectText = Computed(function()
 			if self.Item:get() then
 				return self.Item:get().Name
 			else
-				return "Item"
+				return "Invalid item"
 			end
 		end),
 	}
@@ -83,8 +85,8 @@ function ItemGiverComponent:Construct()
 	if not self.ItemId:get() then
 		warn("No RR_ItemId attribute defined for ItemGiver", self.Instance)
 	end
-	if not ItemGiverComponent.Item:get() then
-		warn("Could not find item from ItemId", self.ItemId:get(), self.Instance)
+	if not self.Item:get() then
+		warn("Could not find item from RR_ItemId", self.ItemId:get(), self.Instance)
 	end
 end
 
