@@ -53,6 +53,10 @@ local States = {
 	TopbarInset = Value(Rect.new(Vector2.new(), Vector2.new())),
 	RobloxMenuOpen = Value(false),
 	PreferredTransparency = Value(0.25),
+	Worlds = {
+		TopWorlds = Value({}),
+		RandomWorlds = Value({}),
+	},
 }
 
 function States:_StartExtensions()
