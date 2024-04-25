@@ -10,7 +10,7 @@ local States = require(Client.UI.States)
 local Knit = require(Packages.Knit)
 local Topbar = require(Client.UI.States.Topbar)
 
-local WorldsService
+local WorldRegistryService
 
 local FRIENDS_ONLINE_CACHE_PERIOD = 30
 
@@ -25,7 +25,7 @@ function FriendsController:UpdateFriendsInRoRooms()
 	for _, Friend in ipairs(self.FriendsOnline) do
 		local WorldIsRegistered = false
 		if Friend.PlaceId then
-			local Success, Result = WorldsService:IsWorldRegistered(Friend.PlaceId):await()
+			local Success, Result = WorldRegistryService:IsWorldRegistered(Friend.PlaceId):await()
 			if Success then
 				WorldIsRegistered = Result
 			end
@@ -66,7 +66,7 @@ function FriendsController:UpdateFriends(ForceUpdate: boolean?)
 end
 
 function FriendsController:KnitStart()
-	WorldsService = Knit.GetService("WorldsService")
+	WorldRegistryService = Knit.GetService("WorldRegistryService")
 
 	UIController:MountUI(FriendsMenu {})
 	Topbar:AddTopbarButton("Friends", Topbar.NativeButtons.Friends)
