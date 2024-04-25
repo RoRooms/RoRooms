@@ -4,6 +4,9 @@ local Shared = RoRooms.Shared
 
 local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Colors = require(OnyxUI.Utils.Colors)
+local Fusion = require(OnyxUI._Packages.Fusion)
+
+local New = Fusion.New
 
 return {
 	Colors = {
@@ -70,5 +73,22 @@ return {
 		Base = 50,
 	},
 	SpringDampening = 1,
-	Sound = {},
+	Sound = {
+		Hover = New "Sound" {
+			SoundId = "rbxassetid://10066936758",
+			Volume = 0,
+		},
+		Click = New "Sound" {
+			SoundId = "rbxassetid://16480549841",
+			Volume = 0,
+		},
+		Focus = New "Sound" {
+			SoundId = "rbxassetid://16480549841",
+			Volume = 0,
+		},
+		Switch = New "Sound" {
+			SoundId = "rbxassetid://9119713951",
+			Volume = 0,
+		},
+	},
 }
