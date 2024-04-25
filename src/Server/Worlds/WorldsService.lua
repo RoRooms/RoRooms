@@ -14,11 +14,18 @@ local WorldsService = {
 	RandomWorlds = {},
 }
 
-function WorldsService.Client:GetRandomWorlds(PageSize: number, PageCount: number, CurrentPage: number)
+function WorldsService.Client:GetTopWorlds(StartingPage: number, PageCount: number, PageSize: number)
 	local Pages = {}
 
-	for Count = 1, PageCount, 1 do
+	for CurrentPage = StartingPage, (StartingPage + PageCount) do
 		local Page = {}
+
+		for Index = (CurrentPage * PageSize), ((CurrentPage * PageSize) + (PageCount * PageSize)) do
+			local PlaceId = self.TopWorlds[Index]
+			if PlaceId then
+				table.insert(Page, PlaceId)
+			end
+		end
 
 		table.insert(Pages, Page)
 	end
@@ -26,12 +33,23 @@ function WorldsService.Client:GetRandomWorlds(PageSize: number, PageCount: numbe
 	return Pages
 end
 
-function WorldsService.Client:IsWorldRegistered(_Player: Player, PlaceId: number)
-	if typeof(PlaceId) ~= "number" then
-		return
+function WorldsService.Client:GetRandomWorlds(StartingPage: number, PageCount: number, PageSize: number)
+	local Pages = {}
+
+	for CurrentPage = StartingPage, (StartingPage + PageCount) do
+		local Page = {}
+
+		for Index = (CurrentPage * PageSize), (CurrentPage * PageSize) + (PageCount * PageSize) do
+			local PlaceId = self.RandomWorlds[Index]
+			if PlaceId then
+				table.insert(Page, PlaceId)
+			end
+		end
+
+		table.insert(Pages, Page)
 	end
 
-	return WorldRegistryService:IsWorldRegistered(PlaceId)
+	return Pages
 end
 
 function WorldsService.Client:TeleportToWorld(Player: Player, PlaceId: number)
@@ -40,6 +58,14 @@ function WorldsService.Client:TeleportToWorld(Player: Player, PlaceId: number)
 	end
 
 	return self.Server:TeleportPlayerToWorld(Player, PlaceId)
+end
+
+function WorldsService.Client:IsWorldRegistered(_Player: Player, PlaceId: number)
+	if typeof(PlaceId) ~= "number" then
+		return
+	end
+
+	return WorldRegistryService:IsWorldRegistered(PlaceId)
 end
 
 function WorldsService:TeleportPlayerToWorld(Player: Player, PlaceId: number)
