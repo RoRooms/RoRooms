@@ -14,14 +14,14 @@ local WorldsService = {
 	RandomWorlds = {},
 }
 
-function WorldsService.Client:GetTopWorlds(StartingPage: number, PageCount: number, PageSize: number)
+function WorldsService.Client:GetTopWorlds(_Player: Player, StartingPage: number, PageCount: number, PageSize: number)
 	local Pages = {}
 
 	for CurrentPage = StartingPage, (StartingPage + PageCount) do
 		local Page = {}
 
 		for Index = (CurrentPage * PageSize), ((CurrentPage * PageSize) + (PageCount * PageSize)) do
-			local PlaceId = self.TopWorlds[Index]
+			local PlaceId = WorldsService.TopWorlds[Index]
 			if PlaceId then
 				table.insert(Page, PlaceId)
 			end
@@ -33,14 +33,19 @@ function WorldsService.Client:GetTopWorlds(StartingPage: number, PageCount: numb
 	return Pages
 end
 
-function WorldsService.Client:GetRandomWorlds(StartingPage: number, PageCount: number, PageSize: number)
+function WorldsService.Client:GetRandomWorlds(
+	_Player: Player,
+	StartingPage: number,
+	PageCount: number,
+	PageSize: number
+)
 	local Pages = {}
 
 	for CurrentPage = StartingPage, (StartingPage + PageCount) do
 		local Page = {}
 
 		for Index = (CurrentPage * PageSize), (CurrentPage * PageSize) + (PageCount * PageSize) do
-			local PlaceId = self.RandomWorlds[Index]
+			local PlaceId = WorldsService.RandomWorlds[Index]
 			if PlaceId then
 				table.insert(Page, PlaceId)
 			end
