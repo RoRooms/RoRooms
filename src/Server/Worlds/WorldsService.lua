@@ -27,7 +27,11 @@ function WorldsService.Client:GetTopWorlds(_Player: Player, StartingPage: number
 			end
 		end
 
-		table.insert(Pages, Page)
+		if #Page >= 1 then
+			table.insert(Pages, Page)
+		else
+			break
+		end
 	end
 
 	return Pages
@@ -51,7 +55,11 @@ function WorldsService.Client:GetRandomWorlds(
 			end
 		end
 
-		table.insert(Pages, Page)
+		if #Page >= 1 then
+			table.insert(Pages, Page)
+		else
+			break
+		end
 	end
 
 	return Pages
