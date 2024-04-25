@@ -48,6 +48,7 @@ return function(Props)
 					1
 				),
 				BaseResolution = Vector2.new(739, 789),
+				ScaleClamps = { Min = 1, Max = 1 },
 
 				[Children] = {
 					MenuFrame {

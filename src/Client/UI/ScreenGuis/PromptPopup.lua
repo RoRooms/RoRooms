@@ -8,7 +8,6 @@ local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local States = require(Client.UI.States)
 local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
-local Prompts = require(Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -73,6 +72,7 @@ return function(Props)
 					Themer.Theme.SpringDampening
 				),
 				BaseResolution = Vector2.new(739, 789),
+				ScaleClamps = { Min = 1, Max = 1 },
 
 				[Children] = {
 					MenuFrame {
