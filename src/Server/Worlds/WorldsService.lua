@@ -81,7 +81,7 @@ function WorldsService:_UpdateRandomWorlds(WorldRegistry: { [string]: { any } })
 end
 
 function WorldsService:_LogWorldTeleport(PlaceId: number)
-	if self:IsWorldRegistered(PlaceId) then
+	if WorldRegistryService:IsWorldRegistered(PlaceId) then
 		self.WorldTeleportsStore:IncrementAsync(tostring(PlaceId), 1)
 	end
 end
