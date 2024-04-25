@@ -60,14 +60,6 @@ function WorldsService.Client:TeleportToWorld(Player: Player, PlaceId: number)
 	return self.Server:TeleportPlayerToWorld(Player, PlaceId)
 end
 
-function WorldsService.Client:IsWorldRegistered(_Player: Player, PlaceId: number)
-	if typeof(PlaceId) ~= "number" then
-		return
-	end
-
-	return WorldRegistryService:IsWorldRegistered(PlaceId)
-end
-
 function WorldsService:TeleportPlayerToWorld(Player: Player, PlaceId: number)
 	if WorldRegistryService:IsWorldRegistered(PlaceId) then
 		TeleportService:Teleport(PlaceId, Player)

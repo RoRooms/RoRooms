@@ -9,12 +9,21 @@ local REGISTRY_ASSET_ID = 16007140043
 
 local WorldRegistryService = {
 	Name = "WorldRegistryService",
+	Client = {},
 
 	WorldRegistry = {},
 	WorldRegistryLastUpdated = 0,
 
 	RegistryUpdated = Signal.new(),
 }
+
+function WorldRegistryService.Client:IsWorldRegistered(_Player: Player, PlaceId: number)
+	if typeof(PlaceId) ~= "number" then
+		return
+	end
+
+	return self.Server:IsWorldRegistered(PlaceId)
+end
 
 function WorldRegistryService:IsWorldRegistered(PlaceId: number)
 	return self.WorldRegistry[PlaceId] ~= nil
