@@ -11,7 +11,7 @@ function Worlds:AddTopWorlds(PageCount: number | nil)
 
 	if States.Services.WorldsService then
 		States.Services.WorldsService
-			:GetTopWorlds(math.floor(#States.Worlds.TopWorlds / PAGE_SIZE), PageCount, PAGE_SIZE)
+			:GetTopWorlds(math.ceil(#States.Worlds.TopWorlds:get() / PAGE_SIZE), PageCount, PAGE_SIZE)
 			:andThen(function(WorldPages: { [number]: { [number]: number } })
 				local NewTopWorlds = States.Worlds.TopWorlds:get()
 
@@ -33,7 +33,7 @@ function Worlds:AddRandomWorlds(PageCount: number | nil)
 
 	if States.Services.WorldsService then
 		States.Services.WorldsService
-			:GetRandomWorlds(math.floor(#States.Worlds.RandomWorlds / PAGE_SIZE), PageCount, PAGE_SIZE)
+			:GetRandomWorlds(math.ceil(#States.Worlds.RandomWorlds:get() / PAGE_SIZE), PageCount, PAGE_SIZE)
 			:andThen(function(WorldPages: { [number]: { [number]: number } })
 				local NewRandomWorlds = States.Worlds.RandomWorlds:get()
 
