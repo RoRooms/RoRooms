@@ -48,10 +48,30 @@ function Worlds:AddRandomWorlds(PageCount: number | nil)
 	end
 end
 
+function Worlds:ClearTopWorlds()
+	States.Worlds.TopWorlds:set({})
+end
+
 function Worlds:ClearRandomWorlds()
 	States.Worlds.RandomWorlds:set({})
 end
 
-function Worlds:Start() end
+function Worlds:Start()
+	States.Services.WorldsService.TopWorldsInitialized:Connect(function()
+		self:ClearRandomWorlds()
+		self:AddRandomWorlds()
+	end)
+	States.Services.WorldsService.RandomWorldsInitialized:Connect(function()
+		self:ClearTopWorlds()
+		self:AddTopWorlds()
+	end)
+
+	if #States.Worlds.TopWorlds:get() == 0 then
+		self:AddTopWorlds()
+	end
+	if #States.Worlds.RandomWorlds:get() == 0 then
+		self:AddRandomWorlds()
+	end
+end
 
 return Worlds

@@ -5,13 +5,20 @@ local TeleportService = game:GetService("TeleportService")
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
 local WorldRegistryService = require(script.Parent.WorldRegistryService)
 local ShuffleArray = require(RoRooms.Shared.ExtPackages.ShuffleArray)
+local Knit = require(RoRooms.Packages.Knit)
 
 local WorldsService = {
 	Name = "WorldsService",
-	Client = {},
+	Client = {
+		TopWorldsInitialized = Knit.CreateSignal(),
+		RandomWorldsInitialized = Knit.CreateSignal(),
+	},
 
 	TopWorlds = {},
 	RandomWorlds = {},
+
+	_TopWorldsAdvancedLastCheck = true,
+	_TopWorldsPages = nil,
 }
 
 function WorldsService.Client:GetTopWorlds(_Player: Player, StartingPage: number, PageCount: number, PageSize: number)
@@ -91,6 +98,8 @@ function WorldsService:_UpdateRandomWorlds(WorldRegistry: { [string]: { any } })
 	end
 
 	self.RandomWorlds = ShuffleArray(RandomWorlds)
+
+	self.Client.RandomWorldsInitialized:FireAll()
 end
 
 function WorldsService:_LogWorldTeleport(PlaceId: number)
@@ -99,54 +108,61 @@ function WorldsService:_LogWorldTeleport(PlaceId: number)
 	end
 end
 
-function WorldsService:_SpawnTopWorldsUpdateLoop()
+function WorldsService:_SpawnTopWorldsLoadLoop()
 	return task.spawn(function()
-		local Pages = self.PreviousWorldTeleportsStore:GetSortedAsync(false, 100)
-		local AdvancedLastCheck = true
+		self._TopWorldsPages = self.WorldTeleportsStore:GetSortedAsync(false, 100)
 
-		self.TopWorlds = {}
+		self:_LoadCurrentTopWorldsPage()
+		self:_AdvanceToNextTopWorldsPage()
+		self.Client.TopWorldsInitialized:FireAll()
 
-		while true do
-			local CurrentPage = Pages:GetCurrentPage()
-
-			if AdvancedLastCheck then
-				for _, Entry in ipairs(CurrentPage) do
-					print(Entry.value)
-
-					table.insert(self.TopWorlds, Entry.value)
-				end
-			end
-
-			if Pages.IsFinished then
-				AdvancedLastCheck = false
-			else
-				Pages:AdvanceToNextPageAsync()
-
-				AdvancedLastCheck = true
-			end
-
-			task.wait(5)
+		while task.wait(5) do
+			self:_LoadCurrentTopWorldsPage()
+			self:_AdvanceToNextTopWorldsPage()
 		end
 	end)
 end
 
+function WorldsService:_LoadCurrentTopWorldsPage()
+	local CurrentPage = self._TopWorldsPages:GetCurrentPage()
+
+	if self._TopWorldsAdvancedLastCheck then
+		for _, Entry in ipairs(CurrentPage) do
+			table.insert(self.TopWorlds, tonumber(Entry.key))
+		end
+	end
+end
+
+function WorldsService:_AdvanceToNextTopWorldsPage()
+	if self._TopWorldsPages.IsFinished then
+		self._TopWorldsAdvancedLastCheck = false
+	else
+		self._TopWorldsPages:AdvanceToNextPageAsync()
+
+		self._TopWorldsAdvancedLastCheck = true
+	end
+end
+
 function WorldsService:KnitStart()
-	self:_SpawnTopWorldsUpdateLoop()
+	self:_SpawnTopWorldsLoadLoop()
 
 	WorldRegistryService.RegistryUpdated:Connect(function(WorldRegistry: { [string]: {} })
 		self:_UpdateRandomWorlds(WorldRegistry)
 	end)
 
 	Players.PlayerAdded:Connect(function(Player)
-		self:_LogWorldTeleport(Player:GetJoinData().SourcePlaceId)
+		local JoinData = Player:GetJoinData()
+		if JoinData and JoinData.SourcePlaceId then
+			self:_LogWorldTeleport(JoinData.SourcePlaceId)
+		end
 	end)
 end
 
 function WorldsService:KnitInit()
 	self.WorldTeleportsStore =
-		DataStoreService:GetOrderedDataStore("WorldTeleports", tostring(math.floor(os.time() / 86400)))
+		DataStoreService:GetOrderedDataStore("RR_WorldTeleports", tostring(math.floor(os.time() / 86400)))
 	self.PreviousWorldTeleportsStore =
-		DataStoreService:GetOrderedDataStore("WorldTeleports", tostring(math.floor(os.time() / 86400) - 1))
+		DataStoreService:GetOrderedDataStore("RR_WorldTeleports", tostring(math.floor(os.time() / 86400) - 1))
 end
 
 return WorldsService
