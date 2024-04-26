@@ -37,7 +37,7 @@ local States = {
 		FocusedCategory = Value(nil),
 	},
 	WorldPageMenu = {
-		PlaceId = Value(8310127828),
+		PlaceId = Value(),
 	},
 	ItemsMenuOpen = Value(false),
 	LocalPlayerData = Value({}),

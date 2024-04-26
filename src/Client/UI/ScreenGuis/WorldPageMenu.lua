@@ -77,108 +77,133 @@ return function(Props)
 							40,
 							1
 						),
+						BackgroundTransparency = States.PreferredTransparency,
 
 						[Children] = {
-							Modifier.Padding {
-								Padding = Computed(function()
-									return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-								end),
-							},
+							Modifier.ListLayout {},
 
 							TitleBar {
 								Title = "World",
 								CloseButtonDisabled = true,
 							},
-							Image {
-								Name = "Thumbnail",
-								Image = Computed(function()
-									if PlaceInfo:get() then
-										return `rbxassetid://{PlaceInfo:get().IconImageAssetId}`
-									else
-										return "rbxasset://textures/ui/GuiImagePlaceholder.png"
-									end
-								end),
-								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 80)),
-								ScaleType = Enum.ScaleType.Crop,
-
-								[Children] = {
-									Modifier.Corner {
-										CornerRadius = Computed(function()
-											return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-										end),
-									},
-								},
-							},
 							Frame {
-								Name = "WorldInfo",
+								Name = "Contents",
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 
 								[Children] = {
-									Modifier.ListLayout {},
+									Modifier.ListLayout {
+										Padding = Computed(function()
+											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+										end),
+									},
 
-									Text {
+									Image {
+										Name = "Thumbnail",
+										Image = Computed(function()
+											if PlaceInfo:get() and PlaceInfo:get().IconImageAssetId then
+												return `rbxassetid://{PlaceInfo:get().IconImageAssetId}`
+											else
+												return "rbxasset://textures/ui/GuiImagePlaceholder.png"
+											end
+										end),
+										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 80)),
+										ScaleType = Enum.ScaleType.Crop,
+
+										[Children] = {
+											Modifier.Corner {},
+										},
+									},
+									Frame {
+										Name = "Details",
 										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,
-										Text = Computed(function()
-											if PlaceInfo:get() and PlaceInfo:get().Name then
-												return PlaceInfo:get().Name
-											else
-												return "World Name"
-											end
-										end),
-										TextSize = 25,
-										TextTruncate = Enum.TextTruncate.AtEnd,
-										RichText = true,
-										AutoLocalize = false,
+
+										[Children] = {
+											Modifier.ListLayout {},
+
+											Text {
+												Name = "Name",
+												Size = UDim2.fromScale(1, 0),
+												AutomaticSize = Enum.AutomaticSize.Y,
+												Text = Computed(function()
+													if PlaceInfo:get() and PlaceInfo:get().Name then
+														return PlaceInfo:get().Name
+													else
+														return "Name"
+													end
+												end),
+												TextSize = Themer.Theme.TextSize["1.5"],
+												FontFace = Computed(function()
+													return Font.new(
+														Themer.Theme.Font.Heading:get(),
+														Themer.Theme.FontWeight.Heading:get()
+													)
+												end),
+												TextTruncate = Enum.TextTruncate.AtEnd,
+												RichText = false,
+												AutoLocalize = false,
+											},
+											Text {
+												Name = "Description",
+												Text = Computed(function()
+													if PlaceInfo:get() and PlaceInfo:get().Description then
+														return PlaceInfo:get().Description
+													else
+														return "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+													end
+												end),
+												Size = UDim2.fromScale(1, 0),
+												AutomaticSize = Enum.AutomaticSize.Y,
+												TextTruncate = Enum.TextTruncate.AtEnd,
+												TextWrapped = true,
+												RichText = false,
+												AutoLocalize = false,
+
+												[Children] = {
+													Modifier.SizeConstraint {
+														MaxSize = Computed(function()
+															return Vector2.new(
+																math.huge,
+																Themer.Theme.TextSize["1"]:get() * 2
+															)
+														end),
+													},
+												},
+											},
+										},
 									},
-									Text {
-										Name = "Description",
-										Text = Computed(function()
-											if PlaceInfo:get() and PlaceInfo:get().Description then
-												return PlaceInfo:get().Description
-											else
-												return "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+									Button {
+										Name = "PlayButton",
+										Size = UDim2.fromScale(1, 0),
+										AutomaticSize = Enum.AutomaticSize.Y,
+										Contents = { "rbxassetid://17293685944" },
+										ContentSize = Themer.Theme.TextSize["1.5"],
+
+										OnActivated = function()
+											if States.Services.WorldsService then
+												States.Services.WorldsService
+													:TeleportToWorld(States.WorldPageMenu.PlaceId:get())
+													:andThen(function(Success: boolean, Message: string)
+														States.CurrentMenu:set(nil)
+
+														if not Success then
+															Prompts:PushPrompt({
+																Title = "Error",
+																Text = Message,
+																Buttons = {
+																	{
+																		Primary = true,
+																		Contents = { "Dismiss" },
+																	},
+																},
+															})
+														end
+													end)
 											end
-										end),
-										TextWrapped = true,
-										RichText = true,
-										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 35)),
-										AutomaticSize = Enum.AutomaticSize.None,
-										TextTruncate = Enum.TextTruncate.AtEnd,
-										AutoLocalize = false,
+										end,
 									},
 								},
-							},
-							Button {
-								Name = "PlayButton",
-								Size = UDim2.fromScale(1, 0),
-								AutomaticSize = Enum.AutomaticSize.Y,
-								Contents = { "rbxassetid://10392248278" },
-								ContentSize = 25,
-								Style = "Filled",
-
-								OnActivated = function()
-									if States.WorldsService then
-										States.WorldsService
-											:TeleportToWorld(States.WorldPageMenu.PlaceId:get())
-											:andThen(function(Success: boolean, Message: string)
-												States.CurrentMenu:set(nil)
-												if not Success then
-													Prompts:PushPrompt({
-														Title = "Error",
-														Text = Message,
-														Buttons = {
-															{
-																Primary = false,
-																Contents = { "Dismiss" },
-															},
-														},
-													})
-												end
-											end)
-									end
-								end,
 							},
 						},
 					},
