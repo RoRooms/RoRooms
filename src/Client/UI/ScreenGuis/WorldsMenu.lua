@@ -21,6 +21,7 @@ local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local TitleBar = require(OnyxUI.Components.TitleBar)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local WorldButton = require(Client.UI.Components.WorldButton)
+local WorldsCategory = require(Client.UI.Components.WorldsCategory)
 
 return function(Props)
 	local MenuOpen = Computed(function()
@@ -90,11 +91,46 @@ return function(Props)
 										Wraps = true,
 									},
 
-									ForValues(Config.WorldsSystem.FeaturedWorlds, function(PlaceId: number)
-										return WorldButton {
-											PlaceId = PlaceId,
-										}
-									end, Fusion.cleanup),
+									WorldsCategory {
+										Title = "From creator",
+										Icon = "rbxassetid://17292608120",
+										Visible = Computed(function()
+											return #Config.WorldsSystem.FeaturedWorlds >= 1
+										end),
+
+										[Children] = {
+											ForValues(Config.WorldsSystem.FeaturedWorlds, function(PlaceId: number)
+												print(Config.WorldsSystem.FeaturedWorlds)
+												return WorldButton {
+													PlaceId = PlaceId,
+												}
+											end, Fusion.cleanup),
+										},
+									},
+									WorldsCategory {
+										Title = "Popular",
+										Icon = "rbxassetid://17292608258",
+
+										[Children] = {
+											ForValues(States.Worlds.TopWorlds, function(PlaceId: number)
+												return WorldButton {
+													PlaceId = PlaceId,
+												}
+											end, Fusion.cleanup),
+										},
+									},
+									WorldsCategory {
+										Title = "Random",
+										Icon = "rbxassetid://17292608467",
+
+										[Children] = {
+											ForValues(States.Worlds.RandomWorlds, function(PlaceId: number)
+												return WorldButton {
+													PlaceId = PlaceId,
+												}
+											end, Fusion.cleanup),
+										},
+									},
 								},
 							},
 						},
