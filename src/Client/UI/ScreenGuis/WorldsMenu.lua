@@ -79,7 +79,7 @@ return function(Props)
 							},
 							ScrollingFrame {
 								Name = "WorldsList",
-								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
+								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 205)),
 								ScrollBarThickness = Themer.Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
 
@@ -109,11 +109,31 @@ return function(Props)
 										end),
 
 										[Children] = {
-											ForValues(Config.WorldsSystem.FeaturedWorlds, function(PlaceId: number)
-												return WorldButton {
-													PlaceId = PlaceId,
-												}
-											end, Fusion.cleanup),
+											Frame {
+												Name = "Worlds",
+												Size = UDim2.fromScale(1, 0),
+												AutomaticSize = Enum.AutomaticSize.Y,
+
+												[Children] = {
+													Modifier.ListLayout {
+														Padding = Computed(function()
+															return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+														end),
+														FillDirection = Enum.FillDirection.Horizontal,
+														Wraps = true,
+													},
+
+													ForValues(
+														Config.WorldsSystem.FeaturedWorlds,
+														function(PlaceId: number)
+															return WorldButton {
+																PlaceId = PlaceId,
+															}
+														end,
+														Fusion.cleanup
+													),
+												},
+											},
 										},
 									},
 									WorldsCategory {
@@ -138,6 +158,8 @@ return function(Props)
 														Padding = Computed(function()
 															return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 														end),
+														FillDirection = Enum.FillDirection.Horizontal,
+														Wraps = true,
 													},
 
 													ForValues(States.Worlds.TopWorlds, function(PlaceId: number)
