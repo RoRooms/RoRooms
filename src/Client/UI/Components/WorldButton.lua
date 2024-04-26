@@ -9,20 +9,21 @@ local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(Client.UI.States)
 local ColourUtils = require(OnyxUI._Packages.ColourUtils)
+local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
 
 local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)
-local Frame = require(OnyxUI.Components.Frame)
+local Image = require(OnyxUI.Components.Image)
 
 return function(Props)
 	Props.PlaceId = EnsureValue(Props.PlaceId, "number", nil)
-	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Color3.fromRGB(41, 41, 41))
+	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Main)
 
 	local IsHolding = Value(false)
 	local PlaceInfo = Computed(function()
@@ -43,17 +44,15 @@ return function(Props)
 		BackgroundColor3 = Spring(
 			Computed(function()
 				if IsHolding:get() then
-					return ColourUtils.Lighten(Props.BaseColor3:get(), 0.02)
+					return ColourUtils.Lighten(Props.Color:get(), 0.05)
 				else
-					return Props.BaseColor3:get()
+					return Props.Color:get()
 				end
 			end),
-			35,
-			1
+			Themer.Theme.SpringSpeed["1"],
+			Themer.Theme.SpringDampening
 		),
 		BackgroundTransparency = 0,
-		ClipsDescendants = true,
-		LayoutOrder = Props.LayoutOrder,
 
 		OnActivated = function()
 			States.WorldPageMenu.PlaceId:set(Props.PlaceId:get())
@@ -62,29 +61,28 @@ return function(Props)
 		IsHolding = IsHolding,
 
 		[Children] = {
-			New "UICorner" {
-				CornerRadius = UDim.new(0, 10),
+			Modifier.Corner {
+				CornerRadius = Computed(function()
+					return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+				end),
 			},
-			New "UIPadding" {
-				PaddingLeft = UDim.new(0, 8),
-				PaddingBottom = UDim.new(0, 8),
-				PaddingTop = UDim.new(0, 8),
-				PaddingRight = UDim.new(0, 8),
+			Modifier.Padding {
+				Padding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+				end),
 			},
-			New "UIStroke" {
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Thickness = 2,
-				Color = ColourUtils.Lighten(Props.BaseColor3:get(), 0.05),
+			Modifier.Stroke {
+				ColourUtils.Lighten(Props.Color:get(), 0.15),
 			},
-			New "UIListLayout" {
-				Padding = UDim.new(0, 8),
+			Modifier.ListLayout {
 				HorizontalAlignment = Enum.HorizontalAlignment.Center,
 			},
-			New "ImageLabel" {
-				Name = "GameIcon",
-				Size = UDim2.fromOffset(85, 85),
+
+			Image {
+				Name = "Icon",
+				Size = UDim2.fromOffset(95, 95),
 				Image = Computed(function()
-					if PlaceInfo:get() then
+					if PlaceInfo:get() and PlaceInfo:get().IconImageAssetId then
 						return `rbxassetid://{PlaceInfo:get().IconImageAssetId}`
 					else
 						return "rbxasset://textures/ui/GuiImagePlaceholder.png"
@@ -93,41 +91,33 @@ return function(Props)
 				BackgroundTransparency = 1,
 
 				[Children] = {
-					New "UICorner" {
-						CornerRadius = UDim.new(0, 8),
-					},
-					New "UIAspectRatioConstraint" {
+					Modifier.Corner {},
+					Modifier.AspectRatioConstraint {
 						AspectRatio = 1,
+						AspectType = Enum.AspectType.FitWithinMaxSize,
+						DominantAxis = Enum.DominantAxis.Height,
 					},
 				},
 			},
-			Frame {
-				Name = "NameContainer",
-				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 32)),
+			Text {
+				Name = "Title",
+				Text = Computed(function()
+					if PlaceInfo:get() and PlaceInfo:get().Name then
+						return PlaceInfo:get().Name
+					else
+						return "Title"
+					end
+				end),
+				Size = Computed(function()
+					return UDim2.fromOffset(95, Themer.Theme.TextSize["1"]:get() * 2)
+				end),
 				AutomaticSize = Enum.AutomaticSize.None,
-
-				[Children] = {
-					New "UIListLayout" {},
-					Text {
-						Name = "WorldName",
-						Size = UDim2.fromScale(1, 1),
-						AutomaticSize = Enum.AutomaticSize.None,
-						Text = Computed(function()
-							if PlaceInfo:get() then
-								return PlaceInfo:get().Name
-							else
-								return "Name"
-							end
-						end),
-						TextSize = 16,
-						TextTruncate = Enum.TextTruncate.AtEnd,
-						TextWrapped = true,
-						RichText = true,
-						TextXAlignment = Enum.TextXAlignment.Center,
-						TextYAlignment = Enum.TextYAlignment.Top,
-						AutoLocalize = false,
-					},
-				},
+				TextTruncate = Enum.TextTruncate.AtEnd,
+				TextXAlignment = Enum.TextXAlignment.Center,
+				TextYAlignment = Enum.TextYAlignment.Top,
+				AutoLocalize = false,
+				TextWrapped = true,
+				RichText = false,
 			},
 		},
 	}
