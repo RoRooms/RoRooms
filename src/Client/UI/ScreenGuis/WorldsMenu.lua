@@ -9,6 +9,7 @@ local Fusion = require(OnyxUI._Packages.Fusion)
 local States = require(Client.UI.States)
 local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
+local Worlds = require(RoRooms.Client.UI.States.Worlds)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -22,6 +23,8 @@ local TitleBar = require(OnyxUI.Components.TitleBar)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local WorldButton = require(Client.UI.Components.WorldButton)
 local WorldsCategory = require(Client.UI.Components.WorldsCategory)
+local Button = require(OnyxUI.Components.Button)
+local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
 	local MenuOpen = Computed(function()
@@ -116,11 +119,41 @@ return function(Props)
 										Icon = "rbxassetid://17292608258",
 
 										[Children] = {
-											ForValues(States.Worlds.TopWorlds, function(PlaceId: number)
-												return WorldButton {
-													PlaceId = PlaceId,
-												}
-											end, Fusion.cleanup),
+											Modifier.ListLayout {
+												Padding = Computed(function()
+													return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+												end),
+											},
+
+											Frame {
+												Name = "Worlds",
+												Size = UDim2.fromScale(1, 0),
+												AutomaticSize = Enum.AutomaticSize.Y,
+
+												[Children] = {
+													Modifier.ListLayout {
+														Padding = Computed(function()
+															return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+														end),
+													},
+
+													ForValues(States.Worlds.TopWorlds, function(PlaceId: number)
+														return WorldButton {
+															PlaceId = PlaceId,
+														}
+													end, Fusion.cleanup),
+												},
+											},
+											Button {
+												Name = "LoadMoreButton",
+												Contents = { "rbxassetid://17293213744", "Load more" },
+												Size = UDim2.fromScale(1, 0),
+												AutomaticSize = Enum.AutomaticSize.Y,
+
+												OnActivated = function()
+													Worlds:AddTopWorlds()
+												end,
+											},
 										},
 									},
 									WorldsCategory {
@@ -129,11 +162,42 @@ return function(Props)
 										Icon = "rbxassetid://17292608467",
 
 										[Children] = {
-											ForValues(States.Worlds.RandomWorlds, function(PlaceId: number)
-												return WorldButton {
-													PlaceId = PlaceId,
-												}
-											end, Fusion.cleanup),
+											Modifier.ListLayout {
+												Padding = Computed(function()
+													return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+												end),
+											},
+
+											Frame {
+												Name = "Worlds",
+												Size = UDim2.fromScale(1, 0),
+												AutomaticSize = Enum.AutomaticSize.Y,
+
+												[Children] = {
+													Modifier.ListLayout {
+														Padding = Computed(function()
+															return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+														end),
+													},
+
+													ForValues(States.Worlds.RandomWorlds, function(PlaceId: number)
+														return WorldButton {
+															PlaceId = PlaceId,
+														}
+													end, Fusion.cleanup),
+												},
+											},
+											Button {
+												Name = "RefreshButton",
+												Contents = { "rbxassetid://17292608467", "Refresh" },
+												Size = UDim2.fromScale(1, 0),
+												AutomaticSize = Enum.AutomaticSize.Y,
+
+												OnActivated = function()
+													Worlds:ClearRandomWorlds()
+													Worlds:AddRandomWorlds(2)
+												end,
+											},
 										},
 									},
 								},

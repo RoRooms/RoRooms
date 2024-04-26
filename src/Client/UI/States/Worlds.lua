@@ -48,6 +48,10 @@ function Worlds:AddRandomWorlds(PageCount: number | nil)
 	end
 end
 
+function Worlds:ClearRandomWorlds()
+	States.Worlds.RandomWorlds:set({})
+end
+
 function Worlds:Start() end
 
 return Worlds
