@@ -80,7 +80,7 @@ return function(Props)
 
 			Image {
 				Name = "Icon",
-				Size = UDim2.fromOffset(95, 95),
+				Size = UDim2.fromOffset(90, 90),
 				Image = Computed(function()
 					if PlaceInfo:get() and PlaceInfo:get().IconImageAssetId then
 						return `rbxassetid://{PlaceInfo:get().IconImageAssetId}`
@@ -109,7 +109,7 @@ return function(Props)
 					end
 				end),
 				Size = Computed(function()
-					return UDim2.fromOffset(95, Themer.Theme.TextSize["1"]:get() * 2)
+					return UDim2.fromOffset(90, Themer.Theme.TextSize["1"]:get() * 2)
 				end),
 				AutomaticSize = Enum.AutomaticSize.None,
 				TextTruncate = Enum.TextTruncate.AtEnd,

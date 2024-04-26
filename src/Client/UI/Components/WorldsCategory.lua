@@ -54,21 +54,11 @@ return function(Props: { [any]: any })
 				},
 			},
 			Frame {
-				Name = "Worlds",
+				Name = "Contents",
 				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
 
-				[Children] = {
-					Modifier.ListLayout {
-						Padding = Computed(function()
-							return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-						end),
-						FillDirection = Enum.FillDirection.Horizontal,
-						Wraps = true,
-					},
-
-					Props[Children],
-				},
+				[Children] = Props[Children],
 			},
 		},
 	}

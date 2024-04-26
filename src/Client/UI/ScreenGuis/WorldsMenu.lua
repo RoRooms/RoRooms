@@ -56,7 +56,7 @@ return function(Props)
 
 				[Children] = {
 					MenuFrame {
-						Size = UDim2.fromOffset(353, 0),
+						Size = UDim2.fromOffset(370, 0),
 						GroupTransparency = Spring(
 							Computed(function()
 								if MenuOpen:get() then
@@ -88,10 +88,13 @@ return function(Props)
 										Padding = Computed(function()
 											return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 										end),
+										PaddingRight = Computed(function()
+											return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+										end),
 									},
 									Modifier.ListLayout {
 										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+											return UDim.new(0, Themer.Theme.Spacing["1.5"]:get())
 										end),
 										FillDirection = Enum.FillDirection.Horizontal,
 										Wraps = true,
@@ -178,6 +181,8 @@ return function(Props)
 														Padding = Computed(function()
 															return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 														end),
+														FillDirection = Enum.FillDirection.Horizontal,
+														Wraps = true,
 													},
 
 													ForValues(States.Worlds.RandomWorlds, function(PlaceId: number)
