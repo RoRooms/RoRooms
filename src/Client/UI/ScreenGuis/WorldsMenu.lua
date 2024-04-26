@@ -87,11 +87,15 @@ return function(Props)
 										end),
 									},
 									Modifier.ListLayout {
+										Padding = Computed(function()
+											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+										end),
 										FillDirection = Enum.FillDirection.Horizontal,
 										Wraps = true,
 									},
 
 									WorldsCategory {
+										Name = "Featured",
 										Title = "From creator",
 										Icon = "rbxassetid://17292608120",
 										Visible = Computed(function()
@@ -100,7 +104,6 @@ return function(Props)
 
 										[Children] = {
 											ForValues(Config.WorldsSystem.FeaturedWorlds, function(PlaceId: number)
-												print(Config.WorldsSystem.FeaturedWorlds)
 												return WorldButton {
 													PlaceId = PlaceId,
 												}
@@ -108,6 +111,7 @@ return function(Props)
 										},
 									},
 									WorldsCategory {
+										Name = "Popular",
 										Title = "Popular",
 										Icon = "rbxassetid://17292608258",
 
@@ -120,6 +124,7 @@ return function(Props)
 										},
 									},
 									WorldsCategory {
+										Name = "Random",
 										Title = "Random",
 										Icon = "rbxassetid://17292608467",
 
