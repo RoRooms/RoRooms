@@ -13,6 +13,7 @@ local DefaultsController = {
 
 function DefaultsController:KnitStart()
 	CoreThemer:SetDefaults()
+	CoreThemer:SetAvatarContextMenuEnabled(true)
 	Footstepper:Start()
 end
 

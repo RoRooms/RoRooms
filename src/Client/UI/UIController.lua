@@ -1,5 +1,4 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
-local StarterGui = game:GetService("StarterGui")
 
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
@@ -24,32 +23,8 @@ function UIController:MountUI(UI: Instance)
 	UI.Parent = self.RoRoomsUI
 end
 
-function UIController:_StartACM()
-	local SelectionIndicator = New "Part" {
-		Name = "Indicator",
-		Locked = true,
-		CanCollide = false,
-		Anchored = true,
-		Color = Color3.fromRGB(170, 170, 170),
-		Material = Enum.Material.Neon,
-		Size = Vector3.new(0.45, 0.45, 0.45),
-	}
-	StarterGui:SetCore("AvatarContextMenuEnabled", true)
-	StarterGui:SetCore("AvatarContextMenuTheme", {
-		BackgroundTransparency = 0.015,
-		BackgroundColor = Color3.fromRGB(26, 26, 26),
-		NameTagColor = Color3.fromRGB(26, 26, 26),
-		ButtonFrameColor = Color3.fromRGB(26, 26, 26),
-		ButtonColor = Color3.fromRGB(26, 26, 26),
-		ButtonHoverColor = Color3.fromRGB(61, 61, 61),
-		SelectedCharacterIndicator = SelectionIndicator,
-	})
-end
-
 function UIController:KnitStart()
 	States:Start()
-
-	Themer:Set(Theme)
 
 	for _, GuiName in ipairs(DEFAULT_UIS) do
 		local GuiModule = Client.UI.ScreenGuis:FindFirstChild(GuiName)
@@ -58,8 +33,6 @@ function UIController:KnitStart()
 			self:MountUI(Gui {})
 		end
 	end
-
-	self:_StartACM()
 end
 
 function UIController:KnitInit()
@@ -70,6 +43,8 @@ function UIController:KnitInit()
 	}
 
 	self.XPMultiplierDropdownIcons = {}
+
+	Themer:Set(Theme)
 end
 
 return UIController
