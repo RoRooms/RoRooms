@@ -28,13 +28,16 @@ return function(Props)
 	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Themer.Theme.Colors.Base.Light)
 
 	local IsHolding = Value(false)
+	local IsEquipped = Computed(function()
+		return table.find(States.EquippedItems:get(), Props.ItemId:get()) ~= nil
+	end)
 
 	return BaseButton {
 		Name = "ItemButton",
 		BackgroundColor3 = Spring(
 			Computed(function()
-				if IsHolding:get() then
-					return ColourUtils.Lighten(Props.BaseColor3:get(), 0.05)
+				if IsHolding:get() or IsEquipped:get() then
+					return ColourUtils.Emphasise(Props.BaseColor3:get(), Themer.Theme.Emphasis:get())
 				else
 					return Props.BaseColor3:get()
 				end
@@ -72,9 +75,17 @@ return function(Props)
 				end),
 			},
 			Modifier.Stroke {
-				Color = Computed(function()
-					return ColourUtils.Lighten(Props.BaseColor3:get(), 0.2)
-				end),
+				Color = Spring(
+					Computed(function()
+						if IsEquipped:get() then
+							return ColourUtils.Emphasise(Props.BaseColor3:get(), Themer.Theme.Emphasis:get() * 4)
+						else
+							return ColourUtils.Emphasise(Props.BaseColor3:get(), 0.2)
+						end
+					end),
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening
+				),
 			},
 
 			Computed(function()
