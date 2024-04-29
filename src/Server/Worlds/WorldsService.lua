@@ -7,6 +7,7 @@ local WorldRegistryService = require(script.Parent.WorldRegistryService)
 local ShuffleArray = require(RoRooms.Shared.ExtPackages.ShuffleArray)
 local Knit = require(RoRooms.Packages.Knit)
 local t = require(RoRooms.Packages.t)
+local GetPagesFromArray = require(RoRooms.Shared.ExtPackages.GetPagesFromArray)
 
 local WorldsService = {
 	Name = "WorldsService",
@@ -25,51 +26,13 @@ local WorldsService = {
 function WorldsService.Client:GetTopWorlds(Player: Player, StartingPage: number, PageCount: number, PageSize: number)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.number(StartingPage), t.number(PageCount), t.number(PageSize)))
 
-	local Pages = {}
-
-	for CurrentPage = StartingPage, (StartingPage + PageCount) do
-		local Page = {}
-
-		for Index = (CurrentPage * PageSize), ((CurrentPage * PageSize) + (PageCount * PageSize)) do
-			local PlaceId = WorldsService.TopWorlds[Index]
-			if PlaceId then
-				table.insert(Page, PlaceId)
-			end
-		end
-
-		if #Page >= 1 then
-			table.insert(Pages, Page)
-		else
-			break
-		end
-	end
-
-	return Pages
+	return GetPagesFromArray(self.Server.TopWorlds, StartingPage, PageCount, PageSize)
 end
 
 function WorldsService.Client:GetRandomWorlds(Player: Player, StartingPage: number, PageCount: number, PageSize: number)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.number(StartingPage), t.number(PageCount), t.number(PageSize)))
 
-	local Pages = {}
-
-	for CurrentPage = StartingPage, (StartingPage + PageCount) do
-		local Page = {}
-
-		for Index = (CurrentPage * PageSize), (CurrentPage * PageSize) + (PageCount * PageSize) do
-			local PlaceId = WorldsService.RandomWorlds[Index]
-			if PlaceId then
-				table.insert(Page, PlaceId)
-			end
-		end
-
-		if #Page >= 1 then
-			table.insert(Pages, Page)
-		else
-			break
-		end
-	end
-
-	return Pages
+	return GetPagesFromArray(self.Server.RandomWorlds, StartingPage, PageCount, PageSize)
 end
 
 function WorldsService.Client:TeleportToWorld(Player: Player, PlaceId: number)
