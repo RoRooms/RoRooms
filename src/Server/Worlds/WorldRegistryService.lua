@@ -3,6 +3,7 @@ local MarketplaceService = game:GetService("MarketplaceService")
 
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
 local Signal = require(RoRooms.Packages.Signal)
+local t = require(RoRooms.Packages.t)
 
 local REGISTRY_UPDATE_DELAY = 10 * 60
 local REGISTRY_ASSET_ID = 16007140043
@@ -17,10 +18,8 @@ local WorldRegistryService = {
 	RegistryUpdated = Signal.new(),
 }
 
-function WorldRegistryService.Client:IsWorldRegistered(_Player: Player, PlaceId: number)
-	if typeof(PlaceId) ~= "number" then
-		return
-	end
+function WorldRegistryService.Client:IsWorldRegistered(Player: Player, PlaceId: number)
+	assert(t.tuple(t.instanceOf("Player")(Player), t.number(PlaceId)))
 
 	return self.Server:IsWorldRegistered(PlaceId)
 end

@@ -5,6 +5,7 @@ local Server = RoRooms.Server
 
 local PlayerCharacterComponent = require(Server.Components.PlayerCharacterComponent)
 local PlayerDataService = require(Server.PlayerData.PlayerDataService)
+local t = require(RoRooms.Packages.t)
 
 local EmotesService = {
 	Name = "EmotesService",
@@ -12,6 +13,8 @@ local EmotesService = {
 }
 
 function EmotesService.Client:PlayEmote(Player: Player, EmoteId: string)
+	assert(t.tuple(t.instanceOf("Player")(Player), t.strict(EmoteId)))
+
 	return self.Server:PlayEmote(Player, EmoteId)
 end
 

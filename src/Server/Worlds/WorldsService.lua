@@ -6,6 +6,7 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent)
 local WorldRegistryService = require(script.Parent.WorldRegistryService)
 local ShuffleArray = require(RoRooms.Shared.ExtPackages.ShuffleArray)
 local Knit = require(RoRooms.Packages.Knit)
+local t = require(RoRooms.Packages.t)
 
 local WorldsService = {
 	Name = "WorldsService",
@@ -21,7 +22,9 @@ local WorldsService = {
 	_TopWorldsPages = nil,
 }
 
-function WorldsService.Client:GetTopWorlds(_Player: Player, StartingPage: number, PageCount: number, PageSize: number)
+function WorldsService.Client:GetTopWorlds(Player: Player, StartingPage: number, PageCount: number, PageSize: number)
+	assert(t.tuple(t.instanceOf("Player")(Player), t.number(StartingPage), t.number(PageCount), t.number(PageSize)))
+
 	local Pages = {}
 
 	for CurrentPage = StartingPage, (StartingPage + PageCount) do
@@ -44,12 +47,9 @@ function WorldsService.Client:GetTopWorlds(_Player: Player, StartingPage: number
 	return Pages
 end
 
-function WorldsService.Client:GetRandomWorlds(
-	_Player: Player,
-	StartingPage: number,
-	PageCount: number,
-	PageSize: number
-)
+function WorldsService.Client:GetRandomWorlds(Player: Player, StartingPage: number, PageCount: number, PageSize: number)
+	assert(t.tuple(t.instanceOf("Player")(Player), t.number(StartingPage), t.number(PageCount), t.number(PageSize)))
+
 	local Pages = {}
 
 	for CurrentPage = StartingPage, (StartingPage + PageCount) do
@@ -73,9 +73,7 @@ function WorldsService.Client:GetRandomWorlds(
 end
 
 function WorldsService.Client:TeleportToWorld(Player: Player, PlaceId: number)
-	if typeof(PlaceId) ~= "number" then
-		return
-	end
+	assert(t.tuple(t.instanceOf("Player")(Player), t.number(PlaceId)))
 
 	return self.Server:TeleportPlayerToWorld(Player, PlaceId)
 end

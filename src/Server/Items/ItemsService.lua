@@ -5,19 +5,21 @@ local Shared = RoRooms.Shared
 local Config = RoRooms.Config
 
 local SharedData = require(Shared.SharedData)
-
 local PlayerDataService = require(Server.PlayerData.PlayerDataService)
+local t = require(RoRooms.Packages.t)
 
 local ItemsService = {
 	Name = "ItemsService",
 	Client = {},
 }
 
-function ItemsService.Client:ToggleEquipItem(Player: Player, ItemId: number)
+function ItemsService.Client:ToggleEquipItem(Player: Player, ItemId: string)
+	assert(t.tuple(t.instanceOf("Player")(Player), t.string(ItemId)))
+
 	return self.Server:ToggleEquipItemForPlayer(Player, ItemId)
 end
 
-function ItemsService:ToggleEquipItemForPlayer(Player: Player, ItemId: number)
+function ItemsService:ToggleEquipItemForPlayer(Player: Player, ItemId: string)
 	if self:_PlayerHasItem(Player, ItemId) then
 		self:TakeItemFromPlayer(Player, ItemId)
 	else
@@ -27,7 +29,7 @@ function ItemsService:ToggleEquipItemForPlayer(Player: Player, ItemId: number)
 	end
 end
 
-function ItemsService:GiveItemToPlayer(Player: Player, ItemId: number, BypassRequirement: boolean | nil)
+function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassRequirement: boolean | nil)
 	if not Player.Backpack then
 		return
 	end
@@ -71,7 +73,7 @@ function ItemsService:GiveItemToPlayer(Player: Player, ItemId: number, BypassReq
 	end
 end
 
-function ItemsService:TakeItemFromPlayer(Player: Player, ItemId: number)
+function ItemsService:TakeItemFromPlayer(Player: Player, ItemId: string)
 	for _, ItemTool in ipairs(self:_FindItemsInPlayer(Player)) do
 		if ItemTool:GetAttribute("RR_ItemId") == ItemId then
 			ItemTool:Destroy()
@@ -96,7 +98,7 @@ function ItemsService:_FindItemsInPlayer(Player: Player)
 	return FoundItems
 end
 
-function ItemsService:_PlayerHasItem(Player: Player, ItemId: number)
+function ItemsService:_PlayerHasItem(Player: Player, ItemId: string)
 	local function ScanDirectory(Directory: Instance)
 		for _, Child in ipairs(Directory:GetChildren()) do
 			if Child:IsA("Tool") and Child:GetAttribute("RR_ItemId", ItemId) == ItemId then

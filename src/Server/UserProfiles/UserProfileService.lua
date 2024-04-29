@@ -8,8 +8,8 @@ local Packages = RoRooms.Packages
 local Knit = require(Packages.Knit)
 local SharedData = require(Shared.SharedData)
 local FilterString = require(Storage.ExtPackages.FilterString)
-
 local PlayerDataService = require(Server.PlayerData.PlayerDataService)
+local t = require(RoRooms.Packages.t)
 
 local UserProfileService = {
 	Name = "UserProfileService",
@@ -17,22 +17,16 @@ local UserProfileService = {
 }
 
 function UserProfileService.Client:SetNickname(Player: Player, Nickname: string)
-	if typeof(Nickname) ~= "string" then
-		return
-	end
-	if utf8.len(Nickname) > SharedData.NicknameCharLimit then
-		return
-	end
+	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Nickname)))
+	assert(utf8.len(Nickname) <= SharedData.NicknameCharLimit, "Nickname exceeds character limit")
+
 	self.Server:SetPlayerNickname(Player, FilterString(Nickname, Player))
 end
 
 function UserProfileService.Client:SetStatus(Player: Player, Status: string)
-	if typeof(Status) ~= "string" then
-		return
-	end
-	if utf8.len(Status) > SharedData.StatusCharLimit then
-		return
-	end
+	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Status)))
+	assert(utf8.len(Status) <= SharedData.StatusCharLimit, "Status exceeds character limit")
+
 	self.Server:SetPlayerStatus(Player, FilterString(Status, Player))
 end
 
