@@ -12,7 +12,6 @@ local NeoHotbar = require(Packages.NeoHotbar)
 local States = require(Client.UI.States)
 local Prompts = require(Client.UI.States.Prompts)
 local UIController = require(Client.UI.UIController)
-local DefaultsController = require(Client.Defaults.DefaultsController)
 
 local ItemsService
 
@@ -60,6 +59,10 @@ function ItemsController:UpdateEquippedItems()
 end
 
 function ItemsController:_AddNeoHotbarButton()
+	if NeoHotbar:FindCustomButton("ItemsMenuButton") then
+		NeoHotbar:RemoveCustomButton("ItemsMenuButton")
+	end
+
 	NeoHotbar:AddCustomButton("ItemsMenuButton", "rbxassetid://6966623635", function()
 		if not States.ItemsMenu.Open:get() then
 			States.ItemsMenu.Open:set(true)
@@ -94,13 +97,7 @@ function ItemsController:KnitStart()
 
 	UIController:MountUI(ItemsMenu {})
 
-	if NeoHotbar._Started then
-		self:_AddNeoHotbarButton()
-	else
-		DefaultsController.NeoHotbarStarted:Connect(function()
-			self:_AddNeoHotbarButton()
-		end)
-	end
+	self:_AddNeoHotbarButton()
 end
 
 function ItemsController:KnitInit()
