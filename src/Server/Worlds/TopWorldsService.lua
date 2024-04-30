@@ -7,7 +7,16 @@ local Knit = require(RoRooms.Packages.Knit)
 local GetPagesFromArray = require(RoRooms.Shared.ExtPackages.GetPagesFromArray)
 local t = require(RoRooms.Packages.t)
 
-local PAGE_ADVANCE_DELAY = math.ceil((60 / 5) * 2)
+type TopWorld = {
+	PlaceId: number,
+	Teleports: number,
+}
+type Page = {
+	[number]: TopWorld,
+}
+
+local DATASTORE_NAME = "RR_WorldTeleports"
+local PAGE_ADVANCE_DELAY = 60
 
 local TopWorldsService = {
 	Name = script.Name,
@@ -16,9 +25,6 @@ local TopWorldsService = {
 	},
 
 	TopWorlds = {},
-
-	_TopWorldsAdvancedLastCheck = true,
-	_TopWorldsPages = nil,
 }
 
 function TopWorldsService.Client:GetTopWorlds(Player: Player, StartingPage: number, PageCount: number, PageSize: number)
@@ -27,63 +33,108 @@ function TopWorldsService.Client:GetTopWorlds(Player: Player, StartingPage: numb
 	return GetPagesFromArray(TopWorldsService.TopWorlds, StartingPage, PageCount, PageSize)
 end
 
-function TopWorldsService:_SpawnTopWorldsLoadLoop()
-	return task.spawn(function()
-		self._TopWorldsPages = self.WorldTeleportsStore:GetSortedAsync(false, 100)
+function TopWorldsService:_SpawnUpdateLoop()
+	if self.UpdateLoop then
+		task.cancel(self.UpdateLoop)
+		self.UpdateLoop = nil
+	end
 
-		self:_LoadCurrentTopWorldsPage()
-		self:_AdvanceToNextTopWorldsPage()
+	self.UpdateLoop = task.spawn(function()
+		local Pages = self.TeleportsStore:GetSortedAsync(false, 100)
+		local AdvancedLastCheck = true
+
+		self:_LoadPage(Pages:GetCurrentPage())
+		AdvancedLastCheck = self:_AdvanceToNextPage(Pages)
+
 		self.Client.TopWorldsInitialized:FireAll()
 
 		while task.wait(PAGE_ADVANCE_DELAY) do
-			self:_LoadCurrentTopWorldsPage()
-			self:_AdvanceToNextTopWorldsPage()
+			if AdvancedLastCheck then
+				self:_LoadPage(Pages:GetCurrentPage())
+			end
+			AdvancedLastCheck = self:_AdvanceToNextPage(Pages)
 		end
 	end)
 end
 
-function TopWorldsService:_LoadCurrentTopWorldsPage()
-	local CurrentPage = self._TopWorldsPages:GetCurrentPage()
+function TopWorldsService:_SpawnLastWeekUpdateLoop()
+	if self.LastWeekUpdateLoop then
+		task.cancel(self.LastWeekUpdateLoop)
+		self.LastWeekUpdateLoop = nil
+	end
 
-	if self._TopWorldsAdvancedLastCheck then
-		for _, Entry in ipairs(CurrentPage) do
-			table.insert(self.TopWorlds, { PlaceId = tonumber(Entry.key), Teleports = Entry.value })
+	self.LastWeekUpdateLoop = task.spawn(function()
+		local LastWeekPages = self.LastWeekTeleportsStore:GetSortedAsync(false, 100)
+		local AdvancedLastCheck = true
+
+		self:_LoadPage(LastWeekPages:GetCurrentPage())
+		AdvancedLastCheck = self:_AdvanceToNextPage(LastWeekPages)
+
+		while task.wait(PAGE_ADVANCE_DELAY) do
+			if AdvancedLastCheck then
+				self:_LoadPage(LastWeekPages:GetCurrentPage())
+			end
+			AdvancedLastCheck = self:_AdvanceToNextPage(LastWeekPages)
+		end
+	end)
+end
+
+function TopWorldsService:_FindEntryFromPlaceId(PlaceId: number)
+	for _, TopWorld: TopWorld in ipairs(self.TopWorlds) do
+		if TopWorld.PlaceId == PlaceId then
+			return TopWorld
+		end
+	end
+
+	return nil
+end
+
+function TopWorldsService:_LoadPage(Page: Page)
+	for _, Entry in ipairs(Page) do
+		local ExistingEntry = self:_FindEntryFromPlaceId(Entry.PlaceId)
+		if ExistingEntry then
+			ExistingEntry.Teleports += Entry.value
+		else
+			table.insert(self.TopWorlds, {
+				PlaceId = tonumber(Entry.key),
+				Teleports = Entry.value,
+			})
 		end
 	end
 end
 
-function TopWorldsService:_AdvanceToNextTopWorldsPage()
-	if self._TopWorldsPages.IsFinished then
-		self._TopWorldsAdvancedLastCheck = false
+function TopWorldsService:_AdvanceToNextPage(Pages: DataStorePages)
+	if Pages.IsFinished then
+		return false
 	else
-		self._TopWorldsPages:AdvanceToNextPageAsync()
+		Pages:AdvanceToNextPageAsync()
 
-		self._TopWorldsAdvancedLastCheck = true
+		return true
 	end
 end
 
-function TopWorldsService:_LogWorldTeleport(PlaceId: number)
+function TopWorldsService:_LogIncomingTeleport(PlaceId: number)
 	if WorldRegistryService:IsWorldRegistered(PlaceId) then
-		self.WorldTeleportsStore:IncrementAsync(tostring(PlaceId), 1)
+		self.TeleportsStore:IncrementAsync(tostring(PlaceId), 1)
 	end
 end
 
 function TopWorldsService:KnitStart()
-	self:_SpawnTopWorldsLoadLoop()
+	self:_SpawnUpdateLoop()
+	self:_SpawnLastWeekUpdateLoop()
 
 	Players.PlayerAdded:Connect(function(Player)
 		local JoinData = Player:GetJoinData()
 		if JoinData and JoinData.SourcePlaceId then
-			self:_LogWorldTeleport(JoinData.SourcePlaceId)
+			self:_LogIncomingTeleport(JoinData.SourcePlaceId)
 		end
 	end)
 end
 
 function TopWorldsService:KnitInit()
-	self.WorldTeleportsStore =
-		DataStoreService:GetOrderedDataStore("RR_WorldTeleports", tostring(math.floor(os.time() / 86400)))
-	self.PreviousWorldTeleportsStore =
-		DataStoreService:GetOrderedDataStore("RR_WorldTeleports", tostring(math.floor(os.time() / 86400) - 1))
+	self.TeleportsStore = DataStoreService:GetOrderedDataStore(DATASTORE_NAME, tostring(math.floor(os.time() / 86400)))
+	self.LastWeekTeleportsStore =
+		DataStoreService:GetOrderedDataStore(DATASTORE_NAME, tostring(math.floor(os.time() / 86400) - 1))
 end
 
 return TopWorldsService
