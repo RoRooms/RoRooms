@@ -3,13 +3,12 @@ local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local SocialService = game:GetService("SocialService")
 
-local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 
-local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
-local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local OnyxUI = require(RoRooms.Packages.OnyxUI)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local ColourUtils = require(OnyxUI._Packages.ColourUtils)
+local ColourUtils = require(OnyxUI.Packages.ColourUtils)
 local States = require(Client.UI.States)
 local Prompts = require(Client.UI.States.Prompts)
 local Modifier = require(OnyxUI.Utils.Modifier)

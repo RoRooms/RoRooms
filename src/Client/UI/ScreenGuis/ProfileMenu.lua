@@ -1,12 +1,11 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-local Frame = require(script.Parent.Parent.Parent.Parent.Shared.ExtPackages.OnyxUI.Packages.OnyxUI.Components.Frame)
 
 local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 local Config = RoRooms.Config
 
-local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
-local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local OnyxUI = require(RoRooms.Packages.OnyxUI)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local States = require(Client.UI.States)
 local SharedData = require(Shared.SharedData)
 local Modifier = require(OnyxUI.Utils.Modifier)
@@ -23,6 +22,7 @@ local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local TitleBar = require(OnyxUI.Components.TitleBar)
 local TextInput = require(OnyxUI.Components.TextInput)
 local Button = require(OnyxUI.Components.Button)
+local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
 	local MenuOpen = Computed(function()

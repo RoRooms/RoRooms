@@ -5,7 +5,7 @@ local Shared = RoRooms.Shared
 local Config = RoRooms.Config
 
 local Topbar = require(Client.UI.States.Topbar)
-local OnyxUI = require(Shared.ExtPackages.OnyxUI)
+local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Themer = require(OnyxUI.Utils.Themer)
 local Theme = require(script.Parent.OnyxUITheme)
 

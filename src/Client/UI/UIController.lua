@@ -1,13 +1,12 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
 
-local Shared = RoRooms.Shared
 local Client = RoRooms.Client
 local Packages = RoRooms.Packages
 
 local Knit = require(Packages.Knit)
-local Fusion = require(Shared.ExtPackages.OnyxUI.Packages.Fusion)
+local OnyxUI = require(RoRooms.Packages.OnyxUI)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local States = require(Client.UI.States)
-local OnyxUI = require(Shared.ExtPackages.OnyxUI)
 local Themer = require(OnyxUI.Utils.Themer)
 local Theme = require(script.Parent.OnyxUITheme)
 

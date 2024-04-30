@@ -9,8 +9,8 @@ local Shared = RoRooms.Shared
 local Component = require(Packages.Component)
 local States = require(Client.UI.States)
 local AttributeValue = require(Shared.ExtPackages.AttributeValue)
-local OnyxUI = require(Shared.ExtPackages.OnyxUI)
-local Fusion = require(OnyxUI._Packages.Fusion)
+local OnyxUI = require(RoRooms.Packages.OnyxUI)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Prompts = require(Client.UI.States.Prompts)
 
 local Computed = Fusion.Computed
