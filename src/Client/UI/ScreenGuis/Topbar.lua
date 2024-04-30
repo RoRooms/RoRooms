@@ -1,10 +1,7 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
-local Client = RoRooms.Client
-
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local States = require(Client.UI.States)
+local States = require(RoRooms.Client.UI.States)
 local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -16,7 +13,7 @@ local Spring = Fusion.Spring
 local Value = Fusion.Value
 local Cleanup = Fusion.Cleanup
 
-local Components = Client.UI.Components
+local Components = RoRooms.Client.UI.Components
 local TopbarButton = require(Components.TopbarButton)
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local Frame = require(OnyxUI.Components.Frame)

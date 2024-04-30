@@ -1,17 +1,12 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
 local Players = game:GetService("Players")
 
-local Shared = RoRooms.Shared
-local Client = RoRooms.Client
-local Config = RoRooms.Config
-local Packages = RoRooms.Packages
-
-local Component = require(Packages.Component)
+local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local Component = require(RoRooms.Packages.Component)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local States = require(Client.UI.States)
-local ItemsController = require(Client.Items.ItemsController)
-local AttributeValue = require(Shared.ExtPackages.AttributeValue)
+local States = require(RoRooms.Client.UI.States)
+local ItemsController = require(RoRooms.Client.Items.ItemsController)
+local AttributeValue = require(RoRooms.Shared.ExtPackages.AttributeValue)
 
 local New = Fusion.New
 local Computed = Fusion.Computed
@@ -77,7 +72,7 @@ end
 function ItemGiverComponent:Construct()
 	self.ItemId = AttributeValue(self.Instance, "RR_ItemId")
 	self.Item = Computed(function()
-		return Config.ItemsSystem.Items[self.ItemId:get()]
+		return RoRooms.Config.ItemsSystem.Items[self.ItemId:get()]
 	end)
 	self.Equipped = Computed(function()
 		return table.find(States.EquippedItems:get(), self.ItemId:get()) ~= nil

@@ -1,12 +1,7 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-local Client = RoRooms.Client
-local Config = RoRooms.Config
-
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local States = require(Client.UI.States)
+local States = require(RoRooms.Client.UI.States)
 local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
 local Worlds = require(RoRooms.Client.UI.States.Worlds)
@@ -21,8 +16,8 @@ local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local TitleBar = require(OnyxUI.Components.TitleBar)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
-local WorldButton = require(Client.UI.Components.WorldButton)
-local WorldsCategory = require(Client.UI.Components.WorldsCategory)
+local WorldButton = require(RoRooms.Client.UI.Components.WorldButton)
+local WorldsCategory = require(RoRooms.Client.UI.Components.WorldsCategory)
 local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
 
@@ -105,7 +100,7 @@ return function(Props)
 										Title = "From creator",
 										Icon = "rbxassetid://17292608120",
 										Visible = Computed(function()
-											return #Config.WorldsSystem.FeaturedWorlds >= 1
+											return #RoRooms.Config.WorldsSystem.FeaturedWorlds >= 1
 										end),
 
 										[Children] = {
@@ -124,7 +119,7 @@ return function(Props)
 													},
 
 													ForValues(
-														Config.WorldsSystem.FeaturedWorlds,
+														RoRooms.Config.WorldsSystem.FeaturedWorlds,
 														function(PlaceId: number)
 															return WorldButton {
 																PlaceId = PlaceId,

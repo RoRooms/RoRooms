@@ -1,8 +1,4 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
-local Config = RoRooms.Config
-local Client = RoRooms.Client
-
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
@@ -17,13 +13,13 @@ local ForPairs = Fusion.ForPairs
 local Frame = require(OnyxUI.Components.Frame)
 local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
-local ItemButton = require(Client.UI.Components.ItemButton)
+local ItemButton = require(RoRooms.Client.UI.Components.ItemButton)
 
 return function(Props: { [any]: any })
 	Props.CategoryName = EnsureValue(Props.CategoryName, "string", "Category")
 
 	local Category = Computed(function()
-		return Config.ItemsSystem.Categories[Props.CategoryName:get()]
+		return RoRooms.Config.ItemsSystem.Categories[Props.CategoryName:get()]
 	end)
 
 	return Frame {
@@ -83,7 +79,7 @@ return function(Props: { [any]: any })
 						FillDirection = Enum.FillDirection.Horizontal,
 					},
 
-					ForPairs(Config.ItemsSystem.Items, function(ItemId, Item)
+					ForPairs(RoRooms.Config.ItemsSystem.Items, function(ItemId, Item)
 						local ItemCategory = Item.Category
 						if ItemCategory == nil then
 							ItemCategory = "General"

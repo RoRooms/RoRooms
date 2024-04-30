@@ -1,21 +1,16 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
-
-local Client = RoRooms.Client
-local Config = RoRooms.Config
-local Packages = RoRooms.Packages
-
-local Knit = require(Packages.Knit)
+local Knit = require(RoRooms.Packages.Knit)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local Signal = require(Packages.Signal)
-local NeoHotbar = require(Packages.NeoHotbar)
-local States = require(Client.UI.States)
-local Prompts = require(Client.UI.States.Prompts)
-local UIController = require(Client.UI.UIController)
+local Signal = require(RoRooms.Packages.Signal)
+local NeoHotbar = require(RoRooms.Packages.NeoHotbar)
+local States = require(RoRooms.Client.UI.States)
+local Prompts = require(RoRooms.Client.UI.States.Prompts)
+local UIController = require(RoRooms.Client.UI.UIController)
+
+local ItemsMenu = require(RoRooms.Client.UI.ScreenGuis.ItemsMenu)
 
 local ItemsService
-
-local ItemsMenu = require(Client.UI.ScreenGuis.ItemsMenu)
 
 local ItemsController = {
 	Name = "ItemsController",
@@ -47,7 +42,7 @@ function ItemsController:UpdateEquippedItems()
 		end
 		for _, Child in ipairs(Directory:GetChildren()) do
 			local ItemId = Child:GetAttribute("RR_ItemId")
-			if Child:IsA("Tool") and Config.ItemsSystem.Items[ItemId] then
+			if Child:IsA("Tool") and RoRooms.Config.ItemsSystem.Items[ItemId] then
 				table.insert(self.EquippedItems, ItemId)
 			end
 		end

@@ -1,12 +1,7 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-local Client = RoRooms.Client
-local Config = RoRooms.Config
-
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local States = require(Client.UI.States)
+local States = require(RoRooms.Client.UI.States)
 local Themer = require(OnyxUI.Utils.Themer)
 local Modifier = require(OnyxUI.Utils.Modifier)
 
@@ -20,8 +15,8 @@ local ForPairs = Fusion.ForPairs
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
-local ItemsCategory = require(Client.UI.Components.ItemsCategory)
-local ItemCategoriesSidebar = require(Client.UI.Components.ItemCategoriesSidebar)
+local ItemsCategory = require(RoRooms.Client.UI.Components.ItemsCategory)
+local ItemCategoriesSidebar = require(RoRooms.Client.UI.Components.ItemCategoriesSidebar)
 
 return function(Props)
 	local ItemsMenu = New "ScreenGui" {
@@ -90,7 +85,7 @@ return function(Props)
 										end),
 									},
 
-									ForPairs(Config.ItemsSystem.Categories, function(Name: string, Category)
+									ForPairs(RoRooms.Config.ItemsSystem.Categories, function(Name: string, Category)
 										return Name,
 											ItemsCategory {
 												CategoryName = Name,

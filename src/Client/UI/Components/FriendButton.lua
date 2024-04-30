@@ -1,16 +1,14 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local SocialService = game:GetService("SocialService")
 
-local Client = RoRooms.Client
-
+local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local ColourUtils = require(OnyxUI.Packages.ColourUtils)
-local States = require(Client.UI.States)
-local Prompts = require(Client.UI.States.Prompts)
+local States = require(RoRooms.Client.UI.States)
+local Prompts = require(RoRooms.Client.UI.States.Prompts)
 local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
 local Colors = require(OnyxUI.Utils.Colors)

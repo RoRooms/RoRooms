@@ -1,10 +1,5 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
-
-local Client = RoRooms.Client
-local Shared = RoRooms.Shared
-local Config = RoRooms.Config
-
-local Topbar = require(Client.UI.States.Topbar)
+local Topbar = require(RoRooms.Client.UI.States.Topbar)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Themer = require(OnyxUI.Utils.Themer)
 local Theme = require(script.Parent.OnyxUITheme)
@@ -161,7 +156,7 @@ return function(Target)
 		Target = Target,
 	}
 
-	Config:Update(ROROOMS_CONFIG)
+	RoRooms.Config:Update(ROROOMS_CONFIG)
 
 	Themer:Set(Theme)
 

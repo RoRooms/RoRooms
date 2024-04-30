@@ -1,10 +1,8 @@
 local Players = game:GetService("Players")
+
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
-
-local Packages = RoRooms.Packages
-
-local Component = require(Packages.Component)
-local RemoteComponent = require(Packages.RemoteComponent)
+local Component = require(RoRooms.Packages.Component)
+local RemoteComponent = require(RoRooms.Packages.RemoteComponent)
 
 local PlayerCharacterComponent = Component.new {
 	Tag = "RR_PlayerCharacter",

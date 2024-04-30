@@ -1,19 +1,13 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-local Storage = RoRooms.Storage
-local Config = RoRooms.Config
-local Packages = RoRooms.Packages
-
 local Players = game:GetService("Players")
 
-local Knit = require(Packages.Knit)
-local ProfileService = require(Storage.ExtPackages.ProfileService)
-local LeaderStats = require(Storage.ExtPackages.LeaderStats)
-local XPToLevelUp = require(Shared.SharedData.XPToLevelUp)
-local Trove = require(Packages.Trove)
-local SharedData = require(Shared.SharedData)
-local Signal = require(Packages.Signal)
+local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
+local Knit = require(RoRooms.Packages.Knit)
+local ProfileService = require(RoRooms.Storage.ExtPackages.ProfileService)
+local LeaderStats = require(RoRooms.Storage.ExtPackages.LeaderStats)
+local XPToLevelUp = require(RoRooms.Shared.SharedData.XPToLevelUp)
+local Trove = require(RoRooms.Packages.Trove)
+local SharedData = require(RoRooms.Shared.SharedData)
+local Signal = require(RoRooms.Packages.Signal)
 
 local PROFILE_TEMPLATE = {
 	Level = 1,
@@ -94,7 +88,7 @@ function PlayerDataService:SetXPMultiplier(Player: Player, Name: string, Multipl
 end
 
 function PlayerDataService:_UpdateAllFriendMultipliers()
-	if not Config.ProgressionSystem.FriendsXPMultiplier.Enabled then
+	if not RoRooms.Config.ProgressionSystem.FriendsXPMultiplier.Enabled then
 		return
 	end
 	for _, Player in ipairs(Players:GetPlayers()) do
@@ -106,7 +100,7 @@ function PlayerDataService:_UpdateAllFriendMultipliers()
 					break
 				end
 			end
-			local BaseMultiplier = Config.ProgressionSystem.FriendsXPMultiplier.MultiplierAddon
+			local BaseMultiplier = RoRooms.Config.ProgressionSystem.FriendsXPMultiplier.MultiplierAddon
 			self:SetXPMultiplier(Player, "Friends", (FriendsInGame and BaseMultiplier) or 0)
 		end)
 	end

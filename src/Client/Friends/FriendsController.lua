@@ -1,14 +1,11 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
 local Players = game:GetService("Players")
 
-local Client = RoRooms.Client
-local Packages = RoRooms.Packages
-
-local UIController = require(Client.UI.UIController)
-local FriendsMenu = require(Client.UI.ScreenGuis.FriendsMenu)
-local States = require(Client.UI.States)
-local Knit = require(Packages.Knit)
-local Topbar = require(Client.UI.States.Topbar)
+local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local UIController = require(RoRooms.Client.UI.UIController)
+local FriendsMenu = require(RoRooms.Client.UI.ScreenGuis.FriendsMenu)
+local States = require(RoRooms.Client.UI.States)
+local Knit = require(RoRooms.Packages.Knit)
+local Topbar = require(RoRooms.Client.UI.States.Topbar)
 
 local WorldRegistryService
 

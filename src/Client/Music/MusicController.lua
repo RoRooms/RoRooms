@@ -1,12 +1,8 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
-
-local Client = RoRooms.Client
-local Packages = RoRooms.Packages
-
 local SoundService = game:GetService("SoundService")
 
-local Knit = require(Packages.Knit)
-local States = require(Client.UI.States)
+local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local Knit = require(RoRooms.Packages.Knit)
+local States = require(RoRooms.Client.UI.States)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 

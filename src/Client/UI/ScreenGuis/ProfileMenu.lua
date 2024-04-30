@@ -1,13 +1,8 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-local Client = RoRooms.Client
-local Config = RoRooms.Config
-
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local States = require(Client.UI.States)
-local SharedData = require(Shared.SharedData)
+local States = require(RoRooms.Client.UI.States)
+local SharedData = require(RoRooms.Shared.SharedData)
 local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -132,14 +127,14 @@ return function(Props)
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								Visible = Computed(function()
-									return Config.ProfilesSystem.AvatarEditorCallback ~= nil
+									return RoRooms.Config.ProfilesSystem.AvatarEditorCallback ~= nil
 								end),
 
 								OnActivated = function()
 									States.CurrentMenu:set()
 
-									if Config.ProfilesSystem.AvatarEditorCallback then
-										Config.ProfilesSystem.AvatarEditorCallback()
+									if RoRooms.Config.ProfilesSystem.AvatarEditorCallback then
+										RoRooms.Config.ProfilesSystem.AvatarEditorCallback()
 									end
 								end,
 							},

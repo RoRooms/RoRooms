@@ -1,11 +1,7 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
-
-local Packages = RoRooms.Packages
-local Shared = RoRooms.Shared
-
-local CoreThemer = require(Shared.ExtPackages.CoreThemer)
-local Footstepper = require(Shared.ExtPackages.Footstepper)
-local NeoHotbar = require(Packages.NeoHotbar)
+local CoreThemer = require(RoRooms.Shared.ExtPackages.CoreThemer)
+local Footstepper = require(RoRooms.Shared.ExtPackages.Footstepper)
+local NeoHotbar = require(RoRooms.Packages.NeoHotbar)
 
 local DefaultsController = {
 	Name = script.Name,

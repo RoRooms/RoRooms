@@ -1,10 +1,6 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
-
-local Config = RoRooms.Config
-local Server = RoRooms.Server
-
-local PlayerCharacterComponent = require(Server.Components.PlayerCharacterComponent)
-local PlayerDataService = require(Server.PlayerData.PlayerDataService)
+local PlayerCharacterComponent = require(RoRooms.Server.Components.PlayerCharacterComponent)
+local PlayerDataService = require(RoRooms.Server.PlayerData.PlayerDataService)
 local t = require(RoRooms.Packages.t)
 
 local EmotesService = {
@@ -19,7 +15,7 @@ function EmotesService.Client:PlayEmote(Player: Player, EmoteId: string)
 end
 
 function EmotesService:PlayEmote(Player: Player, EmoteId: string)
-	local Emote = Config.EmotesSystem.Emotes[EmoteId]
+	local Emote = RoRooms.Config.EmotesSystem.Emotes[EmoteId]
 	if Emote then
 		local CanUse, FailureReason = self:CanPlayerUseEmote(Player, EmoteId, Emote)
 		if CanUse then

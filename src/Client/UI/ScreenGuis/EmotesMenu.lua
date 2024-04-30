@@ -1,12 +1,7 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-local Client = RoRooms.Client
-local Config = RoRooms.Config
-
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local States = require(Client.UI.States)
+local States = require(RoRooms.Client.UI.States)
 local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -21,8 +16,8 @@ local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local TitleBar = require(OnyxUI.Components.TitleBar)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
-local EmotesCategory = require(Client.UI.Components.EmotesCategory)
-local EmoteCategoriesSidebar = require(Client.UI.Components.EmoteCategoriesSidebar)
+local EmotesCategory = require(RoRooms.Client.UI.Components.EmotesCategory)
+local EmoteCategoriesSidebar = require(RoRooms.Client.UI.Components.EmoteCategoriesSidebar)
 local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
@@ -114,13 +109,17 @@ return function(Props)
 												Wraps = true,
 											},
 
-											ForPairs(Config.EmotesSystem.Categories, function(Name: string, Category)
-												return Name,
-													EmotesCategory {
-														CategoryName = Name,
-														LayoutOrder = Category.LayoutOrder,
-													}
-											end, Fusion.cleanup),
+											ForPairs(
+												RoRooms.Config.EmotesSystem.Categories,
+												function(Name: string, Category)
+													return Name,
+														EmotesCategory {
+															CategoryName = Name,
+															LayoutOrder = Category.LayoutOrder,
+														}
+												end,
+												Fusion.cleanup
+											),
 										},
 									},
 								},

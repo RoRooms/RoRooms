@@ -1,12 +1,8 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-local Packages = RoRooms.Packages
-
-local Component = require(Packages.Component)
-local Zone = require(Shared.ExtPackages.Zone)
-local Knit = require(Packages.Knit)
-local AttributeValue = require(Shared.ExtPackages.AttributeValue)
+local Component = require(RoRooms.Packages.Component)
+local Zone = require(RoRooms.Shared.ExtPackages.Zone)
+local Knit = require(RoRooms.Packages.Knit)
+local AttributeValue = require(RoRooms.Shared.ExtPackages.AttributeValue)
 
 local PlayerDataService = Knit.GetService("PlayerDataService")
 

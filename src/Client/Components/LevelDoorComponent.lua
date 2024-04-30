@@ -1,14 +1,9 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
-
-local Packages = RoRooms.Packages
-local Shared = RoRooms.Shared
-local Client = RoRooms.Client
-
-local Component = require(Packages.Component)
+local Component = require(RoRooms.Packages.Component)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local AttributeValue = require(Shared.ExtPackages.AttributeValue)
-local States = require(Client.UI.States)
+local AttributeValue = require(RoRooms.Shared.ExtPackages.AttributeValue)
+local States = require(RoRooms.Client.UI.States)
 
 local Computed = Fusion.Computed
 local Observer = Fusion.Observer

@@ -1,12 +1,7 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-local Config = RoRooms.Config
-local Client = RoRooms.Client
-
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local States = require(Client.UI.States)
+local States = require(RoRooms.Client.UI.States)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local ForPairs = Fusion.ForPairs
@@ -23,7 +18,7 @@ return function(Props)
 		Size = Props.Size,
 
 		[Children] = {
-			ForPairs(Config.EmotesSystem.Categories, function(Name: string, Category)
+			ForPairs(RoRooms.Config.EmotesSystem.Categories, function(Name: string, Category)
 				return Name,
 					CategoryButton {
 						Name = "EmoteCategoryButton",

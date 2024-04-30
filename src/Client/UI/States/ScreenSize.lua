@@ -1,8 +1,6 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Parent)
 local Workspace = game:GetService("Workspace")
 
-local Shared = RoRooms.Shared
-
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local States = require(script.Parent)

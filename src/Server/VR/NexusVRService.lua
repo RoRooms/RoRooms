@@ -1,8 +1,5 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-
-local NexusVR = require(Shared.ExtPackages.NexusVRCharacterModel)
+local NexusVR = require(RoRooms.Shared.ExtPackages.NexusVRCharacterModel)
 
 local NEXUS_VR_CONFIGURATION = {
 	Appearance = {
@@ -68,7 +65,7 @@ local NEXUS_VR_CONFIGURATION = {
 	},
 	Output = {
 		--To suppress warnings from Nexus VR Character Model
-		--where supported (missing configuration entries),
+		--where supported (missing RoRooms.Configuration entries),
 		--the names of the warnings can be added here.
 		--Add "All" to suppress all warnings.
 		SuppressWarnings = {},

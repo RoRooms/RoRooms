@@ -1,12 +1,8 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
-
-local Client = RoRooms.Client
-local Packages = RoRooms.Packages
-
-local Knit = require(Packages.Knit)
+local Knit = require(RoRooms.Packages.Knit)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local States = require(Client.UI.States)
+local States = require(RoRooms.Client.UI.States)
 local Themer = require(OnyxUI.Utils.Themer)
 local Theme = require(script.Parent.OnyxUITheme)
 
@@ -26,7 +22,7 @@ function UIController:KnitStart()
 	States:Start()
 
 	for _, GuiName in ipairs(DEFAULT_UIS) do
-		local GuiModule = Client.UI.ScreenGuis:FindFirstChild(GuiName)
+		local GuiModule = RoRooms.Client.UI.ScreenGuis:FindFirstChild(GuiName)
 		if GuiModule then
 			local Gui = require(GuiModule)
 			self:MountUI(Gui {})

@@ -1,8 +1,5 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-
-local ReconcileTable = require(Shared.ExtPackages.ReconcileTable)
+local ReconcileTable = require(RoRooms.Shared.ExtPackages.ReconcileTable)
 local States = require(script.Parent)
 
 local Prompts = {}

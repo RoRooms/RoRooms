@@ -1,14 +1,8 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
-
-local Server = RoRooms.Server
-local Shared = RoRooms.Shared
-local Storage = RoRooms.Storage
-local Packages = RoRooms.Packages
-
-local Knit = require(Packages.Knit)
-local SharedData = require(Shared.SharedData)
-local FilterString = require(Storage.ExtPackages.FilterString)
-local PlayerDataService = require(Server.PlayerData.PlayerDataService)
+local Knit = require(RoRooms.Packages.Knit)
+local SharedData = require(RoRooms.Shared.SharedData)
+local FilterString = require(RoRooms.Storage.ExtPackages.FilterString)
+local PlayerDataService = require(RoRooms.Server.PlayerData.PlayerDataService)
 local t = require(RoRooms.Packages.t)
 
 local UserProfileService = {

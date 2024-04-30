@@ -1,14 +1,9 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local Knit = require(RoRooms.Packages.Knit)
+local Topbar = require(RoRooms.Client.UI.States.Topbar)
+local UIController = require(RoRooms.Client.UI.UIController)
 
-local Client = RoRooms.Client
-local Packages = RoRooms.Packages
-
-local Knit = require(Packages.Knit)
-local Topbar = require(Client.UI.States.Topbar)
-
-local ProfileMenu = require(Client.UI.ScreenGuis.ProfileMenu)
-
-local UIController = require(Client.UI.UIController)
+local ProfileMenu = require(RoRooms.Client.UI.ScreenGuis.ProfileMenu)
 
 local UserProfileController = {
 	Name = "UserProfileController",

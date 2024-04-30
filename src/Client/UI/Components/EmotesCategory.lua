@@ -1,12 +1,8 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
-local Config = RoRooms.Config
-local Client = RoRooms.Client
-
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local States = require(Client.UI.States)
+local States = require(RoRooms.Client.UI.States)
 local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -17,7 +13,7 @@ local ForPairs = Fusion.ForPairs
 local Frame = require(OnyxUI.Components.Frame)
 local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
-local EmoteButton = require(Client.UI.Components.EmoteButton)
+local EmoteButton = require(RoRooms.Client.UI.Components.EmoteButton)
 
 return function(Props: { [any]: any })
 	Props.CategoryName = EnsureValue(Props.CategoryName, "string", "General")
@@ -27,7 +23,7 @@ return function(Props: { [any]: any })
 	Props.LayoutOrder = EnsureValue(Props.LayoutOrder, "number", 0)
 
 	local Category = Computed(function()
-		return Config.EmotesSystem.Categories[Props.CategoryName:get()]
+		return RoRooms.Config.EmotesSystem.Categories[Props.CategoryName:get()]
 	end)
 
 	return Frame {
@@ -81,7 +77,7 @@ return function(Props: { [any]: any })
 						Wraps = true,
 					},
 
-					ForPairs(Config.EmotesSystem.Emotes, function(EmoteId, Emote)
+					ForPairs(RoRooms.Config.EmotesSystem.Emotes, function(EmoteId, Emote)
 						local EmoteCategory = Emote.Category
 						if EmoteCategory == nil then
 							EmoteCategory = "General"
