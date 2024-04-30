@@ -9,7 +9,7 @@ return {
 		ProfilesSystem = { "UserProfileService", "UserProfileController" },
 		ItemsSystem = { "ItemsService", "ItemsController" },
 		EmotesSystem = { "EmotesService", "EmotesController" },
-		WorldsSystem = { "WorldsService", "WorldRegistryService", "WorldsController" },
+		WorldsSystem = { "WorldsService", "WorldRegistryService", "TopWorldsService", "WorldsController" },
 		MusicSystem = { "MusicService", "MusicController" },
 		SettingsSystem = { "SettingsController" },
 		FriendsSystem = { "FriendsController" },

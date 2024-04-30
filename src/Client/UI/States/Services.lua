@@ -1,8 +1,5 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Parent)
-
-local Packages = RoRooms.Packages
-
-local Knit = require(Packages.Knit)
+local Knit = require(RoRooms.Packages.Knit)
 local States = require(script.Parent)
 
 local SERVICES = {
@@ -12,6 +9,7 @@ local SERVICES = {
 	"PlayerDataService",
 	"EmotesService",
 	"WorldRegistryService",
+	"TopWorldsService",
 }
 
 local Services = {}
