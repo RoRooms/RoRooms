@@ -4,10 +4,11 @@ return function(Array: { [number]: any }, StartingPage: number, PageCount: numbe
 	for CurrentPage = StartingPage, (StartingPage + PageCount) do
 		local Page = {}
 
-		for Index = (CurrentPage * PageSize), ((CurrentPage * PageSize) + (PageCount * PageSize)) do
-			local PlaceId = Array[Index]
-			if PlaceId then
-				table.insert(Page, PlaceId)
+		local StartingIndex = (CurrentPage * PageSize) + 1
+		for Index = StartingIndex, (StartingIndex + (PageCount * PageSize)) do
+			local Entry = Array[Index]
+			if Entry then
+				table.insert(Page, Entry)
 			end
 		end
 
