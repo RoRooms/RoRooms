@@ -17,6 +17,7 @@ type Page = {
 
 local DATASTORE_NAME = "RR_WorldTeleports"
 local PAGE_ADVANCE_DELAY = 60
+local REINITIALIZATION_DELAY = 30 * 60
 
 local TopWorldsService = {
 	Name = script.Name,
@@ -31,6 +32,18 @@ function TopWorldsService.Client:GetTopWorlds(Player: Player, StartingPage: numb
 	assert(t.tuple(t.instanceOf("Player")(Player), t.number(StartingPage), t.number(PageCount), t.number(PageSize)))
 
 	return GetPagesFromArray(TopWorldsService.TopWorlds, StartingPage, PageCount, PageSize)
+end
+
+function TopWorldsService:_SpawnInitializationLoop()
+	return task.spawn(function()
+		while true do
+			self:_ClearTopWorlds()
+			self:_SpawnUpdateLoop()
+			self:_SpawnLastWeekUpdateLoop()
+
+			task.wait(REINITIALIZATION_DELAY)
+		end
+	end)
 end
 
 function TopWorldsService:_SpawnUpdateLoop()
@@ -107,21 +120,38 @@ function TopWorldsService:_AdvanceToNextPage(Pages: DataStorePages)
 	if Pages.IsFinished then
 		return false
 	else
-		Pages:AdvanceToNextPageAsync()
+		local Success, Result = pcall(function()
+			return Pages:AdvanceToNextPageAsync()
+		end)
+		if not Success then
+			warn(Result)
+		end
 
-		return true
+		return Success, Result
 	end
+end
+
+function TopWorldsService:_ClearTopWorlds()
+	self.TopWorlds = {}
 end
 
 function TopWorldsService:_LogIncomingTeleport(PlaceId: number)
 	if WorldRegistryService:IsWorldRegistered(PlaceId) then
-		self.TeleportsStore:IncrementAsync(tostring(PlaceId), 1)
+		local Success, Result = pcall(function()
+			return self.TeleportsStore:IncrementAsync(tostring(PlaceId), 1)
+		end)
+		if not Success then
+			warn(Result)
+		end
+
+		return Success, Result
+	else
+		return false
 	end
 end
 
 function TopWorldsService:KnitStart()
-	self:_SpawnUpdateLoop()
-	self:_SpawnLastWeekUpdateLoop()
+	self._InitializationLoop = self:_SpawnInitializationLoop()
 
 	Players.PlayerAdded:Connect(function(Player)
 		local JoinData = Player:GetJoinData()
