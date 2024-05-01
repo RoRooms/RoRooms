@@ -13,6 +13,7 @@ local States = {
 		PlayerDataService = nil,
 		EmotesService = nil,
 		TopWorldsService = nil,
+		RandomWorldsService = nil,
 	},
 	Controllers = {
 		UIController = nil,
