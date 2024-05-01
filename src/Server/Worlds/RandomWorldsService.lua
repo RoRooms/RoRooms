@@ -5,8 +5,8 @@ local Knit = require(RoRooms.Packages.Knit)
 local t = require(RoRooms.Packages.t)
 local GetPagesFromArray = require(RoRooms.Shared.ExtPackages.GetPagesFromArray)
 
-local WorldsService = {
-	Name = "WorldsService",
+local RandomWorldsService = {
+	Name = script.Name,
 	Client = {
 		RandomWorldsInitialized = Knit.CreateSignal(),
 	},
@@ -14,13 +14,18 @@ local WorldsService = {
 	RandomWorlds = {},
 }
 
-function WorldsService.Client:GetRandomWorlds(Player: Player, StartingPage: number, PageCount: number, PageSize: number)
+function RandomWorldsService.Client:GetRandomWorlds(
+	Player: Player,
+	StartingPage: number,
+	PageCount: number,
+	PageSize: number
+)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.number(StartingPage), t.number(PageCount), t.number(PageSize)))
 
 	return GetPagesFromArray(self.Server.RandomWorlds, StartingPage, PageCount, PageSize)
 end
 
-function WorldsService:_UpdateRandomWorlds(WorldRegistry: { [string]: { any } })
+function RandomWorldsService:_UpdateRandomWorlds(WorldRegistry: { [string]: { any } })
 	local RandomWorlds = {}
 
 	for PlaceId, _ in pairs(WorldRegistry) do
@@ -32,12 +37,12 @@ function WorldsService:_UpdateRandomWorlds(WorldRegistry: { [string]: { any } })
 	self.Client.RandomWorldsInitialized:FireAll()
 end
 
-function WorldsService:KnitStart()
+function RandomWorldsService:KnitStart()
 	WorldRegistryService.RegistryUpdated:Connect(function(WorldRegistry: { [string]: {} })
 		self:_UpdateRandomWorlds(WorldRegistry)
 	end)
 end
 
-function WorldsService:KnitInit() end
+function RandomWorldsService:KnitInit() end
 
-return WorldsService
+return RandomWorldsService

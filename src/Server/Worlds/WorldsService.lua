@@ -5,7 +5,8 @@ local WorldRegistryService = require(script.Parent.WorldRegistryService)
 local t = require(RoRooms.Packages.t)
 
 local WorldsService = {
-	Name = "WorldsService",
+	Name = script.Name,
+	Client = {},
 }
 
 function WorldsService.Client:TeleportToWorld(Player: Player, PlaceId: number)
