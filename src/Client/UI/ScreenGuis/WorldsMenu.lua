@@ -11,6 +11,7 @@ local Computed = Fusion.Computed
 local New = Fusion.New
 local Spring = Fusion.Spring
 local ForValues = Fusion.ForValues
+local Value = Fusion.Value
 
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
@@ -21,10 +22,15 @@ local WorldsCategory = require(RoRooms.Client.UI.Components.WorldsCategory)
 local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
 
+local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { "rbxassetid://17293213744", "Load more" }
+local DEFAULT_REFRESH_BUTTON_CONTENTS = { "rbxassetid://13858012326", "Refresh" }
+
 return function(Props)
 	local MenuOpen = Computed(function()
 		return States.CurrentMenu:get() == script.Name
 	end)
+	local LoadMoreButtonContents = Value(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
+	local RefreshButtonContents = Value(DEFAULT_REFRESH_BUTTON_CONTENTS)
 
 	local WorldsMenu = New "ScreenGui" {
 		Name = "WorldsMenu",
@@ -43,8 +49,8 @@ return function(Props)
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
 					end),
-					37,
-					1
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening
 				),
 				BaseResolution = Vector2.new(739, 789),
 				ScaleClamps = { Min = 1, Max = 1 },
@@ -168,12 +174,37 @@ return function(Props)
 											},
 											Button {
 												Name = "LoadMoreButton",
-												Contents = { "rbxassetid://17293213744", "Load more" },
+												Contents = LoadMoreButtonContents,
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 
 												OnActivated = function()
-													Worlds:FetchTopWorlds()
+													LoadMoreButtonContents:set({
+														"rbxassetid://14906067807",
+														"Loading",
+													})
+
+													Worlds:FetchTopWorlds():andThen(function(Result)
+														if typeof(Result) == "table" then
+															LoadMoreButtonContents:set({
+																"rbxassetid://13858820127",
+																"Loaded",
+															})
+															task.wait(0.5)
+															LoadMoreButtonContents:set(
+																DEFAULT_LOAD_MORE_BUTTON_CONTENTS
+															)
+														else
+															LoadMoreButtonContents:set({
+																"rbxassetid://14906266795",
+																"Error",
+															})
+															task.wait(0.5)
+															LoadMoreButtonContents:set(
+																DEFAULT_LOAD_MORE_BUTTON_CONTENTS
+															)
+														end
+													end)
 												end,
 											},
 										},
@@ -215,13 +246,34 @@ return function(Props)
 											},
 											Button {
 												Name = "RefreshButton",
-												Contents = { "rbxassetid://17292608467", "Refresh" },
+												Contents = RefreshButtonContents,
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 
 												OnActivated = function()
+													RefreshButtonContents:set({
+														"rbxassetid://14906067807",
+														"Refreshing",
+													})
+
 													Worlds:ClearRandomWorlds()
-													Worlds:FetchRandomWorlds(1, true)
+													Worlds:FetchRandomWorlds(1, true):andThen(function(Result)
+														if typeof(Result) == "table" then
+															RefreshButtonContents:set({
+																"rbxassetid://13858820127",
+																"Refreshed",
+															})
+															task.wait(0.5)
+															RefreshButtonContents:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
+														else
+															RefreshButtonContents:set({
+																"rbxassetid://14906266795",
+																"Error",
+															})
+															task.wait(0.5)
+															RefreshButtonContents:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
+														end
+													end)
 												end,
 											},
 										},

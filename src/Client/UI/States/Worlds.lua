@@ -20,14 +20,16 @@ function Worlds:FetchTopWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 	end
 
 	if States.Services.TopWorldsService then
-		States.Services.TopWorldsService
+		return States.Services.TopWorldsService
 			:GetTopWorlds(math.floor(#States.Worlds.TopWorlds:get() / PAGE_SIZE), PageCount, PAGE_SIZE)
-			:andThen(function(TopWorlds: WorldPages)
+			:andThen(function(TopWorlds: WorldPages?)
 				if OnlyIfEmpty and #States.Worlds.TopWorlds:get() > 0 then
 					return
 				else
 					self:_AddTopWorlds(TopWorlds)
 				end
+
+				return TopWorlds
 			end)
 	end
 end
@@ -52,7 +54,7 @@ function Worlds:FetchRandomWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 	end
 
 	if States.Services.RandomWorldsService then
-		States.Services.RandomWorldsService
+		return States.Services.RandomWorldsService
 			:GetRandomWorlds(math.floor(#States.Worlds.RandomWorlds:get() / PAGE_SIZE), PageCount, PAGE_SIZE)
 			:andThen(function(RandomWorlds: WorldPages)
 				if OnlyIfEmpty and #States.Worlds.RandomWorlds:get() > 0 then
@@ -60,6 +62,8 @@ function Worlds:FetchRandomWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 				else
 					self:_AddRandomWorlds(RandomWorlds)
 				end
+
+				return RandomWorlds
 			end)
 	end
 end
