@@ -157,11 +157,13 @@ return function(Props)
 														Wraps = true,
 													},
 
-													ForValues(States.Worlds.TopWorlds, function(PlaceId: number)
-														return WorldButton {
-															PlaceId = PlaceId,
-														}
-													end, Fusion.cleanup),
+													ForValues(
+														States.Worlds.TopWorlds,
+														function(World: { [string]: any })
+															return WorldButton(World)
+														end,
+														Fusion.cleanup
+													),
 												},
 											},
 											Button {
@@ -202,11 +204,13 @@ return function(Props)
 														Wraps = true,
 													},
 
-													ForValues(States.Worlds.RandomWorlds, function(PlaceId: number)
-														return WorldButton {
-															PlaceId = PlaceId,
-														}
-													end, Fusion.cleanup),
+													ForValues(
+														States.Worlds.RandomWorlds,
+														function(World: { [string]: any })
+															return WorldButton(World)
+														end,
+														Fusion.cleanup
+													),
 												},
 											},
 											Button {

@@ -5,6 +5,10 @@ local Knit = require(RoRooms.Packages.Knit)
 local t = require(RoRooms.Packages.t)
 local GetPagesFromArray = require(RoRooms.Shared.ExtPackages.GetPagesFromArray)
 
+type World = {
+	PlaceId: number,
+}
+
 local RandomWorldsService = {
 	Name = script.Name,
 	Client = {
@@ -25,11 +29,13 @@ function RandomWorldsService.Client:GetRandomWorlds(
 	return GetPagesFromArray(self.Server.RandomWorlds, StartingPage, PageCount, PageSize)
 end
 
-function RandomWorldsService:_UpdateRandomWorlds(WorldRegistry: { [string]: { any } })
+function RandomWorldsService:_UpdateRandomWorlds(WorldRegistry: { [number]: World })
 	local RandomWorlds = {}
 
 	for PlaceId, _ in pairs(WorldRegistry) do
-		table.insert(RandomWorlds, PlaceId)
+		table.insert(RandomWorlds, {
+			PlaceId = PlaceId,
+		})
 	end
 
 	self.RandomWorlds = ShuffleArray(RandomWorlds)
@@ -38,7 +44,7 @@ function RandomWorldsService:_UpdateRandomWorlds(WorldRegistry: { [string]: { an
 end
 
 function RandomWorldsService:KnitStart()
-	WorldRegistryService.RegistryUpdated:Connect(function(WorldRegistry: { [string]: {} })
+	WorldRegistryService.RegistryUpdated:Connect(function(WorldRegistry: { [number]: World })
 		self:_UpdateRandomWorlds(WorldRegistry)
 	end)
 end

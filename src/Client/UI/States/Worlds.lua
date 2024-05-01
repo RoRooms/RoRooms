@@ -58,12 +58,12 @@ end
 
 function Worlds:Start()
 	States.Services.TopWorldsService.TopWorldsInitialized:Connect(function()
-		self:ClearRandomWorlds()
-		self:AddRandomWorlds()
-	end)
-	States.Services.RandomWorldsService.RandomWorldsInitialized:Connect(function()
 		self:ClearTopWorlds()
 		self:AddTopWorlds()
+	end)
+	States.Services.RandomWorldsService.RandomWorldsInitialized:Connect(function()
+		self:ClearRandomWorlds()
+		self:AddRandomWorlds()
 	end)
 
 	if #States.Worlds.TopWorlds:get() == 0 then
