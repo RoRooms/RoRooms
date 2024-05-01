@@ -1,5 +1,15 @@
 local States = require(script.Parent)
 
+type World = {
+	PlaceId: number,
+}
+type WorldPage = {
+	[number]: World,
+}
+type WorldPages = {
+	[number]: WorldPage,
+}
+
 local PAGE_SIZE = 3
 
 local Worlds = {}
@@ -12,12 +22,12 @@ function Worlds:AddTopWorlds(PageCount: number | nil)
 	if States.Services.TopWorldsService then
 		States.Services.TopWorldsService
 			:GetTopWorlds(math.ceil(#States.Worlds.TopWorlds:get() / PAGE_SIZE), PageCount, PAGE_SIZE)
-			:andThen(function(WorldPages: { [number]: { [number]: number } })
+			:andThen(function(WorldPages: WorldPages)
 				local NewTopWorlds = States.Worlds.TopWorlds:get()
 
 				for _, Page in ipairs(WorldPages) do
-					for _, PlaceId in ipairs(Page) do
-						table.insert(NewTopWorlds, PlaceId)
+					for _, World in ipairs(Page) do
+						table.insert(NewTopWorlds, World)
 					end
 				end
 
@@ -34,12 +44,12 @@ function Worlds:AddRandomWorlds(PageCount: number | nil)
 	if States.Services.RandomWorldsService then
 		States.Services.RandomWorldsService
 			:GetRandomWorlds(math.ceil(#States.Worlds.RandomWorlds:get() / PAGE_SIZE), PageCount, PAGE_SIZE)
-			:andThen(function(WorldPages: { [number]: { [number]: number } })
+			:andThen(function(WorldPages: WorldPages)
 				local NewRandomWorlds = States.Worlds.RandomWorlds:get()
 
 				for _, Page in ipairs(WorldPages) do
-					for _, PlaceId in ipairs(Page) do
-						table.insert(NewRandomWorlds, PlaceId)
+					for _, World in ipairs(Page) do
+						table.insert(NewRandomWorlds, World)
 					end
 				end
 
