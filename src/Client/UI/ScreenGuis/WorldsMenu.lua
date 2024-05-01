@@ -160,7 +160,7 @@ return function(Props)
 													ForValues(
 														States.Worlds.TopWorlds,
 														function(World: { [string]: any })
-															return WorldButton(World)
+															return WorldButton(table.clone(World))
 														end,
 														Fusion.cleanup
 													),
@@ -173,7 +173,7 @@ return function(Props)
 												AutomaticSize = Enum.AutomaticSize.Y,
 
 												OnActivated = function()
-													Worlds:AddTopWorlds()
+													Worlds:FetchTopWorlds()
 												end,
 											},
 										},
@@ -207,7 +207,7 @@ return function(Props)
 													ForValues(
 														States.Worlds.RandomWorlds,
 														function(World: { [string]: any })
-															return WorldButton(World)
+															return WorldButton(table.clone(World))
 														end,
 														Fusion.cleanup
 													),
@@ -221,7 +221,7 @@ return function(Props)
 
 												OnActivated = function()
 													Worlds:ClearRandomWorlds()
-													Worlds:AddRandomWorlds(2)
+													Worlds:FetchRandomWorlds(1, true)
 												end,
 											},
 										},

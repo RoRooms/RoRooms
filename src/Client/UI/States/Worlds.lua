@@ -14,7 +14,7 @@ local PAGE_SIZE = 3
 
 local Worlds = {}
 
-function Worlds:AddTopWorlds(PageCount: number | nil)
+function Worlds:FetchTopWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 	if PageCount == nil then
 		PageCount = 10
 	end
@@ -22,40 +22,56 @@ function Worlds:AddTopWorlds(PageCount: number | nil)
 	if States.Services.TopWorldsService then
 		States.Services.TopWorldsService
 			:GetTopWorlds(math.ceil(#States.Worlds.TopWorlds:get() / PAGE_SIZE), PageCount, PAGE_SIZE)
-			:andThen(function(WorldPages: WorldPages)
-				local NewTopWorlds = States.Worlds.TopWorlds:get()
-
-				for _, Page in ipairs(WorldPages) do
-					for _, World in ipairs(Page) do
-						table.insert(NewTopWorlds, World)
-					end
+			:andThen(function(TopWorlds: WorldPages)
+				if OnlyIfEmpty and #States.Worlds.TopWorlds:get() > 0 then
+					return
+				else
+					self:_AddTopWorlds(TopWorlds)
 				end
-
-				States.Worlds.TopWorlds:set(NewTopWorlds)
 			end)
 	end
 end
 
-function Worlds:AddRandomWorlds(PageCount: number | nil)
+function Worlds:_AddTopWorlds(TopWorlds: WorldPages)
+	local NewTopWorlds = States.Worlds.TopWorlds:get()
+
+	for _, Page in ipairs(TopWorlds) do
+		for _, World in ipairs(Page) do
+			table.insert(NewTopWorlds, World)
+		end
+	end
+
+	States.Worlds.TopWorlds:set(NewTopWorlds)
+end
+
+function Worlds:FetchRandomWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 	if PageCount == nil then
-		PageCount = 10
+		PageCount = 1
 	end
 
 	if States.Services.RandomWorldsService then
 		States.Services.RandomWorldsService
 			:GetRandomWorlds(math.ceil(#States.Worlds.RandomWorlds:get() / PAGE_SIZE), PageCount, PAGE_SIZE)
-			:andThen(function(WorldPages: WorldPages)
-				local NewRandomWorlds = States.Worlds.RandomWorlds:get()
-
-				for _, Page in ipairs(WorldPages) do
-					for _, World in ipairs(Page) do
-						table.insert(NewRandomWorlds, World)
-					end
+			:andThen(function(RandomWorlds: WorldPages)
+				if OnlyIfEmpty and #States.Worlds.RandomWorlds:get() > 0 then
+					return
+				else
+					self:_AddRandomWorlds(RandomWorlds)
 				end
-
-				States.Worlds.RandomWorlds:set(NewRandomWorlds)
 			end)
 	end
+end
+
+function Worlds:_AddRandomWorlds(RandomWorlds: WorldPages)
+	local NewRandomWorlds = States.Worlds.RandomWorlds:get()
+
+	for _, Page in ipairs(RandomWorlds) do
+		for _, World in ipairs(Page) do
+			table.insert(NewRandomWorlds, World)
+		end
+	end
+
+	States.Worlds.RandomWorlds:set(NewRandomWorlds)
 end
 
 function Worlds:ClearTopWorlds()
@@ -67,20 +83,20 @@ function Worlds:ClearRandomWorlds()
 end
 
 function Worlds:Start()
-	States.Services.TopWorldsService.TopWorldsInitialized:Connect(function()
+	States.Services.TopWorldsService.TopWorldsInitialized:Connect(function(TopWorlds: WorldPages)
 		self:ClearTopWorlds()
-		self:AddTopWorlds()
+		self:_AddTopWorlds(TopWorlds)
 	end)
-	States.Services.RandomWorldsService.RandomWorldsInitialized:Connect(function()
+	States.Services.RandomWorldsService.RandomWorldsInitialized:Connect(function(RandomWorlds: WorldPages)
 		self:ClearRandomWorlds()
-		self:AddRandomWorlds()
+		self:_AddRandomWorlds(RandomWorlds)
 	end)
 
 	if #States.Worlds.TopWorlds:get() == 0 then
-		self:AddTopWorlds()
+		self:FetchTopWorlds(nil, true)
 	end
 	if #States.Worlds.RandomWorlds:get() == 0 then
-		self:AddRandomWorlds()
+		self:FetchRandomWorlds(nil, true)
 	end
 end
 

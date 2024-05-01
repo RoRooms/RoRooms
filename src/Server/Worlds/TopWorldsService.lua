@@ -18,6 +18,7 @@ type Page = {
 local DATASTORE_NAME = "RR_WorldTeleports"
 local PAGE_ADVANCE_DELAY = 60
 local REINITIALIZATION_DELAY = 30 * 60
+local PAGE_SIZE = 3
 
 local TopWorldsService = {
 	Name = script.Name,
@@ -31,6 +32,10 @@ local TopWorldsService = {
 function TopWorldsService.Client:GetTopWorlds(Player: Player, StartingPage: number, PageCount: number, PageSize: number)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.number(StartingPage), t.number(PageCount), t.number(PageSize)))
 
+	return self.Server:GetTopWorlds(StartingPage, PageCount, PageSize)
+end
+
+function TopWorldsService:GetTopWorlds(StartingPage: number, PageCount: number, PageSize: number)
 	return GetPagesFromArray(TopWorldsService.TopWorlds, StartingPage, PageCount, PageSize)
 end
 
@@ -59,7 +64,7 @@ function TopWorldsService:_SpawnUpdateLoop()
 		self:_LoadPage(Pages:GetCurrentPage())
 		AdvancedLastCheck = self:_AdvanceToNextPage(Pages)
 
-		self.Client.TopWorldsInitialized:FireAll()
+		self.Client.TopWorldsInitialized:FireAll(self:GetTopWorlds(0, 10, PAGE_SIZE))
 
 		while task.wait(PAGE_ADVANCE_DELAY) do
 			if AdvancedLastCheck then

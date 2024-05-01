@@ -9,6 +9,8 @@ type World = {
 	PlaceId: number,
 }
 
+local PAGE_SIZE = 3
+
 local RandomWorldsService = {
 	Name = script.Name,
 	Client = {
@@ -26,7 +28,11 @@ function RandomWorldsService.Client:GetRandomWorlds(
 )
 	assert(t.tuple(t.instanceOf("Player")(Player), t.number(StartingPage), t.number(PageCount), t.number(PageSize)))
 
-	return GetPagesFromArray(self.Server.RandomWorlds, StartingPage, PageCount, PageSize)
+	return self.Server:GetRandomWorlds(StartingPage, PageCount, PageSize)
+end
+
+function RandomWorldsService:GetRandomWorlds(StartingPage: number, PageCount: number, PageSize: number)
+	return GetPagesFromArray(self.RandomWorlds, StartingPage, PageCount, PageSize)
 end
 
 function RandomWorldsService:_UpdateRandomWorlds(WorldRegistry: { [number]: World })
@@ -40,7 +46,7 @@ function RandomWorldsService:_UpdateRandomWorlds(WorldRegistry: { [number]: Worl
 
 	self.RandomWorlds = ShuffleArray(RandomWorlds)
 
-	self.Client.RandomWorldsInitialized:FireAll()
+	self.Client.RandomWorldsInitialized:FireAll(self:GetRandomWorlds(0, 10, PAGE_SIZE))
 end
 
 function RandomWorldsService:KnitStart()
