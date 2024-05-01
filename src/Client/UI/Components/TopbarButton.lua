@@ -71,16 +71,13 @@ return function(Props)
 
 			Icon {
 				Name = "Icon",
-				Visible = Computed(function()
-					return not MenuOpen:get()
+				Image = Computed(function()
+					if MenuOpen:get() then
+						return Props.IconFilled:get()
+					else
+						return Props.Icon:get()
+					end
 				end),
-				Image = Props.Icon,
-				Size = UDim2.fromOffset(30, 30),
-			},
-			Icon {
-				Name = "IconFilled",
-				Visible = MenuOpen,
-				Image = Props.IconFilled,
 				Size = UDim2.fromOffset(30, 30),
 			},
 		},
