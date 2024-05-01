@@ -4,8 +4,8 @@ return function(Array: { [number]: any }, StartingPage: number, PageCount: numbe
 	for CurrentPage = StartingPage, (StartingPage + PageCount) do
 		local Page = {}
 
-		local StartingIndex = (CurrentPage * PageSize) + 1
-		for Index = StartingIndex, (StartingIndex + (PageCount * PageSize)) do
+		local StartingIndex = CurrentPage * PageSize
+		for Index = (StartingIndex + 1), (StartingIndex + (PageCount * PageSize)) do
 			local Entry = Array[Index]
 			if Entry then
 				table.insert(Page, Entry)
