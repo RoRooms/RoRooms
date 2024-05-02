@@ -43,9 +43,14 @@ end
 function TopWorldsService:_SpawnInitializationLoop()
 	return task.spawn(function()
 		while true do
-			self:_ClearTopWorlds()
-			self:_SpawnUpdateLoop()
-			self:_SpawnLastWeekUpdateLoop()
+			local Success, Result = pcall(function()
+				self:_ClearTopWorlds()
+				self:_SpawnUpdateLoop()
+				self:_SpawnLastWeekUpdateLoop()
+			end)
+			if not Success then
+				warn(Result)
+			end
 
 			task.wait(REINITIALIZATION_DELAY)
 		end
