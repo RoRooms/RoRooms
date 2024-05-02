@@ -101,7 +101,9 @@ return function(Props)
 							{
 								Contents = { "Teleport" },
 								Callback = function()
-									States.WorldsService:TeleportToWorld(Props.PlaceId:get())
+									if States.Services.WorldsService then
+										States.Services.WorldsService:TeleportToWorld(Props.PlaceId:get())
+									end
 								end,
 							},
 						},

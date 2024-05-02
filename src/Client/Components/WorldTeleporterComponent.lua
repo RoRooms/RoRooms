@@ -28,7 +28,9 @@ function WorldTeleporterComponent:PromptTeleport(PlaceId: number, PlaceInfo: { [
 				Contents = { "Teleport" },
 				Style = "Filled",
 				Callback = function()
-					States.WorldsService:TeleportToWorld(PlaceId)
+					if States.Services.WorldsService then
+						States.Services.WorldsService:TeleportToWorld(PlaceId)
+					end
 				end,
 			},
 		},
