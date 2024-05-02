@@ -109,13 +109,16 @@ end
 
 function TopWorldsService:_LoadPage(Page: Page)
 	for _, Entry in ipairs(Page) do
-		local ExistingEntry = self:_FindEntryFromPlaceId(Entry.PlaceId)
+		local PlaceId = tonumber(Entry.key)
+		local Teleports = tonumber(Entry.value)
+
+		local ExistingEntry = self:_FindEntryFromPlaceId(PlaceId)
 		if ExistingEntry then
-			ExistingEntry.Teleports += Entry.value
+			ExistingEntry.Teleports += Teleports
 		else
 			table.insert(self.TopWorlds, {
-				PlaceId = tonumber(Entry.key),
-				Teleports = Entry.value,
+				PlaceId = PlaceId,
+				Teleports = Teleports,
 			})
 		end
 	end
