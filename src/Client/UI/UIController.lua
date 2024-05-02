@@ -8,7 +8,7 @@ local Theme = require(script.Parent.OnyxUITheme)
 
 local New = Fusion.New
 
-local DEFAULT_UIS = { "Topbar", "PromptPopup" }
+local DEFAULT_UIS = { "Topbar", "PromptHUD" }
 
 local UIController = {
 	Name = "UIController",
