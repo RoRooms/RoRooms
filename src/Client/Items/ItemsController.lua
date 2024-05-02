@@ -24,7 +24,6 @@ function ItemsController:ToggleEquipItem(ItemId: string)
 				Text = FailureReason,
 				Buttons = {
 					{
-						Primary = false,
 						Contents = { "Close" },
 					},
 				},

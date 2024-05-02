@@ -85,7 +85,6 @@ return function(Props)
 						Text = "You're already in the same server as this person.",
 						Buttons = {
 							{
-								Primary = false,
 								Contents = { "Close" },
 							},
 						},
@@ -96,11 +95,10 @@ return function(Props)
 						Text = `Do you want to join friend in {PlaceInfo:get().Name}?`,
 						Buttons = {
 							{
-								Primary = false,
 								Contents = { "Cancel" },
+								Style = "Outlined",
 							},
 							{
-								Primary = true,
 								Contents = { "Teleport" },
 								Callback = function()
 									States.WorldsService:TeleportToWorld(Props.PlaceId:get())

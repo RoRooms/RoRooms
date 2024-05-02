@@ -21,12 +21,12 @@ function WorldTeleporterComponent:PromptTeleport(PlaceId: number, PlaceInfo: { [
 		Text = `Do you want to teleport to world {PlaceInfo.Name}?`,
 		Buttons = {
 			{
-				Primary = false,
 				Contents = { "Cancel" },
+				Style = "Outlined",
 			},
 			{
-				Primary = true,
 				Contents = { "Teleport" },
+				Style = "Filled",
 				Callback = function()
 					States.WorldsService:TeleportToWorld(PlaceId)
 				end,

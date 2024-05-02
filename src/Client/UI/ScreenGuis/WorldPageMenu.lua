@@ -190,7 +190,6 @@ return function(Props)
 																Text = Message,
 																Buttons = {
 																	{
-																		Primary = true,
 																		Contents = { "Dismiss" },
 																	},
 																},
