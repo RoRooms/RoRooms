@@ -117,7 +117,7 @@ return function(Props)
 
 	local DisconnectFocusedCategory = Observer(States.ItemsMenu.FocusedCategory):onChange(function()
 		local Items = ItemsMenu.AutoScaleFrame.MenuFrame.Contents.Items
-		local Category = Items.Contents:FindFirstChild(`{States.ItemsMenu.FocusedCategory:get()}ItemsCategory`)
+		local Category = Items:FindFirstChild(`{States.ItemsMenu.FocusedCategory:get()}ItemsCategory`)
 		if Category then
 			Items.CanvasPosition = Vector2.new(0, 0)
 			Items.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - Items.AbsolutePosition.Y)

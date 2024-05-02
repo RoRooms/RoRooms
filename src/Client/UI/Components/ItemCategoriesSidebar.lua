@@ -18,17 +18,17 @@ return function(Props)
 		Size = Props.Size,
 
 		[Children] = {
-			ForPairs(RoRooms.Config.ItemsSystem.Categories, function(Name: string, Category)
-				return Name,
+			ForPairs(RoRooms.Config.ItemsSystem.Categories, function(CategoryName: string, Category)
+				return CategoryName,
 					CategoryButton {
 						Name = "ItemCategoryButton",
-						Category = Name,
+						Category = CategoryName,
 						Icon = Category.Icon,
 						Color = Category.TintColor,
 						LayoutOrder = Category.LayoutOrder,
 
 						OnActivated = function()
-							States.ItemsSystem.FocusedCategory:set(Props.CategoryName:get(), true)
+							States.ItemsMenu.FocusedCategory:set(CategoryName, true)
 						end,
 					}
 			end, Fusion.cleanup),

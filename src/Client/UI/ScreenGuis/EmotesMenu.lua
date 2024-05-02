@@ -132,11 +132,11 @@ return function(Props)
 	}
 
 	local DisconnectFocusedCategory = Observer(States.EmotesMenu.FocusedCategory):onChange(function()
-		local Emotes = EmotesMenu.AutoScaleFrame.MenuFrame.Contents.Frame.EmotesList
-		local Category = Emotes.Contents:FindFirstChild(`{States.EmotesMenu.FocusedCategory:get()}EmotesCategory`)
+		local EmotesList = EmotesMenu.AutoScaleFrame.MenuFrame.Contents.Frame.EmotesList
+		local Category = EmotesList:FindFirstChild(`{States.EmotesMenu.FocusedCategory:get()}EmotesCategory`)
 		if Category then
-			Emotes.CanvasPosition = Vector2.new(0, 0)
-			Emotes.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - Emotes.AbsolutePosition.Y)
+			EmotesList.CanvasPosition = Vector2.new(0, 0)
+			EmotesList.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - EmotesList.AbsolutePosition.Y)
 		end
 	end)
 

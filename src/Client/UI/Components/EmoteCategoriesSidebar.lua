@@ -18,17 +18,17 @@ return function(Props)
 		Size = Props.Size,
 
 		[Children] = {
-			ForPairs(RoRooms.Config.EmotesSystem.Categories, function(Name: string, Category)
-				return Name,
+			ForPairs(RoRooms.Config.EmotesSystem.Categories, function(CategoryName: string, Category)
+				return CategoryName,
 					CategoryButton {
 						Name = "EmoteCategoryButton",
-						Category = Name,
+						Category = CategoryName,
 						Icon = Category.Icon,
 						Color = Category.TintColor,
 						LayoutOrder = Category.LayoutOrder,
 
 						OnActivated = function()
-							States.EmotesMenu.FocusedCategory:set(Props.CategoryName:get(), true)
+							States.EmotesMenu.FocusedCategory:set(CategoryName, true)
 						end,
 					}
 			end, Fusion.cleanup),
