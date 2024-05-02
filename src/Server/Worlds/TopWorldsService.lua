@@ -19,6 +19,7 @@ local DATASTORE_NAME = "RR_WorldTeleports"
 local PAGE_ADVANCE_DELAY = 60
 local REINITIALIZATION_DELAY = 30 * 60
 local PAGE_SIZE = 3
+local WORLD_PERSISTENCE_TIME = (((60 * 60) * 24) * 7)
 
 local TopWorldsService = {
 	Name = script.Name,
@@ -170,9 +171,12 @@ function TopWorldsService:KnitStart()
 end
 
 function TopWorldsService:KnitInit()
-	self.TeleportsStore = DataStoreService:GetOrderedDataStore(DATASTORE_NAME, tostring(math.floor(os.time() / 86400)))
-	self.LastWeekTeleportsStore =
-		DataStoreService:GetOrderedDataStore(DATASTORE_NAME, tostring(math.floor(os.time() / 86400) - 1))
+	self.TeleportsStore =
+		DataStoreService:GetOrderedDataStore(DATASTORE_NAME, tostring(math.floor(os.time() / WORLD_PERSISTENCE_TIME)))
+	self.LastWeekTeleportsStore = DataStoreService:GetOrderedDataStore(
+		DATASTORE_NAME,
+		tostring(math.floor(os.time() / WORLD_PERSISTENCE_TIME) - 1)
+	)
 end
 
 return TopWorldsService
