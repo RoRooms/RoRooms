@@ -55,7 +55,7 @@ function Worlds:FetchRandomWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 
 	if States.Services.RandomWorldsService then
 		return States.Services.RandomWorldsService
-			:GetRandomWorlds(math.floor(#States.Worlds.RandomWorlds:get() / PAGE_SIZE), PageCount, PAGE_SIZE)
+			:GetRandomWorlds(nil, PageCount, PAGE_SIZE)
 			:andThen(function(RandomWorlds: WorldPages)
 				if OnlyIfEmpty and #States.Worlds.RandomWorlds:get() > 0 then
 					return

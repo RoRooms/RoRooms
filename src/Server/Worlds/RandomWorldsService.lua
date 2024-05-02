@@ -22,11 +22,26 @@ local RandomWorldsService = {
 
 function RandomWorldsService.Client:GetRandomWorlds(
 	Player: Player,
-	StartingPage: number,
+	StartingPage: number?,
 	PageCount: number,
 	PageSize: number
 )
-	assert(t.tuple(t.instanceOf("Player")(Player), t.number(StartingPage), t.number(PageCount), t.number(PageSize)))
+	assert(
+		t.tuple(
+			t.instanceOf("Player")(Player),
+			t.number(StartingPage) or t.none(StartingPage),
+			t.number(PageCount),
+			t.number(PageSize)
+		)
+	)
+
+	if StartingPage == nil then
+		local MaxPages = math.ceil(#self.Server.RandomWorlds / PageSize)
+		StartingPage = math.random(0, MaxPages)
+		if StartingPage == MaxPages then
+			StartingPage -= 1
+		end
+	end
 
 	return self.Server:GetRandomWorlds(StartingPage, PageCount, PageSize)
 end
