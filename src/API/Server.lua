@@ -22,7 +22,10 @@ function RoRoomsServer:Start()
 	Loader.LoadDescendants(Server, function(Descendant)
 		if Descendant:IsA("ModuleScript") and Descendant.Name:match("Service$") ~= nil then
 			local Feature = FindFeatureFromModule(Descendant)
-			if table.find(DEFAULT_SERVICES, Descendant.Name) or (Feature and Config[Feature].Enabled == true) then
+			if
+				table.find(DEFAULT_SERVICES, Descendant.Name)
+				or (Feature and Config.Systems[Feature].Enabled == true)
+			then
 				return Knit.CreateService(require(Descendant))
 			else
 				return false

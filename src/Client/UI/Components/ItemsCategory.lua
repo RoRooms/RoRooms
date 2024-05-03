@@ -19,7 +19,7 @@ return function(Props: { [any]: any })
 	Props.CategoryName = EnsureValue(Props.CategoryName, "string", "Category")
 
 	local Category = Computed(function()
-		return RoRooms.Config.ItemsSystem.Categories[Props.CategoryName:get()]
+		return RoRooms.Config.Systems.Items.Categories[Props.CategoryName:get()]
 	end)
 
 	return Frame {
@@ -79,7 +79,7 @@ return function(Props: { [any]: any })
 						FillDirection = Enum.FillDirection.Horizontal,
 					},
 
-					ForPairs(RoRooms.Config.ItemsSystem.Items, function(ItemId, Item)
+					ForPairs(RoRooms.Config.Systems.Items.Items, function(ItemId, Item)
 						local ItemCategory = Item.Category
 						if ItemCategory == nil then
 							ItemCategory = "General"

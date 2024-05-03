@@ -72,7 +72,7 @@ end
 function ItemGiverComponent:Construct()
 	self.ItemId = AttributeValue(self.Instance, "RR_ItemId")
 	self.Item = Computed(function()
-		return RoRooms.Config.ItemsSystem.Items[self.ItemId:get()]
+		return RoRooms.Config.Systems.Items.Items[self.ItemId:get()]
 	end)
 	self.Equipped = Computed(function()
 		return table.find(States.EquippedItems:get(), self.ItemId:get()) ~= nil

@@ -23,7 +23,7 @@ return function(Props: { [any]: any })
 	Props.LayoutOrder = EnsureValue(Props.LayoutOrder, "number", 0)
 
 	local Category = Computed(function()
-		return RoRooms.Config.EmotesSystem.Categories[Props.CategoryName:get()]
+		return RoRooms.Config.Systems.Emotes.Categories[Props.CategoryName:get()]
 	end)
 
 	return Frame {
@@ -77,7 +77,7 @@ return function(Props: { [any]: any })
 						Wraps = true,
 					},
 
-					ForPairs(RoRooms.Config.EmotesSystem.Emotes, function(EmoteId, Emote)
+					ForPairs(RoRooms.Config.Systems.Emotes.Emotes, function(EmoteId, Emote)
 						local EmoteCategory = Emote.Category
 						if EmoteCategory == nil then
 							EmoteCategory = "General"

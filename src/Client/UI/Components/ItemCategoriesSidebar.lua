@@ -18,7 +18,7 @@ return function(Props)
 		Size = Props.Size,
 
 		[Children] = {
-			ForPairs(RoRooms.Config.ItemsSystem.Categories, function(CategoryName: string, Category)
+			ForPairs(RoRooms.Config.Systems.Items.Categories, function(CategoryName: string, Category)
 				return CategoryName,
 					CategoryButton {
 						Name = "ItemCategoryButton",

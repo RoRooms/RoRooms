@@ -1,6 +1,5 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
 local Knit = require(RoRooms.Packages.Knit)
-local SharedData = require(RoRooms.Shared.SharedData)
 local FilterString = require(RoRooms.Storage.ExtPackages.FilterString)
 local PlayerDataService = require(RoRooms.Server.PlayerData.PlayerDataService)
 local t = require(RoRooms.Packages.t)
@@ -12,14 +11,17 @@ local UserProfileService = {
 
 function UserProfileService.Client:SetNickname(Player: Player, Nickname: string)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Nickname)))
-	assert(utf8.len(Nickname) <= SharedData.NicknameCharLimit, "Nickname exceeds character limit")
+	assert(
+		utf8.len(Nickname) <= RoRooms.Config.Systems.Profiles.NicknameCharacterLimit,
+		"Nickname exceeds character limit"
+	)
 
 	self.Server:SetPlayerNickname(Player, FilterString(Nickname, Player))
 end
 
 function UserProfileService.Client:SetStatus(Player: Player, Status: string)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Status)))
-	assert(utf8.len(Status) <= SharedData.StatusCharLimit, "Status exceeds character limit")
+	assert(utf8.len(Status) <= RoRooms.Config.Systems.Profiles.BioCharacterLimit, "Status exceeds character limit")
 
 	self.Server:SetPlayerStatus(Player, FilterString(Status, Player))
 end

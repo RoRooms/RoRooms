@@ -2,7 +2,6 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
-local SharedData = require(RoRooms.Shared.SharedData)
 local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -93,7 +92,7 @@ return function(Props)
 									TextInput {
 										Name = "NicknameInput",
 										PlaceholderText = "Nickname",
-										CharacterLimit = SharedData.NicknameCharLimit,
+										CharacterLimit = RoRooms.Config.Systems.Profiles.NicknameCharacterLimit,
 										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,
 										Text = NicknameText,
@@ -108,7 +107,7 @@ return function(Props)
 										Name = "StatusInput",
 										PlaceholderText = "Status",
 										Text = StatusText,
-										CharacterLimit = SharedData.StatusCharLimit,
+										CharacterLimit = RoRooms.Config.Systems.Profiles.BioCharacterLimit,
 										TextWrapped = true,
 										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 60)),
 										AutomaticSize = Enum.AutomaticSize.Y,
@@ -127,14 +126,14 @@ return function(Props)
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								Visible = Computed(function()
-									return RoRooms.Config.ProfilesSystem.AvatarEditorCallback ~= nil
+									return RoRooms.Config.Systems.Profiles.AvatarEditorCallback ~= nil
 								end),
 
 								OnActivated = function()
 									States.CurrentMenu:set()
 
-									if RoRooms.Config.ProfilesSystem.AvatarEditorCallback then
-										RoRooms.Config.ProfilesSystem.AvatarEditorCallback()
+									if RoRooms.Config.Systems.Profiles.AvatarEditorCallback then
+										RoRooms.Config.Systems.Profiles.AvatarEditorCallback()
 									end
 								end,
 							},

@@ -44,7 +44,7 @@ end
 
 function MusicService:KnitInit()
 	self.CurrentIndex = 0
-	self.Songs = RoRooms.Config.MusicSystem.SoundGroup:GetChildren()
+	self.Songs = RoRooms.Config.Systems.Music.SoundGroup:GetChildren()
 
 	for _, Song in ipairs(self.Songs) do
 		if not Song:IsA("Sound") then

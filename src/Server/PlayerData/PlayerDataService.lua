@@ -6,7 +6,6 @@ local ProfileService = require(RoRooms.Storage.ExtPackages.ProfileService)
 local LeaderStats = require(RoRooms.Storage.ExtPackages.LeaderStats)
 local XPToLevelUp = require(RoRooms.Shared.SharedData.XPToLevelUp)
 local Trove = require(RoRooms.Packages.Trove)
-local SharedData = require(RoRooms.Shared.SharedData)
 local Signal = require(RoRooms.Packages.Signal)
 
 local PROFILE_TEMPLATE = {
@@ -88,9 +87,6 @@ function PlayerDataService:SetXPMultiplier(Player: Player, Name: string, Multipl
 end
 
 function PlayerDataService:_UpdateAllFriendMultipliers()
-	if not RoRooms.Config.ProgressionSystem.FriendsXPMultiplier.Enabled then
-		return
-	end
 	for _, Player in ipairs(Players:GetPlayers()) do
 		task.spawn(function()
 			local FriendsInGame = false
@@ -100,7 +96,7 @@ function PlayerDataService:_UpdateAllFriendMultipliers()
 					break
 				end
 			end
-			local BaseMultiplier = RoRooms.Config.ProgressionSystem.FriendsXPMultiplier.MultiplierAddon
+			local BaseMultiplier = 0.5
 			self:SetXPMultiplier(Player, "Friends", (FriendsInGame and BaseMultiplier) or 0)
 		end)
 	end
@@ -155,7 +151,7 @@ function PlayerDataService:_PlayerAdded(Player: Player)
 					Total *= TotalMultiplier
 					return Total
 				end
-				local XPTotal = CalculateTotal(SharedData.TimeRewards.XPPerMinute, Profile.XPMultipliers)
+				local XPTotal = CalculateTotal(RoRooms.Config.Systems.Leveling.XPPerMinute, Profile.XPMultipliers)
 				self:ChangeXP(Player, XPTotal)
 			end
 		end))

@@ -18,7 +18,7 @@ return function(Props)
 		Size = Props.Size,
 
 		[Children] = {
-			ForPairs(RoRooms.Config.EmotesSystem.Categories, function(CategoryName: string, Category)
+			ForPairs(RoRooms.Config.Systems.Emotes.Categories, function(CategoryName: string, Category)
 				return CategoryName,
 					CategoryButton {
 						Name = "EmoteCategoryButton",

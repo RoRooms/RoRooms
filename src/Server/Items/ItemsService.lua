@@ -1,5 +1,4 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
-local SharedData = require(RoRooms.Shared.SharedData)
 local PlayerDataService = require(RoRooms.Server.PlayerData.PlayerDataService)
 local t = require(RoRooms.Packages.t)
 
@@ -18,7 +17,7 @@ function ItemsService:ToggleEquipItemForPlayer(Player: Player, ItemId: string)
 	if self:_PlayerHasItem(Player, ItemId) then
 		self:TakeItemFromPlayer(Player, ItemId)
 	else
-		if #self:_FindItemsInPlayer(Player) < RoRooms.Config.ItemsSystem.MaxItemsEquippable then
+		if #self:_FindItemsInPlayer(Player) < RoRooms.Config.Systems.Items.MaxItemsEquippable then
 			return self:GiveItemToPlayer(Player, ItemId)
 		end
 	end
@@ -28,7 +27,7 @@ function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassReq
 	if not Player.Backpack then
 		return
 	end
-	local Item = RoRooms.Config.ItemsSystem.Items[ItemId]
+	local Item = RoRooms.Config.Systems.Items.Items[ItemId]
 	if Item and Item.Tool then
 		local AbleToEquip = false
 		local FailureReason
@@ -37,7 +36,7 @@ function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassReq
 			if Item.RequirementCallback then
 				AbleToEquip, FailureReason = Item.RequirementCallback(Player, ItemId, Item)
 				if not AbleToEquip then
-					ResponseCode = SharedData.ItemEquipResponseCodes.RequirementFailure
+					ResponseCode = false
 					if not FailureReason then
 						FailureReason = "Insuffient requirements to equip " .. Item.Name .. " item."
 					end
@@ -52,7 +51,7 @@ function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassReq
 						AbleToEquip = Profile.Data.Level >= Item.LevelRequirement
 						if not AbleToEquip then
 							FailureReason = Item.Name .. " item requires level " .. Item.LevelRequirement .. "."
-							ResponseCode = SharedData.ItemEquipResponseCodes.LevelRequirementFailure
+							ResponseCode = false
 						end
 					end
 				end
@@ -107,7 +106,7 @@ end
 function ItemsService:KnitStart() end
 
 function ItemsService:KnitInit()
-	for ItemId, Item in pairs(RoRooms.Config.ItemsSystem.Items) do
+	for ItemId, Item in pairs(RoRooms.Config.Systems.Items.Items) do
 		if Item.Tool then
 			Item.Tool:SetAttribute("RR_ItemId", ItemId)
 			Item.Tool.CanBeDropped = false

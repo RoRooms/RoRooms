@@ -1,29 +1,18 @@
 return {
-	TimeRewards = {
-		XPPerMinute = 30,
-	},
-	BaseLevelUpXP = 35,
-	NicknameCharLimit = 20,
-	StatusCharLimit = 25,
 	FeatureModulesMap = {
-		ProfilesSystem = { "UserProfileService", "UserProfileController" },
-		ItemsSystem = { "ItemsService", "ItemsController" },
-		EmotesSystem = { "EmotesService", "EmotesController" },
-		WorldsSystem = {
+		Profiles = { "UserProfileService", "UserProfileController" },
+		Items = { "ItemsService", "ItemsController" },
+		Emotes = { "EmotesService", "EmotesController" },
+		Worlds = {
 			"WorldsService",
 			"WorldRegistryService",
 			"TopWorldsService",
 			"RandomWorldsService",
 			"WorldsController",
 		},
-		MusicSystem = { "MusicService", "MusicController" },
-		SettingsSystem = { "SettingsController" },
-		FriendsSystem = { "FriendsController" },
-		VRSystem = { "NexusVRService" },
+		Music = { "MusicService", "MusicController" },
+		Settings = { "SettingsController" },
+		Friends = { "FriendsController" },
+		VR = { "NexusVRService" },
 	},
-	ItemEquipResponseCodes = {
-		RequirementFailure = 1,
-		LevelRequirementFailure = 2,
-	},
-	WorldRegistryAssetId = 16007140043,
 }

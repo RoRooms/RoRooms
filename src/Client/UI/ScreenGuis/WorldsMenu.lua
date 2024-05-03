@@ -106,7 +106,7 @@ return function(Props)
 										Title = "From creator",
 										Icon = "rbxassetid://17292608120",
 										Visible = Computed(function()
-											return #RoRooms.Config.WorldsSystem.FeaturedWorlds >= 1
+											return #RoRooms.Config.Systems.Worlds.FeaturedWorlds >= 1
 										end),
 
 										[Children] = {
@@ -125,7 +125,7 @@ return function(Props)
 													},
 
 													ForValues(
-														RoRooms.Config.WorldsSystem.FeaturedWorlds,
+														RoRooms.Config.Systems.Worlds.FeaturedWorlds,
 														function(PlaceId: number)
 															return WorldButton {
 																PlaceId = PlaceId,

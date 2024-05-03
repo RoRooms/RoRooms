@@ -85,7 +85,7 @@ return function(Props)
 										end),
 									},
 
-									ForPairs(RoRooms.Config.ItemsSystem.Categories, function(Name: string, Category)
+									ForPairs(RoRooms.Config.Systems.Items.Categories, function(Name: string, Category)
 										return Name,
 											ItemsCategory {
 												CategoryName = Name,

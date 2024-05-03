@@ -15,7 +15,7 @@ function EmotesService.Client:PlayEmote(Player: Player, EmoteId: string)
 end
 
 function EmotesService:PlayEmote(Player: Player, EmoteId: string)
-	local Emote = RoRooms.Config.EmotesSystem.Emotes[EmoteId]
+	local Emote = RoRooms.Config.Systems.Emotes.Emotes[EmoteId]
 	if Emote then
 		local CanUse, FailureReason = self:CanPlayerUseEmote(Player, EmoteId, Emote)
 		if CanUse then

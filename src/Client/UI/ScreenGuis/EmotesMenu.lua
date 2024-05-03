@@ -110,7 +110,7 @@ return function(Props)
 											},
 
 											ForPairs(
-												RoRooms.Config.EmotesSystem.Categories,
+												RoRooms.Config.Systems.Emotes.Categories,
 												function(Name: string, Category)
 													return Name,
 														EmotesCategory {

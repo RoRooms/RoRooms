@@ -41,7 +41,7 @@ function ItemsController:UpdateEquippedItems()
 		end
 		for _, Child in ipairs(Directory:GetChildren()) do
 			local ItemId = Child:GetAttribute("RR_ItemId")
-			if Child:IsA("Tool") and RoRooms.Config.ItemsSystem.Items[ItemId] then
+			if Child:IsA("Tool") and RoRooms.Config.Systems.Items.Items[ItemId] then
 				table.insert(self.EquippedItems, ItemId)
 			end
 		end
