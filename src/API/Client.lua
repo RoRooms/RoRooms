@@ -15,7 +15,7 @@ function RoRoomsClient:Start()
 
 	local Knit = require(Packages.Knit)
 	local Loader = require(Packages.Loader)
-	local FindFeatureFromModule = require(Shared.SharedData.FindFeatureFromModule)
+	local FindFeatureFromModule = require(Shared.FindFeatureFromModule)
 
 	self.Knit = Knit
 

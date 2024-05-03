@@ -4,7 +4,7 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
 local Knit = require(RoRooms.Packages.Knit)
 local ProfileService = require(RoRooms.Storage.ExtPackages.ProfileService)
 local LeaderStats = require(RoRooms.Storage.ExtPackages.LeaderStats)
-local XPToLevelUp = require(RoRooms.Shared.SharedData.XPToLevelUp)
+local XPToLevelUp = require(RoRooms.Shared.XPToLevelUp)
 local Trove = require(RoRooms.Packages.Trove)
 local Signal = require(RoRooms.Packages.Signal)
 
