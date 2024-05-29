@@ -1,6 +1,7 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
+local Future = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Future)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
@@ -13,6 +14,8 @@ local Children = Fusion.Children
 local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
+local Observer = Fusion.Observer
+local Cleanup = Fusion.Cleanup
 
 local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)
@@ -23,18 +26,22 @@ return function(Props)
 	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Main)
 
 	local IsHolding = Value(false)
-	local PlaceInfo = Computed(function()
-		if Props.PlaceId:get() then
-			local Success, Result = pcall(function()
-				return MarketplaceService:GetProductInfo(Props.PlaceId:get())
-			end)
+	local PlaceInfo = Value({})
+
+	local function UpdatePlaceInfo()
+		Future.Try(function()
+			return MarketplaceService:GetProductInfo(Props.PlaceId:get())
+		end):After(function(Success, PlaceInfoResult)
 			if Success then
-				return Result
-			else
-				warn(Result)
+				PlaceInfo:set(PlaceInfoResult)
 			end
-		end
-	end)
+		end)
+	end
+
+	local Observers = {
+		Observer(Props.PlaceId):onChange(UpdatePlaceInfo),
+	}
+	UpdatePlaceInfo()
 
 	return BaseButton {
 		Name = "WorldButton",
@@ -50,12 +57,13 @@ return function(Props)
 			Themer.Theme.SpringDampening
 		),
 		BackgroundTransparency = 0,
-
 		OnActivated = function()
 			States.WorldPageMenu.PlaceId:set(Props.PlaceId:get())
 			States.CurrentMenu:set("WorldPageMenu")
 		end,
 		IsHolding = IsHolding,
+
+		[Cleanup] = { Observers },
 
 		[Children] = {
 			Modifier.Corner {

@@ -2,47 +2,38 @@ local MarketplaceService = game:GetService("MarketplaceService")
 local RunService = game:GetService("RunService")
 
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
 local BloxstrapRPC = require(RoRooms.Packages.BloxstrapRPC)
 
 local BloxstrapController = {
 	Name = "BloxstrapController",
 }
 
-function BloxstrapController:SetRichPresence()
-	local GameIcon = 0
-	local CreatorName = "Creator"
-	local GameName = "Game"
-	local IsVerified = false
-
-	local Success, Result = pcall(function()
-		local GameInfo = MarketplaceService:GetProductInfo(game.PlaceId, Enum.InfoType.Asset)
-		GameIcon = GameInfo.IconImageAssetId
-		CreatorName = GameInfo.Creator.Name
-		GameName = GameInfo.Name
-		IsVerified = GameInfo.Creator.HasVerifiedBadge
+function BloxstrapController:UpdateRichPresence()
+	Future.Try(function(PlaceId: number)
+		return MarketplaceService:GetProductInfo(PlaceId, Enum.InfoType.Asset)
+	end, game.PlaceId):After(function(Success, GameInfo)
+		if Success == true then
+			BloxstrapRPC.SetRichPresence({
+				details = `In {GameInfo.Name}`,
+				state = `by {GameInfo.Creator.Name} {(GameInfo.Creator.HasVerifiedBadge and "☑️") or ""}`,
+				startTime = os.time(),
+				largeImage = {
+					assetId = GameInfo.IconImageAssetId,
+					hoverText = GameInfo.Name,
+				},
+				smallImage = {
+					assetId = 15885967339,
+					hoverText = "RoRooms",
+				},
+			})
+		end
 	end)
-	if not Success then
-		warn(Result)
-	end
-
-	BloxstrapRPC.SetRichPresence({
-		details = `In {GameName}`,
-		state = `by {CreatorName} {(IsVerified and "☑️") or ""}`,
-		startTime = os.time(),
-		largeImage = {
-			assetId = GameIcon,
-			hoverText = GameName,
-		},
-		smallImage = {
-			assetId = 15885967339,
-			hoverText = "RoRooms",
-		},
-	})
 end
 
 function BloxstrapController:KnitStart()
 	if not RunService:IsStudio() then
-		self:SetRichPresence()
+		self:UpdateRichPresence()
 	end
 end
 

@@ -1,6 +1,7 @@
 local Players = game:GetService("Players")
 
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
 local UIController = require(RoRooms.Client.UI.UIController)
 local FriendsMenu = require(RoRooms.Client.UI.ScreenGuis.FriendsMenu)
 local States = require(RoRooms.Client.UI.States)
@@ -46,20 +47,17 @@ function FriendsController:UpdateFriends(ForceUpdate: boolean?)
 		return
 	end
 
-	local Success, Result = pcall(function()
+	return Future.Try(function()
 		return Players.LocalPlayer:GetFriendsOnline()
-	end)
-	if Success then
-		if typeof(Result) == "table" then
-			self.FriendsOnline = Result
+	end):After(function(Success, FriendsOnline)
+		if Success then
+			self.FriendsOnline = FriendsOnline
 			self.FriendsOnlineLastUpdated = os.time()
-			States.Friends.Online:set(Result)
+			States.Friends.Online:set(FriendsOnline)
 
 			self:UpdateFriendsInRoRooms()
 		end
-	else
-		warn(Result)
-	end
+	end)
 end
 
 function FriendsController:KnitStart()

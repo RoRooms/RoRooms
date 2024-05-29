@@ -3,6 +3,7 @@ local Players = game:GetService("Players")
 local SocialService = game:GetService("SocialService")
 
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
+local Future = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Future)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
@@ -18,6 +19,8 @@ local New = Fusion.New
 local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
+local Observer = Fusion.Observer
+local Cleanup = Fusion.Cleanup
 
 local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)
@@ -33,21 +36,23 @@ return function(Props)
 	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Themer.Theme.Colors.Base.Light)
 
 	local IsHolding = Value(false)
-	local PlaceInfo = Computed(function()
-		if Props.PlaceId:get() then
-			local Success, Result = pcall(function()
-				return MarketplaceService:GetProductInfo(Props.PlaceId:get())
-			end)
+	local PlaceInfo = Value({})
+
+	local function UpdatePlaceInfo()
+		Future.Try(function()
+			return MarketplaceService:GetProductInfo(Props.PlaceId:get())
+		end):After(function(Success, PlaceInfoResult)
 			if Success then
-				return Result
-			else
-				warn(Result)
-				return {}
+				PlaceInfo:set(PlaceInfoResult)
 			end
-		else
-			return {}
-		end
-	end)
+		end)
+	end
+
+	local Observers = {
+		Observer(Props.PlaceId):onChange(UpdatePlaceInfo),
+	}
+	UpdatePlaceInfo()
+
 	local StatusColor = Computed(function()
 		if Props.InRoRooms:get() then
 			return Color3.fromRGB(2, 183, 87)
@@ -74,6 +79,8 @@ return function(Props)
 		BackgroundTransparency = 0,
 		ClipsDescendants = true,
 		LayoutOrder = Props.LayoutOrder,
+
+		[Cleanup] = { Observers },
 
 		OnActivated = function()
 			States.CurrentMenu:set(nil)

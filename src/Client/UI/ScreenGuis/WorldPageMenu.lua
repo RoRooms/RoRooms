@@ -1,6 +1,7 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
+local Future = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Future)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
@@ -12,6 +13,9 @@ local Children = Fusion.Children
 local Computed = Fusion.Computed
 local New = Fusion.New
 local Spring = Fusion.Spring
+local Value = Fusion.Value
+local Observer = Fusion.Observer
+local Cleanup = Fusion.Cleanup
 
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
@@ -25,24 +29,30 @@ return function(Props)
 	local MenuOpen = Computed(function()
 		return States.CurrentMenu:get() == script.Name
 	end)
-	local PlaceInfo = Computed(function()
-		if States.WorldPageMenu.PlaceId:get() then
-			local Success, Result = pcall(function()
-				return MarketplaceService:GetProductInfo(States.WorldPageMenu.PlaceId:get())
-			end)
+	local PlaceInfo = Value({})
+
+	local function UpdatePlaceInfo()
+		Future.Try(function()
+			return MarketplaceService:GetProductInfo(States.WorldPageMenu.PlaceId:get())
+		end):After(function(Success, ResultPlaceInfo)
 			if Success then
-				return Result
-			else
-				warn(Result)
+				PlaceInfo:set(ResultPlaceInfo)
 			end
-		end
-	end)
+		end)
+	end
+
+	local Observers = {
+		Observer(States.WorldPageMenu.PlaceId):onChange(UpdatePlaceInfo),
+	}
+	UpdatePlaceInfo()
 
 	local WorldPageMenu = New "ScreenGui" {
 		Name = "WorldPageMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
 		ResetOnSpawn = false,
+
+		[Cleanup] = { Observers },
 
 		[Children] = {
 			AutoScaleFrame {
