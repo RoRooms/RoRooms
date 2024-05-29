@@ -49,13 +49,15 @@ function FriendsController:UpdateFriends(ForceUpdate: boolean?)
 
 	return Future.Try(function()
 		return Players.LocalPlayer:GetFriendsOnline()
-	end):After(function(Success, FriendsOnline)
+	end):After(function(Success, Result)
 		if Success then
-			self.FriendsOnline = FriendsOnline
+			self.FriendsOnline = Result
 			self.FriendsOnlineLastUpdated = os.time()
-			States.Friends.Online:set(FriendsOnline)
+			States.Friends.Online:set(Result)
 
 			self:UpdateFriendsInRoRooms()
+		else
+			warn(Result)
 		end
 	end)
 end

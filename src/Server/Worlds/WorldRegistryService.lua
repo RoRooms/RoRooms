@@ -1,6 +1,7 @@
 local InsertService = game:GetService("InsertService")
 local MarketplaceService = game:GetService("MarketplaceService")
 
+local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
 local Signal = require(RoRooms.Packages.Signal)
 local t = require(RoRooms.Packages.t)
@@ -29,36 +30,34 @@ function WorldRegistryService:IsWorldRegistered(PlaceId: number)
 end
 
 function WorldRegistryService:UpdateRegistry()
-	local UpdateStamp = self:_FetchRegistryLastUpdated()
-
-	if UpdateStamp ~= self.WorldRegistryLastUpdated then
-		self.WorldRegistry = self:_FetchLatestRegistry()
-		self.WorldRegistryLastUpdated = UpdateStamp
-
-		self.RegistryUpdated:Fire(self.WorldRegistry)
-	end
-end
-
-function WorldRegistryService:_FetchRegistryLastUpdated()
-	local Success, Result = pcall(function()
+	Future.Try(function()
 		return MarketplaceService:GetProductInfo(REGISTRY_ASSET_ID).Updated
-	end)
-	if Success then
-		return Result
-	else
-		warn(Result)
+	end):After(function(Success, UpdateStamp)
+		if Success then
+			if UpdateStamp ~= self.WorldRegistryLastUpdated then
+				self:_FetchLatestRegistry():After(function(Success, Result)
+					if Success then
+						self.WorldRegistry = Result
+						self.WorldRegistryLastUpdated = UpdateStamp
 
-		return nil
-	end
+						self.RegistryUpdated:Fire(Result)
+					else
+						warn(Result)
+					end
+				end)
+			end
+		end
+	end)
 end
 
 function WorldRegistryService:_FetchLatestRegistry()
-	local Success, Result = pcall(function()
+	return Future.Try(function()
 		local ModuleScript = InsertService:LoadAsset(REGISTRY_ASSET_ID):GetChildren()[1]
 
 		if ModuleScript:IsA("ModuleScript") then
 			local Data = require(ModuleScript)
 
+			assert(t.tuple())
 			if typeof(Data) == "table" then
 				return Data
 			else
@@ -72,14 +71,6 @@ function WorldRegistryService:_FetchLatestRegistry()
 			return {}
 		end
 	end)
-
-	if Success then
-		return Result
-	else
-		warn(Result)
-
-		return nil
-	end
 end
 
 function WorldRegistryService:_SpawnRegistryUpdateLoop()

@@ -32,11 +32,17 @@ return function(Props)
 	local PlaceInfo = Value({})
 
 	local function UpdatePlaceInfo()
+		if States.WorldPageMenu.PlaceId:get() == nil then
+			return
+		end
+
 		Future.Try(function()
 			return MarketplaceService:GetProductInfo(States.WorldPageMenu.PlaceId:get())
-		end):After(function(Success, ResultPlaceInfo)
+		end):After(function(Success, Result)
 			if Success then
-				PlaceInfo:set(ResultPlaceInfo)
+				PlaceInfo:set(Result)
+			else
+				warn(Result)
 			end
 		end)
 	end

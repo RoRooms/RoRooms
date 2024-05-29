@@ -39,11 +39,17 @@ return function(Props)
 	local PlaceInfo = Value({})
 
 	local function UpdatePlaceInfo()
+		if Props.PlaceId:get() == nil then
+			return
+		end
+
 		Future.Try(function()
 			return MarketplaceService:GetProductInfo(Props.PlaceId:get())
-		end):After(function(Success, PlaceInfoResult)
+		end):After(function(Success, Result)
 			if Success then
-				PlaceInfo:set(PlaceInfoResult)
+				PlaceInfo:set(Result)
+			else
+				warn(Result)
 			end
 		end)
 	end

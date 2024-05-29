@@ -1,6 +1,7 @@
 local DataStoreService = game:GetService("DataStoreService")
 local Players = game:GetService("Players")
 
+local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
 local WorldRegistryService = require(RoRooms.Server.Worlds.WorldRegistryService)
 local Knit = require(RoRooms.Packages.Knit)
@@ -43,7 +44,7 @@ end
 function TopWorldsService:_SpawnInitializationLoop()
 	return task.spawn(function()
 		while true do
-			local Success, Result = pcall(function()
+			local Success, Result = Future.Try(function()
 				self:_ClearTopWorlds()
 				self:_SpawnUpdateLoop()
 				self:_SpawnLastWeekUpdateLoop()
@@ -134,9 +135,9 @@ function TopWorldsService:_AdvanceToNextPage(Pages: DataStorePages)
 	if Pages.IsFinished then
 		return false
 	else
-		local Success, Result = pcall(function()
+		local Success, Result = Future.Try(function()
 			return Pages:AdvanceToNextPageAsync()
-		end)
+		end):Await()
 		if not Success then
 			warn(Result)
 		end
@@ -151,9 +152,9 @@ end
 
 function TopWorldsService:_LogIncomingTeleport(PlaceId: number)
 	if WorldRegistryService:IsWorldRegistered(PlaceId) then
-		local Success, Result = pcall(function()
+		local Success, Result = Future.Try(function()
 			return self.TeleportsStore:IncrementAsync(tostring(PlaceId), 1)
-		end)
+		end):Await()
 		if not Success then
 			warn(Result)
 		end
