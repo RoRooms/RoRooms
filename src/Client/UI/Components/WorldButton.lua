@@ -5,7 +5,7 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(RoRooms.Client.UI.States)
-local ColourUtils = require(OnyxUI.Packages.ColourUtils)
+local ColorUtils = require(OnyxUI.Packages.ColorUtils)
 local Themer = require(OnyxUI.Utils.Themer)
 local Modifier = require(OnyxUI.Utils.Modifier)
 
@@ -41,7 +41,7 @@ return function(Props)
 		BackgroundColor3 = Spring(
 			Computed(function()
 				if IsHolding:get() then
-					return ColourUtils.Lighten(Props.Color:get(), 0.05)
+					return ColorUtils.Lighten(Props.Color:get(), 0.05)
 				else
 					return Props.Color:get()
 				end
@@ -69,7 +69,7 @@ return function(Props)
 				end),
 			},
 			Modifier.Stroke {
-				ColourUtils.Lighten(Props.Color:get(), 0.15),
+				ColorUtils.Lighten(Props.Color:get(), 0.15),
 			},
 			Modifier.ListLayout {
 				HorizontalAlignment = Enum.HorizontalAlignment.Center,

@@ -6,7 +6,7 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local ColourUtils = require(OnyxUI.Packages.ColourUtils)
+local ColorUtils = require(OnyxUI.Packages.ColorUtils)
 local States = require(RoRooms.Client.UI.States)
 local Prompts = require(RoRooms.Client.UI.States.Prompts)
 local Modifier = require(OnyxUI.Utils.Modifier)
@@ -63,7 +63,7 @@ return function(Props)
 			Computed(function()
 				local BaseColor = Props.BaseColor3:get()
 				if IsHolding:get() then
-					return ColourUtils.Lighten(BaseColor, 0.05)
+					return ColorUtils.Lighten(BaseColor, 0.05)
 				else
 					return BaseColor
 				end
@@ -140,7 +140,7 @@ return function(Props)
 
 			Avatar {
 				Size = UDim2.fromOffset(80, 80),
-				BackgroundColor3 = ColourUtils.Lighten(Props.BaseColor3:get(), 0.06),
+				BackgroundColor3 = ColorUtils.Lighten(Props.BaseColor3:get(), 0.06),
 				Image = Computed(function()
 					return `rbxthumb://type=AvatarHeadShot&id={Props.UserId:get()}&w=150&h=150`
 				end),

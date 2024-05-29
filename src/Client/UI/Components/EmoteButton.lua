@@ -3,7 +3,7 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(RoRooms.Client.UI.States)
-local ColourUtils = require(OnyxUI.Packages.ColourUtils)
+local ColorUtils = require(OnyxUI.Packages.ColorUtils)
 local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -29,7 +29,7 @@ return function(Props)
 		BackgroundColor3 = Spring(
 			Computed(function()
 				if IsHolding:get() then
-					return ColourUtils.Lighten(Props.BaseColor3:get(), 0.05)
+					return ColorUtils.Lighten(Props.BaseColor3:get(), 0.05)
 				else
 					return Props.BaseColor3:get()
 				end
@@ -68,7 +68,7 @@ return function(Props)
 			},
 			Modifier.Stroke {
 				Color = Computed(function()
-					return ColourUtils.Lighten(Props.BaseColor3:get(), 0.2)
+					return ColorUtils.Lighten(Props.BaseColor3:get(), 0.2)
 				end),
 			},
 
@@ -129,7 +129,7 @@ return function(Props)
 							end
 						end),
 						ImageColor3 = Computed(function()
-							return ColourUtils.Lighten(Props.BaseColor3:get(), 0.25)
+							return ColorUtils.Lighten(Props.BaseColor3:get(), 0.25)
 						end),
 					},
 					Text {
@@ -149,7 +149,7 @@ return function(Props)
 						end),
 						TextSize = 13,
 						TextColor3 = Computed(function()
-							return ColourUtils.Lighten(Props.BaseColor3:get(), 0.5)
+							return ColorUtils.Lighten(Props.BaseColor3:get(), 0.5)
 						end),
 						ClipsDescendants = false,
 						AutoLocalize = false,

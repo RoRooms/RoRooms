@@ -3,7 +3,7 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local ColourUtils = require(OnyxUI.Packages.ColourUtils)
+local ColorUtils = require(OnyxUI.Packages.ColorUtils)
 local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -30,7 +30,7 @@ return function(Props)
 		BackgroundColor3 = Spring(
 			Computed(function()
 				if IsHolding:get() then
-					return ColourUtils.Lighten(Props.Color:get(), 0.1)
+					return ColorUtils.Lighten(Props.Color:get(), 0.1)
 				else
 					return Props.Color:get()
 				end
@@ -49,7 +49,7 @@ return function(Props)
 		[Children] = {
 			Modifier.Stroke {
 				Color = Computed(function()
-					return ColourUtils.Lighten(Props.Color:get(), 0.2)
+					return ColorUtils.Lighten(Props.Color:get(), 0.2)
 				end),
 			},
 			Modifier.Padding {
