@@ -143,15 +143,13 @@ end
 
 local function ReconcileTable(Target, Template)
 	for Key, Value in pairs(Template) do
-		if type(Key) == "string" then
-			if type(Target[Key]) == "table" and type(Value) == "table" then
-				ReconcileTable(Target[Key], Value)
+		if type(Target[Key]) == "table" and type(Value) == "table" then
+			ReconcileTable(Target[Key], Value)
+		else
+			if type(Value) == "table" then
+				Target[Key] = DeepCopyTable(Value)
 			else
-				if type(Value) == "table" then
-					Target[Key] = DeepCopyTable(Value)
-				else
-					Target[Key] = Value
-				end
+				Target[Key] = Value
 			end
 		end
 	end
@@ -161,6 +159,7 @@ local Config = table.clone(CONFIG_TEMPLATE)
 
 function Config:Update(ConfigModifier: Config)
 	ReconcileTable(Config, ConfigModifier)
+	print(Config, ConfigModifier)
 end
 
 return Config
