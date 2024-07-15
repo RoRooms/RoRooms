@@ -32,16 +32,16 @@ return function(Props)
 		BackgroundTransparency = 0,
 		LayoutOrder = Props.LayoutOrder,
 		PaddingTop = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end),
 		PaddingBottom = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end),
 		PaddingLeft = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end),
 		PaddingRight = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end),
 
 		OnActivated = function()
