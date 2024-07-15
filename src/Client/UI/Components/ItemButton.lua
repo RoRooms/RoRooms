@@ -33,7 +33,7 @@ return function(Props)
 		BackgroundColor3 = Spring(
 			Computed(function()
 				if IsHolding:get() or IsEquipped:get() then
-					return ColorUtils.Emphasize(Props.BaseColor3:get(), Themer.Theme.Emphasis:get())
+					return ColorUtils.Emphasize(Props.BaseColor3:get(), Themer.Theme.Emphasis.Light:get())
 				else
 					return Props.BaseColor3:get()
 				end
@@ -58,7 +58,7 @@ return function(Props)
 		StrokeColor = Spring(
 			Computed(function()
 				if IsEquipped:get() then
-					return ColorUtils.Emphasize(Props.BaseColor3:get(), Themer.Theme.Emphasis:get() * 4)
+					return ColorUtils.Emphasize(Props.BaseColor3:get(), Themer.Theme.Emphasis.Light:get() * 4)
 				else
 					return ColorUtils.Emphasize(Props.BaseColor3:get(), 0.2)
 				end
