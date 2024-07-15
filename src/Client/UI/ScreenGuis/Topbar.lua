@@ -8,6 +8,7 @@ local Themer = require(OnyxUI.Utils.Themer)
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 local ForValues = Fusion.ForValues
+local New = Fusion.New
 local Spring = Fusion.Spring
 local Value = Fusion.Value
 local Cleanup = Fusion.Cleanup
@@ -17,15 +18,13 @@ local TopbarButton = require(Components.TopbarButton)
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local Frame = require(OnyxUI.Components.Frame)
 local BaseButton = require(OnyxUI.Components.BaseButton)
-local Base = require(OnyxUI.Components.Base)
 
 return function(Props)
 	local TopbarButtonsHeight = Value(0)
 
 	local CleanupHolder = {}
 
-	local TopbarInstance = Base {
-		ClassName = "ScreenGui",
+	local TopbarInstance = New "ScreenGui" {
 		Name = "Topbar",
 		Parent = Props.Parent,
 		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,

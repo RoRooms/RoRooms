@@ -6,23 +6,18 @@ local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
+local Hydrate = Fusion.Hydrate
 
 local Base = require(OnyxUI.Components.Base)
 local Text = require(OnyxUI.Components.Text)
 
 return function(Props)
-	return Base {
+	return Hydrate(Base {
 		ClassName = "BillboardGui",
 		Name = "Nametag",
 		Parent = Props.Parent,
-		Adornee = Props.Adornee,
 		Enabled = Props.Enabled,
 		Size = UDim2.fromScale(5, 1.55),
-		StudsOffset = Vector3.new(0, 2.4, 0),
-		MaxDistance = 75,
-		LightInfluence = 0,
-		Brightness = 1.3,
-		ResetOnSpawn = false,
 		ListEnabled = true,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 		ListVerticalAlignment = Enum.VerticalAlignment.Bottom,
@@ -61,5 +56,12 @@ return function(Props)
 				TextYAlignment = Enum.TextYAlignment.Bottom,
 			},
 		},
+	}) {
+		Adornee = Props.Adornee,
+		StudsOffset = Vector3.new(0, 2.4, 0),
+		MaxDistance = 75,
+		LightInfluence = 0,
+		Brightness = 1.3,
+		ResetOnSpawn = false,
 	}
 end

@@ -7,6 +7,7 @@ local Themer = require(OnyxUI.Utils.Themer)
 local Prompts = require(RoRooms.Client.UI.States.Prompts)
 
 local Children = Fusion.Children
+local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local ForValues = Fusion.ForValues
@@ -16,7 +17,6 @@ local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local Text = require(OnyxUI.Components.Text)
 local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
-local Base = require(OnyxUI.Components.Base)
 
 return function(Props)
 	local CurrentPrompt = Computed(function()
@@ -33,8 +33,7 @@ return function(Props)
 		end
 	end)
 
-	return Base {
-		ClassName = "ScreenGui",
+	return New "ScreenGui" {
 		Name = "PromptHUD",
 		Parent = Props.Parent,
 		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,

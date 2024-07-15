@@ -12,6 +12,7 @@ local Children = Fusion.Children
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Observer = Fusion.Observer
+local New = Fusion.New
 
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
@@ -19,7 +20,6 @@ local TitleBar = require(OnyxUI.Components.TitleBar)
 local SettingToggle = require(OnyxUI.Examples.SettingToggle)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local Text = require(OnyxUI.Components.Text)
-local Base = require(OnyxUI.Components.Base)
 
 local TOGGLEABLE_CORE_GUIS = { Enum.CoreGuiType.Chat, Enum.CoreGuiType.PlayerList }
 
@@ -43,8 +43,7 @@ return function(Props)
 		end)
 	end
 
-	local SettingsMenu = Base {
-		ClassName = "ScreenGui",
+	local SettingsMenu = New "ScreenGui" {
 		Name = "SettingsMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,

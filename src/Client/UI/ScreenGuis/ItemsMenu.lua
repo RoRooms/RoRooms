@@ -5,6 +5,7 @@ local States = require(RoRooms.Client.UI.States)
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
+local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Observer = Fusion.Observer
@@ -15,11 +16,9 @@ local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local ItemsCategory = require(RoRooms.Client.UI.Components.ItemsCategory)
 local ItemCategoriesSidebar = require(RoRooms.Client.UI.Components.ItemCategoriesSidebar)
-local Base = require(OnyxUI.Components.Base)
 
 return function(Props)
-	local ItemsMenu = Base {
-		ClassName = "ScreenGui",
+	local ItemsMenu = New "ScreenGui" {
 		Name = "ItemsMenu",
 		Parent = Props.Parent,
 		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,

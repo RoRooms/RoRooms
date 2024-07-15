@@ -6,12 +6,12 @@ local States = require(RoRooms.Client.UI.States)
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
+local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Observer = Fusion.Observer
 local ForPairs = Fusion.ForPairs
 
-local Base = require(OnyxUI.Components.Base)
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local TitleBar = require(OnyxUI.Components.TitleBar)
@@ -25,8 +25,7 @@ return function(Props)
 		return States.CurrentMenu:get() == script.Name
 	end)
 
-	local EmotesMenu = Base {
-		ClassName = "ScreenGui",
+	local EmotesMenu = New "ScreenGui" {
 		Name = "EmotesMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,

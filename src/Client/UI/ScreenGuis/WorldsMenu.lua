@@ -8,6 +8,7 @@ local Worlds = require(RoRooms.Client.UI.States.Worlds)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
+local New = Fusion.New
 local Spring = Fusion.Spring
 local ForValues = Fusion.ForValues
 local Value = Fusion.Value
@@ -20,7 +21,6 @@ local WorldButton = require(RoRooms.Client.UI.Components.WorldButton)
 local WorldsCategory = require(RoRooms.Client.UI.Components.WorldsCategory)
 local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
-local Base = require(OnyxUI.Components.Base)
 
 local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { "rbxassetid://17293213744", "Load more" }
 local DEFAULT_REFRESH_BUTTON_CONTENTS = { "rbxassetid://13858012326", "Refresh" }
@@ -32,8 +32,7 @@ return function(Props)
 	local LoadMoreButtonContents = Value(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
 	local RefreshButtonContents = Value(DEFAULT_REFRESH_BUTTON_CONTENTS)
 
-	local WorldsMenu = Base {
-		ClassName = "ScreenGui",
+	local WorldsMenu = New "ScreenGui" {
 		Name = "WorldsMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,

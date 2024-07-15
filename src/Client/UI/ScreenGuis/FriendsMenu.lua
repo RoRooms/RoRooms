@@ -8,6 +8,7 @@ local Themer = require(OnyxUI.Utils.Themer)
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 local ForValues = Fusion.ForValues
+local New = Fusion.New
 local Observer = Fusion.Observer
 local Spring = Fusion.Spring
 
@@ -16,15 +17,13 @@ local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local TitleBar = require(OnyxUI.Components.TitleBar)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local FriendButton = require(RoRooms.Client.UI.Components.FriendButton)
-local Base = require(OnyxUI.Components.Base)
 
 return function(Props)
 	local MenuOpen = Computed(function()
 		return States.CurrentMenu:get() == script.Name
 	end)
 
-	local FriendsMenu = Base {
-		ClassName = "ScreenGui",
+	local FriendsMenu = New "ScreenGui" {
 		Name = "FriendsMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,

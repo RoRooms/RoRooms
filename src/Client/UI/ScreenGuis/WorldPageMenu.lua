@@ -10,6 +10,7 @@ local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
+local New = Fusion.New
 local Spring = Fusion.Spring
 local Value = Fusion.Value
 local Observer = Fusion.Observer
@@ -22,7 +23,6 @@ local Text = require(OnyxUI.Components.Text)
 local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
 local Image = require(OnyxUI.Components.Image)
-local Base = require(OnyxUI.Components.Base)
 
 return function(Props)
 	local MenuOpen = Computed(function()
@@ -51,8 +51,7 @@ return function(Props)
 	}
 	UpdatePlaceInfo()
 
-	local WorldPageMenu = Base {
-		ClassName = "ScreenGui",
+	local WorldPageMenu = New "ScreenGui" {
 		Name = "WorldPageMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,

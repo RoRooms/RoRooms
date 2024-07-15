@@ -6,6 +6,7 @@ local States = require(RoRooms.Client.UI.States)
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
+local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Value = Fusion.Value
@@ -16,7 +17,6 @@ local TitleBar = require(OnyxUI.Components.TitleBar)
 local TextInput = require(OnyxUI.Components.TextInput)
 local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
-local Base = require(OnyxUI.Components.Base)
 
 return function(Props)
 	local MenuOpen = Computed(function()
@@ -33,8 +33,7 @@ return function(Props)
 		end)
 	end
 
-	local ProfileMenu = Base {
-		ClassName = "ScreenGui",
+	local ProfileMenu = New "ScreenGui" {
 		Name = "ProfileMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
