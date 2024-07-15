@@ -56,7 +56,7 @@ return {
 		Heading = Enum.FontWeight.Bold,
 	},
 	TextSize = {
-		Base = 18,
+		Base = 16,
 	},
 	CornerRadius = {
 		Base = 6,
