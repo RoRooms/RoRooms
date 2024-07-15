@@ -105,11 +105,11 @@ return function(Props)
 								[Children] = {
 									SettingToggle {
 										Label = "Mute music",
-										SwitchedOn = States.UserSettings.MuteMusic,
+										Switched = States.UserSettings.MuteMusic,
 									},
 									SettingToggle {
 										Label = "Hide UI",
-										SwitchedOn = States.UserSettings.HideUI,
+										Switched = States.UserSettings.HideUI,
 									},
 									Text {
 										Text = "[RoRooms v0.0.0]",
