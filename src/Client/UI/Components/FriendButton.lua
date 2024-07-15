@@ -10,7 +10,7 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 local States = require(RoRooms.Client.UI.States)
 local Prompts = require(RoRooms.Client.UI.States.Prompts)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 local Colors = require(OnyxUI.Utils.Colors)
 
@@ -132,25 +132,18 @@ return function(Props)
 			end
 		end,
 		IsHolding = IsHolding,
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+		end),
+		Padding = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		ListEnabled = true,
+		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+		StrokeEnabled = true,
+		StrokeColor = Themer.Theme.Colors.Neutral.Main,
 
 		[Children] = {
-			Modifier.Corner {
-				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-				end),
-			},
-			Modifier.Padding {
-				Padding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-				end),
-			},
-			Modifier.ListLayout {
-				HorizontalAlignment = Enum.HorizontalAlignment.Center,
-			},
-			Modifier.Stroke {
-				Color = Themer.Theme.Colors.Neutral.Main,
-			},
-
 			Avatar {
 				Size = UDim2.fromOffset(80, 80),
 				BackgroundColor3 = ColorUtils.Lighten(Props.BaseColor3:get(), 0.06),
@@ -169,12 +162,10 @@ return function(Props)
 				Name = "Details",
 				Size = UDim2.fromOffset(80, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
+				ListEnabled = true,
+				ListPadding = UDim.new(0, 0),
 
 				[Children] = {
-					Modifier.ListLayout {
-						Padding = UDim.new(0, 0),
-					},
-
 					Text {
 						Name = "DisplayName",
 						Text = Props.DisplayName,

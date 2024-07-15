@@ -4,7 +4,7 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(RoRooms.Client.UI.States)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
@@ -44,6 +44,16 @@ return function(Props)
 		LayoutOrder = Computed(function()
 			return Props.Emote:get().LayoutOrder or 0
 		end),
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+		end),
+		Padding = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+		end),
+		StrokeEnabled = true,
+		StrokeColor = Computed(function()
+			return ColorUtils.Lighten(Props.BaseColor3:get(), 0.2)
+		end),
 
 		OnActivated = function()
 			if Props.Callback then
@@ -56,22 +66,6 @@ return function(Props)
 		IsHolding = IsHolding,
 
 		[Children] = {
-			Modifier.Corner {
-				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-				end),
-			},
-			Modifier.Padding {
-				Padding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-				end),
-			},
-			Modifier.Stroke {
-				Color = Computed(function()
-					return ColorUtils.Lighten(Props.BaseColor3:get(), 0.2)
-				end),
-			},
-
 			Text {
 				Name = "Emoji",
 				AnchorPoint = Vector2.new(0.5, 0.5),
@@ -106,12 +100,10 @@ return function(Props)
 			Frame {
 				Name = "Label",
 				ZIndex = 2,
+				ListEnabled = true,
+				ListFillDirection = Enum.FillDirection.Horizontal,
 
 				[Children] = {
-					Modifier.ListLayout {
-						FillDirection = Enum.FillDirection.Horizontal,
-					},
-
 					Icon {
 						Name = "LabelIcon",
 						AnchorPoint = Vector2.new(0, 0),

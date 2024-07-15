@@ -2,13 +2,12 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local States = require(RoRooms.Client.UI.States)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 local ForValues = Fusion.ForValues
-local New = Fusion.New
 local Spring = Fusion.Spring
 local Value = Fusion.Value
 local Cleanup = Fusion.Cleanup
@@ -18,13 +17,15 @@ local TopbarButton = require(Components.TopbarButton)
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local Frame = require(OnyxUI.Components.Frame)
 local BaseButton = require(OnyxUI.Components.BaseButton)
+local Base = require(OnyxUI.Components.Base)
 
 return function(Props)
 	local TopbarButtonsHeight = Value(0)
 
 	local CleanupHolder = {}
 
-	local TopbarInstance = New "ScreenGui" {
+	local TopbarInstance = Base {
+		ClassName = "ScreenGui",
 		Name = "Topbar",
 		Parent = Props.Parent,
 		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
@@ -50,39 +51,31 @@ return function(Props)
 				),
 				BaseResolution = Vector2.new(739, 789),
 				ScaleClamps = { Min = 1, Max = 1 },
+				ListEnabled = true,
+				ListPadding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+				end),
+				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 
 				[Children] = {
-					Modifier.ListLayout {
-						Padding = Computed(function()
-							return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-						end),
-						HorizontalAlignment = Enum.HorizontalAlignment.Center,
-					},
-
 					Frame {
 						Name = "TopbarButtons",
 						BackgroundColor3 = Themer.Theme.Colors.Base.Main,
 						BackgroundTransparency = States.PreferredTransparency,
+						ListEnabled = true,
+						ListPadding = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+						end),
+						ListFillDirection = Enum.FillDirection.Horizontal,
+						ListVerticalAlignment = Enum.VerticalAlignment.Center,
+						CornerRadius = Computed(function()
+							return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+						end),
+						Padding = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["0.5"]:get() / 1.25)
+						end),
 
 						[Children] = {
-							Modifier.ListLayout {
-								Padding = Computed(function()
-									return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-								end),
-								FillDirection = Enum.FillDirection.Horizontal,
-								VerticalAlignment = Enum.VerticalAlignment.Center,
-							},
-							Modifier.Corner {
-								CornerRadius = Computed(function()
-									return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
-								end),
-							},
-							Modifier.Padding {
-								Padding = Computed(function()
-									return UDim.new(0, Themer.Theme.Spacing["0.5"]:get() / 1.25)
-								end),
-							},
-
 							ForValues(States.TopbarButtons, function(Button)
 								return TopbarButton(Button)
 							end, Fusion.cleanup),
@@ -96,6 +89,22 @@ return function(Props)
 							return not (typeof(States.CurrentMenu:get()) == "string")
 						end),
 						TextSize = 0,
+						CornerRadius = Computed(function()
+							return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+						end),
+						PaddingTop = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+						end),
+						PaddingLeft = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+						end),
+						PaddingRight = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+						end),
+						PaddingBottom = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+						end),
+						StrokeColor = Themer.Theme.Colors.Neutral.Main,
 
 						OnActivated = function()
 							States.TopbarVisible:set(not States.TopbarVisible:get())
@@ -103,29 +112,6 @@ return function(Props)
 						end,
 
 						[Children] = {
-							Modifier.Corner {
-								CornerRadius = Computed(function()
-									return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
-								end),
-							},
-							Modifier.Padding {
-								PaddingTop = Computed(function()
-									return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-								end),
-								PaddingLeft = Computed(function()
-									return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-								end),
-								PaddingRight = Computed(function()
-									return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-								end),
-								PaddingBottom = Computed(function()
-									return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-								end),
-							},
-							Modifier.Stroke {
-								Color = Themer.Theme.Colors.Neutral.Main,
-							},
-
 							Frame {
 								Size = Computed(function()
 									return UDim2.fromOffset(100, Themer.Theme.StrokeThickness["1"]:get())

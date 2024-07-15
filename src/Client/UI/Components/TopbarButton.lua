@@ -5,7 +5,6 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(RoRooms.Client.UI.States)
 local Themer = require(OnyxUI.Utils.Themer)
-local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -44,6 +43,12 @@ return function(Props)
 		end),
 		AutomaticSize = Enum.AutomaticSize.None,
 		LayoutOrder = Props.LayoutOrder,
+		ListEnabled = true,
+		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+		ListVerticalAlignment = Enum.VerticalAlignment.Center,
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["Full"]:get())
+		end),
 
 		IsHovering = IsHovering,
 		IsHolding = IsHolding,
@@ -59,16 +64,6 @@ return function(Props)
 		end,
 
 		[Children] = {
-			Modifier.ListLayout {
-				HorizontalAlignment = Enum.HorizontalAlignment.Center,
-				VerticalAlignment = Enum.VerticalAlignment.Center,
-			},
-			Modifier.Corner {
-				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius["Full"]:get())
-				end),
-			},
-
 			Icon {
 				Name = "Icon",
 				Image = Computed(function()

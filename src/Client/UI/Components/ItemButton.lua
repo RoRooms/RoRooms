@@ -4,7 +4,7 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(RoRooms.Client.UI.States)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
@@ -48,6 +48,24 @@ return function(Props)
 		LayoutOrder = Computed(function()
 			return Props.Item:get().LayoutOrder or 0
 		end),
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+		end),
+		Padding = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+		end),
+		StrokeEnabled = true,
+		StrokeColor = Spring(
+			Computed(function()
+				if IsEquipped:get() then
+					return ColorUtils.Emphasize(Props.BaseColor3:get(), Themer.Theme.Emphasis:get() * 4)
+				else
+					return ColorUtils.Emphasize(Props.BaseColor3:get(), 0.2)
+				end
+			end),
+			Themer.Theme.SpringSpeed["1"],
+			Themer.Theme.SpringDampening
+		),
 
 		OnActivated = function()
 			if Props.Callback then
@@ -60,30 +78,6 @@ return function(Props)
 		IsHolding = IsHolding,
 
 		[Children] = {
-			Modifier.Corner {
-				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-				end),
-			},
-			Modifier.Padding {
-				Padding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-				end),
-			},
-			Modifier.Stroke {
-				Color = Spring(
-					Computed(function()
-						if IsEquipped:get() then
-							return ColorUtils.Emphasize(Props.BaseColor3:get(), Themer.Theme.Emphasis:get() * 4)
-						else
-							return ColorUtils.Emphasize(Props.BaseColor3:get(), 0.2)
-						end
-					end),
-					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
-				),
-			},
-
 			Computed(function()
 				local Tool = Props.Item:get().Tool
 				if not Tool then
@@ -129,15 +123,13 @@ return function(Props)
 			Frame {
 				Name = "Label",
 				ZIndex = 2,
+				ListEnabled = true,
+				ListFillDirection = Enum.FillDirection.Horizontal,
+				ListPadding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+				end),
 
 				[Children] = {
-					Modifier.ListLayout {
-						FillDirection = Enum.FillDirection.Horizontal,
-						Padding = Computed(function()
-							return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-						end),
-					},
-
 					Icon {
 						Name = "LabelIcon",
 						Size = Computed(function()

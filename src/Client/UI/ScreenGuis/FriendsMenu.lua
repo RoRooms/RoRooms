@@ -2,13 +2,12 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local States = require(RoRooms.Client.UI.States)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 local ForValues = Fusion.ForValues
-local New = Fusion.New
 local Observer = Fusion.Observer
 local Spring = Fusion.Spring
 
@@ -17,13 +16,15 @@ local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local TitleBar = require(OnyxUI.Components.TitleBar)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local FriendButton = require(RoRooms.Client.UI.Components.FriendButton)
+local Base = require(OnyxUI.Components.Base)
 
 return function(Props)
 	local MenuOpen = Computed(function()
 		return States.CurrentMenu:get() == script.Name
 	end)
 
-	local FriendsMenu = New "ScreenGui" {
+	local FriendsMenu = Base {
+		ClassName = "ScreenGui",
 		Name = "FriendsMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
@@ -61,10 +62,9 @@ return function(Props)
 							Themer.Theme.SpringDampening
 						),
 						BackgroundTransparency = States.PreferredTransparency,
+						ListEnabled = true,
 
 						[Children] = {
-							Modifier.ListLayout {},
-
 							TitleBar {
 								Title = "Friends",
 								CloseButtonDisabled = true,
@@ -74,21 +74,17 @@ return function(Props)
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
 								ScrollBarThickness = Themer.Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
+								Padding = Computed(function()
+									return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+								end),
+								ListEnabled = true,
+								ListPadding = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+								end),
+								ListFillDirection = Enum.FillDirection.Horizontal,
+								ListWraps = true,
 
 								[Children] = {
-									Modifier.Padding {
-										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-										end),
-									},
-									Modifier.ListLayout {
-										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-										end),
-										FillDirection = Enum.FillDirection.Horizontal,
-										Wraps = true,
-									},
-
 									ForValues(States.Friends.InRoRooms, function(Friend)
 										return FriendButton {
 											UserId = Friend.VisitorId,

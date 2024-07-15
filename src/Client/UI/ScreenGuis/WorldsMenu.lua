@@ -2,13 +2,12 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local States = require(RoRooms.Client.UI.States)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 local Worlds = require(RoRooms.Client.UI.States.Worlds)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
-local New = Fusion.New
 local Spring = Fusion.Spring
 local ForValues = Fusion.ForValues
 local Value = Fusion.Value
@@ -21,6 +20,7 @@ local WorldButton = require(RoRooms.Client.UI.Components.WorldButton)
 local WorldsCategory = require(RoRooms.Client.UI.Components.WorldsCategory)
 local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
+local Base = require(OnyxUI.Components.Base)
 
 local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { "rbxassetid://17293213744", "Load more" }
 local DEFAULT_REFRESH_BUTTON_CONTENTS = { "rbxassetid://13858012326", "Refresh" }
@@ -32,7 +32,8 @@ return function(Props)
 	local LoadMoreButtonContents = Value(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
 	local RefreshButtonContents = Value(DEFAULT_REFRESH_BUTTON_CONTENTS)
 
-	local WorldsMenu = New "ScreenGui" {
+	local WorldsMenu = Base {
+		ClassName = "ScreenGui",
 		Name = "WorldsMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
@@ -70,10 +71,9 @@ return function(Props)
 							Themer.Theme.SpringDampening
 						),
 						BackgroundTransparency = States.PreferredTransparency,
+						ListEnabled = true,
 
 						[Children] = {
-							Modifier.ListLayout {},
-
 							TitleBar {
 								Title = "Worlds",
 								CloseButtonDisabled = true,
@@ -83,24 +83,20 @@ return function(Props)
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 205)),
 								ScrollBarThickness = Themer.Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
+								Padding = Computed(function()
+									return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+								end),
+								PaddingRight = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+								end),
+								ListEnabled = true,
+								ListPadding = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["1.5"]:get())
+								end),
+								ListFillDirection = Enum.FillDirection.Horizontal,
+								ListWraps = true,
 
 								[Children] = {
-									Modifier.Padding {
-										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-										end),
-										PaddingRight = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-										end),
-									},
-									Modifier.ListLayout {
-										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["1.5"]:get())
-										end),
-										FillDirection = Enum.FillDirection.Horizontal,
-										Wraps = true,
-									},
-
 									WorldsCategory {
 										Name = "Featured",
 										Title = "From creator",
@@ -114,16 +110,14 @@ return function(Props)
 												Name = "Worlds",
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
+												ListEnabled = true,
+												ListPadding = Computed(function()
+													return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+												end),
+												ListFillDirection = Enum.FillDirection.Horizontal,
+												ListWraps = true,
 
 												[Children] = {
-													Modifier.ListLayout {
-														Padding = Computed(function()
-															return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-														end),
-														FillDirection = Enum.FillDirection.Horizontal,
-														Wraps = true,
-													},
-
 													ForValues(
 														RoRooms.Config.Systems.Worlds.FeaturedWorlds,
 														function(PlaceId: number)
@@ -141,28 +135,24 @@ return function(Props)
 										Name = "Popular",
 										Title = "Popular",
 										Icon = "rbxassetid://17292608258",
+										ListEnabled = true,
+										ListPadding = Computed(function()
+											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+										end),
 
 										[Children] = {
-											Modifier.ListLayout {
-												Padding = Computed(function()
-													return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-												end),
-											},
-
 											Frame {
 												Name = "Worlds",
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
+												ListEnabled = true,
+												ListPadding = Computed(function()
+													return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+												end),
+												ListFillDirection = Enum.FillDirection.Horizontal,
+												ListWraps = true,
 
 												[Children] = {
-													Modifier.ListLayout {
-														Padding = Computed(function()
-															return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-														end),
-														FillDirection = Enum.FillDirection.Horizontal,
-														Wraps = true,
-													},
-
 													ForValues(
 														States.Worlds.TopWorlds,
 														function(World: { [string]: any })
@@ -213,28 +203,24 @@ return function(Props)
 										Name = "Random",
 										Title = "Random",
 										Icon = "rbxassetid://17292608467",
+										ListEnabled = true,
+										ListPadding = Computed(function()
+											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+										end),
 
 										[Children] = {
-											Modifier.ListLayout {
-												Padding = Computed(function()
-													return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-												end),
-											},
-
 											Frame {
 												Name = "Worlds",
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
+												ListEnabled = true,
+												ListPadding = Computed(function()
+													return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+												end),
+												ListFillDirection = Enum.FillDirection.Horizontal,
+												ListWraps = true,
 
 												[Children] = {
-													Modifier.ListLayout {
-														Padding = Computed(function()
-															return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-														end),
-														FillDirection = Enum.FillDirection.Horizontal,
-														Wraps = true,
-													},
-
 													ForValues(
 														States.Worlds.RandomWorlds,
 														function(World: { [string]: any })

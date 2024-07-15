@@ -8,7 +8,6 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(RoRooms.Client.UI.States)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 local Themer = require(OnyxUI.Utils.Themer)
-local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
 local Spring = Fusion.Spring
@@ -64,27 +63,20 @@ return function(Props)
 			States.CurrentMenu:set("WorldPageMenu")
 		end,
 		IsHolding = IsHolding,
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+		end),
+		Padding = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+		end),
+		StrokeEnabled = true,
+		StrokeColor = ColorUtils.Lighten(Props.Color:get(), 0.15),
+		ListEnabled = true,
+		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 
 		[Cleanup] = { Observers },
 
 		[Children] = {
-			Modifier.Corner {
-				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-				end),
-			},
-			Modifier.Padding {
-				Padding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-				end),
-			},
-			Modifier.Stroke {
-				ColorUtils.Lighten(Props.Color:get(), 0.15),
-			},
-			Modifier.ListLayout {
-				HorizontalAlignment = Enum.HorizontalAlignment.Center,
-			},
-
 			Image {
 				Name = "Icon",
 				Size = UDim2.fromOffset(90, 90),
@@ -96,15 +88,12 @@ return function(Props)
 					end
 				end),
 				BackgroundTransparency = 1,
-
-				[Children] = {
-					Modifier.Corner {},
-					Modifier.AspectRatioConstraint {
-						AspectRatio = 1,
-						AspectType = Enum.AspectType.FitWithinMaxSize,
-						DominantAxis = Enum.DominantAxis.Height,
-					},
-				},
+				CornerRadius = Computed(function()
+					return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+				end),
+				AspectRatio = 1,
+				AspectType = Enum.AspectType.FitWithinMaxSize,
+				DominantAxis = Enum.DominantAxis.Height,
 			},
 			Text {
 				Name = "Title",

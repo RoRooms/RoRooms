@@ -3,16 +3,16 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
-local Modifier = require(OnyxUI.Utils.Modifier)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
+local Base = require(OnyxUI.Components.Base)
 local Text = require(OnyxUI.Components.Text)
 
 return function(Props)
-	return New "BillboardGui" {
+	return Base {
+		ClassName = "BillboardGui",
 		Name = "Nametag",
 		Parent = Props.Parent,
 		Adornee = Props.Adornee,
@@ -23,16 +23,14 @@ return function(Props)
 		LightInfluence = 0,
 		Brightness = 1.3,
 		ResetOnSpawn = false,
+		ListEnabled = true,
+		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+		ListVerticalAlignment = Enum.VerticalAlignment.Bottom,
+		ListPadding = Computed(function()
+			return UDim.new(0, 0)
+		end),
 
 		[Children] = {
-			Modifier.ListLayout {
-				HorizontalAlignment = Enum.HorizontalAlignment.Center,
-				VerticalAlignment = Enum.VerticalAlignment.Bottom,
-				Padding = Computed(function()
-					return UDim.new(0, 0)
-				end),
-			},
-
 			Text {
 				Name = "Nickname",
 				Text = Props.Nickname,

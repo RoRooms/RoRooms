@@ -2,11 +2,10 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local States = require(RoRooms.Client.UI.States)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Value = Fusion.Value
@@ -17,6 +16,7 @@ local TitleBar = require(OnyxUI.Components.TitleBar)
 local TextInput = require(OnyxUI.Components.TextInput)
 local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
+local Base = require(OnyxUI.Components.Base)
 
 return function(Props)
 	local MenuOpen = Computed(function()
@@ -33,7 +33,8 @@ return function(Props)
 		end)
 	end
 
-	local ProfileMenu = New "ScreenGui" {
+	local ProfileMenu = Base {
+		ClassName = "ScreenGui",
 		Name = "ProfileMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
@@ -71,24 +72,21 @@ return function(Props)
 							Themer.Theme.SpringDampening
 						),
 						BackgroundTransparency = States.PreferredTransparency,
+						ListEnabled = true,
+						ListPadding = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+						end),
 
 						[Children] = {
-							Modifier.ListLayout {
-								Padding = Computed(function()
-									return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-								end),
-							},
-
 							TitleBar {
 								Title = "Profile",
 								CloseButtonDisabled = true,
 							},
 							Frame {
 								Size = UDim2.fromScale(1, 0),
+								ListEnabled = true,
 
 								[Children] = {
-									Modifier.ListLayout {},
-
 									TextInput {
 										Name = "NicknameInput",
 										PlaceholderText = "Nickname",

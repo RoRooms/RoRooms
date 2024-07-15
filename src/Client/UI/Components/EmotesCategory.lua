@@ -3,7 +3,7 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(RoRooms.Client.UI.States)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
@@ -31,21 +31,18 @@ return function(Props: { [any]: any })
 		Size = Props.Size,
 		AutomaticSize = Props.AutomaticSize,
 		LayoutOrder = Props.LayoutOrder,
+		ListEnabled = true,
 
 		[Children] = {
-			Modifier.ListLayout {},
-
 			Frame {
 				Name = "Title",
+				ListEnabled = true,
+				ListFillDirection = Enum.FillDirection.Horizontal,
+				ListPadding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+				end),
 
 				[Children] = {
-					Modifier.ListLayout {
-						FillDirection = Enum.FillDirection.Horizontal,
-						Padding = Computed(function()
-							return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-						end),
-					},
-
 					Icon {
 						Image = Computed(function()
 							if Category:get() and Category:get().Icon then
@@ -67,16 +64,14 @@ return function(Props: { [any]: any })
 				Name = "Emotes",
 				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
+				ListEnabled = true,
+				ListPadding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+				end),
+				ListFillDirection = Enum.FillDirection.Horizontal,
+				ListWraps = true,
 
 				[Children] = {
-					Modifier.ListLayout {
-						Padding = Computed(function()
-							return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-						end),
-						FillDirection = Enum.FillDirection.Horizontal,
-						Wraps = true,
-					},
-
 					ForPairs(RoRooms.Config.Systems.Emotes.Emotes, function(EmoteId, Emote)
 						local EmoteCategory = Emote.Category
 						if EmoteCategory == nil then

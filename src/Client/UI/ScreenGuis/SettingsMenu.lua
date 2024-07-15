@@ -5,11 +5,10 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local States = require(RoRooms.Client.UI.States)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Observer = Fusion.Observer
@@ -20,6 +19,7 @@ local TitleBar = require(OnyxUI.Components.TitleBar)
 local SettingToggle = require(OnyxUI.Components.SettingToggle)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local Text = require(OnyxUI.Components.Text)
+local Base = require(OnyxUI.Components.Base)
 
 local TOGGLEABLE_CORE_GUIS = { Enum.CoreGuiType.Chat, Enum.CoreGuiType.PlayerList }
 
@@ -43,7 +43,8 @@ return function(Props)
 		end)
 	end
 
-	local SettingsMenu = New "ScreenGui" {
+	local SettingsMenu = Base {
+		ClassName = "ScreenGui",
 		Name = "SettingsMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
@@ -65,10 +66,9 @@ return function(Props)
 				),
 				BaseResolution = Vector2.new(739, 789),
 				ScaleClamps = { Min = 1, Max = 1 },
+				ListEnabled = true,
 
 				[Children] = {
-					Modifier.ListLayout {},
-
 					MenuFrame {
 						Size = UDim2.fromOffset(305, 0),
 						GroupTransparency = Spring(
@@ -83,10 +83,9 @@ return function(Props)
 							Themer.Theme.SpringDampening
 						),
 						BackgroundTransparency = States.PreferredTransparency,
+						ListEnabled = true,
 
 						[Children] = {
-							Modifier.ListLayout {},
-
 							TitleBar {
 								Title = "Settings",
 								CloseButtonDisabled = true,
@@ -96,18 +95,15 @@ return function(Props)
 								AutomaticSize = Enum.AutomaticSize.None,
 								ScrollBarThickness = Themer.Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
+								ListEnabled = true,
+								PaddingTop = Computed(function()
+									return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+								end),
+								PaddingRight = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+								end),
 
 								[Children] = {
-									Modifier.ListLayout {},
-									Modifier.Padding {
-										PaddingTop = Computed(function()
-											return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-										end),
-										PaddingRight = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-										end),
-									},
-
 									SettingToggle {
 										Label = "Mute music",
 										SwitchedOn = States.UserSettings.MuteMusic,

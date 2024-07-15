@@ -3,7 +3,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
-local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
 local New = Fusion.New
@@ -42,15 +41,13 @@ return function(Props: { [any]: any })
 
 			Frame {
 				Name = "Title",
+				ListEnabled = true,
+				ListFillDirection = Enum.FillDirection.Horizontal,
+				ListPadding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+				end),
 
 				[Children] = {
-					Modifier.ListLayout {
-						FillDirection = Enum.FillDirection.Horizontal,
-						Padding = Computed(function()
-							return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-						end),
-					},
-
 					Icon {
 						Image = Computed(function()
 							if Category:get() and Category:get().Icon then
@@ -72,13 +69,11 @@ return function(Props: { [any]: any })
 				Name = "Items",
 				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
+				ListEnabled = true,
+				ListWraps = true,
+				ListFillDirection = Enum.FillDirection.Horizontal,
 
 				[Children] = {
-					Modifier.ListLayout {
-						Wraps = true,
-						FillDirection = Enum.FillDirection.Horizontal,
-					},
-
 					ForPairs(RoRooms.Config.Systems.Items.Items, function(ItemId, Item)
 						local ItemCategory = Item.Category
 						if ItemCategory == nil then

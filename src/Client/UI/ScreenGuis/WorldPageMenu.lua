@@ -7,11 +7,9 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local States = require(RoRooms.Client.UI.States)
 local Prompts = require(RoRooms.Client.UI.States.Prompts)
 local Themer = require(OnyxUI.Utils.Themer)
-local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
-local New = Fusion.New
 local Spring = Fusion.Spring
 local Value = Fusion.Value
 local Observer = Fusion.Observer
@@ -24,6 +22,7 @@ local Text = require(OnyxUI.Components.Text)
 local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
 local Image = require(OnyxUI.Components.Image)
+local Base = require(OnyxUI.Components.Base)
 
 return function(Props)
 	local MenuOpen = Computed(function()
@@ -52,7 +51,8 @@ return function(Props)
 	}
 	UpdatePlaceInfo()
 
-	local WorldPageMenu = New "ScreenGui" {
+	local WorldPageMenu = Base {
+		ClassName = "ScreenGui",
 		Name = "WorldPageMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
@@ -91,10 +91,9 @@ return function(Props)
 							1
 						),
 						BackgroundTransparency = States.PreferredTransparency,
+						ListEnabled = true,
 
 						[Children] = {
-							Modifier.ListLayout {},
-
 							TitleBar {
 								Title = "World",
 								CloseButtonDisabled = true,
@@ -103,14 +102,12 @@ return function(Props)
 								Name = "Contents",
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
+								ListEnabled = true,
+								ListPadding = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+								end),
 
 								[Children] = {
-									Modifier.ListLayout {
-										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-										end),
-									},
-
 									Image {
 										Name = "Thumbnail",
 										Image = Computed(function()
@@ -122,19 +119,17 @@ return function(Props)
 										end),
 										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 80)),
 										ScaleType = Enum.ScaleType.Crop,
-
-										[Children] = {
-											Modifier.Corner {},
-										},
+										CornerRadius = Computed(function()
+											return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+										end),
 									},
 									Frame {
 										Name = "Details",
 										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,
+										ListEnabled = true,
 
 										[Children] = {
-											Modifier.ListLayout {},
-
 											Text {
 												Name = "Name",
 												Size = UDim2.fromScale(1, 0),
@@ -172,17 +167,9 @@ return function(Props)
 												TextWrapped = true,
 												RichText = false,
 												AutoLocalize = false,
-
-												[Children] = {
-													Modifier.SizeConstraint {
-														MaxSize = Computed(function()
-															return Vector2.new(
-																math.huge,
-																Themer.Theme.TextSize["1"]:get() * 2
-															)
-														end),
-													},
-												},
+												MaxSize = Computed(function()
+													return Vector2.new(math.huge, Themer.Theme.TextSize["1"]:get() * 2)
+												end),
 											},
 										},
 									},

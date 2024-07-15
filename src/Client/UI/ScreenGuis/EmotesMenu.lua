@@ -2,16 +2,16 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local States = require(RoRooms.Client.UI.States)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Observer = Fusion.Observer
 local ForPairs = Fusion.ForPairs
 
+local Base = require(OnyxUI.Components.Base)
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local TitleBar = require(OnyxUI.Components.TitleBar)
@@ -25,7 +25,8 @@ return function(Props)
 		return States.CurrentMenu:get() == script.Name
 	end)
 
-	local EmotesMenu = New "ScreenGui" {
+	local EmotesMenu = Base {
+		ClassName = "ScreenGui",
 		Name = "EmotesMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
@@ -64,10 +65,9 @@ return function(Props)
 						),
 						BackgroundTransparency = States.PreferredTransparency,
 						AutomaticSize = Enum.AutomaticSize.XY,
+						ListEnabled = true,
 
 						[Children] = {
-							Modifier.ListLayout {},
-
 							TitleBar {
 								Title = "Emotes",
 								CloseButtonDisabled = true,
@@ -75,15 +75,13 @@ return function(Props)
 							Frame {
 								Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 185)),
 								AutomaticSize = Enum.AutomaticSize.X,
+								ListEnabled = true,
+								ListFillDirection = Enum.FillDirection.Horizontal,
+								ListPadding = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+								end),
 
 								[Children] = {
-									Modifier.ListLayout {
-										FillDirection = Enum.FillDirection.Horizontal,
-										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-										end),
-									},
-
 									EmoteCategoriesSidebar {
 										Size = UDim2.fromScale(0, 1),
 									},
@@ -94,21 +92,17 @@ return function(Props)
 										end),
 										ScrollBarThickness = Themer.Theme.StrokeThickness["1"],
 										ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
+										Padding = Computed(function()
+											return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+										end),
+										ListEnabled = true,
+										ListPadding = Computed(function()
+											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+										end),
+										ListFillDirection = Enum.FillDirection.Horizontal,
+										ListWraps = true,
 
 										[Children] = {
-											Modifier.Padding {
-												Padding = Computed(function()
-													return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-												end),
-											},
-											Modifier.ListLayout {
-												Padding = Computed(function()
-													return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-												end),
-												FillDirection = Enum.FillDirection.Horizontal,
-												Wraps = true,
-											},
-
 											ForPairs(
 												RoRooms.Config.Systems.Emotes.Categories,
 												function(Name: string, Category)

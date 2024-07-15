@@ -4,7 +4,7 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
@@ -40,6 +40,16 @@ return function(Props)
 		),
 		BackgroundTransparency = 0,
 		LayoutOrder = Props.LayoutOrder,
+		StrokeEnabled = true,
+		StrokeColor = Computed(function()
+			return ColorUtils.Lighten(Props.Color:get(), 0.2)
+		end),
+		Padding = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+		end),
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+		end),
 
 		OnActivated = function()
 			Props.OnActivated:get()()
@@ -47,18 +57,6 @@ return function(Props)
 		IsHolding = IsHolding,
 
 		[Children] = {
-			Modifier.Stroke {
-				Color = Computed(function()
-					return ColorUtils.Lighten(Props.Color:get(), 0.2)
-				end),
-			},
-			Modifier.Padding {
-				Padding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-				end),
-			},
-			Modifier.Corner {},
-
 			Image {
 				Name = "Icon",
 				Image = Props.Icon,

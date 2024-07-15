@@ -3,10 +3,8 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local States = require(RoRooms.Client.UI.States)
 local Themer = require(OnyxUI.Utils.Themer)
-local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Observer = Fusion.Observer
@@ -17,9 +15,11 @@ local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local ItemsCategory = require(RoRooms.Client.UI.Components.ItemsCategory)
 local ItemCategoriesSidebar = require(RoRooms.Client.UI.Components.ItemCategoriesSidebar)
+local Base = require(OnyxUI.Components.Base)
 
 return function(Props)
-	local ItemsMenu = New "ScreenGui" {
+	local ItemsMenu = Base {
+		ClassName = "ScreenGui",
 		Name = "ItemsMenu",
 		Parent = Props.Parent,
 		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
@@ -58,12 +58,10 @@ return function(Props)
 							Themer.Theme.SpringDampening
 						),
 						BackgroundTransparency = States.PreferredTransparency,
+						ListEnabled = true,
+						ListFillDirection = Enum.FillDirection.Horizontal,
 
 						[Children] = {
-							Modifier.ListLayout {
-								FillDirection = Enum.FillDirection.Horizontal,
-							},
-
 							ItemCategoriesSidebar {
 								Size = UDim2.fromScale(0, 1),
 							},
@@ -72,19 +70,15 @@ return function(Props)
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 220)),
 								ScrollBarThickness = Themer.Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
+								Padding = Computed(function()
+									return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+								end),
+								ListEnabled = true,
+								ListPadding = Computed(function()
+									return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+								end),
 
 								[Children] = {
-									Modifier.Padding {
-										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-										end),
-									},
-									Modifier.ListLayout {
-										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-										end),
-									},
-
 									ForPairs(RoRooms.Config.Systems.Items.Categories, function(Name: string, Category)
 										return Name,
 											ItemsCategory {

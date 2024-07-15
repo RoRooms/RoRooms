@@ -3,7 +3,7 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
@@ -28,21 +28,18 @@ return function(Props: { [any]: any })
 		AutomaticSize = Props.AutomaticSize,
 		LayoutOrder = Props.LayoutOrder,
 		Visible = Props.Visible,
+		ListEnabled = true,
 
 		[Children] = {
-			Modifier.ListLayout {},
-
 			Frame {
 				Name = "Title",
+				ListEnabled = true,
+				ListFillDirection = Enum.FillDirection.Horizontal,
+				ListPadding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+				end),
 
 				[Children] = {
-					Modifier.ListLayout {
-						FillDirection = Enum.FillDirection.Horizontal,
-						Padding = Computed(function()
-							return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-						end),
-					},
-
 					Icon {
 						Image = Props.Icon,
 						Size = Computed(function()

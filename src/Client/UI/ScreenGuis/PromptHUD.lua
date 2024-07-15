@@ -2,12 +2,11 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local States = require(RoRooms.Client.UI.States)
-local Modifier = require(OnyxUI.Utils.Modifier)
+
 local Themer = require(OnyxUI.Utils.Themer)
 local Prompts = require(RoRooms.Client.UI.States.Prompts)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local ForValues = Fusion.ForValues
@@ -17,6 +16,7 @@ local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local Text = require(OnyxUI.Components.Text)
 local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
+local Base = require(OnyxUI.Components.Base)
 
 return function(Props)
 	local CurrentPrompt = Computed(function()
@@ -33,7 +33,8 @@ return function(Props)
 		end
 	end)
 
-	return New "ScreenGui" {
+	return Base {
+		ClassName = "ScreenGui",
 		Name = "PromptHUD",
 		Parent = Props.Parent,
 		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
@@ -74,22 +75,19 @@ return function(Props)
 							Themer.Theme.SpringDampening
 						),
 						BackgroundTransparency = States.PreferredTransparency,
+						ListEnabled = true,
+						ListPadding = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["2"]:get())
+						end),
 
 						[Children] = {
-							Modifier.ListLayout {
-								Padding = Computed(function()
-									return UDim.new(0, Themer.Theme.Spacing["2"]:get())
-								end),
-							},
-
 							Frame {
 								Name = "Details",
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
+								ListEnabled = true,
 
 								[Children] = {
-									Modifier.ListLayout {},
-
 									Text {
 										Name = "Title",
 										Text = Computed(function()
@@ -134,13 +132,11 @@ return function(Props)
 								Visible = Computed(function()
 									return #Buttons:get() >= 1
 								end),
+								ListEnabled = true,
+								ListFillDirection = Enum.FillDirection.Horizontal,
+								ListHorizontalAlignment = Enum.HorizontalAlignment.Right,
 
 								[Children] = {
-									Modifier.ListLayout {
-										FillDirection = Enum.FillDirection.Horizontal,
-										HorizontalAlignment = Enum.HorizontalAlignment.Right,
-									},
-
 									ForValues(Buttons, function(PromptButton)
 										return Button {
 											Contents = PromptButton.Contents,
