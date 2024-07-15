@@ -145,7 +145,9 @@ return function(Props)
 				Image = Computed(function()
 					return `rbxthumb://type=AvatarHeadShot&id={Props.UserId:get()}&w=150&h=150`
 				end),
-				CornerRadius = Themer.Theme.CornerRadius.Full,
+				CornerRadius = Computed(function()
+					return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+				end),
 				RingEnabled = Props.InRoRooms,
 				RingColor = Colors.Green["500"],
 				IndicatorEnabled = Computed(function()
