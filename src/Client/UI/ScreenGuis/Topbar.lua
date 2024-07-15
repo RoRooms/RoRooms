@@ -49,7 +49,8 @@ return function(Props)
 					1
 				),
 				BaseResolution = Vector2.new(739, 789),
-				ScaleClamps = { Min = 1, Max = 1 },
+				MinScale = 1,
+				MaxScale = 1,
 				ListEnabled = true,
 				ListPadding = Computed(function()
 					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
