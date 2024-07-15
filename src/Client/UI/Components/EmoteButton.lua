@@ -8,51 +8,45 @@ local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
-local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
 
-local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 local Frame = require(OnyxUI.Components.Frame)
+local Button = require(OnyxUI.Components.Button)
 
 return function(Props)
 	Props.EmoteId = EnsureValue(Props.EmoteId, "string", "EmoteId")
 	Props.Emote = EnsureValue(Props.Emote, "table", {})
-	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Themer.Theme.Colors.Base.Light)
+	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Light)
 
 	local IsHolding = Value(false)
 
-	return BaseButton {
+	return Button {
 		Name = "EmoteButton",
-		BackgroundColor3 = Spring(
-			Computed(function()
-				if IsHolding:get() then
-					return ColorUtils.Lighten(Props.BaseColor3:get(), 0.05)
-				else
-					return Props.BaseColor3:get()
-				end
-			end),
-			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
-		),
-		BackgroundTransparency = 0,
+		Color = Props.Color,
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+		end),
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
 		ClipsDescendants = true,
 		LayoutOrder = Computed(function()
 			return Props.Emote:get().LayoutOrder or 0
 		end),
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+		ListEnabled = false,
+		PaddingTop = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 		end),
-		Padding = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+		PaddingBottom = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 		end),
-		StrokeEnabled = true,
-		StrokeColor = Computed(function()
-			return ColorUtils.Lighten(Props.BaseColor3:get(), 0.2)
+		PaddingLeft = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingRight = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 		end),
 
 		OnActivated = function()
@@ -121,7 +115,7 @@ return function(Props)
 							end
 						end),
 						ImageColor3 = Computed(function()
-							return ColorUtils.Lighten(Props.BaseColor3:get(), 0.25)
+							return ColorUtils.Lighten(Props.Color:get(), 0.25)
 						end),
 					},
 					Text {
@@ -141,7 +135,7 @@ return function(Props)
 						end),
 						TextSize = 13,
 						TextColor3 = Computed(function()
-							return ColorUtils.Lighten(Props.BaseColor3:get(), 0.5)
+							return ColorUtils.Lighten(Props.Color:get(), 0.5)
 						end),
 						ClipsDescendants = false,
 						AutoLocalize = false,

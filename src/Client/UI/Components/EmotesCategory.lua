@@ -83,7 +83,7 @@ return function(Props: { [any]: any })
 								EmoteButton {
 									EmoteId = EmoteId,
 									Emote = Emote,
-									BaseColor3 = Emote.TintColor,
+									Color = Emote.TintColor,
 
 									Callback = function()
 										if States.ScreenSize:get().Y <= 500 then

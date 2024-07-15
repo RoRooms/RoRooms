@@ -57,7 +57,7 @@ return function(Props)
 
 				[Children] = {
 					MenuFrame {
-						Size = UDim2.fromOffset(370, 0),
+						Size = UDim2.fromOffset(383, 0),
 						GroupTransparency = Spring(
 							Computed(function()
 								if MenuOpen:get() then

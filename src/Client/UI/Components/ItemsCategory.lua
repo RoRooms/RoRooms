@@ -85,7 +85,7 @@ return function(Props: { [any]: any })
 								ItemButton {
 									ItemId = ItemId,
 									Item = Item,
-									BaseColor3 = Item.TintColor,
+									Color = Item.TintColor,
 								}
 						else
 							return ItemId, nil

@@ -16,13 +16,12 @@ local Colors = require(OnyxUI.Utils.Colors)
 
 local Children = Fusion.Children
 local New = Fusion.New
-local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
 local Observer = Fusion.Observer
 local Cleanup = Fusion.Cleanup
 
-local BaseButton = require(OnyxUI.Components.BaseButton)
+local Button = require(OnyxUI.Components.Button)
 local Text = require(OnyxUI.Components.Text)
 local Frame = require(OnyxUI.Components.Frame)
 local Avatar = require(OnyxUI.Components.Avatar)
@@ -33,7 +32,7 @@ return function(Props)
 	Props.PlaceId = EnsureValue(Props.PlaceId, "number", nil)
 	Props.JobId = EnsureValue(Props.JobId, "string", nil)
 	Props.InRoRooms = EnsureValue(Props.InRoRooms, "boolean", false)
-	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Themer.Theme.Colors.Base.Light)
+	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Light)
 
 	local IsHolding = Value(false)
 	local PlaceInfo = Value({})
@@ -67,24 +66,30 @@ return function(Props)
 		end
 	end)
 
-	return BaseButton {
+	return Button {
 		Name = "FriendButton",
 		Parent = Props.Parent,
-		BackgroundColor3 = Spring(
-			Computed(function()
-				local BaseColor = Props.BaseColor3:get()
-				if IsHolding:get() then
-					return ColorUtils.Lighten(BaseColor, 0.05)
-				else
-					return BaseColor
-				end
-			end),
-			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
-		),
-		BackgroundTransparency = 0,
+		Color = Props.Color,
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+		end),
 		ClipsDescendants = true,
 		LayoutOrder = Props.LayoutOrder,
+		ListEnabled = true,
+		ListFillDirection = Enum.FillDirection.Vertical,
+		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+		PaddingTop = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingBottom = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingLeft = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingRight = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
 
 		[Cleanup] = { Observers },
 
@@ -132,21 +137,11 @@ return function(Props)
 			end
 		end,
 		IsHolding = IsHolding,
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-		end),
-		Padding = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-		end),
-		ListEnabled = true,
-		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
-		StrokeEnabled = true,
-		StrokeColor = Themer.Theme.Colors.Neutral.Main,
 
 		[Children] = {
 			Avatar {
 				Size = UDim2.fromOffset(80, 80),
-				BackgroundColor3 = ColorUtils.Lighten(Props.BaseColor3:get(), 0.06),
+				BackgroundColor3 = ColorUtils.Lighten(Props.Color:get(), 0.06),
 				Image = Computed(function()
 					return `rbxthumb://type=AvatarHeadShot&id={Props.UserId:get()}&w=150&h=150`
 				end),

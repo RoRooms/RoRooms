@@ -12,35 +12,29 @@ local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
 
-local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 local Frame = require(OnyxUI.Components.Frame)
 local Image = require(OnyxUI.Components.Image)
+local Button = require(OnyxUI.Components.Button)
 
 return function(Props)
 	Props.ItemId = EnsureValue(Props.ItemId, "string", "ItemId")
 	Props.Item = EnsureValue(Props.Item, "table", {})
-	Props.BaseColor3 = EnsureValue(Props.BaseColor3, "Color3", Themer.Theme.Colors.Base.Light)
+	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Light)
 
 	local IsHolding = Value(false)
 	local IsEquipped = Computed(function()
 		return table.find(States.EquippedItems:get(), Props.ItemId:get()) ~= nil
 	end)
 
-	return BaseButton {
+	return Button {
 		Name = "ItemButton",
-		BackgroundColor3 = Spring(
-			Computed(function()
-				if IsHolding:get() or IsEquipped:get() then
-					return ColorUtils.Emphasize(Props.BaseColor3:get(), Themer.Theme.Emphasis.Light:get())
-				else
-					return Props.BaseColor3:get()
-				end
-			end),
-			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
-		),
+		Color = Props.Color,
+		IsHolding = IsHolding,
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+		end),
 		BackgroundTransparency = 0,
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
@@ -48,24 +42,31 @@ return function(Props)
 		LayoutOrder = Computed(function()
 			return Props.Item:get().LayoutOrder or 0
 		end),
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-		end),
-		Padding = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		StrokeEnabled = true,
+		StrokeEnabled = IsEquipped,
 		StrokeColor = Spring(
 			Computed(function()
 				if IsEquipped:get() then
-					return ColorUtils.Emphasize(Props.BaseColor3:get(), Themer.Theme.Emphasis.Light:get() * 4)
+					return ColorUtils.Emphasize(Props.Color:get(), Themer.Theme.Emphasis.Light:get() * 4)
 				else
-					return ColorUtils.Emphasize(Props.BaseColor3:get(), 0.2)
+					return ColorUtils.Emphasize(Props.Color:get(), 0.2)
 				end
 			end),
 			Themer.Theme.SpringSpeed["1"],
 			Themer.Theme.SpringDampening
 		),
+		ListEnabled = false,
+		PaddingTop = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingBottom = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingLeft = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingRight = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
 
 		OnActivated = function()
 			if Props.Callback then
@@ -75,7 +76,6 @@ return function(Props)
 				States.Controllers.ItemsController:ToggleEquipItem(Props.ItemId:get())
 			end
 		end,
-		IsHolding = IsHolding,
 
 		[Children] = {
 			Computed(function()
@@ -151,7 +151,7 @@ return function(Props)
 							end
 						end),
 						ImageColor3 = Computed(function()
-							return ColorUtils.Lighten(Props.BaseColor3:get(), 0.25)
+							return ColorUtils.Lighten(Props.Color:get(), 0.25)
 						end),
 					},
 					Text {
@@ -171,7 +171,7 @@ return function(Props)
 						end),
 						TextSize = Themer.Theme.TextSize["0.875"],
 						TextColor3 = Computed(function()
-							return ColorUtils.Lighten(Props.BaseColor3:get(), 0.5)
+							return ColorUtils.Lighten(Props.Color:get(), 0.5)
 						end),
 						AutoLocalize = false,
 					},

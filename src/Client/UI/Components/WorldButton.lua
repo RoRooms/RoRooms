@@ -6,19 +6,17 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local States = require(RoRooms.Client.UI.States)
-local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
-local Spring = Fusion.Spring
 local Computed = Fusion.Computed
 local Value = Fusion.Value
 local Observer = Fusion.Observer
 local Cleanup = Fusion.Cleanup
 
-local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)
 local Image = require(OnyxUI.Components.Image)
+local Button = require(OnyxUI.Components.Button)
 
 return function(Props)
 	Props.PlaceId = EnsureValue(Props.PlaceId, "number", nil)
@@ -44,35 +42,33 @@ return function(Props)
 	}
 	UpdatePlaceInfo()
 
-	return BaseButton {
+	return Button {
 		Name = "WorldButton",
-		BackgroundColor3 = Spring(
-			Computed(function()
-				if IsHolding:get() then
-					return ColorUtils.Lighten(Props.Color:get(), 0.05)
-				else
-					return Props.Color:get()
-				end
-			end),
-			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
-		),
-		BackgroundTransparency = 0,
-		OnActivated = function()
-			States.WorldPageMenu.PlaceId:set(Props.PlaceId:get())
-			States.CurrentMenu:set("WorldPageMenu")
-		end,
+		Color = Props.Color,
 		IsHolding = IsHolding,
 		CornerRadius = Computed(function()
 			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
 		end),
-		Padding = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		StrokeEnabled = true,
-		StrokeColor = ColorUtils.Lighten(Props.Color:get(), 0.15),
 		ListEnabled = true,
+		ListFillDirection = Enum.FillDirection.Vertical,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+		PaddingTop = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingBottom = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingLeft = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingRight = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+
+		OnActivated = function()
+			States.WorldPageMenu.PlaceId:set(Props.PlaceId:get())
+			States.CurrentMenu:set("WorldPageMenu")
+		end,
 
 		[Cleanup] = { Observers },
 
