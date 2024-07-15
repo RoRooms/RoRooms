@@ -134,10 +134,6 @@ return function(Props)
 										Name = "Popular",
 										Title = "Popular",
 										Icon = "rbxassetid://17292608258",
-										ListEnabled = true,
-										ListPadding = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-										end),
 
 										[Children] = {
 											Frame {
@@ -202,10 +198,6 @@ return function(Props)
 										Name = "Random",
 										Title = "Random",
 										Icon = "rbxassetid://17292608467",
-										ListEnabled = true,
-										ListPadding = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-										end),
 
 										[Children] = {
 											Frame {

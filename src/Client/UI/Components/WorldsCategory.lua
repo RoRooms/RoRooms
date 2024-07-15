@@ -1,10 +1,9 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-
 local Themer = require(OnyxUI.Utils.Themer)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -22,7 +21,7 @@ return function(Props: { [any]: any })
 	Props.LayoutOrder = EnsureValue(Props.LayoutOrder, "number", 0)
 	Props.Visible = EnsureValue(Props.Visible, "boolean", true)
 
-	return Frame {
+	return Frame(CombineProps(Props, {
 		Name = Props.Name,
 		Size = Props.Size,
 		AutomaticSize = Props.AutomaticSize,
@@ -55,9 +54,10 @@ return function(Props: { [any]: any })
 				Name = "Contents",
 				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
+				ListEnabled = true,
 
 				[Children] = Props[Children],
 			},
 		},
-	}
+	}, { Children }))
 end
