@@ -87,7 +87,7 @@ return function(Props)
 									ScrollingFrame {
 										Name = "EmotesList",
 										Size = Computed(function()
-											return UDim2.new(UDim.new(0, 255), UDim.new(1, 0))
+											return UDim2.new(UDim.new(0, 260), UDim.new(1, 0))
 										end),
 										ScrollBarThickness = Themer.Theme.StrokeThickness["1"],
 										ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,

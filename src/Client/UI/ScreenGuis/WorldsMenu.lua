@@ -57,7 +57,7 @@ return function(Props)
 
 				[Children] = {
 					MenuFrame {
-						Size = UDim2.fromOffset(383, 0),
+						Size = UDim2.fromOffset(389, 0),
 						GroupTransparency = Spring(
 							Computed(function()
 								if MenuOpen:get() then
@@ -111,7 +111,7 @@ return function(Props)
 												AutomaticSize = Enum.AutomaticSize.Y,
 												ListEnabled = true,
 												ListPadding = Computed(function()
-													return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+													return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 												end),
 												ListFillDirection = Enum.FillDirection.Horizontal,
 												ListWraps = true,
@@ -142,7 +142,7 @@ return function(Props)
 												AutomaticSize = Enum.AutomaticSize.Y,
 												ListEnabled = true,
 												ListPadding = Computed(function()
-													return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+													return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 												end),
 												ListFillDirection = Enum.FillDirection.Horizontal,
 												ListWraps = true,
@@ -206,7 +206,7 @@ return function(Props)
 												AutomaticSize = Enum.AutomaticSize.Y,
 												ListEnabled = true,
 												ListPadding = Computed(function()
-													return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+													return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 												end),
 												ListFillDirection = Enum.FillDirection.Horizontal,
 												ListWraps = true,

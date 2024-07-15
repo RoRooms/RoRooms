@@ -66,7 +66,7 @@ return function(Props: { [any]: any })
 				AutomaticSize = Enum.AutomaticSize.Y,
 				ListEnabled = true,
 				ListPadding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 				end),
 				ListFillDirection = Enum.FillDirection.Horizontal,
 				ListWraps = true,

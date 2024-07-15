@@ -5,7 +5,6 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Computed = Fusion.Computed
 local ForPairs = Fusion.ForPairs
 
@@ -32,13 +31,12 @@ return function(Props: { [any]: any })
 				return 0
 			end
 		end),
+		ListEnabled = true,
+		ListPadding = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
 
 		[Children] = {
-			New "UIListLayout" {
-				Padding = UDim.new(0, 8),
-				SortOrder = Enum.SortOrder.LayoutOrder,
-			},
-
 			Frame {
 				Name = "Title",
 				ListEnabled = true,
@@ -72,6 +70,9 @@ return function(Props: { [any]: any })
 				ListEnabled = true,
 				ListWraps = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
+				ListPadding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+				end),
 
 				[Children] = {
 					ForPairs(RoRooms.Config.Systems.Items.Items, function(ItemId, Item)
