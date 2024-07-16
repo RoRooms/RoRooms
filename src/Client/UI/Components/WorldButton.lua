@@ -16,11 +16,10 @@ local Cleanup = Fusion.Cleanup
 
 local Text = require(OnyxUI.Components.Text)
 local Image = require(OnyxUI.Components.Image)
-local Button = require(OnyxUI.Components.Button)
+local CustomButton = require(script.Parent.CustomButton)
 
 return function(Props)
 	Props.PlaceId = EnsureValue(Props.PlaceId, "number", nil)
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Main)
 
 	local IsHolding = Value(false)
 	local PlaceInfo = Value({})
@@ -42,28 +41,12 @@ return function(Props)
 	}
 	UpdatePlaceInfo()
 
-	return Button {
+	return CustomButton {
 		Name = "WorldButton",
-		Color = Props.Color,
 		IsHolding = IsHolding,
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-		end),
 		ListEnabled = true,
 		ListFillDirection = Enum.FillDirection.Vertical,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
-		PaddingTop = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingBottom = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingLeft = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingRight = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
 
 		OnActivated = function()
 			States.WorldPageMenu.PlaceId:set(Props.PlaceId:get())

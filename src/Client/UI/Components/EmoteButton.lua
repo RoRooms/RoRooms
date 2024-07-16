@@ -14,40 +14,23 @@ local Value = Fusion.Value
 local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 local Frame = require(OnyxUI.Components.Frame)
-local Button = require(OnyxUI.Components.Button)
+local CustomButton = require(script.Parent.CustomButton)
 
 return function(Props)
 	Props.EmoteId = EnsureValue(Props.EmoteId, "string", "EmoteId")
 	Props.Emote = EnsureValue(Props.Emote, "table", {})
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Light)
+	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Dark)
 
 	local IsHolding = Value(false)
 
-	return Button {
+	return CustomButton {
 		Name = "EmoteButton",
-		Color = Props.Color,
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-		end),
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
-		ClipsDescendants = true,
 		LayoutOrder = Computed(function()
 			return Props.Emote:get().LayoutOrder or 0
 		end),
 		ListEnabled = false,
-		PaddingTop = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingBottom = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingLeft = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingRight = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
 
 		OnActivated = function()
 			if Props.Callback then

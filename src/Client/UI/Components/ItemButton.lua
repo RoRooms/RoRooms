@@ -16,29 +16,24 @@ local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 local Frame = require(OnyxUI.Components.Frame)
 local Image = require(OnyxUI.Components.Image)
-local Button = require(OnyxUI.Components.Button)
+local CustomButton = require(script.Parent.CustomButton)
 
 return function(Props)
 	Props.ItemId = EnsureValue(Props.ItemId, "string", "ItemId")
 	Props.Item = EnsureValue(Props.Item, "table", {})
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Light)
+	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Dark)
 
 	local IsHolding = Value(false)
 	local IsEquipped = Computed(function()
 		return table.find(States.EquippedItems:get(), Props.ItemId:get()) ~= nil
 	end)
 
-	return Button {
+	return CustomButton {
 		Name = "ItemButton",
 		Color = Props.Color,
 		IsHolding = IsHolding,
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-		end),
-		BackgroundTransparency = 0,
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
-		ClipsDescendants = true,
 		LayoutOrder = Computed(function()
 			return Props.Item:get().LayoutOrder or 0
 		end),
@@ -55,18 +50,6 @@ return function(Props)
 			Themer.Theme.SpringDampening
 		),
 		ListEnabled = false,
-		PaddingTop = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingBottom = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingLeft = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingRight = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
 
 		OnActivated = function()
 			if Props.Callback then

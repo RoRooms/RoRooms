@@ -11,38 +11,20 @@ local Computed = Fusion.Computed
 local Value = Fusion.Value
 
 local Image = require(OnyxUI.Components.Image)
-local Button = require(OnyxUI.Components.Button)
+local CustomButton = require(script.Parent.CustomButton)
 
 return function(Props)
 	Props.Name = EnsureValue(Props.Name, "string", "CategoryButton")
 	Props.Category = EnsureValue(Props.Category, "string", "Category")
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Light)
 	Props.Icon = EnsureValue(Props.Icon, "string", nil)
 	Props.FallbackIcon = EnsureValue(Props.FallbackIcon, "string", "rbxassetid://17266112920")
 	Props.OnActivated = EnsureValue(Props.OnActivated, "function", function() end)
 
 	local IsHolding = Value(false)
 
-	return Button {
+	return CustomButton {
 		Name = Props.Name,
-		Color = Props.Color,
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-		end),
-		BackgroundTransparency = 0,
 		LayoutOrder = Props.LayoutOrder,
-		PaddingTop = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingBottom = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingLeft = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingRight = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
 
 		OnActivated = function()
 			Props.OnActivated:get()()

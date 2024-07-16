@@ -21,10 +21,10 @@ local Value = Fusion.Value
 local Observer = Fusion.Observer
 local Cleanup = Fusion.Cleanup
 
-local Button = require(OnyxUI.Components.Button)
 local Text = require(OnyxUI.Components.Text)
 local Frame = require(OnyxUI.Components.Frame)
 local Avatar = require(OnyxUI.Components.Avatar)
+local CustomButton = require(RoRooms.Client.UI.Components.CustomButton)
 
 return function(Props)
 	Props.UserId = EnsureValue(Props.UserId, "number", 1)
@@ -32,7 +32,7 @@ return function(Props)
 	Props.PlaceId = EnsureValue(Props.PlaceId, "number", nil)
 	Props.JobId = EnsureValue(Props.JobId, "string", nil)
 	Props.InRoRooms = EnsureValue(Props.InRoRooms, "boolean", false)
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Light)
+	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Dark)
 
 	local IsHolding = Value(false)
 	local PlaceInfo = Value({})
@@ -66,30 +66,14 @@ return function(Props)
 		end
 	end)
 
-	return Button {
+	return CustomButton {
 		Name = "FriendButton",
 		Parent = Props.Parent,
-		Color = Props.Color,
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-		end),
 		ClipsDescendants = true,
 		LayoutOrder = Props.LayoutOrder,
 		ListEnabled = true,
 		ListFillDirection = Enum.FillDirection.Vertical,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
-		PaddingTop = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingBottom = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingLeft = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingRight = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
 
 		[Cleanup] = { Observers },
 
