@@ -32,7 +32,7 @@ return function(Props)
 	Props.PlaceId = EnsureValue(Props.PlaceId, "number", nil)
 	Props.JobId = EnsureValue(Props.JobId, "string", nil)
 	Props.InRoRooms = EnsureValue(Props.InRoRooms, "boolean", false)
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Dark)
+	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Main)
 
 	local IsHolding = Value(false)
 	local PlaceInfo = Value({})

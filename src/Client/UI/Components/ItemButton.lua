@@ -21,7 +21,7 @@ local CustomButton = require(script.Parent.CustomButton)
 return function(Props)
 	Props.ItemId = EnsureValue(Props.ItemId, "string", "ItemId")
 	Props.Item = EnsureValue(Props.Item, "table", {})
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Dark)
+	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Main)
 
 	local IsHolding = Value(false)
 	local IsEquipped = Computed(function()
