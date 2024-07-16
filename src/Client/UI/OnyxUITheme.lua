@@ -89,4 +89,10 @@ return {
 			Volume = 0,
 		},
 	},
+	Emphasis = {
+		Light = 0.1,
+		Regular = 0.25,
+		Strong = 0.5,
+		Contrast = 1,
+	},
 }
