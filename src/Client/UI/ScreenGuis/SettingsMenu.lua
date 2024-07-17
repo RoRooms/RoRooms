@@ -1,12 +1,12 @@
 local StarterGui = game:GetService("StarterGui")
 local Players = game:GetService("Players")
 
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-local OnyxUI = require(RoRooms.Packages.OnyxUI)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
-local States = require(RoRooms.Client.UI.States)
-
+local States = require(RoRooms.SourceCode.Client.UI.States)
 local Themer = require(OnyxUI.Utils.Themer)
+local Version = require(RoRooms.Version)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -112,9 +112,23 @@ return function(Props)
 										Label = "Hide UI",
 										Switched = States.UserSettings.HideUI,
 									},
+
 									Text {
-										Text = "[RoRooms v0.0.0]",
-										TextColor3 = Themer.Theme.Colors.NeutralContent.Dark,
+										Text = Computed(function()
+											local VersionStamp = `[RoRooms v{Version}]`
+											if not States.RoRooms.UpToDate:get() then
+												return `{VersionStamp} - Out of date`
+											else
+												return VersionStamp
+											end
+										end),
+										TextColor3 = Computed(function()
+											if not States.RoRooms.UpToDate:get() then
+												return Themer.Theme.Colors.Warning.Main:get()
+											else
+												return Themer.Theme.Colors.NeutralContent.Dark:get()
+											end
+										end),
 									},
 								},
 							},

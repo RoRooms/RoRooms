@@ -1,4 +1,10 @@
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local States = require(script.Parent)
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Themer = require(OnyxUI.Utils.Themer)
+local Fusion = require(OnyxUI.Parent.Fusion)
+
+local Computed = Fusion.Computed
 
 local Topbar = {
 	NativeButtons = {
@@ -7,6 +13,10 @@ local Topbar = {
 			Icon = "rbxassetid://17273236509",
 			IconFilled = "rbxassetid://17273236289",
 			LayoutOrder = 5,
+			IndicatorColor = Themer.Theme.Colors.Warning.Main,
+			IndicatorEnabled = Computed(function()
+				return States.RoRooms.UpToDate:get() == false
+			end),
 		},
 		Emotes = {
 			MenuName = "EmotesMenu",
