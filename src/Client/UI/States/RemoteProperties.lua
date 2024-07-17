@@ -12,6 +12,10 @@ function RemoteProperties:Start()
 		LocalPlayerData.Level = Level
 		States.LocalPlayerData:set(LocalPlayerData)
 	end)
+
+	States.Services.UpdatesService.UpToDate:Observe(function(UpToDate)
+		States.RoRooms.UpToDate:set(UpToDate)
+	end)
 end
 
 return RemoteProperties

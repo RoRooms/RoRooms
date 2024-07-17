@@ -14,6 +14,7 @@ local States = {
 		EmotesService = nil,
 		TopWorldsService = nil,
 		RandomWorldsService = nil,
+		UpdatesService = nil,
 	},
 	Controllers = {
 		UIController = nil,
@@ -55,6 +56,9 @@ local States = {
 	Worlds = {
 		TopWorlds = Value({}),
 		RandomWorlds = Value({}),
+	},
+	RoRooms = {
+		UpToDate = Value(),
 	},
 }
 

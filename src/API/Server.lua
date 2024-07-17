@@ -1,5 +1,5 @@
 local ROROOMS_SOURCE = script.Parent.SourceCode
-local DEFAULT_SERVICES = { "PlayerDataService", "CharacterDefaultsService", "ComponentsService" }
+local DEFAULT_SERVICES = { "PlayerDataService", "CharacterDefaultsService", "ComponentsService", "UpdatesService" }
 
 local RoRoomsServer = {}
 

@@ -11,6 +11,7 @@ local SERVICES = {
 	"WorldRegistryService",
 	"TopWorldsService",
 	"RandomWorldsService",
+	"UpdatesService",
 }
 
 local Services = {}
