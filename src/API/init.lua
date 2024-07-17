@@ -2,9 +2,11 @@ local RunService = game:GetService("RunService")
 
 local SourceCode = script.SourceCode
 local Config = require(script.Config)
+local Version = require(script.Version)
 local Packages = script.Parent
 
 local RoRooms = {
+	_Version = Version,
 	Config = Config,
 	Packages = Packages,
 	Shared = SourceCode.Shared,
