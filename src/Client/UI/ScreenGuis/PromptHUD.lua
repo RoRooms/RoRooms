@@ -63,6 +63,7 @@ return function(Props)
 						Size = Computed(function()
 							return UDim2.fromOffset(Themer.Theme.Spacing["16"]:get(), 0)
 						end),
+						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Spring(
 							Computed(function()
 								if PromptOpen:get() then
