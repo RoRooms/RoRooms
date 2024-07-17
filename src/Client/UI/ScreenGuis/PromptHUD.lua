@@ -61,7 +61,7 @@ return function(Props)
 				[Children] = {
 					MenuFrame {
 						Size = Computed(function()
-							return UDim2.fromOffset(Themer.Theme.Spacing["16"]:get(), 0)
+							return UDim2.fromOffset(Themer.Theme.Spacing["16"]:get() * 1.2, 0)
 						end),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Spring(
