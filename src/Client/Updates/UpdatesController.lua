@@ -1,3 +1,4 @@
+local RunService = game:GetService("RunService")
 local RoRooms = script.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(OnyxUI.Parent.Fusion)
@@ -13,22 +14,24 @@ local UpdatesController = {
 function UpdatesController:KnitStart()
 	local LastUpToDate: boolean?
 
-	Observer(States.RoRooms.UpToDate):onChange(function()
-		local UpToDate = States.RoRooms.UpToDate:get()
-		if not UpToDate and (LastUpToDate ~= UpToDate) then
-			Prompts:PushPrompt({
-				Title = "Update available ✨",
-				Text = "RoRooms is out of date. Please update to receive the latest bug-fixes and improvements.",
-				Buttons = {
-					{
-						Contents = { "Close" },
+	if RunService:IsStudio() then
+		Observer(States.RoRooms.UpToDate):onChange(function()
+			local UpToDate = States.RoRooms.UpToDate:get()
+			if not UpToDate and (LastUpToDate ~= UpToDate) then
+				Prompts:PushPrompt({
+					Title = "Update available ✨",
+					Text = "RoRooms is out of date. Please update to receive the latest bug-fixes and improvements.",
+					Buttons = {
+						{
+							Contents = { "Close" },
+						},
 					},
-				},
-			})
-		end
+				})
+			end
 
-		LastUpToDate = States.RoRooms.UpToDate:get()
-	end)
+			LastUpToDate = States.RoRooms.UpToDate:get()
+		end)
+	end
 end
 
 function UpdatesController:KnitInit() end
