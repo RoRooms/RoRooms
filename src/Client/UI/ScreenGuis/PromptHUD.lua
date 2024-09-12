@@ -7,11 +7,11 @@ local Prompts = require(RoRooms.Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 
-local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
-local MenuFrame = require(OnyxUI.Components.MenuFrame)
-local Text = require(OnyxUI.Components.Text)
-local Button = require(OnyxUI.Components.Button)
-local Frame = require(OnyxUI.Components.Frame)
+
+
+
+
+
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local CurrentPrompt = Scope:Computed(function(Use)

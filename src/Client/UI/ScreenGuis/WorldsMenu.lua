@@ -7,14 +7,14 @@ local Worlds = require(RoRooms.Client.UI.States.Worlds)
 
 local Children = Fusion.Children
 
-local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
-local MenuFrame = require(OnyxUI.Components.MenuFrame)
-local TitleBar = require(OnyxUI.Components.TitleBar)
-local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
+
+
+
+
 local WorldButton = require(RoRooms.Client.UI.Components.WorldButton)
 local WorldsCategory = require(RoRooms.Client.UI.Components.WorldsCategory)
-local Button = require(OnyxUI.Components.Button)
-local Frame = require(OnyxUI.Components.Frame)
+
+
 
 local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { "rbxassetid://17293213744", "Load more" }
 local DEFAULT_REFRESH_BUTTON_CONTENTS = { "rbxassetid://13858012326", "Refresh" }

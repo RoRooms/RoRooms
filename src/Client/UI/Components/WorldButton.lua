@@ -8,8 +8,6 @@ local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
 
-local Text = require(OnyxUI.Components.Text)
-local Image = require(OnyxUI.Components.Image)
 local CustomButton = require(script.Parent.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)

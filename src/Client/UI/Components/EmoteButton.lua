@@ -6,9 +6,6 @@ local ColorUtils = require(RoRooms.Packages.ColorUtils)
 
 local Children = Fusion.Children
 
-local Text = require(OnyxUI.Components.Text)
-local Icon = require(OnyxUI.Components.Icon)
-local Frame = require(OnyxUI.Components.Frame)
 local CustomButton = require(script.Parent.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)

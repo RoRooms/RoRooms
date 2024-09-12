@@ -4,8 +4,6 @@ local Fusion = require(RoRooms.Packages.Fusion)
 
 local Children = Fusion.Children
 
-local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
-
 return function(Scope: Fusion.Scope<any>, Props)
 	local Name = Scope:EnsureValue(Props.Name, "CategoriesSidebar")
 

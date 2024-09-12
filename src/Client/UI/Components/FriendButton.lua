@@ -12,9 +12,6 @@ local Prompts = require(RoRooms.Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 
-local Text = require(OnyxUI.Components.Text)
-local Frame = require(OnyxUI.Components.Frame)
-local Avatar = require(OnyxUI.Components.Avatar)
 local CustomButton = require(RoRooms.Client.UI.Components.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)

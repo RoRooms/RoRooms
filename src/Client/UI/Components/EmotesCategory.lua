@@ -5,9 +5,6 @@ local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
 
-local Frame = require(OnyxUI.Components.Frame)
-local Text = require(OnyxUI.Components.Text)
-local Icon = require(OnyxUI.Components.Icon)
 local EmoteButton = require(RoRooms.Client.UI.Components.EmoteButton)
 
 return function(Scope: Fusion.Scope<any>, Props)

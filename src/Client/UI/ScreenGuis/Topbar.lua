@@ -7,9 +7,9 @@ local Children = Fusion.Children
 
 local Components = RoRooms.Client.UI.Components
 local TopbarButton = require(Components.TopbarButton)
-local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
-local Frame = require(OnyxUI.Components.Frame)
-local BaseButton = require(OnyxUI.Components.BaseButton)
+
+
+
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local TopbarButtonsHeight = Scope:Value(0)

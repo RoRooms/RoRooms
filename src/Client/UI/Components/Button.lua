@@ -5,9 +5,9 @@ local ColorUtils = require(RoRooms.Packages.ColorUtils)
 
 local Children = Fusion.Children
 
-local BaseButton = require(OnyxUI.Components.BaseButton)
-local Text = require(OnyxUI.Components.Text)
-local Icon = require(OnyxUI.Components.Icon)
+
+
+
 
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75

@@ -5,9 +5,6 @@ local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
 
-local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
-local MenuFrame = require(OnyxUI.Components.MenuFrame)
-local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local ItemsCategory = require(RoRooms.Client.UI.Components.ItemsCategory)
 local ItemCategoriesSidebar = require(RoRooms.Client.UI.Components.ItemCategoriesSidebar)
 

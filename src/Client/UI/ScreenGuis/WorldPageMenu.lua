@@ -9,14 +9,6 @@ local Prompts = require(RoRooms.Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 
-local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
-local MenuFrame = require(OnyxUI.Components.MenuFrame)
-local TitleBar = require(OnyxUI.Components.TitleBar)
-local Text = require(OnyxUI.Components.Text)
-local Button = require(OnyxUI.Components.Button)
-local Frame = require(OnyxUI.Components.Frame)
-local Image = require(OnyxUI.Components.Image)
-
 return function(Scope: Fusion.Scope<any>, Props)
 	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name

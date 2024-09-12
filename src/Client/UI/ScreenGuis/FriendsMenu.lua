@@ -5,10 +5,10 @@ local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
 
-local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
-local MenuFrame = require(OnyxUI.Components.MenuFrame)
-local TitleBar = require(OnyxUI.Components.TitleBar)
-local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
+
+
+
+
 local FriendButton = require(RoRooms.Client.UI.Components.FriendButton)
 
 return function(Scope: Fusion.Scope<any>, Props)

@@ -4,10 +4,6 @@ local Fusion = require(RoRooms.Packages.Fusion)
 
 local Children = Fusion.Children
 
-local Frame = require(OnyxUI.Components.Frame)
-local Text = require(OnyxUI.Components.Text)
-local Icon = require(OnyxUI.Components.Icon)
-
 return function(Scope: Fusion.Scope<any>, Props)
 	local Title = Scope:EnsureValue(Props.Title, "General")
 	local Icon = Scope:EnsureValue(Props.Icon, "rbxassetid://17266112920")

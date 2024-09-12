@@ -4,9 +4,6 @@ local Fusion = require(RoRooms.Packages.Fusion)
 
 local Children = Fusion.Children
 
-local Frame = require(OnyxUI.Components.Frame)
-local Text = require(OnyxUI.Components.Text)
-local Icon = require(OnyxUI.Components.Icon)
 local ItemButton = require(RoRooms.Client.UI.Components.ItemButton)
 
 return function(Scope: Fusion.Scope<any>, Props)

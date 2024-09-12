@@ -5,7 +5,6 @@ local Fusion = require(RoRooms.Packages.Fusion)
 
 local Children = Fusion.Children
 
-local Image = require(OnyxUI.Components.Image)
 local CustomButton = require(script.Parent.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)

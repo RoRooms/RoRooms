@@ -6,10 +6,6 @@ local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
 
-local BaseButton = require(OnyxUI.Components.BaseButton)
-local Icon = require(OnyxUI.Components.Icon)
-local Base = require(OnyxUI.Components.Base)
-
 return function(Scope: Fusion.Scope<any>, Props)
 	local SizeMultiplier = Scope:EnsureValue(Props.SizeMultiplier, 1)
 	local IconImage = Scope:EnsureValue(Props.IconImage, "")
