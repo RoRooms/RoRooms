@@ -41,7 +41,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				end
 			end),
 			Theme.SpringSpeed["1"],
-			Theme.SpringDampening
+			Theme.SpringDampening["1"]
 		),
 		ListEnabled = false,
 

@@ -47,7 +47,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0.5, YPos))
 					end),
 					Theme.SpringSpeed["1"],
-					Theme.SpringDampening
+					Theme.SpringDampening["1"]
 				),
 				BaseResolution = Vector2.new(739, 789),
 				MinScale = 1,
@@ -68,7 +68,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								end
 							end),
 							Theme.SpringSpeed["1"],
-							Theme.SpringDampening
+							Theme.SpringDampening["1"]
 						),
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,

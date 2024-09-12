@@ -87,7 +87,7 @@ return function(Props: Props)
 				return 1
 			end
 		end),
-		BackgroundColor3 = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening),
+		BackgroundColor3 = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
 		PaddingLeft = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.Spacing["0.75"]))
 		end),
@@ -111,7 +111,7 @@ return function(Props: Props)
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 		ListVerticalAlignment = Enum.VerticalAlignment.Center,
 		StrokeEnabled = true,
-		StrokeColor = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening),
+		StrokeColor = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
 		StrokeTransparency = Scope:Computed(function(Use)
 			if Use(Style) == "Ghost" then
 				return 1
