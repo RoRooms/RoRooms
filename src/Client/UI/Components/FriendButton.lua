@@ -109,7 +109,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		IsHolding = IsHolding,
 
 		[Children] = {
-			Avatar {
+			Scope:Avatar {
 				Size = UDim2.fromOffset(80, 80),
 				BackgroundColor3 = ColorUtils.Lighten(Use(Props.Color), 0.06),
 				Image = Scope:Computed(function(Use)
@@ -125,7 +125,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				end),
 				IndicatorColor = StatusColor,
 			},
-			Frame {
+			Scope:Frame {
 				Name = "Details",
 				Size = UDim2.fromOffset(80, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
@@ -133,7 +133,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListPadding = UDim.new(0, 0),
 
 				[Children] = {
-					Text {
+					Scope:Text {
 						Name = "DisplayName",
 						Text = Props.DisplayName,
 						TextTruncate = Enum.TextTruncate.AtEnd,
@@ -142,7 +142,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						TextXAlignment = Enum.TextXAlignment.Center,
 						TextWrapped = false,
 					},
-					Text {
+					Scope:Text {
 						Name = "Status",
 						Text = Scope:Computed(function(Use)
 							return (Use(Props.InRoRooms) and Use(PlaceInfo).Name) or "Online"

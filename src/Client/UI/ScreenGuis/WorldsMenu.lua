@@ -33,7 +33,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ResetOnSpawn = false,
 
 		[Children] = {
-			AutoScaleFrame {
+			Scope:AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Scope:Spring(
 					Scope:Computed(function(Use)
@@ -51,7 +51,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				MaxScale = 1,
 
 				[Children] = {
-					MenuFrame {
+					Scope:MenuFrame {
 						Size = UDim2.fromOffset(375, 0),
 						GroupTransparency = Scope:Spring(
 							Scope:Computed(function(Use)
@@ -68,11 +68,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 						ListEnabled = true,
 
 						[Children] = {
-							TitleBar {
+							Scope:TitleBar {
 								Title = "Worlds",
 								CloseButtonDisabled = true,
 							},
-							ScrollingFrame {
+							Scope:Scroller {
 								Name = "WorldsList",
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 205)),
 								ScrollBarThickness = Theme.StrokeThickness["1"],
@@ -100,7 +100,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										end),
 
 										[Children] = {
-											Frame {
+											Scope:Frame {
 												Name = "Worlds",
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
@@ -130,7 +130,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										Icon = "rbxassetid://17292608258",
 
 										[Children] = {
-											Frame {
+											Scope:Frame {
 												Name = "Worlds",
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
@@ -150,7 +150,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 													),
 												},
 											},
-											Button {
+											Scope:Button {
 												Name = "LoadMoreButton",
 												Contents = LoadMoreButtonContents,
 												Size = UDim2.fromScale(1, 0),
@@ -193,7 +193,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										Icon = "rbxassetid://17292608467",
 
 										[Children] = {
-											Frame {
+											Scope:Frame {
 												Name = "Worlds",
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
@@ -213,7 +213,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 													),
 												},
 											},
-											Button {
+											Scope:Button {
 												Name = "RefreshButton",
 												Contents = RefreshButtonContents,
 												Size = UDim2.fromScale(1, 0),

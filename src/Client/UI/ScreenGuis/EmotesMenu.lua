@@ -20,7 +20,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ResetOnSpawn = false,
 
 		[Children] = {
-			AutoScaleFrame {
+			Scope:AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Scope:Spring(
 					Scope:Computed(function(Use)
@@ -38,7 +38,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				MaxScale = 1,
 
 				[Children] = {
-					MenuFrame {
+					Scope:MenuFrame {
 						Size = UDim2.fromOffset(0, 0),
 						GroupTransparency = Scope:Spring(
 							Scope:Computed(function(Use)
@@ -56,11 +56,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 						ListEnabled = true,
 
 						[Children] = {
-							TitleBar {
+							Scope:TitleBar {
 								Title = "Emotes",
 								CloseButtonDisabled = true,
 							},
-							Frame {
+							Scope:Frame {
 								Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 185)),
 								AutomaticSize = Enum.AutomaticSize.X,
 								ListEnabled = true,
@@ -73,7 +73,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 									EmoteCategoriesSidebar {
 										Size = UDim2.fromScale(0, 1),
 									},
-									ScrollingFrame {
+									Scope:Scroller {
 										Name = "EmotesList",
 										Size = Scope:Computed(function(Use)
 											return UDim2.new(UDim.new(0, 260), UDim.new(1, 0))

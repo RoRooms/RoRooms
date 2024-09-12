@@ -23,7 +23,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ResetOnSpawn = false,
 
 		[Children] = {
-			AutoScaleFrame {
+			Scope:AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Scope:Spring(
 					Scope:Computed(function(Use)
@@ -46,7 +46,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 
 				[Children] = {
-					Frame {
+					Scope:Frame {
 						Name = "TopbarButtons",
 						BackgroundColor3 = Theme.Colors.Base.Main,
 						BackgroundTransparency = States.PreferredTransparency,
@@ -69,7 +69,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							end),
 						},
 					},
-					BaseButton {
+					Scope:BaseButton {
 						Name = "PullButton",
 						BackgroundTransparency = States.PreferredTransparency,
 						BackgroundColor3 = Theme.Colors.Base.Main,
@@ -100,7 +100,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						end,
 
 						[Children] = {
-							Frame {
+							Scope:Frame {
 								Size = Scope:Computed(function(Use)
 									return UDim2.fromOffset(100, Use(Theme.StrokeThickness["1"]))
 								end),

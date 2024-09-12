@@ -35,7 +35,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		IsHolding = IsHolding,
 
 		[Children] = {
-			Text {
+			Scope:Text {
 				Name = "Emoji",
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Position = UDim2.fromScale(0.5, 0.45),
@@ -51,7 +51,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				RichText = false,
 				ClipsDescendants = false,
 			},
-			Text {
+			Scope:Text {
 				Name = "EmoteName",
 				LayoutOrder = 3,
 				AnchorPoint = Vector2.new(0.5, 1),
@@ -66,14 +66,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 				TextXAlignment = Enum.TextXAlignment.Center,
 				TextWrapped = false,
 			},
-			Frame {
+			Scope:Frame {
 				Name = "Label",
 				ZIndex = 2,
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
 
 				[Children] = {
-					Icon {
+					Scope:Icon {
 						Name = "LabelIcon",
 						AnchorPoint = Vector2.new(0, 0),
 						Position = UDim2.fromScale(0, 0),
@@ -93,7 +93,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							return ColorUtils.Lighten(Use(Props.Color), 0.25)
 						end),
 					},
-					Text {
+					Scope:Text {
 						Name = "LabelText",
 						AnchorPoint = Vector2.new(0, 0),
 						Position = UDim2.fromScale(0, 0),

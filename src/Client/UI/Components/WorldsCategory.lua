@@ -22,7 +22,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListEnabled = true,
 
 		[Children] = {
-			Frame {
+			Scope:Frame {
 				Name = "Title",
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
@@ -31,18 +31,18 @@ return function(Scope: Fusion.Scope<any>, Props)
 				end),
 
 				[Children] = {
-					Icon {
+					Scope:Icon {
 						Image = Props.Icon,
 						Size = Scope:Computed(function(Use)
 							return UDim2.fromOffset(Use(Theme.TextSize["1"]), Use(Theme.TextSize["1"]))
 						end),
 					},
-					Text {
+					Scope:Text {
 						Text = Props.Title,
 					},
 				},
 			},
-			Frame {
+			Scope:Frame {
 				Name = "Contents",
 				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,

@@ -127,7 +127,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		[Children] = {
 			Scope:ForValues((Content, function(ContentString: string)
 				if string.find(ContentString, "rbxassetid://", 1, true) then
-					return Icon {
+					return Scope:Icon {
 						Image = ContentString,
 						ImageColor3 = EffectiveContentColor,
 						Size = Scope:Computed(function(Use)
@@ -136,7 +136,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 						ImageTransparency = EffectiveContentTransparency,
 					}
 				else
-					return Text {
+					return Scope:Text {
 						Text = ContentString,
 						TextColor3 = EffectiveContentColor,
 						TextSize = ContentSize,

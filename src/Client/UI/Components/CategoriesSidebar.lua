@@ -7,7 +7,7 @@ local Children = Fusion.Children
 return function(Scope: Fusion.Scope<any>, Props)
 	local Name = Scope:EnsureValue(Props.Name, "CategoriesSidebar")
 
-	return ScrollingFrame {
+	return Scope:Scroller {
 		Name = Props.Name,
 		Size = Props.Size,
 		AutomaticSize = Enum.AutomaticSize.X,

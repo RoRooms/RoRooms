@@ -43,7 +43,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ResetOnSpawn = false,
 
 		[Children] = {
-			AutoScaleFrame {
+			Scope:AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Scope:Spring(
 					Scope:Computed(function(Use)
@@ -59,7 +59,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				BaseResolution = Vector2.new(739, 789),
 
 				[Children] = {
-					MenuFrame {
+					Scope:MenuFrame {
 						Size = UDim2.fromOffset(353, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Scope:Spring(
@@ -77,11 +77,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 						ListEnabled = true,
 
 						[Children] = {
-							TitleBar {
+							Scope:TitleBar {
 								Title = "World",
 								CloseButtonDisabled = true,
 							},
-							Frame {
+							Scope:Frame {
 								Name = "Contents",
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
@@ -91,7 +91,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								end),
 
 								[Children] = {
-									Image {
+									Scope:Image {
 										Name = "Thumbnail",
 										Image = Scope:Computed(function(Use)
 											if Use(PlaceInfo) and Use(PlaceInfo).IconImageAssetId then
@@ -106,14 +106,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 											return UDim.new(0, Use(Theme.CornerRadius["1"]))
 										end),
 									},
-									Frame {
+									Scope:Frame {
 										Name = "Details",
 										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,
 										ListEnabled = true,
 
 										[Children] = {
-											Text {
+											Scope:Text {
 												Name = "Name",
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
@@ -135,7 +135,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												RichText = false,
 												AutoLocalize = false,
 											},
-											Text {
+											Scope:Text {
 												Name = "Description",
 												Text = Scope:Computed(function(Use)
 													if Use(PlaceInfo) and Use(PlaceInfo).Description then
@@ -156,7 +156,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 											},
 										},
 									},
-									Button {
+									Scope:Button {
 										Name = "PlayButton",
 										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,

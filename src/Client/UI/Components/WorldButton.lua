@@ -46,7 +46,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end,
 
 		[Children] = {
-			Image {
+			Scope:Image {
 				Name = "Icon",
 				Size = UDim2.fromOffset(90, 90),
 				Image = Scope:Computed(function(Use)
@@ -64,7 +64,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				AspectType = Enum.AspectType.FitWithinMaxSize,
 				DominantAxis = Enum.DominantAxis.Height,
 			},
-			Text {
+			Scope:Text {
 				Name = "Title",
 				Text = Scope:Computed(function(Use)
 					if Use(PlaceInfo) and Use(PlaceInfo).Name then

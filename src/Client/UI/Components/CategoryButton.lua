@@ -26,7 +26,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		IsHolding = IsHolding,
 
 		[Children] = {
-			Image {
+			Scope:Image {
 				Name = "Icon",
 				Image = Props.Icon,
 				FallbackImage = Props.FallbackIcon,

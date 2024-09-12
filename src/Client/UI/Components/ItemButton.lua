@@ -62,7 +62,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				local Position = UDim2.fromScale(0.5, 0.5)
 
 				if string.len(Tool.TextureId) >= 1 then
-					return Image {
+					return Scope:Image {
 						Name = "Icon",
 						Image = Tool.TextureId,
 						BackgroundTransparency = 1,
@@ -71,7 +71,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						Size = Size,
 					}
 				else
-					return Text {
+					return Scope:Text {
 						Name = "ItemName",
 						Text = Scope:Computed(function(Use)
 							if Use(Props.Item) and Use(Props.Item).Name then
@@ -93,7 +93,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					}
 				end
 			end),
-			Frame {
+			Scope:Frame {
 				Name = "Label",
 				ZIndex = 2,
 				ListEnabled = true,
@@ -103,7 +103,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				end),
 
 				[Children] = {
-					Icon {
+					Scope:Icon {
 						Name = "LabelIcon",
 						Size = Scope:Computed(function(Use)
 							return UDim2.fromOffset(Use(Theme.TextSize["0.875"]), Use(Theme.TextSize["0.875"]))
@@ -124,7 +124,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							return ColorUtils.Lighten(Use(Props.Color), 0.25)
 						end),
 					},
-					Text {
+					Scope:Text {
 						Name = "LabelText",
 						Text = Scope:Computed(function(Use)
 							if Use(Props.Item) then

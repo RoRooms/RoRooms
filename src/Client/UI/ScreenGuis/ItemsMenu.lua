@@ -17,7 +17,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ResetOnSpawn = false,
 
 		[Children] = {
-			AutoScaleFrame {
+			Scope:AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 1),
 				Position = Scope:Spring(
 					Scope:Computed(function(Use)
@@ -35,7 +35,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				MaxScale = 1,
 
 				[Children] = {
-					MenuFrame {
+					Scope:MenuFrame {
 						Size = UDim2.fromOffset(385, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Scope:Spring(
@@ -57,7 +57,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							ItemCategoriesSidebar {
 								Size = UDim2.fromScale(0, 1),
 							},
-							ScrollingFrame {
+							Scope:Scroller {
 								Name = "Items",
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 220)),
 								ScrollBarThickness = Theme.StrokeThickness["1"],

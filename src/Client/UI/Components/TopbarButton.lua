@@ -21,7 +21,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		return Use(States.CurrentMenu) == Use(Props.MenuName)
 	end)
 
-	return BaseButton {
+	return Scope:BaseButton {
 		Name = "TopbarButton",
 		BackgroundColor3 = Theme.Colors.BaseContent.Main,
 		BackgroundTransparency = Scope:Computed(function(Use)
@@ -56,7 +56,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end,
 
 		[Children] = {
-			Icon {
+			Scope:Icon {
 				Name = "Icon",
 				Image = Scope:Computed(function(Use)
 					if Use(MenuOpen) then
@@ -69,7 +69,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Position = UDim2.fromScale(0.5, 0.5),
 			},
-			Base {
+			Scope:Base {
 				Name = "Indicator",
 				BackgroundTransparency = 0,
 				BackgroundColor3 = IndicatorColor,

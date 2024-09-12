@@ -6,7 +6,7 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local Children = Fusion.Children
 
 return function(Scope: Fusion.Scope<any>, Props)
-	return Scope:Hydrate(Base {
+	return Scope:Hydrate(Scope:Base {
 		ClassName = "BillboardGui",
 		Name = "Nametag",
 		Parent = Props.Parent,
@@ -20,7 +20,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end),
 
 		[Children] = {
-			Text {
+			Scope:Text {
 				Name = "Nickname",
 				Text = Props.Nickname,
 				Visible = Scope:Computed(function(Use)
@@ -36,7 +36,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				TextXAlignment = Enum.TextXAlignment.Center,
 				TextYAlignment = Enum.TextYAlignment.Bottom,
 			},
-			Text {
+			Scope:Text {
 				Name = "Status",
 				Text = Props.Status,
 				Visible = Scope:Computed(function(Use)

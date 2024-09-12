@@ -36,7 +36,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ResetOnSpawn = false,
 
 		[Children] = {
-			AutoScaleFrame {
+			Scope:AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Position = Scope:Spring(
 					Scope:Computed(function(Use)
@@ -54,7 +54,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				MaxScale = 1,
 
 				[Children] = {
-					MenuFrame {
+					Scope:MenuFrame {
 						Size = Scope:Computed(function(Use)
 							return UDim2.fromOffset(Use(Theme.Spacing["16"]) * 1.2, 0)
 						end),
@@ -77,14 +77,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 						end),
 
 						[Children] = {
-							Frame {
+							Scope:Frame {
 								Name = "Details",
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								ListEnabled = true,
 
 								[Children] = {
-									Text {
+									Scope:Text {
 										Name = "Title",
 										Text = Scope:Computed(function(Use)
 											if Use(CurrentPrompt) and Use(CurrentPrompt).Title then
@@ -101,7 +101,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										AutomaticSize = Enum.AutomaticSize.Y,
 										TextWrapped = false,
 									},
-									Text {
+									Scope:Text {
 										Name = "Body",
 										Text = Scope:Computed(function(Use)
 											if Use(CurrentPrompt) and Use(CurrentPrompt).Text then
@@ -118,7 +118,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 									},
 								},
 							},
-							Frame {
+							Scope:Frame {
 								Name = "Buttons",
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
@@ -131,7 +131,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 								[Children] = {
 									Scope:ForValues((Buttons, function(PromptButton)
-										return Button {
+										return Scope:Button {
 											Contents = PromptButton.Contents,
 											Style = PromptButton.Style,
 											Color = PromptButton.Color,

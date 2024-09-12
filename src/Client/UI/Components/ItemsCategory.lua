@@ -13,7 +13,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		return RoRooms.Config.Systems.Items.Categories[Use(Props.CategoryName)]
 	end)
 
-	return Frame {
+	return Scope:Frame {
 		Name = `{Use(Props.CategoryName)}ItemsCategory`,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
@@ -30,7 +30,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end),
 
 		[Children] = {
-			Frame {
+			Scope:Frame {
 				Name = "Title",
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
@@ -39,7 +39,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				end),
 
 				[Children] = {
-					Icon {
+					Scope:Icon {
 						Image = Scope:Computed(function(Use)
 							if Use(Category) and Use(Category).Icon then
 								return Use(Category).Icon
@@ -51,12 +51,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 							return UDim2.fromOffset(Use(Theme.TextSize["1"]), Use(Theme.TextSize["1"]))
 						end),
 					},
-					Text {
+					Scope:Text {
 						Text = Props.CategoryName,
 					},
 				},
 			},
-			Frame {
+			Scope:Frame {
 				Name = "Items",
 				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,

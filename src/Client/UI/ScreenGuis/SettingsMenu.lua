@@ -38,7 +38,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ResetOnSpawn = false,
 
 		[Children] = {
-			AutoScaleFrame {
+			Scope:AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Scope:Spring(
 					Scope:Computed(function(Use)
@@ -57,7 +57,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListEnabled = true,
 
 				[Children] = {
-					MenuFrame {
+					Scope:MenuFrame {
 						Size = UDim2.fromOffset(305, 0),
 						GroupTransparency = Scope:Spring(
 							Scope:Computed(function(Use)
@@ -74,11 +74,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 						ListEnabled = true,
 
 						[Children] = {
-							TitleBar {
+							Scope:TitleBar {
 								Title = "Settings",
 								CloseButtonDisabled = true,
 							},
-							ScrollingFrame {
+							Scope:Scroller {
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 135)),
 								AutomaticSize = Enum.AutomaticSize.None,
 								ScrollBarThickness = Theme.StrokeThickness["1"],
@@ -101,7 +101,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										Switched = States.UserSettings.HideUI,
 									},
 
-									Text {
+									Scope:Text {
 										Text = Scope:Computed(function(Use)
 											local VersionStamp = `[RoRooms v{Version}]`
 											if not Use(States.RoRooms.UpToDate) then

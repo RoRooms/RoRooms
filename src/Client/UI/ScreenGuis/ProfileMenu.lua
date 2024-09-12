@@ -27,7 +27,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ResetOnSpawn = false,
 
 		[Children] = {
-			AutoScaleFrame {
+			Scope:AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Scope:Spring(
 					Scope:Computed(function(Use)
@@ -45,7 +45,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				MaxScale = 1,
 
 				[Children] = {
-					MenuFrame {
+					Scope:MenuFrame {
 						Size = UDim2.fromOffset(270, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Scope:Spring(
@@ -66,16 +66,16 @@ return function(Scope: Fusion.Scope<any>, Props)
 						end),
 
 						[Children] = {
-							TitleBar {
+							Scope:TitleBar {
 								Title = "Profile",
 								CloseButtonDisabled = true,
 							},
-							Frame {
+							Scope:Frame {
 								Size = UDim2.fromScale(1, 0),
 								ListEnabled = true,
 
 								[Children] = {
-									TextInput {
+									Scope:TextInput {
 										Name = "NicknameInput",
 										PlaceholderText = "Nickname",
 										CharacterLimit = RoRooms.Config.Systems.Profiles.NicknameCharacterLimit,
@@ -89,7 +89,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 											end
 										end,
 									},
-									TextInput {
+									Scope:TextInput {
 										Name = "StatusInput",
 										PlaceholderText = "Status",
 										Text = StatusText,
@@ -106,7 +106,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 									},
 								},
 							},
-							Button {
+							Scope:Button {
 								Name = "EditAvatarButton",
 								Contents = { "rbxassetid://13285615740", "Edit Avatar" },
 								Size = UDim2.fromScale(1, 0),
