@@ -6,6 +6,7 @@ local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)

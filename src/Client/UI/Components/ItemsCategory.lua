@@ -4,6 +4,7 @@ local Fusion = require(RoRooms.Packages.Fusion)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
 
 local ItemButton = require(RoRooms.Client.UI.Components.ItemButton)
 

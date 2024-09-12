@@ -5,6 +5,7 @@ local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
 
 local ItemsCategory = require(RoRooms.Client.UI.Components.ItemsCategory)
 local ItemCategoriesSidebar = require(RoRooms.Client.UI.Components.ItemCategoriesSidebar)

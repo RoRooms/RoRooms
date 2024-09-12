@@ -12,6 +12,7 @@ local Prompts = require(RoRooms.Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
 
 local CustomButton = require(RoRooms.Client.UI.Components.CustomButton)
 

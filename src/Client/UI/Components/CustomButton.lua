@@ -3,6 +3,7 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 
 local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
 
 local Button = require(script.Parent.Button)
 

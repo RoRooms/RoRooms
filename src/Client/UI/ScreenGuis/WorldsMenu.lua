@@ -7,6 +7,7 @@ local Worlds = require(RoRooms.Client.UI.States.Worlds)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
 
 local WorldButton = require(RoRooms.Client.UI.Components.WorldButton)
 local WorldsCategory = require(RoRooms.Client.UI.Components.WorldsCategory)

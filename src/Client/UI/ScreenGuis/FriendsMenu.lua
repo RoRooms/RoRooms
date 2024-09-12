@@ -5,6 +5,7 @@ local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
 
 local FriendButton = require(RoRooms.Client.UI.Components.FriendButton)
 

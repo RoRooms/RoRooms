@@ -6,6 +6,7 @@ local ColorUtils = require(RoRooms.Packages.ColorUtils)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
 
 local CustomButton = require(script.Parent.CustomButton)
 
