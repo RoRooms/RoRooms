@@ -65,7 +65,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 						[Children] = {
 							Scope:ForValues((States.TopbarButtons, function(Button)
-								return TopbarButton(Button)
+								return Scope:TopbarButton(table.clone(Button))
 							end),
 						},
 					},

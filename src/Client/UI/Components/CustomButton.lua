@@ -10,7 +10,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Color = Scope:EnsureValue(Props.Color, Theme.Util.Colors.Neutral.Main)
 	local IsHovering = Scope:EnsureValue(Props.IsHovering, false)
 
-	return Button(Util.CombineProps(Props, {
+	return Scope:Button(Util.CombineProps(Props, {
 		Color = Color,
 		CornerRadius = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.CornerRadius["2"]))

@@ -145,7 +145,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 													Scope:ForValues((
 														States.Worlds.TopWorlds,
 														function(World: { [string]: any })
-															return WorldButton(table.clone(World))
+															return Scope:WorldButton(table.clone(World))
 														end
 													),
 												},
@@ -208,7 +208,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 													Scope:ForValues((
 														States.Worlds.RandomWorlds,
 														function(World: { [string]: any })
-															return WorldButton(table.clone(World))
+															return Scope:WorldButton(table.clone(World))
 														end
 													),
 												},
