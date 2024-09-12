@@ -1,4 +1,4 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent.Parent
 local ReconcileTable = require(RoRooms.Shared.ExtPackages.ReconcileTable)
 local States = require(script.Parent)
 local Fusion = require(RoRooms.Packages.Fusion)

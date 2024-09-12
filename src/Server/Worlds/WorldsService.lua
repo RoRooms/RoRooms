@@ -1,6 +1,6 @@
 local TeleportService = game:GetService("TeleportService")
 
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent
 local WorldRegistryService = require(script.Parent.WorldRegistryService)
 local t = require(RoRooms.Packages.t)
 

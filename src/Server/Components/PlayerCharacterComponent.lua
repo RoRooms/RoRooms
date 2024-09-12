@@ -1,6 +1,6 @@
 local Players = game:GetService("Players")
 
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent
 local Component = require(RoRooms.Packages.Component)
 local RemoteComponent = require(RoRooms.Packages.RemoteComponent)
 local Knit = require(RoRooms.Packages.Knit)

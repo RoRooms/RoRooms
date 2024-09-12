@@ -1,7 +1,7 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 local RunService = game:GetService("RunService")
 
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
 local BloxstrapRPC = require(RoRooms.Packages.BloxstrapRPC)
 

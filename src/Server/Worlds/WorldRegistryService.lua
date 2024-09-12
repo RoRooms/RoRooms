@@ -2,7 +2,7 @@ local InsertService = game:GetService("InsertService")
 local MarketplaceService = game:GetService("MarketplaceService")
 
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent
 local Signal = require(RoRooms.Packages.Signal)
 local t = require(RoRooms.Packages.t)
 

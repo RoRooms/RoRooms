@@ -1,6 +1,6 @@
 local Players = game:GetService("Players")
 
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
 local UIController = require(RoRooms.Client.UI.UIController)
 local FriendsMenu = require(RoRooms.Client.UI.ScreenGuis.FriendsMenu)

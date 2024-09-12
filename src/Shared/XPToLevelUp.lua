@@ -1,4 +1,4 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 
 local CURVE_MULTIPLIER = 0.85
 

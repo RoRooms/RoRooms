@@ -1,4 +1,4 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent
 local Component = require(RoRooms.Packages.Component)
 local Zone = require(RoRooms.Shared.ExtPackages.Zone)
 local Knit = require(RoRooms.Packages.Knit)

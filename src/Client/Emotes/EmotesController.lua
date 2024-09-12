@@ -1,4 +1,4 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent
 local Knit = require(RoRooms.Packages.Knit)
 local Topbar = require(RoRooms.Client.UI.States.Topbar)
 local Prompts = require(RoRooms.Client.UI.States.Prompts)

@@ -1,4 +1,4 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent
 local WorldRegistryService = require(script.Parent.WorldRegistryService)
 local ShuffleArray = require(RoRooms.Shared.ExtPackages.ShuffleArray)
 local Knit = require(RoRooms.Packages.Knit)

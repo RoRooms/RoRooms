@@ -1,4 +1,4 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent
 local CoreThemer = require(RoRooms.Shared.ExtPackages.CoreThemer)
 local Footstepper = require(RoRooms.Shared.ExtPackages.Footstepper)
 local NeoHotbar = require(RoRooms.Packages.NeoHotbar)

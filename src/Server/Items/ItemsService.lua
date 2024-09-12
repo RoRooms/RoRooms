@@ -1,4 +1,4 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent
 local PlayerDataService = require(RoRooms.Server.PlayerData.PlayerDataService)
 local t = require(RoRooms.Packages.t)
 

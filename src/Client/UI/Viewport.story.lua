@@ -1,4 +1,4 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent
 local Topbar = require(RoRooms.Client.UI.States.Topbar)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Theme = require(script.Parent.OnyxUITheme)
