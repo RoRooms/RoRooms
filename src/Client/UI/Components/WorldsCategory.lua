@@ -31,14 +31,14 @@ return function(Props: { [any]: any })
 				Name = "Title",
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
-				ListPadding = Computed(function()
+				ListPadding = Computed(function(Use)
 					return UDim.new(0, Theme.Spacing["0.25"]:get())
 				end),
 
 				[Children] = {
 					Icon {
 						Image = Props.Icon,
-						Size = Computed(function()
+						Size = Computed(function(Use)
 							return UDim2.fromOffset(Theme.TextSize["1"]:get(), Theme.TextSize["1"]:get())
 						end),
 					},

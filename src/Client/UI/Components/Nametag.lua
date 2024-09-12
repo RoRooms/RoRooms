@@ -20,7 +20,7 @@ return function(Props)
 		ListEnabled = true,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 		ListVerticalAlignment = Enum.VerticalAlignment.Bottom,
-		ListPadding = Computed(function()
+		ListPadding = Computed(function(Use)
 			return UDim.new(0, 0)
 		end),
 
@@ -28,13 +28,13 @@ return function(Props)
 			Text {
 				Name = "Nickname",
 				Text = Props.Nickname,
-				Visible = Computed(function()
+				Visible = Computed(function(Use)
 					return Use(Props.Nickname) ~= ""
 				end),
 				Size = UDim2.fromScale(1, 0.45),
 				AutomaticSize = Enum.AutomaticSize.None,
 				TextScaled = true,
-				FontFace = Computed(function()
+				FontFace = Computed(function(Use)
 					return Font.new(Use(Theme.Font.Heading), Use(Theme.FontWeight.Heading))
 				end),
 				RichText = false,
@@ -44,7 +44,7 @@ return function(Props)
 			Text {
 				Name = "Status",
 				Text = Props.Status,
-				Visible = Computed(function()
+				Visible = Computed(function(Use)
 					return Use(Props.Status) ~= ""
 				end),
 				Size = UDim2.fromScale(1, 0.25),

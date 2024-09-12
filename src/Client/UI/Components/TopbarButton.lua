@@ -23,28 +23,28 @@ return function(Props)
 
 	local IsHovering = Value(false)
 	local IsHolding = Value(false)
-	local MenuOpen = Computed(function()
+	local MenuOpen = Computed(function(Use)
 		return Use(States.CurrentMenu) == Use(Props.MenuName)
 	end)
 
 	return BaseButton {
 		Name = "TopbarButton",
 		BackgroundColor3 = Theme.Colors.BaseContent.Main,
-		BackgroundTransparency = Computed(function()
+		BackgroundTransparency = Computed(function(Use)
 			if Use(IsHovering) or Use(MenuOpen) then
 				return 0.9
 			else
 				return 1
 			end
 		end),
-		Size = Computed(function()
+		Size = Computed(function(Use)
 			local BaseSize = UDim2.fromOffset(45, 45)
 			local SizeMultiplier = Use(Props.SizeMultiplier)
 			return UDim2.fromOffset(BaseSize.X.Offset * SizeMultiplier, BaseSize.Y.Offset * SizeMultiplier)
 		end),
 		AutomaticSize = Enum.AutomaticSize.None,
 		LayoutOrder = Props.LayoutOrder,
-		CornerRadius = Computed(function()
+		CornerRadius = Computed(function(Use)
 			return UDim.new(0, Theme.CornerRadius["Full"]:get())
 		end),
 
@@ -64,7 +64,7 @@ return function(Props)
 		[Children] = {
 			Icon {
 				Name = "Icon",
-				Image = Computed(function()
+				Image = Computed(function(Use)
 					if Use(MenuOpen) then
 						return Use(Props.IconFilled)
 					else
@@ -82,7 +82,7 @@ return function(Props)
 				Size = UDim2.fromOffset(12, 3),
 				AnchorPoint = Vector2.new(0.5, 1),
 				Position = UDim2.fromScale(0.5, 1),
-				CornerRadius = Computed(function()
+				CornerRadius = Computed(function(Use)
 					return UDim.new(0, Use(Theme.CornerRadius.Full))
 				end),
 				Visible = IndicatorEnabled,

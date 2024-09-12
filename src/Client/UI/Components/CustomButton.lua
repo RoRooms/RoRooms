@@ -14,19 +14,19 @@ return function(Props: Props)
 
 	return Button(CombineProps(Props, {
 		Color = Color,
-		CornerRadius = Computed(function()
+		CornerRadius = Computed(function(Use)
 			return UDim.new(0, Theme.CornerRadius["2"]:get())
 		end),
-		PaddingTop = Computed(function()
+		PaddingTop = Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.5"]:get())
 		end),
-		PaddingBottom = Computed(function()
+		PaddingBottom = Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.5"]:get())
 		end),
-		PaddingLeft = Computed(function()
+		PaddingLeft = Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.5"]:get())
 		end),
-		PaddingRight = Computed(function()
+		PaddingRight = Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.5"]:get())
 		end),
 

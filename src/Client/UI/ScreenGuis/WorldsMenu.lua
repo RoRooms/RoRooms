@@ -25,7 +25,7 @@ local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { "rbxassetid://17293213744", "Load mo
 local DEFAULT_REFRESH_BUTTON_CONTENTS = { "rbxassetid://13858012326", "Refresh" }
 
 return function(Props)
-	local MenuOpen = Computed(function()
+	local MenuOpen = Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)
 	local LoadMoreButtonContents = Value(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
@@ -41,7 +41,7 @@ return function(Props)
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Spring(
-					Computed(function()
+					Computed(function(Use)
 						local YPos = Use(States.TopbarBottomPos)
 						if not Use(MenuOpen) then
 							YPos = YPos + 15
@@ -59,7 +59,7 @@ return function(Props)
 					MenuFrame {
 						Size = UDim2.fromOffset(375, 0),
 						GroupTransparency = Spring(
-							Computed(function()
+							Computed(function(Use)
 								if Use(MenuOpen) then
 									return 0
 								else
@@ -82,14 +82,14 @@ return function(Props)
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 205)),
 								ScrollBarThickness = Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
-								Padding = Computed(function()
+								Padding = Computed(function(Use)
 									return UDim.new(0, Theme.StrokeThickness["1"]:get())
 								end),
-								PaddingRight = Computed(function()
+								PaddingRight = Computed(function(Use)
 									return UDim.new(0, Theme.Spacing["0.75"]:get())
 								end),
 								ListEnabled = true,
-								ListPadding = Computed(function()
+								ListPadding = Computed(function(Use)
 									return UDim.new(0, Theme.Spacing["1.5"]:get())
 								end),
 								ListFillDirection = Enum.FillDirection.Horizontal,
@@ -100,7 +100,7 @@ return function(Props)
 										Name = "Featured",
 										Title = "From creator",
 										Icon = "rbxassetid://17292608120",
-										Visible = Computed(function()
+										Visible = Computed(function(Use)
 											return #RoRooms.Config.Systems.Worlds.FeaturedWorlds >= 1
 										end),
 
@@ -110,7 +110,7 @@ return function(Props)
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 												ListEnabled = true,
-												ListPadding = Computed(function()
+												ListPadding = Computed(function(Use)
 													return UDim.new(0, Theme.Spacing["0.75"]:get())
 												end),
 												ListFillDirection = Enum.FillDirection.Horizontal,
@@ -141,7 +141,7 @@ return function(Props)
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 												ListEnabled = true,
-												ListPadding = Computed(function()
+												ListPadding = Computed(function(Use)
 													return UDim.new(0, Theme.Spacing["0.75"]:get())
 												end),
 												ListFillDirection = Enum.FillDirection.Horizontal,
@@ -205,7 +205,7 @@ return function(Props)
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 												ListEnabled = true,
-												ListPadding = Computed(function()
+												ListPadding = Computed(function(Use)
 													return UDim.new(0, Theme.Spacing["0.75"]:get())
 												end),
 												ListFillDirection = Enum.FillDirection.Horizontal,

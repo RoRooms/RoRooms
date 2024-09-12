@@ -54,7 +54,7 @@ return function(Props)
 	}
 	UpdatePlaceInfo()
 
-	local StatusColor = Computed(function()
+	local StatusColor = Computed(function(Use)
 		if Use(Props.InRoRooms) then
 			return Color3.fromRGB(2, 183, 87)
 		else
@@ -122,15 +122,15 @@ return function(Props)
 			Avatar {
 				Size = UDim2.fromOffset(80, 80),
 				BackgroundColor3 = ColorUtils.Lighten(Use(Props.Color), 0.06),
-				Image = Computed(function()
+				Image = Computed(function(Use)
 					return `rbxthumb://type=AvatarHeadShot&id={Use(Props.UserId)}&w=150&h=150`
 				end),
-				CornerRadius = Computed(function()
+				CornerRadius = Computed(function(Use)
 					return UDim.new(0, Use(Theme.CornerRadius.Full))
 				end),
 				RingEnabled = Props.InRoRooms,
 				RingColor = Colors.Green["500"],
-				IndicatorEnabled = Computed(function()
+				IndicatorEnabled = Computed(function(Use)
 					return not Use(Props.InRoRooms)
 				end),
 				IndicatorColor = StatusColor,
@@ -154,7 +154,7 @@ return function(Props)
 					},
 					Text {
 						Name = "Status",
-						Text = Computed(function()
+						Text = Computed(function(Use)
 							return (Use(Props.InRoRooms) and Use(PlaceInfo).Name) or "Online"
 						end),
 						TextColor3 = StatusColor,

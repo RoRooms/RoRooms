@@ -36,7 +36,7 @@ return function(Props)
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Spring(
-					Computed(function()
+					Computed(function(Use)
 						if Use(States.TopbarVisible) then
 							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, 14))
 						else
@@ -50,7 +50,7 @@ return function(Props)
 				MinScale = 1,
 				MaxScale = 1,
 				ListEnabled = true,
-				ListPadding = Computed(function()
+				ListPadding = Computed(function(Use)
 					return UDim.new(0, Theme.Spacing["0.5"]:get())
 				end),
 				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
@@ -61,15 +61,15 @@ return function(Props)
 						BackgroundColor3 = Theme.Colors.Base.Main,
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,
-						ListPadding = Computed(function()
+						ListPadding = Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["0.25"]:get())
 						end),
 						ListFillDirection = Enum.FillDirection.Horizontal,
 						ListVerticalAlignment = Enum.VerticalAlignment.Center,
-						CornerRadius = Computed(function()
+						CornerRadius = Computed(function(Use)
 							return UDim.new(0, Use(Theme.CornerRadius.Full))
 						end),
-						Padding = Computed(function()
+						Padding = Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["0.5"]:get() / 1.25)
 						end),
 
@@ -83,23 +83,23 @@ return function(Props)
 						Name = "PullButton",
 						BackgroundTransparency = States.PreferredTransparency,
 						BackgroundColor3 = Theme.Colors.Base.Main,
-						Visible = Computed(function()
+						Visible = Computed(function(Use)
 							return not (typeof(Use(States.CurrentMenu)) == "string")
 						end),
 						TextSize = 0,
-						CornerRadius = Computed(function()
+						CornerRadius = Computed(function(Use)
 							return UDim.new(0, Use(Theme.CornerRadius.Full))
 						end),
-						PaddingTop = Computed(function()
+						PaddingTop = Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["0.5"]:get())
 						end),
-						PaddingLeft = Computed(function()
+						PaddingLeft = Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["0.75"]:get())
 						end),
-						PaddingRight = Computed(function()
+						PaddingRight = Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["0.75"]:get())
 						end),
-						PaddingBottom = Computed(function()
+						PaddingBottom = Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["0.5"]:get())
 						end),
 						StrokeColor = Theme.Colors.Neutral.Main,
@@ -111,7 +111,7 @@ return function(Props)
 
 						[Children] = {
 							Frame {
-								Size = Computed(function()
+								Size = Computed(function(Use)
 									return UDim2.fromOffset(100, Theme.StrokeThickness["1"]:get())
 								end),
 								AutomaticSize = Enum.AutomaticSize.None,

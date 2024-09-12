@@ -9,7 +9,7 @@ local Computed = Fusion.Computed
 local Observer = Fusion.Observer
 
 local CoreGui = {
-	IsUnibarOpen = Computed(function()
+	IsUnibarOpen = Computed(function(Use)
 		return Use(States.TopbarInset).Min.X > 250
 	end),
 }

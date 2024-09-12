@@ -33,7 +33,7 @@ return function(Props: Props)
 	local ContentColor = EnsureValue(
 		Props.ContentColor,
 		"Color3",
-		Computed(function()
+		Computed(function(Use)
 			return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Contrast))
 		end)
 	)
@@ -41,7 +41,7 @@ return function(Props: Props)
 
 	local IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
 	local IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
-	local EffectiveColor = Computed(function()
+	local EffectiveColor = Computed(function(Use)
 		if Use(Disabled) then
 			return Use(Theme.Colors.BaseContent.Main)
 		else
@@ -54,7 +54,7 @@ return function(Props: Props)
 			end
 		end
 	end)
-	local EffectiveContentColor = Computed(function()
+	local EffectiveContentColor = Computed(function(Use)
 		if Use(Disabled) then
 			return Use(Theme.Colors.BaseContent.Main)
 		else
@@ -69,7 +69,7 @@ return function(Props: Props)
 			end
 		end
 	end)
-	local EffectiveContentTransparency = Computed(function()
+	local EffectiveContentTransparency = Computed(function(Use)
 		if Use(Disabled) then
 			return DISABLED_CONTENT_TRANSPARENCY
 		else
@@ -79,7 +79,7 @@ return function(Props: Props)
 
 	return BaseButton(CombineProps(Props, {
 		Name = "Button",
-		BackgroundTransparency = Computed(function()
+		BackgroundTransparency = Computed(function(Use)
 			if Use(Style) == "Filled" then
 				if Use(Disabled) then
 					return DISABLED_BACKGROUND_TRANSPARENCY
@@ -91,23 +91,23 @@ return function(Props: Props)
 			end
 		end),
 		BackgroundColor3 = Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening),
-		PaddingLeft = Computed(function()
+		PaddingLeft = Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.75"]:get())
 		end),
-		PaddingRight = Computed(function()
+		PaddingRight = Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.75"]:get())
 		end),
-		PaddingTop = Computed(function()
+		PaddingTop = Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.25"]:get())
 		end),
-		PaddingBottom = Computed(function()
+		PaddingBottom = Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.25"]:get())
 		end),
-		CornerRadius = Computed(function()
+		CornerRadius = Computed(function(Use)
 			return UDim.new(0, Theme.CornerRadius["1"]:get())
 		end),
 		ListEnabled = true,
-		ListPadding = Computed(function()
+		ListPadding = Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.25"]:get())
 		end),
 		ListFillDirection = Enum.FillDirection.Horizontal,
@@ -115,7 +115,7 @@ return function(Props: Props)
 		ListVerticalAlignment = Enum.VerticalAlignment.Center,
 		StrokeEnabled = true,
 		StrokeColor = Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening),
-		StrokeTransparency = Computed(function()
+		StrokeTransparency = Computed(function(Use)
 			if Use(Style) == "Ghost" then
 				return 1
 			elseif Use(Disabled) then
@@ -133,7 +133,7 @@ return function(Props: Props)
 					return Icon {
 						Image = ContentString,
 						ImageColor3 = EffectiveContentColor,
-						Size = Computed(function()
+						Size = Computed(function(Use)
 							return UDim2.fromOffset(Use(ContentSize), Use(ContentSize))
 						end),
 						ImageTransparency = EffectiveContentTransparency,

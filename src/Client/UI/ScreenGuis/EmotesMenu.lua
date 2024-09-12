@@ -19,7 +19,7 @@ local EmoteCategoriesSidebar = require(RoRooms.Client.UI.Components.EmoteCategor
 local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
-	local MenuOpen = Computed(function()
+	local MenuOpen = Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)
 
@@ -33,7 +33,7 @@ return function(Props)
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Spring(
-					Computed(function()
+					Computed(function(Use)
 						local YPos = Use(States.TopbarBottomPos)
 						if not Use(MenuOpen) then
 							YPos = YPos + 15
@@ -51,7 +51,7 @@ return function(Props)
 					MenuFrame {
 						Size = UDim2.fromOffset(0, 0),
 						GroupTransparency = Spring(
-							Computed(function()
+							Computed(function(Use)
 								if Use(MenuOpen) then
 									return 0
 								else
@@ -75,7 +75,7 @@ return function(Props)
 								AutomaticSize = Enum.AutomaticSize.X,
 								ListEnabled = true,
 								ListFillDirection = Enum.FillDirection.Horizontal,
-								ListPadding = Computed(function()
+								ListPadding = Computed(function(Use)
 									return UDim.new(0, Theme.Spacing["0.75"]:get())
 								end),
 
@@ -85,16 +85,16 @@ return function(Props)
 									},
 									ScrollingFrame {
 										Name = "EmotesList",
-										Size = Computed(function()
+										Size = Computed(function(Use)
 											return UDim2.new(UDim.new(0, 260), UDim.new(1, 0))
 										end),
 										ScrollBarThickness = Theme.StrokeThickness["1"],
 										ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
-										Padding = Computed(function()
+										Padding = Computed(function(Use)
 											return UDim.new(0, Theme.StrokeThickness["1"]:get())
 										end),
 										ListEnabled = true,
-										ListPadding = Computed(function()
+										ListPadding = Computed(function(Use)
 											return UDim.new(0, Theme.Spacing["1"]:get())
 										end),
 										ListFillDirection = Enum.FillDirection.Horizontal,

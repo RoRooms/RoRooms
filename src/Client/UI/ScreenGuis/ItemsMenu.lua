@@ -28,7 +28,7 @@ return function(Props)
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 1),
 				Position = Spring(
-					Computed(function()
+					Computed(function(Use)
 						local YPos = 68 + 15
 						if not Use(States.ItemsMenu.Open) then
 							YPos -= 15
@@ -47,7 +47,7 @@ return function(Props)
 						Size = UDim2.fromOffset(385, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Spring(
-							Computed(function()
+							Computed(function(Use)
 								if Use(States.ItemsMenu.Open) then
 									return 0
 								else
@@ -70,11 +70,11 @@ return function(Props)
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 220)),
 								ScrollBarThickness = Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
-								Padding = Computed(function()
+								Padding = Computed(function(Use)
 									return UDim.new(0, Theme.StrokeThickness["1"]:get())
 								end),
 								ListEnabled = true,
-								ListPadding = Computed(function()
+								ListPadding = Computed(function(Use)
 									return UDim.new(0, Theme.Spacing["0.75"]:get())
 								end),
 

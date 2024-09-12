@@ -18,13 +18,13 @@ local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
-	local CurrentPrompt = Computed(function()
+	local CurrentPrompt = Computed(function(Use)
 		return Use(States.Prompts)[#Use(States.Prompts)]
 	end)
-	local PromptOpen = Computed(function()
+	local PromptOpen = Computed(function(Use)
 		return Use(CurrentPrompt) ~= nil
 	end)
-	local Buttons = Computed(function()
+	local Buttons = Computed(function(Use)
 		if Use(CurrentPrompt) and Use(CurrentPrompt).Buttons then
 			return Use(CurrentPrompt).Buttons
 		else
@@ -43,7 +43,7 @@ return function(Props)
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Position = Spring(
-					Computed(function()
+					Computed(function(Use)
 						local YPos = 0
 						if not Use(PromptOpen) then
 							YPos = YPos + 15
@@ -59,12 +59,12 @@ return function(Props)
 
 				[Children] = {
 					MenuFrame {
-						Size = Computed(function()
+						Size = Computed(function(Use)
 							return UDim2.fromOffset(Theme.Spacing["16"]:get() * 1.2, 0)
 						end),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Spring(
-							Computed(function()
+							Computed(function(Use)
 								if Use(PromptOpen) then
 									return 0
 								else
@@ -76,7 +76,7 @@ return function(Props)
 						),
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,
-						ListPadding = Computed(function()
+						ListPadding = Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["2"]:get())
 						end),
 
@@ -90,7 +90,7 @@ return function(Props)
 								[Children] = {
 									Text {
 										Name = "Title",
-										Text = Computed(function()
+										Text = Computed(function(Use)
 											if Use(CurrentPrompt) and Use(CurrentPrompt).Title then
 												return Use(CurrentPrompt).Title
 											else
@@ -98,7 +98,7 @@ return function(Props)
 											end
 										end),
 										TextSize = Theme.TextSize["1.25"],
-										FontFace = Computed(function()
+										FontFace = Computed(function(Use)
 											return Font.new(Use(Theme.Font.Heading), Use(Theme.FontWeight.Heading))
 										end),
 										Size = UDim2.fromScale(1, 0),
@@ -107,14 +107,14 @@ return function(Props)
 									},
 									Text {
 										Name = "Body",
-										Text = Computed(function()
+										Text = Computed(function(Use)
 											if Use(CurrentPrompt) and Use(CurrentPrompt).Text then
 												return Use(CurrentPrompt).Text
 											else
 												return "Prompt body text"
 											end
 										end),
-										Size = Computed(function()
+										Size = Computed(function(Use)
 											return UDim2.new(UDim.new(1, 0), UDim.new(0, 0))
 										end),
 										AutomaticSize = Enum.AutomaticSize.Y,
@@ -126,7 +126,7 @@ return function(Props)
 								Name = "Buttons",
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
-								Visible = Computed(function()
+								Visible = Computed(function(Use)
 									return #Use(Buttons) >= 1
 								end),
 								ListEnabled = true,

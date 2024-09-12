@@ -17,7 +17,7 @@ local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
-	local MenuOpen = Computed(function()
+	local MenuOpen = Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)
 
@@ -41,7 +41,7 @@ return function(Props)
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Spring(
-					Computed(function()
+					Computed(function(Use)
 						local YPos = Use(States.TopbarBottomPos)
 						if not Use(MenuOpen) then
 							YPos = YPos + 15
@@ -60,7 +60,7 @@ return function(Props)
 						Size = UDim2.fromOffset(270, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Spring(
-							Computed(function()
+							Computed(function(Use)
 								if Use(MenuOpen) then
 									return 0
 								else
@@ -72,7 +72,7 @@ return function(Props)
 						),
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,
-						ListPadding = Computed(function()
+						ListPadding = Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["1"]:get())
 						end),
 
@@ -122,7 +122,7 @@ return function(Props)
 								Contents = { "rbxassetid://13285615740", "Edit Avatar" },
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
-								Visible = Computed(function()
+								Visible = Computed(function(Use)
 									return RoRooms.Config.Systems.Profiles.AvatarEditorCallback ~= nil
 								end),
 

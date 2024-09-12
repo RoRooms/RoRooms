@@ -17,10 +17,10 @@ return function(Props)
 		ScrollBarThickness = 0,
 		ScrollBarImageTransparency = 1,
 		ListEnabled = true,
-		ListPadding = Computed(function()
+		ListPadding = Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.5"]:get())
 		end),
-		Padding = Computed(function()
+		Padding = Computed(function(Use)
 			return UDim.new(0, Theme.StrokeThickness["1"]:get())
 		end),
 

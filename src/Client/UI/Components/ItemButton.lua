@@ -21,7 +21,7 @@ return function(Props)
 	Props.Color = EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
 
 	local IsHolding = Value(false)
-	local IsEquipped = Computed(function()
+	local IsEquipped = Computed(function(Use)
 		return table.find(Use(States.EquippedItems), Use(Props.ItemId)) ~= nil
 	end)
 
@@ -31,12 +31,12 @@ return function(Props)
 		IsHolding = IsHolding,
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
-		LayoutOrder = Computed(function()
+		LayoutOrder = Computed(function(Use)
 			return Use(Props.Item).LayoutOrder or 0
 		end),
 		StrokeEnabled = IsEquipped,
 		StrokeColor = Spring(
-			Computed(function()
+			Computed(function(Use)
 				if Use(IsEquipped) then
 					return ColorUtils.Emphasize(Use(Props.Color), Use(Theme.Emphasis.Light) * 4)
 				else
@@ -58,7 +58,7 @@ return function(Props)
 		end,
 
 		[Children] = {
-			Computed(function()
+			Computed(function(Use)
 				local Tool = Use(Props.Item).Tool
 				if not Tool then
 					return
@@ -80,7 +80,7 @@ return function(Props)
 				else
 					return Text {
 						Name = "ItemName",
-						Text = Computed(function()
+						Text = Computed(function(Use)
 							if Use(Props.Item) and Use(Props.Item).Name then
 								return Use(Props.Item).Name
 							else
@@ -105,17 +105,17 @@ return function(Props)
 				ZIndex = 2,
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
-				ListPadding = Computed(function()
+				ListPadding = Computed(function(Use)
 					return UDim.new(0, Theme.Spacing["0.25"]:get())
 				end),
 
 				[Children] = {
 					Icon {
 						Name = "LabelIcon",
-						Size = Computed(function()
+						Size = Computed(function(Use)
 							return UDim2.fromOffset(Theme.TextSize["0.875"]:get(), Theme.TextSize["0.875"]:get())
 						end),
-						Image = Computed(function()
+						Image = Computed(function(Use)
 							local LabelIcon = Use(Props.Item).LabelIcon
 							local LevelRequirement = Use(Props.Item).LevelRequirement
 
@@ -127,13 +127,13 @@ return function(Props)
 								return ""
 							end
 						end),
-						ImageColor3 = Computed(function()
+						ImageColor3 = Computed(function(Use)
 							return ColorUtils.Lighten(Use(Props.Color), 0.25)
 						end),
 					},
 					Text {
 						Name = "LabelText",
-						Text = Computed(function()
+						Text = Computed(function(Use)
 							if Use(Props.Item) then
 								if Use(Props.Item).LabelText then
 									return Use(Props.Item).LabelText
@@ -147,7 +147,7 @@ return function(Props)
 							end
 						end),
 						TextSize = Theme.TextSize["0.875"],
-						TextColor3 = Computed(function()
+						TextColor3 = Computed(function(Use)
 							return ColorUtils.Lighten(Use(Props.Color), 0.5)
 						end),
 						AutoLocalize = false,

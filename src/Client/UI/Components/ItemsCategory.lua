@@ -14,7 +14,7 @@ local ItemButton = require(RoRooms.Client.UI.Components.ItemButton)
 return function(Props: { [any]: any })
 	Props.CategoryName = EnsureValue(Props.CategoryName, "string", "Category")
 
-	local Category = Computed(function()
+	local Category = Computed(function(Use)
 		return RoRooms.Config.Systems.Items.Categories[Use(Props.CategoryName)]
 	end)
 
@@ -22,7 +22,7 @@ return function(Props: { [any]: any })
 		Name = `{Use(Props.CategoryName)}ItemsCategory`,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		LayoutOrder = Computed(function()
+		LayoutOrder = Computed(function(Use)
 			if Use(Category) then
 				return Use(Category).LayoutOrder
 			else
@@ -30,7 +30,7 @@ return function(Props: { [any]: any })
 			end
 		end),
 		ListEnabled = true,
-		ListPadding = Computed(function()
+		ListPadding = Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.75"]:get())
 		end),
 
@@ -39,20 +39,20 @@ return function(Props: { [any]: any })
 				Name = "Title",
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
-				ListPadding = Computed(function()
+				ListPadding = Computed(function(Use)
 					return UDim.new(0, Theme.Spacing["0.25"]:get())
 				end),
 
 				[Children] = {
 					Icon {
-						Image = Computed(function()
+						Image = Computed(function(Use)
 							if Use(Category) and Use(Category).Icon then
 								return Use(Category).Icon
 							else
 								return "rbxassetid://17266112920"
 							end
 						end),
-						Size = Computed(function()
+						Size = Computed(function(Use)
 							return UDim2.fromOffset(Theme.TextSize["1"]:get(), Theme.TextSize["1"]:get())
 						end),
 					},
@@ -68,7 +68,7 @@ return function(Props: { [any]: any })
 				ListEnabled = true,
 				ListWraps = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
-				ListPadding = Computed(function()
+				ListPadding = Computed(function(Use)
 					return UDim.new(0, Theme.Spacing["0.75"]:get())
 				end),
 

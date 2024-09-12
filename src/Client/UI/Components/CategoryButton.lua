@@ -33,7 +33,7 @@ return function(Props)
 				Name = "Icon",
 				Image = Props.Icon,
 				FallbackImage = Props.FallbackIcon,
-				Size = Computed(function()
+				Size = Computed(function(Use)
 					return UDim2.fromOffset(Theme.TextSize["1.5"]:get(), Theme.TextSize["1.5"]:get())
 				end),
 				BackgroundTransparency = 1,

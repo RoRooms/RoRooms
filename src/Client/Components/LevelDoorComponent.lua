@@ -20,7 +20,7 @@ end
 
 function LevelDoorComponent:Construct()
 	self.LevelRequirement = AttributeValue(self.Instance, "RR_LevelRequirement", 0)
-	self.LevelMet = Computed(function()
+	self.LevelMet = Computed(function(Use)
 		if Use(States.LocalPlayerData) and Use(States.LocalPlayerData).Level then
 			return Use(States.LocalPlayerData).Level >= Use(self.LevelRequirement)
 		else

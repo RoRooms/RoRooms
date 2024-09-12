@@ -23,7 +23,7 @@ local Text = require(OnyxUI.Components.Text)
 local TOGGLEABLE_CORE_GUIS = { Enum.CoreGuiType.Chat, Enum.CoreGuiType.PlayerList }
 
 return function(Props)
-	local MenuOpen = Computed(function()
+	local MenuOpen = Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)
 
@@ -52,7 +52,7 @@ return function(Props)
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Spring(
-					Computed(function()
+					Computed(function(Use)
 						local YPos = Use(States.TopbarBottomPos)
 						if not Use(MenuOpen) then
 							YPos = YPos + Theme.Spacing["1"]:get()
@@ -71,7 +71,7 @@ return function(Props)
 					MenuFrame {
 						Size = UDim2.fromOffset(305, 0),
 						GroupTransparency = Spring(
-							Computed(function()
+							Computed(function(Use)
 								if Use(MenuOpen) then
 									return 0
 								else
@@ -95,10 +95,10 @@ return function(Props)
 								ScrollBarThickness = Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
 								ListEnabled = true,
-								PaddingTop = Computed(function()
+								PaddingTop = Computed(function(Use)
 									return UDim.new(0, Theme.StrokeThickness["1"]:get())
 								end),
-								PaddingRight = Computed(function()
+								PaddingRight = Computed(function(Use)
 									return UDim.new(0, Theme.Spacing["1"]:get())
 								end),
 
@@ -113,7 +113,7 @@ return function(Props)
 									},
 
 									Text {
-										Text = Computed(function()
+										Text = Computed(function(Use)
 											local VersionStamp = `[RoRooms v{Version}]`
 											if not Use(States.RoRooms.UpToDate) then
 												return `{VersionStamp} - Out of date`
@@ -121,7 +121,7 @@ return function(Props)
 												return VersionStamp
 											end
 										end),
-										TextColor3 = Computed(function()
+										TextColor3 = Computed(function(Use)
 											if not Use(States.RoRooms.UpToDate) then
 												return Use(Theme.Colors.Warning.Main)
 											else

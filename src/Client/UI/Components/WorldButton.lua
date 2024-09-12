@@ -57,7 +57,7 @@ return function(Props)
 			Image {
 				Name = "Icon",
 				Size = UDim2.fromOffset(90, 90),
-				Image = Computed(function()
+				Image = Computed(function(Use)
 					if Use(PlaceInfo) and Use(PlaceInfo).IconImageAssetId then
 						return `rbxassetid://{Use(PlaceInfo).IconImageAssetId}`
 					else
@@ -65,7 +65,7 @@ return function(Props)
 					end
 				end),
 				BackgroundTransparency = 1,
-				CornerRadius = Computed(function()
+				CornerRadius = Computed(function(Use)
 					return UDim.new(0, Theme.CornerRadius["1"]:get())
 				end),
 				AspectRatio = 1,
@@ -74,14 +74,14 @@ return function(Props)
 			},
 			Text {
 				Name = "Title",
-				Text = Computed(function()
+				Text = Computed(function(Use)
 					if Use(PlaceInfo) and Use(PlaceInfo).Name then
 						return Use(PlaceInfo).Name
 					else
 						return "Title"
 					end
 				end),
-				Size = Computed(function()
+				Size = Computed(function(Use)
 					return UDim2.fromOffset(90, Theme.TextSize["1"]:get() * 2)
 				end),
 				AutomaticSize = Enum.AutomaticSize.None,
