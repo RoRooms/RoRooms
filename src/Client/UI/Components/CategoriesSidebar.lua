@@ -7,7 +7,7 @@ local Children = Fusion.Children
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 
 return function(Scope: Fusion.Scope<any>, Props)
-	Props.Name = Scope:EnsureValue(Props.Name, "CategoriesSidebar")
+	local Name = Scope:EnsureValue(Props.Name, "CategoriesSidebar")
 
 	return ScrollingFrame {
 		Name = Props.Name,

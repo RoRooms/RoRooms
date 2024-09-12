@@ -10,7 +10,7 @@ local Icon = require(OnyxUI.Components.Icon)
 local ItemButton = require(RoRooms.Client.UI.Components.ItemButton)
 
 return function(Props: { [any]: any })
-	Props.CategoryName = Scope:EnsureValue(Props.CategoryName, "Category")
+	local CategoryName = Scope:EnsureValue(Props.CategoryName, "Category")
 
 	local Category = Scope:Computed(function(Use)
 		return RoRooms.Config.Systems.Items.Categories[Use(Props.CategoryName)]

@@ -13,7 +13,7 @@ local Image = require(OnyxUI.Components.Image)
 local CustomButton = require(script.Parent.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
-	Props.PlaceId = Scope:EnsureValue(Props.PlaceId, nil)
+	local PlaceId = Scope:EnsureValue(Props.PlaceId, nil)
 
 	local IsHolding = Scope:Value(false)
 	local PlaceInfo = Scope:Value({})
