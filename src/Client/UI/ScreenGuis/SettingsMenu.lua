@@ -2,7 +2,7 @@ local StarterGui = game:GetService("StarterGui")
 local Players = game:GetService("Players")
 
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Version = require(RoRooms.Version)
