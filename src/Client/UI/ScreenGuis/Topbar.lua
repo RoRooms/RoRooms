@@ -8,9 +8,6 @@ local Children = Fusion.Children
 local Components = RoRooms.Client.UI.Components
 local TopbarButton = require(Components.TopbarButton)
 
-
-
-
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
@@ -67,7 +64,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						end),
 
 						[Children] = {
-							Scope:ForValues((States.TopbarButtons, function(Button)
+							Scope:ForValues(States.TopbarButtons, function(Button)
 								return Scope:TopbarButton(table.clone(Button))
 							end),
 						},

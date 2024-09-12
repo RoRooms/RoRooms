@@ -5,10 +5,6 @@ local ColorUtils = require(RoRooms.Packages.ColorUtils)
 
 local Children = Fusion.Children
 
-
-
-
-
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
 
@@ -128,7 +124,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		IsHovering = IsHovering,
 
 		[Children] = {
-			Scope:ForValues((Content, function(ContentString: string)
+			Scope:ForValues(Content, function(ContentString: string)
 				if string.find(ContentString, "rbxassetid://", 1, true) then
 					return Scope:Icon {
 						Image = ContentString,

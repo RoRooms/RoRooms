@@ -7,12 +7,6 @@ local Prompts = require(RoRooms.Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 
-
-
-
-
-
-
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
@@ -133,7 +127,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ListHorizontalAlignment = Enum.HorizontalAlignment.Right,
 
 								[Children] = {
-									Scope:ForValues((Buttons, function(PromptButton)
+									Scope:ForValues(Buttons, function(PromptButton)
 										return Scope:Button {
 											Contents = PromptButton.Contents,
 											Style = PromptButton.Style,

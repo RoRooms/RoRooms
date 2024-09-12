@@ -7,14 +7,8 @@ local Worlds = require(RoRooms.Client.UI.States.Worlds)
 
 local Children = Fusion.Children
 
-
-
-
-
 local WorldButton = require(RoRooms.Client.UI.Components.WorldButton)
 local WorldsCategory = require(RoRooms.Client.UI.Components.WorldsCategory)
-
-
 
 local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { "rbxassetid://17293213744", "Load more" }
 local DEFAULT_REFRESH_BUTTON_CONTENTS = { "rbxassetid://13858012326", "Refresh" }
@@ -115,7 +109,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												ListWraps = true,
 
 												[Children] = {
-													Scope:ForValues((
+													Scope:ForValues(
 														RoRooms.Config.Systems.Worlds.FeaturedWorlds,
 														function(PlaceId: number)
 															return Scope:WorldButton {
@@ -145,7 +139,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												ListWraps = true,
 
 												[Children] = {
-													Scope:ForValues((
+													Scope:ForValues(
 														States.Worlds.TopWorlds,
 														function(World: { [string]: any })
 															return Scope:WorldButton(table.clone(World))
@@ -208,7 +202,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												ListWraps = true,
 
 												[Children] = {
-													Scope:ForValues((
+													Scope:ForValues(
 														States.Worlds.RandomWorlds,
 														function(World: { [string]: any })
 															return Scope:WorldButton(table.clone(World))

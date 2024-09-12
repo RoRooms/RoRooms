@@ -5,16 +5,12 @@ local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
 
-
-
-
-
 local FriendButton = require(RoRooms.Client.UI.Components.FriendButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
-	
+
 	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)
@@ -81,7 +77,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ListWraps = true,
 
 								[Children] = {
-									Scope:ForValues((States.Friends.InRoRooms, function(Friend)
+									Scope:ForValues(States.Friends.InRoRooms, function(Friend)
 										return Scope:FriendButton {
 											UserId = Friend.VisitorId,
 											DisplayName = Friend.DisplayName,
@@ -90,7 +86,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 											InRoRooms = true,
 										}
 									end),
-									Scope:ForValues((States.Friends.NotInRoRooms, function(Friend)
+									Scope:ForValues(States.Friends.NotInRoRooms, function(Friend)
 										return Scope:FriendButton {
 											UserId = Friend.VisitorId,
 											DisplayName = Friend.DisplayName,
