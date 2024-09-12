@@ -29,7 +29,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							States.ItemsMenu.FocusedCategory:set(CategoryName, true)
 						end,
 					}
-			end, Fusion.cleanup),
+			end),
 		},
 	}
 end

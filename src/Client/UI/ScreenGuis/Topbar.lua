@@ -22,10 +22,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
 		ResetOnSpawn = false,
 
-		[Cleanup] = {
-			CleanupHolder,
-		},
-
 		[Children] = {
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
@@ -70,7 +66,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						[Children] = {
 							Scope:ForValues((States.TopbarButtons, function(Button)
 								return TopbarButton(Button)
-							end, Fusion.cleanup),
+							end),
 						},
 					},
 					BaseButton {

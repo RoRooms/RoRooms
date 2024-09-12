@@ -50,8 +50,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Enabled = MenuOpen,
 		ResetOnSpawn = false,
 
-		[Cleanup] = { Observers },
-
 		[Children] = {
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),

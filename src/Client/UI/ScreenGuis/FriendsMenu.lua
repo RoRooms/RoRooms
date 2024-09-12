@@ -86,7 +86,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 											JobId = Friend.GameId,
 											InRoRooms = true,
 										}
-									end, Fusion.cleanup),
+									end),
 									Scope:ForValues((States.Friends.NotInRoRooms, function(Friend)
 										return FriendButton {
 											UserId = Friend.VisitorId,
@@ -95,7 +95,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 											JobId = Friend.GameId,
 											InRoRooms = false,
 										}
-									end, Fusion.cleanup),
+									end),
 								},
 							},
 						},

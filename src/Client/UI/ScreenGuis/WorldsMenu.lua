@@ -118,8 +118,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 															return WorldButton {
 																PlaceId = PlaceId,
 															}
-														end,
-														Fusion.cleanup
+														end
 													),
 												},
 											},
@@ -147,8 +146,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 														States.Worlds.TopWorlds,
 														function(World: { [string]: any })
 															return WorldButton(table.clone(World))
-														end,
-														Fusion.cleanup
+														end
 													),
 												},
 											},
@@ -211,8 +209,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 														States.Worlds.RandomWorlds,
 														function(World: { [string]: any })
 															return WorldButton(table.clone(World))
-														end,
-														Fusion.cleanup
+														end
 													),
 												},
 											},

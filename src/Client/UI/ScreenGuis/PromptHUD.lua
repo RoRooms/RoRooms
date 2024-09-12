@@ -145,7 +145,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												end
 											end,
 										}
-									end, Fusion.cleanup),
+									end),
 								},
 							},
 						},

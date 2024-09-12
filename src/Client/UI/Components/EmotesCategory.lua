@@ -89,7 +89,7 @@ return function(Props: { [any]: any })
 						else
 							return EmoteId, nil
 						end
-					end, Fusion.cleanup),
+					end),
 				},
 			},
 		},

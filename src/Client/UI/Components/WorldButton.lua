@@ -47,8 +47,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 			States.CurrentMenu:set("WorldPageMenu")
 		end,
 
-		[Cleanup] = { Observers },
-
 		[Children] = {
 			Image {
 				Name = "Icon",

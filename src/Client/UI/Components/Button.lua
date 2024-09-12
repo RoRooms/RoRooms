@@ -144,7 +144,7 @@ return function(Props: Props)
 						TextWrapped = false,
 					}
 				end
-			end, Fusion.cleanup),
+			end),
 		},
 	}))
 end

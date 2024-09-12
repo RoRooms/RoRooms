@@ -66,8 +66,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListFillDirection = Enum.FillDirection.Vertical,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 
-		[Cleanup] = { Observers },
-
 		OnActivated = function()
 			States.CurrentMenu:set(nil)
 

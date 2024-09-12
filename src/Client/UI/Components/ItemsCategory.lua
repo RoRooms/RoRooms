@@ -87,7 +87,7 @@ return function(Props: { [any]: any })
 						else
 							return ItemId, nil
 						end
-					end, Fusion.cleanup),
+					end),
 				},
 			},
 		},

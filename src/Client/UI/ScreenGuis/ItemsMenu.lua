@@ -82,8 +82,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 													CategoryName = Name,
 													LayoutOrder = Category.LayoutOrder,
 												}
-										end,
-										Fusion.cleanup
+										end
 									),
 								},
 							},

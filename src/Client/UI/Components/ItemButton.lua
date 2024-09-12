@@ -96,7 +96,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						TextWrapped = true,
 					}
 				end
-			end, Fusion.cleanup),
+			end),
 			Frame {
 				Name = "Label",
 				ZIndex = 2,
