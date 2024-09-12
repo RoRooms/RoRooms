@@ -20,14 +20,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local LayoutOrder = Util.Fallback(Props.LayoutOrder, 0)
 
 	local Category = Scope:Computed(function(Use)
-		return RoRooms.Config.Systems.Emotes.Categories[Use(Props.CategoryName)]
+		return RoRooms.Config.Systems.Emotes.Categories[Use(CategoryName)]
 	end)
 
 	return Scope:Frame {
-		Name = Props.Name,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		LayoutOrder = Props.LayoutOrder,
+		Name = Name,
+		Size = Size,
+		AutomaticSize = AutomaticSize,
+		LayoutOrder = LayoutOrder,
 		ListEnabled = true,
 
 		[Children] = {
@@ -53,7 +53,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						end),
 					},
 					Scope:Text {
-						Text = Props.CategoryName,
+						Text = CategoryName,
 					},
 				},
 			},
@@ -75,7 +75,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							EmoteCategory = "General"
 						end
 
-						if EmoteCategory == Use(Props.CategoryName) then
+						if EmoteCategory == Use(CategoryName) then
 							return EmoteId,
 								Scope:EmoteButton {
 									EmoteId = EmoteId,

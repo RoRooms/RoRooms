@@ -18,28 +18,29 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local ItemId = Util.Fallback(Props.ItemId, "ItemId")
 	local Item = Util.Fallback(Props.Item, {})
 	local Color = Util.Fallback(Props.Color, Theme.Util.Colors.Neutral.Main)
+	local Callback = Util.Fallback(Props.Callback, function() end)
 
 	local IsHolding = Scope:Value(false)
 	local IsEquipped = Scope:Computed(function(Use)
-		return table.find(Use(States.EquippedItems), Use(Props.ItemId)) ~= nil
+		return table.find(Use(States.EquippedItems), Use(ItemId)) ~= nil
 	end)
 
 	return Scope:CustomButton {
 		Name = "ItemButton",
-		Color = Props.Color,
+		Color = Color,
 		IsHolding = IsHolding,
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
 		LayoutOrder = Scope:Computed(function(Use)
-			return Use(Props.Item).LayoutOrder or 0
+			return Use(Item).LayoutOrder or 0
 		end),
 		StrokeEnabled = IsEquipped,
 		StrokeColor = Scope:Spring(
 			Scope:Computed(function(Use)
 				if Use(IsEquipped) then
-					return ColorUtils.Emphasize(Use(Props.Color), Use(Theme.Emphasis.Light) * 4)
+					return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Light) * 4)
 				else
-					return ColorUtils.Emphasize(Use(Props.Color), 0.2)
+					return ColorUtils.Emphasize(Use(Color), 0.2)
 				end
 			end),
 			Theme.SpringSpeed["1"],
@@ -48,17 +49,17 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListEnabled = false,
 
 		OnActivated = function()
-			if Props.Callback then
-				Props.Callback()
+			if Callback then
+				Callback()
 			end
 			if States.Controllers.ItemsController then
-				States.Controllers.ItemsController:ToggleEquipItem(Peek(Props.ItemId))
+				States.Controllers.ItemsController:ToggleEquipItem(Peek(ItemId))
 			end
 		end,
 
 		[Children] = {
 			Scope:Computed(function(Use)
-				local Tool = Use(Props.Item).Tool
+				local Tool = Use(Item).Tool
 				if not Tool then
 					return
 				end
@@ -80,10 +81,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 					return Scope:Text {
 						Name = "ItemName",
 						Text = Scope:Computed(function(Use)
-							if Use(Props.Item) and Use(Props.Item).Name then
-								return Use(Props.Item).Name
+							if Use(Item) and Use(Item).Name then
+								return Use(Item).Name
 							else
-								return Use(Props.ItemId)
+								return Use(ItemId)
 							end
 						end),
 						TextSize = Theme.TextSize["1"],
@@ -115,8 +116,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 							return UDim2.fromOffset(Use(Theme.TextSize["0.875"]), Use(Theme.TextSize["0.875"]))
 						end),
 						Image = Scope:Computed(function(Use)
-							local LabelIcon = Use(Props.Item).LabelIcon
-							local LevelRequirement = Use(Props.Item).LevelRequirement
+							local LabelIcon = Use(Item).LabelIcon
+							local LevelRequirement = Use(Item).LevelRequirement
 
 							if LabelIcon then
 								return LabelIcon
@@ -127,17 +128,17 @@ return function(Scope: Fusion.Scope<any>, Props)
 							end
 						end),
 						ImageColor3 = Scope:Computed(function(Use)
-							return ColorUtils.Lighten(Use(Props.Color), 0.25)
+							return ColorUtils.Lighten(Use(Color), 0.25)
 						end),
 					},
 					Scope:Text {
 						Name = "LabelText",
 						Text = Scope:Computed(function(Use)
-							if Use(Props.Item) then
-								if Use(Props.Item).LabelText then
-									return Use(Props.Item).LabelText
-								elseif Use(Props.Item).LevelRequirement then
-									return Use(Props.Item).LevelRequirement
+							if Use(Item) then
+								if Use(Item).LabelText then
+									return Use(Item).LabelText
+								elseif Use(Item).LevelRequirement then
+									return Use(Item).LevelRequirement
 								else
 									return ""
 								end
@@ -147,7 +148,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						end),
 						TextSize = Theme.TextSize["0.875"],
 						TextColor3 = Scope:Computed(function(Use)
-							return ColorUtils.Lighten(Use(Props.Color), 0.5)
+							return ColorUtils.Lighten(Use(Color), 0.5)
 						end),
 						AutoLocalize = false,
 					},

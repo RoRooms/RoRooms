@@ -24,7 +24,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local IsHovering = Scope:Value(false)
 	local IsHolding = Scope:Value(false)
 	local MenuOpen = Scope:Computed(function(Use)
-		return Use(States.CurrentMenu) == Use(Props.MenuName)
+		return Use(States.CurrentMenu) == Use(MenuName)
 	end)
 
 	return Scope:BaseButton {
@@ -39,7 +39,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end),
 		Size = Scope:Computed(function(Use)
 			local BaseSize = UDim2.fromOffset(45, 45)
-			local SizeMultiplier = Use(Props.SizeMultiplier)
+			local SizeMultiplier = Use(SizeMultiplier)
 			return UDim2.fromOffset(BaseSize.X.Offset * SizeMultiplier, BaseSize.Y.Offset * SizeMultiplier)
 		end),
 		AutomaticSize = Enum.AutomaticSize.None,
@@ -51,10 +51,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 		IsHovering = IsHovering,
 		IsHolding = IsHolding,
 		OnActivated = function()
-			if Peek(States.CurrentMenu) == Peek(Props.MenuName) then
+			if Peek(States.CurrentMenu) == Peek(MenuName) then
 				States.CurrentMenu:set()
 			else
-				States.CurrentMenu:set(Peek(Props.MenuName))
+				States.CurrentMenu:set(Peek(MenuName))
 				if Peek(States.ScreenSize).Y < 900 then
 					States.ItemsMenu.Open:set()
 				end
@@ -66,9 +66,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 				Name = "Icon",
 				Image = Scope:Computed(function(Use)
 					if Use(MenuOpen) then
-						return Use(Props.IconFilled)
+						return Use(IconFilled)
 					else
-						return Use(Props.Icon)
+						return Use(Icon)
 					end
 				end),
 				Size = UDim2.fromOffset(30, 30),

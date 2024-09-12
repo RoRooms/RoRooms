@@ -17,7 +17,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Name = Util.Fallback(Props.Name, "ItemCategoriesSidebar")
 
 	return Scope:CategoriesSidebar {
-		Name = Props.Name,
+		Name = Name,
 		Size = Props.Size,
 
 		[Children] = {

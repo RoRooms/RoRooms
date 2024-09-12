@@ -26,7 +26,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
 		LayoutOrder = Scope:Computed(function(Use)
-			return Use(Props.Emote).LayoutOrder or 0
+			return Use(Emote).LayoutOrder or 0
 		end),
 		ListEnabled = false,
 
@@ -35,7 +35,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				Props.Callback()
 			end
 			if States.Controllers.EmotesController then
-				States.Controllers.EmotesController:PlayEmote(Peek(Props.EmoteId))
+				States.Controllers.EmotesController:PlayEmote(Peek(EmoteId))
 			end
 		end,
 		IsHolding = IsHolding,
@@ -96,7 +96,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							end
 						end),
 						ImageColor3 = Scope:Computed(function(Use)
-							return ColorUtils.Lighten(Use(Props.Color), 0.25)
+							return ColorUtils.Lighten(Use(Color), 0.25)
 						end),
 					},
 					Scope:Text {
@@ -104,8 +104,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 						AnchorPoint = Vector2.new(0, 0),
 						Position = UDim2.fromScale(0, 0),
 						Text = Scope:Computed(function(Use)
-							local LabelText = Use(Props.Emote).LabelText
-							local LevelRequirement = Use(Props.Emote).LevelRequirement
+							local LabelText = Use(Emote).LabelText
+							local LevelRequirement = Use(Emote).LevelRequirement
 							if LabelText then
 								return LabelText
 							elseif LevelRequirement then

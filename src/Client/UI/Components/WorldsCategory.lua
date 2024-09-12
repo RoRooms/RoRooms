@@ -19,11 +19,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Visible = Util.Fallback(Props.Visible, true)
 
 	return Scope:Frame(Util.CombineProps(Props, {
-		Name = Props.Name,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		LayoutOrder = Props.LayoutOrder,
-		Visible = Props.Visible,
+		Name = Name,
+		Size = Size,
+		AutomaticSize = AutomaticSize,
+		LayoutOrder = LayoutOrder,
+		Visible = Visible,
 		ListEnabled = true,
 
 		[Children] = {
@@ -37,13 +37,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 				[Children] = {
 					Scope:Icon {
-						Image = Props.Icon,
+						Image = Icon,
 						Size = Scope:Computed(function(Use)
 							return UDim2.fromOffset(Use(Theme.TextSize["1"]), Use(Theme.TextSize["1"]))
 						end),
 					},
 					Scope:Text {
-						Text = Props.Title,
+						Text = Title,
 					},
 				},
 			},

@@ -23,19 +23,19 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local IsHolding = Scope:Value(false)
 
 	return Scope:CustomButton {
-		Name = Props.Name,
+		Name = Name,
 		LayoutOrder = Props.LayoutOrder,
 
 		OnActivated = function()
-			Peek(Props.OnActivated)()
+			Peek(OnActivated)()
 		end,
 		IsHolding = IsHolding,
 
 		[Children] = {
 			Scope:Image {
 				Name = "Icon",
-				Image = Props.Icon,
-				FallbackImage = Props.FallbackIcon,
+				Image = Icon,
+				FallbackImage = FallbackIcon,
 				Size = Scope:Computed(function(Use)
 					return UDim2.fromOffset(Use(Theme.TextSize["1.5"]), Use(Theme.TextSize["1.5"]))
 				end),

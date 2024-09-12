@@ -32,12 +32,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local PlaceInfo = Scope:Value({})
 
 	local function UpdatePlaceInfo()
-		if Peek(Props.PlaceId) == nil then
+		if Peek(PlaceId) == nil then
 			return
 		end
 
 		Future.Try(function()
-			return MarketplaceService:GetProductInfo(Peek(Props.PlaceId))
+			return MarketplaceService:GetProductInfo(Peek(PlaceId))
 		end):After(function(Success, Result)
 			if Success then
 				PlaceInfo:set(Result)
@@ -48,12 +48,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 	end
 
 	local Observers = {
-		Scope:Observer(Props.PlaceId):onChange(UpdatePlaceInfo),
+		Scope:Observer(PlaceId):onChange(UpdatePlaceInfo),
 	}
 	UpdatePlaceInfo()
 
 	local StatusColor = Scope:Computed(function(Use)
-		if Use(Props.InRoRooms) then
+		if Use(InRoRooms) then
 			return Color3.fromRGB(2, 183, 87)
 		else
 			return Color3.fromRGB(0, 162, 255)
@@ -72,8 +72,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 		OnActivated = function()
 			States.CurrentMenu:set(nil)
 
-			if Peek(Props.InRoRooms) then
-				if Peek(Props.JobId) == game.JobId then
+			if Peek(InRoRooms) then
+				if Peek(JobId) == game.JobId then
 					Prompts:PushPrompt({
 						Title = "Failure",
 						Text = "You're already in the same server as this person.",
@@ -96,7 +96,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								Contents = { "Teleport" },
 								Callback = function()
 									if States.Services.WorldsService then
-										States.Services.WorldsService:TeleportToWorld(Peek(Props.PlaceId))
+										States.Services.WorldsService:TeleportToWorld(Peek(PlaceId))
 									end
 								end,
 							},
@@ -107,7 +107,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				SocialService:PromptGameInvite(
 					Players.LocalPlayer,
 					Scope:New "ExperienceInviteOptions" {
-						InviteUser = Peek(Props.UserId),
+						InviteUser = Peek(UserId),
 					}
 				)
 			end
@@ -118,18 +118,18 @@ return function(Scope: Fusion.Scope<any>, Props)
 			Scope:Avatar {
 				Size = UDim2.fromOffset(80, 80),
 				BackgroundColor3 = Scope:Computed(function(Use)
-					return ColorUtils.Lighten(Use(Props.Color), 0.06)
+					return ColorUtils.Lighten(Use(Color), 0.06)
 				end),
 				Image = Scope:Computed(function(Use)
-					return `rbxthumb://type=AvatarHeadShot&id={Use(Props.UserId)}&w=150&h=150`
+					return `rbxthumb://type=AvatarHeadShot&id={Use(UserId)}&w=150&h=150`
 				end),
 				CornerRadius = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.CornerRadius.Full))
 				end),
-				RingEnabled = Props.InRoRooms,
+				RingEnabled = InRoRooms,
 				RingColor = Util.Colors.Green["500"],
 				IndicatorEnabled = Scope:Computed(function(Use)
-					return not Use(Props.InRoRooms)
+					return not Use(InRoRooms)
 				end),
 				IndicatorColor = StatusColor,
 			},
@@ -143,7 +143,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				[Children] = {
 					Scope:Text {
 						Name = "DisplayName",
-						Text = Props.DisplayName,
+						Text = DisplayName,
 						TextTruncate = Enum.TextTruncate.AtEnd,
 						Size = UDim2.fromScale(1, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
@@ -153,7 +153,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					Scope:Text {
 						Name = "Status",
 						Text = Scope:Computed(function(Use)
-							return (Use(Props.InRoRooms) and Use(PlaceInfo).Name) or "Online"
+							return (Use(InRoRooms) and Use(PlaceInfo).Name) or "Online"
 						end),
 						TextColor3 = StatusColor,
 						TextSize = Theme.TextSize["0.875"],

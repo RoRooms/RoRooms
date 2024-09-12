@@ -13,7 +13,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Name = Util.Fallback(Props.Name, "CategoriesSidebar")
 
 	return Scope:Scroller {
-		Name = Props.Name,
+		Name = Name,
 		Size = Props.Size,
 		AutomaticSize = Enum.AutomaticSize.X,
 		ScrollBarThickness = 0,

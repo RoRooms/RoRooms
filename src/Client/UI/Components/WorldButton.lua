@@ -24,7 +24,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local function UpdatePlaceInfo()
 		Future.Try(function()
-			return MarketplaceService:GetProductInfo(Peek(Props.PlaceId))
+			return MarketplaceService:GetProductInfo(Peek(PlaceId))
 		end):After(function(Success, Result)
 			if Success then
 				PlaceInfo:set(Result)
@@ -35,7 +35,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	end
 
 	local Observers = {
-		Scope:Observer(Props.PlaceId):onChange(UpdatePlaceInfo),
+		Scope:Observer(PlaceId):onChange(UpdatePlaceInfo),
 	}
 	UpdatePlaceInfo()
 
@@ -47,7 +47,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 
 		OnActivated = function()
-			States.WorldPageMenu.PlaceId:set(Peek(Props.PlaceId))
+			States.WorldPageMenu.PlaceId:set(Peek(PlaceId))
 			States.CurrentMenu:set("WorldPageMenu")
 		end,
 

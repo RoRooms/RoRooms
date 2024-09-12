@@ -16,11 +16,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local CategoryName = Util.Fallback(Props.CategoryName, "Category")
 
 	local Category = Scope:Computed(function(Use)
-		return RoRooms.Config.Systems.Items.Categories[Use(Props.CategoryName)]
+		return RoRooms.Config.Systems.Items.Categories[Use(CategoryName)]
 	end)
 
 	return Scope:Frame {
-		Name = `{Use(Props.CategoryName)}ItemsCategory`,
+		Name = `ItemsCategory`,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		LayoutOrder = Scope:Computed(function(Use)
@@ -58,7 +58,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						end),
 					},
 					Scope:Text {
-						Text = Props.CategoryName,
+						Text = CategoryName,
 					},
 				},
 			},
@@ -80,7 +80,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							ItemCategory = "General"
 						end
 
-						if ItemCategory == Peek(Props.CategoryName) then
+						if ItemCategory == Peek(CategoryName) then
 							return ItemId,
 								ItemButton {
 									ItemId = ItemId,
