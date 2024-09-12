@@ -15,7 +15,7 @@ function UpdatesController:KnitStart()
 	local LastUpToDate: boolean?
 
 	if RunService:IsStudio() then
-		Observer(States.RoRooms.UpToDate):onChange(function()
+		Scope:Observer(States.RoRooms.UpToDate):onChange(function()
 			local UpToDate = Use(States.RoRooms.UpToDate)
 			if not UpToDate and (LastUpToDate ~= UpToDate) then
 				Prompts:PushPrompt({

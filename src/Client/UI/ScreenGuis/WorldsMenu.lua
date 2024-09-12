@@ -9,7 +9,7 @@ local Children = Fusion.Children
 local Computed = Fusion.Computed
 local New = Fusion.New
 local Spring = Fusion.Spring
-local ForValues = Fusion.ForValues
+local Scope:ForValues( = Fusion.Scope:ForValues(
 local Value = Fusion.Value
 
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
@@ -25,13 +25,13 @@ local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { "rbxassetid://17293213744", "Load mo
 local DEFAULT_REFRESH_BUTTON_CONTENTS = { "rbxassetid://13858012326", "Refresh" }
 
 return function(Props)
-	local MenuOpen = Computed(function(Use)
+	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)
-	local LoadMoreButtonContents = Value(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
-	local RefreshButtonContents = Value(DEFAULT_REFRESH_BUTTON_CONTENTS)
+	local LoadMoreButtonContents = Scope:Value(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
+	local RefreshButtonContents = Scope:Value(DEFAULT_REFRESH_BUTTON_CONTENTS)
 
-	local WorldsMenu = New "ScreenGui" {
+	local WorldsMenu = Scope:New "ScreenGui" {
 		Name = "WorldsMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
@@ -40,8 +40,8 @@ return function(Props)
 		[Children] = {
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
-				Position = Spring(
-					Computed(function(Use)
+				Position = Scope:Spring(
+					Scope:Computed(function(Use)
 						local YPos = Use(States.TopbarBottomPos)
 						if not Use(MenuOpen) then
 							YPos = YPos + 15
@@ -58,8 +58,8 @@ return function(Props)
 				[Children] = {
 					MenuFrame {
 						Size = UDim2.fromOffset(375, 0),
-						GroupTransparency = Spring(
-							Computed(function(Use)
+						GroupTransparency = Scope:Spring(
+							Scope:Computed(function(Use)
 								if Use(MenuOpen) then
 									return 0
 								else
@@ -82,14 +82,14 @@ return function(Props)
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 205)),
 								ScrollBarThickness = Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
-								Padding = Computed(function(Use)
+								Padding = Scope:Computed(function(Use)
 									return UDim.new(0, Theme.StrokeThickness["1"]:get())
 								end),
-								PaddingRight = Computed(function(Use)
+								PaddingRight = Scope:Computed(function(Use)
 									return UDim.new(0, Theme.Spacing["0.75"]:get())
 								end),
 								ListEnabled = true,
-								ListPadding = Computed(function(Use)
+								ListPadding = Scope:Computed(function(Use)
 									return UDim.new(0, Theme.Spacing["1.5"]:get())
 								end),
 								ListFillDirection = Enum.FillDirection.Horizontal,
@@ -100,7 +100,7 @@ return function(Props)
 										Name = "Featured",
 										Title = "From creator",
 										Icon = "rbxassetid://17292608120",
-										Visible = Computed(function(Use)
+										Visible = Scope:Computed(function(Use)
 											return #RoRooms.Config.Systems.Worlds.FeaturedWorlds >= 1
 										end),
 
@@ -110,14 +110,14 @@ return function(Props)
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 												ListEnabled = true,
-												ListPadding = Computed(function(Use)
+												ListPadding = Scope:Computed(function(Use)
 													return UDim.new(0, Theme.Spacing["0.75"]:get())
 												end),
 												ListFillDirection = Enum.FillDirection.Horizontal,
 												ListWraps = true,
 
 												[Children] = {
-													ForValues(
+													Scope:ForValues((
 														RoRooms.Config.Systems.Worlds.FeaturedWorlds,
 														function(PlaceId: number)
 															return WorldButton {
@@ -141,14 +141,14 @@ return function(Props)
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 												ListEnabled = true,
-												ListPadding = Computed(function(Use)
+												ListPadding = Scope:Computed(function(Use)
 													return UDim.new(0, Theme.Spacing["0.75"]:get())
 												end),
 												ListFillDirection = Enum.FillDirection.Horizontal,
 												ListWraps = true,
 
 												[Children] = {
-													ForValues(
+													Scope:ForValues((
 														States.Worlds.TopWorlds,
 														function(World: { [string]: any })
 															return WorldButton(table.clone(World))
@@ -205,14 +205,14 @@ return function(Props)
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 												ListEnabled = true,
-												ListPadding = Computed(function(Use)
+												ListPadding = Scope:Computed(function(Use)
 													return UDim.new(0, Theme.Spacing["0.75"]:get())
 												end),
 												ListFillDirection = Enum.FillDirection.Horizontal,
 												ListWraps = true,
 
 												[Children] = {
-													ForValues(
+													Scope:ForValues((
 														States.Worlds.RandomWorlds,
 														function(World: { [string]: any })
 															return WorldButton(table.clone(World))

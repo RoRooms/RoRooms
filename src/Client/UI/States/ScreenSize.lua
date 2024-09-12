@@ -11,7 +11,7 @@ local Out = Fusion.Out
 local ScreenSize = {}
 
 function ScreenSize:Start()
-	Hydrate(Workspace.CurrentCamera) {
+	Scope:Hydrate(Workspace.CurrentCamera) {
 		[Out "ViewportSize"] = States.ScreenSize,
 	}
 end

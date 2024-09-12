@@ -9,24 +9,24 @@ local Button = require(script.Parent.Button)
 export type Props = Button.Props & {}
 
 return function(Props: Props)
-	local Color = EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
-	local IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
+	local Color = Scope:EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
+	local IsHovering = Scope:EnsureValue(Props.IsHovering, "boolean", false)
 
 	return Button(CombineProps(Props, {
 		Color = Color,
-		CornerRadius = Computed(function(Use)
+		CornerRadius = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.CornerRadius["2"]:get())
 		end),
-		PaddingTop = Computed(function(Use)
+		PaddingTop = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.5"]:get())
 		end),
-		PaddingBottom = Computed(function(Use)
+		PaddingBottom = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.5"]:get())
 		end),
-		PaddingLeft = Computed(function(Use)
+		PaddingLeft = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.5"]:get())
 		end),
-		PaddingRight = Computed(function(Use)
+		PaddingRight = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.5"]:get())
 		end),
 

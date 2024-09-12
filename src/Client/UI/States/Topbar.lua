@@ -13,7 +13,7 @@ local Topbar = {
 			IconFilled = "rbxassetid://17273236289",
 			LayoutOrder = 5,
 			IndicatorColor = Theme.Colors.Warning.Main,
-			IndicatorEnabled = Computed(function(Use)
+			IndicatorEnabled = Scope:Computed(function(Use)
 				return Use(States.RoRooms.UpToDate) == false
 			end),
 		},

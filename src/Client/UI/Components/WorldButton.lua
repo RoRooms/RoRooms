@@ -17,10 +17,10 @@ local Image = require(OnyxUI.Components.Image)
 local CustomButton = require(script.Parent.CustomButton)
 
 return function(Props)
-	Props.PlaceId = EnsureValue(Props.PlaceId, "number", nil)
+	Props.PlaceId = Scope:EnsureValue(Props.PlaceId, "number", nil)
 
-	local IsHolding = Value(false)
-	local PlaceInfo = Value({})
+	local IsHolding = Scope:Value(false)
+	local PlaceInfo = Scope:Value({})
 
 	local function UpdatePlaceInfo()
 		Future.Try(function()
@@ -35,7 +35,7 @@ return function(Props)
 	end
 
 	local Observers = {
-		Observer(Props.PlaceId):onChange(UpdatePlaceInfo),
+		Scope:Observer(Props.PlaceId):onChange(UpdatePlaceInfo),
 	}
 	UpdatePlaceInfo()
 
@@ -57,7 +57,7 @@ return function(Props)
 			Image {
 				Name = "Icon",
 				Size = UDim2.fromOffset(90, 90),
-				Image = Computed(function(Use)
+				Image = Scope:Computed(function(Use)
 					if Use(PlaceInfo) and Use(PlaceInfo).IconImageAssetId then
 						return `rbxassetid://{Use(PlaceInfo).IconImageAssetId}`
 					else
@@ -65,7 +65,7 @@ return function(Props)
 					end
 				end),
 				BackgroundTransparency = 1,
-				CornerRadius = Computed(function(Use)
+				CornerRadius = Scope:Computed(function(Use)
 					return UDim.new(0, Theme.CornerRadius["1"]:get())
 				end),
 				AspectRatio = 1,
@@ -74,14 +74,14 @@ return function(Props)
 			},
 			Text {
 				Name = "Title",
-				Text = Computed(function(Use)
+				Text = Scope:Computed(function(Use)
 					if Use(PlaceInfo) and Use(PlaceInfo).Name then
 						return Use(PlaceInfo).Name
 					else
 						return "Title"
 					end
 				end),
-				Size = Computed(function(Use)
+				Size = Scope:Computed(function(Use)
 					return UDim2.fromOffset(90, Theme.TextSize["1"]:get() * 2)
 				end),
 				AutomaticSize = Enum.AutomaticSize.None,

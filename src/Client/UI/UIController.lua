@@ -32,7 +32,7 @@ function UIController:KnitStart()
 end
 
 function UIController:KnitInit()
-	self.RoRoomsUI = New "ScreenGui" {
+	self.RoRoomsUI = Scope:New "ScreenGui" {
 		Name = "RoRoomsUI",
 		Parent = Knit.Player:WaitForChild("PlayerGui"),
 		ResetOnSpawn = false,

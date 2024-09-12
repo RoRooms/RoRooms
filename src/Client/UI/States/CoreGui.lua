@@ -9,7 +9,7 @@ local Computed = Fusion.Computed
 local Observer = Fusion.Observer
 
 local CoreGui = {
-	IsUnibarOpen = Computed(function(Use)
+	IsUnibarOpen = Scope:Computed(function(Use)
 		return Use(States.TopbarInset).Min.X > 250
 	end),
 }
@@ -25,14 +25,14 @@ function CoreGui:Start()
 		States.RobloxMenuOpen:set(GuiService.MenuIsOpen)
 	end)
 
-	Observer(self.IsUnibarOpen):onChange(function()
+	Scope:Observer(self.IsUnibarOpen):onChange(function()
 		States.TopbarVisible:set(not Use(CoreGui.IsUnibarOpen))
 		if Use(CoreGui.IsUnibarOpen) then
 			States.CurrentMenu:set(nil)
 		end
 	end)
 
-	Observer(States.RobloxMenuOpen):onChange(function()
+	Scope:Observer(States.RobloxMenuOpen):onChange(function()
 		States.TopbarVisible:set(not Use(States.RobloxMenuOpen))
 		if Use(States.RobloxMenuOpen) then
 			States.CurrentMenu:set(nil)

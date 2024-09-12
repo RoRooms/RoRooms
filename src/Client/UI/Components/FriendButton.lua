@@ -23,15 +23,15 @@ local Avatar = require(OnyxUI.Components.Avatar)
 local CustomButton = require(RoRooms.Client.UI.Components.CustomButton)
 
 return function(Props)
-	Props.UserId = EnsureValue(Props.UserId, "number", 1)
-	Props.DisplayName = EnsureValue(Props.DisplayName, "string", "DisplayName")
-	Props.PlaceId = EnsureValue(Props.PlaceId, "number", nil)
-	Props.JobId = EnsureValue(Props.JobId, "string", nil)
-	Props.InRoRooms = EnsureValue(Props.InRoRooms, "boolean", false)
-	Props.Color = EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
+	Props.UserId = Scope:EnsureValue(Props.UserId, "number", 1)
+	Props.DisplayName = Scope:EnsureValue(Props.DisplayName, "string", "DisplayName")
+	Props.PlaceId = Scope:EnsureValue(Props.PlaceId, "number", nil)
+	Props.JobId = Scope:EnsureValue(Props.JobId, "string", nil)
+	Props.InRoRooms = Scope:EnsureValue(Props.InRoRooms, "boolean", false)
+	Props.Color = Scope:EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
 
-	local IsHolding = Value(false)
-	local PlaceInfo = Value({})
+	local IsHolding = Scope:Value(false)
+	local PlaceInfo = Scope:Value({})
 
 	local function UpdatePlaceInfo()
 		if Use(Props.PlaceId) == nil then
@@ -50,11 +50,11 @@ return function(Props)
 	end
 
 	local Observers = {
-		Observer(Props.PlaceId):onChange(UpdatePlaceInfo),
+		Scope:Observer(Props.PlaceId):onChange(UpdatePlaceInfo),
 	}
 	UpdatePlaceInfo()
 
-	local StatusColor = Computed(function(Use)
+	local StatusColor = Scope:Computed(function(Use)
 		if Use(Props.InRoRooms) then
 			return Color3.fromRGB(2, 183, 87)
 		else
@@ -110,7 +110,7 @@ return function(Props)
 			else
 				SocialService:PromptGameInvite(
 					Players.LocalPlayer,
-					New "ExperienceInviteOptions" {
+					Scope:New "ExperienceInviteOptions" {
 						InviteUser = Use(Props.UserId),
 					}
 				)
@@ -122,15 +122,15 @@ return function(Props)
 			Avatar {
 				Size = UDim2.fromOffset(80, 80),
 				BackgroundColor3 = ColorUtils.Lighten(Use(Props.Color), 0.06),
-				Image = Computed(function(Use)
+				Image = Scope:Computed(function(Use)
 					return `rbxthumb://type=AvatarHeadShot&id={Use(Props.UserId)}&w=150&h=150`
 				end),
-				CornerRadius = Computed(function(Use)
+				CornerRadius = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.CornerRadius.Full))
 				end),
 				RingEnabled = Props.InRoRooms,
 				RingColor = Colors.Green["500"],
-				IndicatorEnabled = Computed(function(Use)
+				IndicatorEnabled = Scope:Computed(function(Use)
 					return not Use(Props.InRoRooms)
 				end),
 				IndicatorColor = StatusColor,
@@ -154,7 +154,7 @@ return function(Props)
 					},
 					Text {
 						Name = "Status",
-						Text = Computed(function(Use)
+						Text = Scope:Computed(function(Use)
 							return (Use(Props.InRoRooms) and Use(PlaceInfo).Name) or "Online"
 						end),
 						TextColor3 = StatusColor,

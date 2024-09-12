@@ -13,13 +13,13 @@ local Icon = require(OnyxUI.Components.Icon)
 local EmoteButton = require(RoRooms.Client.UI.Components.EmoteButton)
 
 return function(Props: { [any]: any })
-	Props.CategoryName = EnsureValue(Props.CategoryName, "string", "General")
-	Props.Name = EnsureValue(Props.Name, "string", `{Use(Props.CategoryName)}EmotesCategory`)
-	Props.Size = EnsureValue(Props.Size, "UDim2", UDim2.fromScale(1, 0))
-	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
-	Props.LayoutOrder = EnsureValue(Props.LayoutOrder, "number", 0)
+	Props.CategoryName = Scope:EnsureValue(Props.CategoryName, "string", "General")
+	Props.Name = Scope:EnsureValue(Props.Name, "string", `{Use(Props.CategoryName)}EmotesCategory`)
+	Props.Size = Scope:EnsureValue(Props.Size, "UDim2", UDim2.fromScale(1, 0))
+	Props.AutomaticSize = Scope:EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
+	Props.LayoutOrder = Scope:EnsureValue(Props.LayoutOrder, "number", 0)
 
-	local Category = Computed(function(Use)
+	local Category = Scope:Computed(function(Use)
 		return RoRooms.Config.Systems.Emotes.Categories[Use(Props.CategoryName)]
 	end)
 
@@ -35,20 +35,20 @@ return function(Props: { [any]: any })
 				Name = "Title",
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
-				ListPadding = Computed(function(Use)
+				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Theme.Spacing["0.25"]:get())
 				end),
 
 				[Children] = {
 					Icon {
-						Image = Computed(function(Use)
+						Image = Scope:Computed(function(Use)
 							if Use(Category) and Use(Category).Icon then
 								return Use(Category).Icon
 							else
 								return "rbxassetid://17266112920"
 							end
 						end),
-						Size = Computed(function(Use)
+						Size = Scope:Computed(function(Use)
 							return UDim2.fromOffset(Theme.TextSize["1"]:get(), Theme.TextSize["1"]:get())
 						end),
 					},
@@ -62,14 +62,14 @@ return function(Props: { [any]: any })
 				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
 				ListEnabled = true,
-				ListPadding = Computed(function(Use)
+				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Theme.Spacing["0.75"]:get())
 				end),
 				ListFillDirection = Enum.FillDirection.Horizontal,
 				ListWraps = true,
 
 				[Children] = {
-					ForPairs(RoRooms.Config.Systems.Emotes.Emotes, function(EmoteId, Emote)
+					Scope:ForPairs(RoRooms.Config.Systems.Emotes.Emotes, function(EmoteId, Emote)
 						local EmoteCategory = Emote.Category
 						if EmoteCategory == nil then
 							EmoteCategory = "General"

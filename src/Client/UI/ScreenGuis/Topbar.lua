@@ -5,7 +5,7 @@ local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
-local ForValues = Fusion.ForValues
+local Scope:ForValues( = Fusion.Scope:ForValues(
 local New = Fusion.New
 local Spring = Fusion.Spring
 local Value = Fusion.Value
@@ -18,11 +18,11 @@ local Frame = require(OnyxUI.Components.Frame)
 local BaseButton = require(OnyxUI.Components.BaseButton)
 
 return function(Props)
-	local TopbarButtonsHeight = Value(0)
+	local TopbarButtonsHeight = Scope:Value(0)
 
 	local CleanupHolder = {}
 
-	local TopbarInstance = New "ScreenGui" {
+	local TopbarInstance = Scope:New "ScreenGui" {
 		Name = "Topbar",
 		Parent = Props.Parent,
 		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
@@ -35,8 +35,8 @@ return function(Props)
 		[Children] = {
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
-				Position = Spring(
-					Computed(function(Use)
+				Position = Scope:Spring(
+					Scope:Computed(function(Use)
 						if Use(States.TopbarVisible) then
 							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, 14))
 						else
@@ -50,7 +50,7 @@ return function(Props)
 				MinScale = 1,
 				MaxScale = 1,
 				ListEnabled = true,
-				ListPadding = Computed(function(Use)
+				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Theme.Spacing["0.5"]:get())
 				end),
 				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
@@ -61,20 +61,20 @@ return function(Props)
 						BackgroundColor3 = Theme.Colors.Base.Main,
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,
-						ListPadding = Computed(function(Use)
+						ListPadding = Scope:Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["0.25"]:get())
 						end),
 						ListFillDirection = Enum.FillDirection.Horizontal,
 						ListVerticalAlignment = Enum.VerticalAlignment.Center,
-						CornerRadius = Computed(function(Use)
+						CornerRadius = Scope:Computed(function(Use)
 							return UDim.new(0, Use(Theme.CornerRadius.Full))
 						end),
-						Padding = Computed(function(Use)
+						Padding = Scope:Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["0.5"]:get() / 1.25)
 						end),
 
 						[Children] = {
-							ForValues(States.TopbarButtons, function(Button)
+							Scope:ForValues((States.TopbarButtons, function(Button)
 								return TopbarButton(Button)
 							end, Fusion.cleanup),
 						},
@@ -83,23 +83,23 @@ return function(Props)
 						Name = "PullButton",
 						BackgroundTransparency = States.PreferredTransparency,
 						BackgroundColor3 = Theme.Colors.Base.Main,
-						Visible = Computed(function(Use)
+						Visible = Scope:Computed(function(Use)
 							return not (typeof(Use(States.CurrentMenu)) == "string")
 						end),
 						TextSize = 0,
-						CornerRadius = Computed(function(Use)
+						CornerRadius = Scope:Computed(function(Use)
 							return UDim.new(0, Use(Theme.CornerRadius.Full))
 						end),
-						PaddingTop = Computed(function(Use)
+						PaddingTop = Scope:Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["0.5"]:get())
 						end),
-						PaddingLeft = Computed(function(Use)
+						PaddingLeft = Scope:Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["0.75"]:get())
 						end),
-						PaddingRight = Computed(function(Use)
+						PaddingRight = Scope:Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["0.75"]:get())
 						end),
-						PaddingBottom = Computed(function(Use)
+						PaddingBottom = Scope:Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["0.5"]:get())
 						end),
 						StrokeColor = Theme.Colors.Neutral.Main,
@@ -111,7 +111,7 @@ return function(Props)
 
 						[Children] = {
 							Frame {
-								Size = Computed(function(Use)
+								Size = Scope:Computed(function(Use)
 									return UDim2.fromOffset(100, Theme.StrokeThickness["1"]:get())
 								end),
 								AutomaticSize = Enum.AutomaticSize.None,

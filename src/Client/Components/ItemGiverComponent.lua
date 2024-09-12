@@ -25,7 +25,7 @@ end
 function ItemGiverComponent:GetProximityPrompt()
 	local ProximityPrompt = self.Instance:FindFirstChild("RR_ItemGiverPrompt")
 	if not ProximityPrompt then
-		ProximityPrompt = New "ProximityPrompt" {
+		ProximityPrompt = Scope:New "ProximityPrompt" {
 			Name = "RR_ItemGiverPrompt",
 			Parent = self.Instance,
 			ActionText = "",
@@ -34,11 +34,11 @@ function ItemGiverComponent:GetProximityPrompt()
 		}
 	end
 
-	Hydrate(ProximityPrompt) {
-		Enabled = Computed(function(Use)
+	Scope:Hydrate(ProximityPrompt) {
+		Enabled = Scope:Computed(function(Use)
 			return Use(self.Item) ~= nil
 		end),
-		ActionText = Computed(function(Use)
+		ActionText = Scope:Computed(function(Use)
 			if Use(self.Item) then
 				if Use(self.Equipped) then
 					return "Unequip"
@@ -49,7 +49,7 @@ function ItemGiverComponent:GetProximityPrompt()
 				return Use(self.ItemId)
 			end
 		end),
-		ObjectText = Computed(function(Use)
+		ObjectText = Scope:Computed(function(Use)
 			if Use(self.Item) then
 				return Use(self.Item).Name
 			else
@@ -71,10 +71,10 @@ end
 
 function ItemGiverComponent:Construct()
 	self.ItemId = AttributeValue(self.Instance, "RR_ItemId")
-	self.Item = Computed(function(Use)
+	self.Item = Scope:Computed(function(Use)
 		return RoRooms.Config.Systems.Items.Items[Use(self.ItemId)]
 	end)
-	self.Equipped = Computed(function(Use)
+	self.Equipped = Scope:Computed(function(Use)
 		return table.find(Use(States.EquippedItems), Use(self.ItemId)) ~= nil
 	end)
 
@@ -87,7 +87,7 @@ function ItemGiverComponent:Construct()
 end
 
 function ItemGiverComponent:Stop()
-	self.DisconnectLevelMetObserver()
+	self.DisconnectLevelMetScope:Observer()
 end
 
 return ItemGiverComponent

@@ -19,11 +19,11 @@ local EmoteCategoriesSidebar = require(RoRooms.Client.UI.Components.EmoteCategor
 local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
-	local MenuOpen = Computed(function(Use)
+	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)
 
-	local EmotesMenu = New "ScreenGui" {
+	local EmotesMenu = Scope:New "ScreenGui" {
 		Name = "EmotesMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
@@ -32,8 +32,8 @@ return function(Props)
 		[Children] = {
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
-				Position = Spring(
-					Computed(function(Use)
+				Position = Scope:Spring(
+					Scope:Computed(function(Use)
 						local YPos = Use(States.TopbarBottomPos)
 						if not Use(MenuOpen) then
 							YPos = YPos + 15
@@ -50,8 +50,8 @@ return function(Props)
 				[Children] = {
 					MenuFrame {
 						Size = UDim2.fromOffset(0, 0),
-						GroupTransparency = Spring(
-							Computed(function(Use)
+						GroupTransparency = Scope:Spring(
+							Scope:Computed(function(Use)
 								if Use(MenuOpen) then
 									return 0
 								else
@@ -75,7 +75,7 @@ return function(Props)
 								AutomaticSize = Enum.AutomaticSize.X,
 								ListEnabled = true,
 								ListFillDirection = Enum.FillDirection.Horizontal,
-								ListPadding = Computed(function(Use)
+								ListPadding = Scope:Computed(function(Use)
 									return UDim.new(0, Theme.Spacing["0.75"]:get())
 								end),
 
@@ -85,23 +85,23 @@ return function(Props)
 									},
 									ScrollingFrame {
 										Name = "EmotesList",
-										Size = Computed(function(Use)
+										Size = Scope:Computed(function(Use)
 											return UDim2.new(UDim.new(0, 260), UDim.new(1, 0))
 										end),
 										ScrollBarThickness = Theme.StrokeThickness["1"],
 										ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
-										Padding = Computed(function(Use)
+										Padding = Scope:Computed(function(Use)
 											return UDim.new(0, Theme.StrokeThickness["1"]:get())
 										end),
 										ListEnabled = true,
-										ListPadding = Computed(function(Use)
+										ListPadding = Scope:Computed(function(Use)
 											return UDim.new(0, Theme.Spacing["1"]:get())
 										end),
 										ListFillDirection = Enum.FillDirection.Horizontal,
 										ListWraps = true,
 
 										[Children] = {
-											ForPairs(
+											Scope:ForPairs(
 												RoRooms.Config.Systems.Emotes.Categories,
 												function(Name: string, Category)
 													return Name,
@@ -123,7 +123,7 @@ return function(Props)
 		},
 	}
 
-	local DisconnectFocusedCategory = Observer(States.EmotesMenu.FocusedCategory):onChange(function()
+	local DisconnectFocusedCategory = Scope:Observer(States.EmotesMenu.FocusedCategory):onChange(function()
 		local EmotesList = EmotesMenu.AutoScaleFrame.MenuFrame.Contents.Frame.EmotesList
 		local Category = EmotesList:FindFirstChild(`{Use(States.EmotesMenu.FocusedCategory)}EmotesCategory`)
 		if Category then

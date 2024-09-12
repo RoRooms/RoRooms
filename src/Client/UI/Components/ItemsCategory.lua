@@ -12,9 +12,9 @@ local Icon = require(OnyxUI.Components.Icon)
 local ItemButton = require(RoRooms.Client.UI.Components.ItemButton)
 
 return function(Props: { [any]: any })
-	Props.CategoryName = EnsureValue(Props.CategoryName, "string", "Category")
+	Props.CategoryName = Scope:EnsureValue(Props.CategoryName, "string", "Category")
 
-	local Category = Computed(function(Use)
+	local Category = Scope:Computed(function(Use)
 		return RoRooms.Config.Systems.Items.Categories[Use(Props.CategoryName)]
 	end)
 
@@ -22,7 +22,7 @@ return function(Props: { [any]: any })
 		Name = `{Use(Props.CategoryName)}ItemsCategory`,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		LayoutOrder = Computed(function(Use)
+		LayoutOrder = Scope:Computed(function(Use)
 			if Use(Category) then
 				return Use(Category).LayoutOrder
 			else
@@ -30,7 +30,7 @@ return function(Props: { [any]: any })
 			end
 		end),
 		ListEnabled = true,
-		ListPadding = Computed(function(Use)
+		ListPadding = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.75"]:get())
 		end),
 
@@ -39,20 +39,20 @@ return function(Props: { [any]: any })
 				Name = "Title",
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
-				ListPadding = Computed(function(Use)
+				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Theme.Spacing["0.25"]:get())
 				end),
 
 				[Children] = {
 					Icon {
-						Image = Computed(function(Use)
+						Image = Scope:Computed(function(Use)
 							if Use(Category) and Use(Category).Icon then
 								return Use(Category).Icon
 							else
 								return "rbxassetid://17266112920"
 							end
 						end),
-						Size = Computed(function(Use)
+						Size = Scope:Computed(function(Use)
 							return UDim2.fromOffset(Theme.TextSize["1"]:get(), Theme.TextSize["1"]:get())
 						end),
 					},
@@ -68,12 +68,12 @@ return function(Props: { [any]: any })
 				ListEnabled = true,
 				ListWraps = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
-				ListPadding = Computed(function(Use)
+				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Theme.Spacing["0.75"]:get())
 				end),
 
 				[Children] = {
-					ForPairs(RoRooms.Config.Systems.Items.Items, function(ItemId, Item)
+					Scope:ForPairs(RoRooms.Config.Systems.Items.Items, function(ItemId, Item)
 						local ItemCategory = Item.Category
 						if ItemCategory == nil then
 							ItemCategory = "General"

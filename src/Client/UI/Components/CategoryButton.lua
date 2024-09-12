@@ -11,13 +11,13 @@ local Image = require(OnyxUI.Components.Image)
 local CustomButton = require(script.Parent.CustomButton)
 
 return function(Props)
-	Props.Name = EnsureValue(Props.Name, "string", "CategoryButton")
-	Props.Category = EnsureValue(Props.Category, "string", "Category")
-	Props.Icon = EnsureValue(Props.Icon, "string", nil)
-	Props.FallbackIcon = EnsureValue(Props.FallbackIcon, "string", "rbxassetid://17266112920")
-	Props.OnActivated = EnsureValue(Props.OnActivated, "function", function() end)
+	Props.Name = Scope:EnsureValue(Props.Name, "string", "CategoryButton")
+	Props.Category = Scope:EnsureValue(Props.Category, "string", "Category")
+	Props.Icon = Scope:EnsureValue(Props.Icon, "string", nil)
+	Props.FallbackIcon = Scope:EnsureValue(Props.FallbackIcon, "string", "rbxassetid://17266112920")
+	Props.OnActivated = Scope:EnsureValue(Props.OnActivated, "function", function() end)
 
-	local IsHolding = Value(false)
+	local IsHolding = Scope:Value(false)
 
 	return CustomButton {
 		Name = Props.Name,
@@ -33,7 +33,7 @@ return function(Props)
 				Name = "Icon",
 				Image = Props.Icon,
 				FallbackImage = Props.FallbackIcon,
-				Size = Computed(function(Use)
+				Size = Scope:Computed(function(Use)
 					return UDim2.fromOffset(Theme.TextSize["1.5"]:get(), Theme.TextSize["1.5"]:get())
 				end),
 				BackgroundTransparency = 1,

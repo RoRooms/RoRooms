@@ -23,11 +23,11 @@ local Text = require(OnyxUI.Components.Text)
 local TOGGLEABLE_CORE_GUIS = { Enum.CoreGuiType.Chat, Enum.CoreGuiType.PlayerList }
 
 return function(Props)
-	local MenuOpen = Computed(function(Use)
+	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)
 
-	Observer(States.UserSettings.HideUI):onChange(function()
+	Scope:Observer(States.UserSettings.HideUI):onChange(function()
 		for _, CoreGuiType in ipairs(TOGGLEABLE_CORE_GUIS) do
 			StarterGui:SetCoreGuiEnabled(CoreGuiType, not Use(States.UserSettings.HideUI))
 		end
@@ -42,7 +42,7 @@ return function(Props)
 		end)
 	end
 
-	local SettingsMenu = New "ScreenGui" {
+	local SettingsMenu = Scope:New "ScreenGui" {
 		Name = "SettingsMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
@@ -51,8 +51,8 @@ return function(Props)
 		[Children] = {
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
-				Position = Spring(
-					Computed(function(Use)
+				Position = Scope:Spring(
+					Scope:Computed(function(Use)
 						local YPos = Use(States.TopbarBottomPos)
 						if not Use(MenuOpen) then
 							YPos = YPos + Theme.Spacing["1"]:get()
@@ -70,8 +70,8 @@ return function(Props)
 				[Children] = {
 					MenuFrame {
 						Size = UDim2.fromOffset(305, 0),
-						GroupTransparency = Spring(
-							Computed(function(Use)
+						GroupTransparency = Scope:Spring(
+							Scope:Computed(function(Use)
 								if Use(MenuOpen) then
 									return 0
 								else
@@ -95,10 +95,10 @@ return function(Props)
 								ScrollBarThickness = Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
 								ListEnabled = true,
-								PaddingTop = Computed(function(Use)
+								PaddingTop = Scope:Computed(function(Use)
 									return UDim.new(0, Theme.StrokeThickness["1"]:get())
 								end),
-								PaddingRight = Computed(function(Use)
+								PaddingRight = Scope:Computed(function(Use)
 									return UDim.new(0, Theme.Spacing["1"]:get())
 								end),
 
@@ -113,7 +113,7 @@ return function(Props)
 									},
 
 									Text {
-										Text = Computed(function(Use)
+										Text = Scope:Computed(function(Use)
 											local VersionStamp = `[RoRooms v{Version}]`
 											if not Use(States.RoRooms.UpToDate) then
 												return `{VersionStamp} - Out of date`
@@ -121,7 +121,7 @@ return function(Props)
 												return VersionStamp
 											end
 										end),
-										TextColor3 = Computed(function(Use)
+										TextColor3 = Scope:Computed(function(Use)
 											if not Use(States.RoRooms.UpToDate) then
 												return Use(Theme.Colors.Warning.Main)
 											else

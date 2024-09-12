@@ -16,12 +16,12 @@ local Image = require(OnyxUI.Components.Image)
 local CustomButton = require(script.Parent.CustomButton)
 
 return function(Props)
-	Props.ItemId = EnsureValue(Props.ItemId, "string", "ItemId")
-	Props.Item = EnsureValue(Props.Item, "table", {})
-	Props.Color = EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
+	Props.ItemId = Scope:EnsureValue(Props.ItemId, "string", "ItemId")
+	Props.Item = Scope:EnsureValue(Props.Item, "table", {})
+	Props.Color = Scope:EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
 
-	local IsHolding = Value(false)
-	local IsEquipped = Computed(function(Use)
+	local IsHolding = Scope:Value(false)
+	local IsEquipped = Scope:Computed(function(Use)
 		return table.find(Use(States.EquippedItems), Use(Props.ItemId)) ~= nil
 	end)
 
@@ -31,12 +31,12 @@ return function(Props)
 		IsHolding = IsHolding,
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
-		LayoutOrder = Computed(function(Use)
+		LayoutOrder = Scope:Computed(function(Use)
 			return Use(Props.Item).LayoutOrder or 0
 		end),
 		StrokeEnabled = IsEquipped,
-		StrokeColor = Spring(
-			Computed(function(Use)
+		StrokeColor = Scope:Spring(
+			Scope:Computed(function(Use)
 				if Use(IsEquipped) then
 					return ColorUtils.Emphasize(Use(Props.Color), Use(Theme.Emphasis.Light) * 4)
 				else
@@ -58,7 +58,7 @@ return function(Props)
 		end,
 
 		[Children] = {
-			Computed(function(Use)
+			Scope:Computed(function(Use)
 				local Tool = Use(Props.Item).Tool
 				if not Tool then
 					return
@@ -80,7 +80,7 @@ return function(Props)
 				else
 					return Text {
 						Name = "ItemName",
-						Text = Computed(function(Use)
+						Text = Scope:Computed(function(Use)
 							if Use(Props.Item) and Use(Props.Item).Name then
 								return Use(Props.Item).Name
 							else
@@ -105,17 +105,17 @@ return function(Props)
 				ZIndex = 2,
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
-				ListPadding = Computed(function(Use)
+				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Theme.Spacing["0.25"]:get())
 				end),
 
 				[Children] = {
 					Icon {
 						Name = "LabelIcon",
-						Size = Computed(function(Use)
+						Size = Scope:Computed(function(Use)
 							return UDim2.fromOffset(Theme.TextSize["0.875"]:get(), Theme.TextSize["0.875"]:get())
 						end),
-						Image = Computed(function(Use)
+						Image = Scope:Computed(function(Use)
 							local LabelIcon = Use(Props.Item).LabelIcon
 							local LevelRequirement = Use(Props.Item).LevelRequirement
 
@@ -127,13 +127,13 @@ return function(Props)
 								return ""
 							end
 						end),
-						ImageColor3 = Computed(function(Use)
+						ImageColor3 = Scope:Computed(function(Use)
 							return ColorUtils.Lighten(Use(Props.Color), 0.25)
 						end),
 					},
 					Text {
 						Name = "LabelText",
-						Text = Computed(function(Use)
+						Text = Scope:Computed(function(Use)
 							if Use(Props.Item) then
 								if Use(Props.Item).LabelText then
 									return Use(Props.Item).LabelText
@@ -147,7 +147,7 @@ return function(Props)
 							end
 						end),
 						TextSize = Theme.TextSize["0.875"],
-						TextColor3 = Computed(function(Use)
+						TextColor3 = Scope:Computed(function(Use)
 							return ColorUtils.Lighten(Use(Props.Color), 0.5)
 						end),
 						AutoLocalize = false,

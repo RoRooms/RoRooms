@@ -4,7 +4,7 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local ColorUtils = require(RoRooms.Packages.ColorUtils)
 
 local Children = Fusion.Children
-local ForValues = Fusion.ForValues
+local Scope:ForValues( = Fusion.Scope:ForValues(
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 
@@ -26,22 +26,22 @@ export type Props = BaseButton.Props & {
 }
 
 return function(Props: Props)
-	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
-	local Content = EnsureValue(Props.Content, "table", {})
-	local Style = EnsureValue(Props.Style, "string", "Filled")
-	local Color = EnsureValue(Props.Color, "Color3", Theme.Colors.Primary.Main)
-	local ContentColor = EnsureValue(
+	local Disabled = Scope:EnsureValue(Props.Disabled, "boolean", false)
+	local Content = Scope:EnsureValue(Props.Content, "table", {})
+	local Style = Scope:EnsureValue(Props.Style, "string", "Filled")
+	local Color = Scope:EnsureValue(Props.Color, "Color3", Theme.Colors.Primary.Main)
+	local ContentColor = Scope:EnsureValue(
 		Props.ContentColor,
 		"Color3",
-		Computed(function(Use)
+		Scope:Computed(function(Use)
 			return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Contrast))
 		end)
 	)
-	local ContentSize = EnsureValue(Props.ContentSize, "number", Theme.TextSize["1"])
+	local ContentSize = Scope:EnsureValue(Props.ContentSize, "number", Theme.TextSize["1"])
 
-	local IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
-	local IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
-	local EffectiveColor = Computed(function(Use)
+	local IsHolding = Scope:EnsureValue(Props.IsHolding, "boolean", false)
+	local IsHovering = Scope:EnsureValue(Props.IsHovering, "boolean", false)
+	local EffectiveColor = Scope:Computed(function(Use)
 		if Use(Disabled) then
 			return Use(Theme.Colors.BaseContent.Main)
 		else
@@ -54,7 +54,7 @@ return function(Props: Props)
 			end
 		end
 	end)
-	local EffectiveContentColor = Computed(function(Use)
+	local EffectiveContentColor = Scope:Computed(function(Use)
 		if Use(Disabled) then
 			return Use(Theme.Colors.BaseContent.Main)
 		else
@@ -69,7 +69,7 @@ return function(Props: Props)
 			end
 		end
 	end)
-	local EffectiveContentTransparency = Computed(function(Use)
+	local EffectiveContentTransparency = Scope:Computed(function(Use)
 		if Use(Disabled) then
 			return DISABLED_CONTENT_TRANSPARENCY
 		else
@@ -79,7 +79,7 @@ return function(Props: Props)
 
 	return BaseButton(CombineProps(Props, {
 		Name = "Button",
-		BackgroundTransparency = Computed(function(Use)
+		BackgroundTransparency = Scope:Computed(function(Use)
 			if Use(Style) == "Filled" then
 				if Use(Disabled) then
 					return DISABLED_BACKGROUND_TRANSPARENCY
@@ -90,32 +90,32 @@ return function(Props: Props)
 				return 1
 			end
 		end),
-		BackgroundColor3 = Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening),
-		PaddingLeft = Computed(function(Use)
+		BackgroundColor3 = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening),
+		PaddingLeft = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.75"]:get())
 		end),
-		PaddingRight = Computed(function(Use)
+		PaddingRight = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.75"]:get())
 		end),
-		PaddingTop = Computed(function(Use)
+		PaddingTop = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.25"]:get())
 		end),
-		PaddingBottom = Computed(function(Use)
+		PaddingBottom = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.25"]:get())
 		end),
-		CornerRadius = Computed(function(Use)
+		CornerRadius = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.CornerRadius["1"]:get())
 		end),
 		ListEnabled = true,
-		ListPadding = Computed(function(Use)
+		ListPadding = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.25"]:get())
 		end),
 		ListFillDirection = Enum.FillDirection.Horizontal,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 		ListVerticalAlignment = Enum.VerticalAlignment.Center,
 		StrokeEnabled = true,
-		StrokeColor = Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening),
-		StrokeTransparency = Computed(function(Use)
+		StrokeColor = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening),
+		StrokeTransparency = Scope:Computed(function(Use)
 			if Use(Style) == "Ghost" then
 				return 1
 			elseif Use(Disabled) then
@@ -128,12 +128,12 @@ return function(Props: Props)
 		IsHovering = IsHovering,
 
 		[Children] = {
-			ForValues(Content, function(ContentString: string)
+			Scope:ForValues((Content, function(ContentString: string)
 				if string.find(ContentString, "rbxassetid://", 1, true) then
 					return Icon {
 						Image = ContentString,
 						ImageColor3 = EffectiveContentColor,
-						Size = Computed(function(Use)
+						Size = Scope:Computed(function(Use)
 							return UDim2.fromOffset(Use(ContentSize), Use(ContentSize))
 						end),
 						ImageTransparency = EffectiveContentTransparency,

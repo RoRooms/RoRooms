@@ -10,13 +10,13 @@ local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 
 return function(Props: { [any]: any })
-	Props.Title = EnsureValue(Props.Title, "string", "General")
-	Props.Icon = EnsureValue(Props.Icon, "string", "rbxassetid://17266112920")
-	Props.Name = EnsureValue(Props.Name, "string", "WorldsCategory")
-	Props.Size = EnsureValue(Props.Size, "UDim2", UDim2.fromScale(1, 0))
-	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
-	Props.LayoutOrder = EnsureValue(Props.LayoutOrder, "number", 0)
-	Props.Visible = EnsureValue(Props.Visible, "boolean", true)
+	Props.Title = Scope:EnsureValue(Props.Title, "string", "General")
+	Props.Icon = Scope:EnsureValue(Props.Icon, "string", "rbxassetid://17266112920")
+	Props.Name = Scope:EnsureValue(Props.Name, "string", "WorldsCategory")
+	Props.Size = Scope:EnsureValue(Props.Size, "UDim2", UDim2.fromScale(1, 0))
+	Props.AutomaticSize = Scope:EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
+	Props.LayoutOrder = Scope:EnsureValue(Props.LayoutOrder, "number", 0)
+	Props.Visible = Scope:EnsureValue(Props.Visible, "boolean", true)
 
 	return Frame(CombineProps(Props, {
 		Name = Props.Name,
@@ -31,14 +31,14 @@ return function(Props: { [any]: any })
 				Name = "Title",
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
-				ListPadding = Computed(function(Use)
+				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Theme.Spacing["0.25"]:get())
 				end),
 
 				[Children] = {
 					Icon {
 						Image = Props.Icon,
-						Size = Computed(function(Use)
+						Size = Scope:Computed(function(Use)
 							return UDim2.fromOffset(Theme.TextSize["1"]:get(), Theme.TextSize["1"]:get())
 						end),
 					},

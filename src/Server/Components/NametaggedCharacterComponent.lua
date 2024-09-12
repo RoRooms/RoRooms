@@ -62,12 +62,12 @@ function NametaggedCharacterComponent:Start()
 end
 
 function NametaggedCharacterComponent:Construct()
-	self.Nickname = Value("")
-	self.Status = Value("")
+	self.Nickname = Scope:Value("")
+	self.Status = Scope:Value("")
 
 	self.Player = Players:GetPlayerFromCharacter(self.Instance)
 	self.Humanoid = self.Instance:WaitForChild("Humanoid")
-	self.Head = Value(self.Instance:WaitForChild("Head"))
+	self.Head = Scope:Value(self.Instance:WaitForChild("Head"))
 end
 
 return NametaggedCharacterComponent

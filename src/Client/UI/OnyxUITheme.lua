@@ -71,19 +71,19 @@ return {
 	},
 	SpringDampening = 1,
 	Sound = {
-		Hover = New "Sound" {
+		Hover = Scope:New "Sound" {
 			SoundId = "rbxassetid://10066936758",
 			Volume = 0,
 		},
-		Click = New "Sound" {
+		Click = Scope:New "Sound" {
 			SoundId = "rbxassetid://16480549841",
 			Volume = 0,
 		},
-		Focus = New "Sound" {
+		Focus = Scope:New "Sound" {
 			SoundId = "rbxassetid://16480549841",
 			Volume = 0,
 		},
-		Switch = New "Sound" {
+		Switch = Scope:New "Sound" {
 			SoundId = "rbxassetid://9119713951",
 			Volume = 0,
 		},

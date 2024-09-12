@@ -9,7 +9,7 @@ local Children = Fusion.Children
 local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
-local ForValues = Fusion.ForValues
+local Scope:ForValues( = Fusion.Scope:ForValues(
 
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
@@ -18,13 +18,13 @@ local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
-	local CurrentPrompt = Computed(function(Use)
+	local CurrentPrompt = Scope:Computed(function(Use)
 		return Use(States.Prompts)[#Use(States.Prompts)]
 	end)
-	local PromptOpen = Computed(function(Use)
+	local PromptOpen = Scope:Computed(function(Use)
 		return Use(CurrentPrompt) ~= nil
 	end)
-	local Buttons = Computed(function(Use)
+	local Buttons = Scope:Computed(function(Use)
 		if Use(CurrentPrompt) and Use(CurrentPrompt).Buttons then
 			return Use(CurrentPrompt).Buttons
 		else
@@ -32,7 +32,7 @@ return function(Props)
 		end
 	end)
 
-	return New "ScreenGui" {
+	return Scope:New "ScreenGui" {
 		Name = "PromptHUD",
 		Parent = Props.Parent,
 		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
@@ -42,8 +42,8 @@ return function(Props)
 		[Children] = {
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0.5),
-				Position = Spring(
-					Computed(function(Use)
+				Position = Scope:Spring(
+					Scope:Computed(function(Use)
 						local YPos = 0
 						if not Use(PromptOpen) then
 							YPos = YPos + 15
@@ -59,12 +59,12 @@ return function(Props)
 
 				[Children] = {
 					MenuFrame {
-						Size = Computed(function(Use)
+						Size = Scope:Computed(function(Use)
 							return UDim2.fromOffset(Theme.Spacing["16"]:get() * 1.2, 0)
 						end),
 						AutomaticSize = Enum.AutomaticSize.Y,
-						GroupTransparency = Spring(
-							Computed(function(Use)
+						GroupTransparency = Scope:Spring(
+							Scope:Computed(function(Use)
 								if Use(PromptOpen) then
 									return 0
 								else
@@ -76,7 +76,7 @@ return function(Props)
 						),
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,
-						ListPadding = Computed(function(Use)
+						ListPadding = Scope:Computed(function(Use)
 							return UDim.new(0, Theme.Spacing["2"]:get())
 						end),
 
@@ -90,7 +90,7 @@ return function(Props)
 								[Children] = {
 									Text {
 										Name = "Title",
-										Text = Computed(function(Use)
+										Text = Scope:Computed(function(Use)
 											if Use(CurrentPrompt) and Use(CurrentPrompt).Title then
 												return Use(CurrentPrompt).Title
 											else
@@ -98,7 +98,7 @@ return function(Props)
 											end
 										end),
 										TextSize = Theme.TextSize["1.25"],
-										FontFace = Computed(function(Use)
+										FontFace = Scope:Computed(function(Use)
 											return Font.new(Use(Theme.Font.Heading), Use(Theme.FontWeight.Heading))
 										end),
 										Size = UDim2.fromScale(1, 0),
@@ -107,14 +107,14 @@ return function(Props)
 									},
 									Text {
 										Name = "Body",
-										Text = Computed(function(Use)
+										Text = Scope:Computed(function(Use)
 											if Use(CurrentPrompt) and Use(CurrentPrompt).Text then
 												return Use(CurrentPrompt).Text
 											else
 												return "Prompt body text"
 											end
 										end),
-										Size = Computed(function(Use)
+										Size = Scope:Computed(function(Use)
 											return UDim2.new(UDim.new(1, 0), UDim.new(0, 0))
 										end),
 										AutomaticSize = Enum.AutomaticSize.Y,
@@ -126,7 +126,7 @@ return function(Props)
 								Name = "Buttons",
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
-								Visible = Computed(function(Use)
+								Visible = Scope:Computed(function(Use)
 									return #Use(Buttons) >= 1
 								end),
 								ListEnabled = true,
@@ -134,7 +134,7 @@ return function(Props)
 								ListHorizontalAlignment = Enum.HorizontalAlignment.Right,
 
 								[Children] = {
-									ForValues(Buttons, function(PromptButton)
+									Scope:ForValues((Buttons, function(PromptButton)
 										return Button {
 											Contents = PromptButton.Contents,
 											Style = PromptButton.Style,

@@ -10,14 +10,14 @@ local CategoriesSidebar = require(script.Parent.CategoriesSidebar)
 local CategoryButton = require(script.Parent.CategoryButton)
 
 return function(Props)
-	Props.Name = EnsureValue(Props.Name, "string", "ItemCategoriesSidebar")
+	Props.Name = Scope:EnsureValue(Props.Name, "string", "ItemCategoriesSidebar")
 
 	return CategoriesSidebar {
 		Name = Props.Name,
 		Size = Props.Size,
 
 		[Children] = {
-			ForPairs(RoRooms.Config.Systems.Items.Categories, function(CategoryName: string, Category)
+			Scope:ForPairs(RoRooms.Config.Systems.Items.Categories, function(CategoryName: string, Category)
 				return CategoryName,
 					CategoryButton {
 						Name = "ItemCategoryButton",

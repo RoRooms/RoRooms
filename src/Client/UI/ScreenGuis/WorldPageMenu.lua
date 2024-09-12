@@ -24,10 +24,10 @@ local Frame = require(OnyxUI.Components.Frame)
 local Image = require(OnyxUI.Components.Image)
 
 return function(Props)
-	local MenuOpen = Computed(function(Use)
+	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)
-	local PlaceInfo = Value({})
+	local PlaceInfo = Scope:Value({})
 
 	local function UpdatePlaceInfo()
 		if Use(States.WorldPageMenu.PlaceId) == nil then
@@ -46,11 +46,11 @@ return function(Props)
 	end
 
 	local Observers = {
-		Observer(States.WorldPageMenu.PlaceId):onChange(UpdatePlaceInfo),
+		Scope:Observer(States.WorldPageMenu.PlaceId):onChange(UpdatePlaceInfo),
 	}
 	UpdatePlaceInfo()
 
-	local WorldPageMenu = New "ScreenGui" {
+	local WorldPageMenu = Scope:New "ScreenGui" {
 		Name = "WorldPageMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
@@ -61,8 +61,8 @@ return function(Props)
 		[Children] = {
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
-				Position = Spring(
-					Computed(function(Use)
+				Position = Scope:Spring(
+					Scope:Computed(function(Use)
 						local YPos = Use(States.TopbarBottomPos)
 						if not Use(MenuOpen) then
 							YPos = YPos + 15
@@ -78,8 +78,8 @@ return function(Props)
 					MenuFrame {
 						Size = UDim2.fromOffset(353, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
-						GroupTransparency = Spring(
-							Computed(function(Use)
+						GroupTransparency = Scope:Spring(
+							Scope:Computed(function(Use)
 								if Use(MenuOpen) then
 									return 0
 								else
@@ -102,14 +102,14 @@ return function(Props)
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								ListEnabled = true,
-								ListPadding = Computed(function(Use)
+								ListPadding = Scope:Computed(function(Use)
 									return UDim.new(0, Theme.Spacing["1"]:get())
 								end),
 
 								[Children] = {
 									Image {
 										Name = "Thumbnail",
-										Image = Computed(function(Use)
+										Image = Scope:Computed(function(Use)
 											if Use(PlaceInfo) and Use(PlaceInfo).IconImageAssetId then
 												return `rbxassetid://{Use(PlaceInfo).IconImageAssetId}`
 											else
@@ -118,7 +118,7 @@ return function(Props)
 										end),
 										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 80)),
 										ScaleType = Enum.ScaleType.Crop,
-										CornerRadius = Computed(function(Use)
+										CornerRadius = Scope:Computed(function(Use)
 											return UDim.new(0, Theme.CornerRadius["1"]:get())
 										end),
 									},
@@ -133,7 +133,7 @@ return function(Props)
 												Name = "Name",
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
-												Text = Computed(function(Use)
+												Text = Scope:Computed(function(Use)
 													if Use(PlaceInfo) and Use(PlaceInfo).Name then
 														return Use(PlaceInfo).Name
 													else
@@ -141,7 +141,7 @@ return function(Props)
 													end
 												end),
 												TextSize = Theme.TextSize["1.5"],
-												FontFace = Computed(function(Use)
+												FontFace = Scope:Computed(function(Use)
 													return Font.new(
 														Use(Theme.Font.Heading),
 														Use(Theme.FontWeight.Heading)
@@ -153,7 +153,7 @@ return function(Props)
 											},
 											Text {
 												Name = "Description",
-												Text = Computed(function(Use)
+												Text = Scope:Computed(function(Use)
 													if Use(PlaceInfo) and Use(PlaceInfo).Description then
 														return Use(PlaceInfo).Description
 													else
@@ -166,7 +166,7 @@ return function(Props)
 												TextWrapped = true,
 												RichText = false,
 												AutoLocalize = false,
-												MaxSize = Computed(function(Use)
+												MaxSize = Scope:Computed(function(Use)
 													return Vector2.new(math.huge, Theme.TextSize["1"]:get() * 2)
 												end),
 											},

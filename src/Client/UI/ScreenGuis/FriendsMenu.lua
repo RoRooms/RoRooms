@@ -5,7 +5,7 @@ local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
-local ForValues = Fusion.ForValues
+local Scope:ForValues( = Fusion.Scope:ForValues(
 local New = Fusion.New
 local Observer = Fusion.Observer
 local Spring = Fusion.Spring
@@ -17,11 +17,11 @@ local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local FriendButton = require(RoRooms.Client.UI.Components.FriendButton)
 
 return function(Props)
-	local MenuOpen = Computed(function(Use)
+	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)
 
-	local FriendsMenu = New "ScreenGui" {
+	local FriendsMenu = Scope:New "ScreenGui" {
 		Name = "FriendsMenu",
 		Parent = Props.Parent,
 		Enabled = MenuOpen,
@@ -30,8 +30,8 @@ return function(Props)
 		[Children] = {
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 0),
-				Position = Spring(
-					Computed(function(Use)
+				Position = Scope:Spring(
+					Scope:Computed(function(Use)
 						local YPos = Use(States.TopbarBottomPos)
 						if not Use(MenuOpen) then
 							YPos = YPos + 15
@@ -48,8 +48,8 @@ return function(Props)
 				[Children] = {
 					MenuFrame {
 						Size = UDim2.fromOffset(345, 0),
-						GroupTransparency = Spring(
-							Computed(function(Use)
+						GroupTransparency = Scope:Spring(
+							Scope:Computed(function(Use)
 								if Use(MenuOpen) then
 									return 0
 								else
@@ -72,18 +72,18 @@ return function(Props)
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
 								ScrollBarThickness = Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
-								Padding = Computed(function(Use)
+								Padding = Scope:Computed(function(Use)
 									return UDim.new(0, Theme.StrokeThickness["1"]:get())
 								end),
 								ListEnabled = true,
-								ListPadding = Computed(function(Use)
+								ListPadding = Scope:Computed(function(Use)
 									return UDim.new(0, Theme.Spacing["0.75"]:get())
 								end),
 								ListFillDirection = Enum.FillDirection.Horizontal,
 								ListWraps = true,
 
 								[Children] = {
-									ForValues(States.Friends.InRoRooms, function(Friend)
+									Scope:ForValues((States.Friends.InRoRooms, function(Friend)
 										return FriendButton {
 											UserId = Friend.VisitorId,
 											DisplayName = Friend.DisplayName,
@@ -92,7 +92,7 @@ return function(Props)
 											InRoRooms = true,
 										}
 									end, Fusion.cleanup),
-									ForValues(States.Friends.NotInRoRooms, function(Friend)
+									Scope:ForValues((States.Friends.NotInRoRooms, function(Friend)
 										return FriendButton {
 											UserId = Friend.VisitorId,
 											DisplayName = Friend.DisplayName,
@@ -110,7 +110,7 @@ return function(Props)
 		},
 	}
 
-	local DisconnectOpen = Observer(MenuOpen):onChange(function()
+	local DisconnectOpen = Scope:Observer(MenuOpen):onChange(function()
 		if Use(MenuOpen) then
 			if States.Controllers.FriendsController then
 				States.Controllers.FriendsController:UpdateFriends()

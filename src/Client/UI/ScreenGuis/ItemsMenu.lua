@@ -17,7 +17,7 @@ local ItemsCategory = require(RoRooms.Client.UI.Components.ItemsCategory)
 local ItemCategoriesSidebar = require(RoRooms.Client.UI.Components.ItemCategoriesSidebar)
 
 return function(Props)
-	local ItemsMenu = New "ScreenGui" {
+	local ItemsMenu = Scope:New "ScreenGui" {
 		Name = "ItemsMenu",
 		Parent = Props.Parent,
 		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
@@ -27,8 +27,8 @@ return function(Props)
 		[Children] = {
 			AutoScaleFrame {
 				AnchorPoint = Vector2.new(0.5, 1),
-				Position = Spring(
-					Computed(function(Use)
+				Position = Scope:Spring(
+					Scope:Computed(function(Use)
 						local YPos = 68 + 15
 						if not Use(States.ItemsMenu.Open) then
 							YPos -= 15
@@ -46,8 +46,8 @@ return function(Props)
 					MenuFrame {
 						Size = UDim2.fromOffset(385, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
-						GroupTransparency = Spring(
-							Computed(function(Use)
+						GroupTransparency = Scope:Spring(
+							Scope:Computed(function(Use)
 								if Use(States.ItemsMenu.Open) then
 									return 0
 								else
@@ -70,22 +70,26 @@ return function(Props)
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 220)),
 								ScrollBarThickness = Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
-								Padding = Computed(function(Use)
+								Padding = Scope:Computed(function(Use)
 									return UDim.new(0, Theme.StrokeThickness["1"]:get())
 								end),
 								ListEnabled = true,
-								ListPadding = Computed(function(Use)
+								ListPadding = Scope:Computed(function(Use)
 									return UDim.new(0, Theme.Spacing["0.75"]:get())
 								end),
 
 								[Children] = {
-									ForPairs(RoRooms.Config.Systems.Items.Categories, function(Name: string, Category)
-										return Name,
-											ItemsCategory {
-												CategoryName = Name,
-												LayoutOrder = Category.LayoutOrder,
-											}
-									end, Fusion.cleanup),
+									Scope:ForPairs(
+										RoRooms.Config.Systems.Items.Categories,
+										function(Name: string, Category)
+											return Name,
+												ItemsCategory {
+													CategoryName = Name,
+													LayoutOrder = Category.LayoutOrder,
+												}
+										end,
+										Fusion.cleanup
+									),
 								},
 							},
 						},
@@ -95,7 +99,7 @@ return function(Props)
 		},
 	}
 
-	local DisconnectOpen = Observer(States.ItemsMenu.Open):onChange(function()
+	local DisconnectOpen = Scope:Observer(States.ItemsMenu.Open):onChange(function()
 		local TextClasses = { "TextLabel", "TextButton", "TextBox" }
 		if Use(States.ItemsMenu.Open) then
 			if Use(States.ScreenSize).Y < 1000 then
@@ -109,7 +113,7 @@ return function(Props)
 		end
 	end)
 
-	local DisconnectFocusedCategory = Observer(States.ItemsMenu.FocusedCategory):onChange(function()
+	local DisconnectFocusedCategory = Scope:Observer(States.ItemsMenu.FocusedCategory):onChange(function()
 		local Items = ItemsMenu.AutoScaleFrame.MenuFrame.Contents.Items
 		local Category = Items:FindFirstChild(`{Use(States.ItemsMenu.FocusedCategory)}ItemsCategory`)
 		if Category then

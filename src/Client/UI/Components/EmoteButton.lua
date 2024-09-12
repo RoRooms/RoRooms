@@ -14,17 +14,17 @@ local Frame = require(OnyxUI.Components.Frame)
 local CustomButton = require(script.Parent.CustomButton)
 
 return function(Props)
-	Props.EmoteId = EnsureValue(Props.EmoteId, "string", "EmoteId")
-	Props.Emote = EnsureValue(Props.Emote, "table", {})
-	Props.Color = EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
+	Props.EmoteId = Scope:EnsureValue(Props.EmoteId, "string", "EmoteId")
+	Props.Emote = Scope:EnsureValue(Props.Emote, "table", {})
+	Props.Color = Scope:EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
 
-	local IsHolding = Value(false)
+	local IsHolding = Scope:Value(false)
 
 	return CustomButton {
 		Name = "EmoteButton",
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
-		LayoutOrder = Computed(function(Use)
+		LayoutOrder = Scope:Computed(function(Use)
 			return Use(Props.Emote).LayoutOrder or 0
 		end),
 		ListEnabled = false,
@@ -44,7 +44,7 @@ return function(Props)
 				Name = "Emoji",
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Position = UDim2.fromScale(0.5, 0.45),
-				Text = Computed(function(Use)
+				Text = Scope:Computed(function(Use)
 					if Use(Props.Emote) and Use(Props.Emote).Emoji then
 						return Use(Props.Emote).Emoji
 					else
@@ -62,7 +62,7 @@ return function(Props)
 				AnchorPoint = Vector2.new(0.5, 1),
 				Position = UDim2.fromScale(0.5, 1),
 				Size = UDim2.fromScale(1, 0),
-				Text = Computed(function(Use)
+				Text = Scope:Computed(function(Use)
 					return Use(Props.Emote).Name or Use(Props.EmoteId)
 				end),
 				TextSize = Theme.TextSize["0.875"],
@@ -83,7 +83,7 @@ return function(Props)
 						AnchorPoint = Vector2.new(0, 0),
 						Position = UDim2.fromScale(0, 0),
 						Size = UDim2.fromOffset(13, 13),
-						Image = Computed(function(Use)
+						Image = Scope:Computed(function(Use)
 							local LabelIcon = Use(Props.Emote).LabelIcon
 							local LevelRequirement = Use(Props.Emote).LevelRequirement
 							if LabelIcon then
@@ -94,7 +94,7 @@ return function(Props)
 								return ""
 							end
 						end),
-						ImageColor3 = Computed(function(Use)
+						ImageColor3 = Scope:Computed(function(Use)
 							return ColorUtils.Lighten(Use(Props.Color), 0.25)
 						end),
 					},
@@ -102,7 +102,7 @@ return function(Props)
 						Name = "LabelText",
 						AnchorPoint = Vector2.new(0, 0),
 						Position = UDim2.fromScale(0, 0),
-						Text = Computed(function(Use)
+						Text = Scope:Computed(function(Use)
 							local LabelText = Use(Props.Emote).LabelText
 							local LevelRequirement = Use(Props.Emote).LevelRequirement
 							if LabelText then
@@ -114,7 +114,7 @@ return function(Props)
 							end
 						end),
 						TextSize = 13,
-						TextColor3 = Computed(function(Use)
+						TextColor3 = Scope:Computed(function(Use)
 							return ColorUtils.Lighten(Use(Props.Color), 0.5)
 						end),
 						ClipsDescendants = false,

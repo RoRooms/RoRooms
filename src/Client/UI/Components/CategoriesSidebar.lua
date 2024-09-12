@@ -8,7 +8,7 @@ local Computed = Fusion.Computed
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 
 return function(Props)
-	Props.Name = EnsureValue(Props.Name, "string", "CategoriesSidebar")
+	Props.Name = Scope:EnsureValue(Props.Name, "string", "CategoriesSidebar")
 
 	return ScrollingFrame {
 		Name = Props.Name,
@@ -17,10 +17,10 @@ return function(Props)
 		ScrollBarThickness = 0,
 		ScrollBarImageTransparency = 1,
 		ListEnabled = true,
-		ListPadding = Computed(function(Use)
+		ListPadding = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.Spacing["0.5"]:get())
 		end),
-		Padding = Computed(function(Use)
+		Padding = Scope:Computed(function(Use)
 			return UDim.new(0, Theme.StrokeThickness["1"]:get())
 		end),
 
