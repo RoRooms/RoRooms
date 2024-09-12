@@ -17,10 +17,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ScrollBarImageTransparency = 1,
 		ListEnabled = true,
 		ListPadding = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.Spacing["0.5"]:get())
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end),
 		Padding = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.StrokeThickness["1"]:get())
+			return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 		end),
 
 		[Children] = {

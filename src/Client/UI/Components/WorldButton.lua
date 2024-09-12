@@ -62,7 +62,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				end),
 				BackgroundTransparency = 1,
 				CornerRadius = Scope:Computed(function(Use)
-					return UDim.new(0, Theme.CornerRadius["1"]:get())
+					return UDim.new(0, Use(Theme.CornerRadius["1"]))
 				end),
 				AspectRatio = 1,
 				AspectType = Enum.AspectType.FitWithinMaxSize,
@@ -78,7 +78,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					end
 				end),
 				Size = Scope:Computed(function(Use)
-					return UDim2.fromOffset(90, Theme.TextSize["1"]:get() * 2)
+					return UDim2.fromOffset(90, Use(Theme.TextSize["1"]) * 2)
 				end),
 				AutomaticSize = Enum.AutomaticSize.None,
 				TextTruncate = Enum.TextTruncate.AtEnd,

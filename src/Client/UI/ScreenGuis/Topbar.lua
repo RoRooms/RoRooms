@@ -45,7 +45,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				MaxScale = 1,
 				ListEnabled = true,
 				ListPadding = Scope:Computed(function(Use)
-					return UDim.new(0, Theme.Spacing["0.5"]:get())
+					return UDim.new(0, Use(Theme.Spacing["0.5"]))
 				end),
 				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 
@@ -56,7 +56,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,
 						ListPadding = Scope:Computed(function(Use)
-							return UDim.new(0, Theme.Spacing["0.25"]:get())
+							return UDim.new(0, Use(Theme.Spacing["0.25"]))
 						end),
 						ListFillDirection = Enum.FillDirection.Horizontal,
 						ListVerticalAlignment = Enum.VerticalAlignment.Center,
@@ -64,7 +64,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							return UDim.new(0, Use(Theme.CornerRadius.Full))
 						end),
 						Padding = Scope:Computed(function(Use)
-							return UDim.new(0, Theme.Spacing["0.5"]:get() / 1.25)
+							return UDim.new(0, Use(Theme.Spacing["0.5"]) / 1.25)
 						end),
 
 						[Children] = {
@@ -85,16 +85,16 @@ return function(Scope: Fusion.Scope<any>, Props)
 							return UDim.new(0, Use(Theme.CornerRadius.Full))
 						end),
 						PaddingTop = Scope:Computed(function(Use)
-							return UDim.new(0, Theme.Spacing["0.5"]:get())
+							return UDim.new(0, Use(Theme.Spacing["0.5"]))
 						end),
 						PaddingLeft = Scope:Computed(function(Use)
-							return UDim.new(0, Theme.Spacing["0.75"]:get())
+							return UDim.new(0, Use(Theme.Spacing["0.75"]))
 						end),
 						PaddingRight = Scope:Computed(function(Use)
-							return UDim.new(0, Theme.Spacing["0.75"]:get())
+							return UDim.new(0, Use(Theme.Spacing["0.75"]))
 						end),
 						PaddingBottom = Scope:Computed(function(Use)
-							return UDim.new(0, Theme.Spacing["0.5"]:get())
+							return UDim.new(0, Use(Theme.Spacing["0.5"]))
 						end),
 						StrokeColor = Theme.Colors.Neutral.Main,
 
@@ -106,7 +106,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						[Children] = {
 							Frame {
 								Size = Scope:Computed(function(Use)
-									return UDim2.fromOffset(100, Theme.StrokeThickness["1"]:get())
+									return UDim2.fromOffset(100, Use(Theme.StrokeThickness["1"]))
 								end),
 								AutomaticSize = Enum.AutomaticSize.None,
 								BackgroundTransparency = 0,

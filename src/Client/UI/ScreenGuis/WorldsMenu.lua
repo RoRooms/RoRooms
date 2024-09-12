@@ -78,14 +78,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ScrollBarThickness = Theme.StrokeThickness["1"],
 								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
 								Padding = Scope:Computed(function(Use)
-									return UDim.new(0, Theme.StrokeThickness["1"]:get())
+									return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 								end),
 								PaddingRight = Scope:Computed(function(Use)
-									return UDim.new(0, Theme.Spacing["0.75"]:get())
+									return UDim.new(0, Use(Theme.Spacing["0.75"]))
 								end),
 								ListEnabled = true,
 								ListPadding = Scope:Computed(function(Use)
-									return UDim.new(0, Theme.Spacing["1.5"]:get())
+									return UDim.new(0, Use(Theme.Spacing["1.5"]))
 								end),
 								ListFillDirection = Enum.FillDirection.Horizontal,
 								ListWraps = true,
@@ -106,7 +106,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												AutomaticSize = Enum.AutomaticSize.Y,
 												ListEnabled = true,
 												ListPadding = Scope:Computed(function(Use)
-													return UDim.new(0, Theme.Spacing["0.75"]:get())
+													return UDim.new(0, Use(Theme.Spacing["0.75"]))
 												end),
 												ListFillDirection = Enum.FillDirection.Horizontal,
 												ListWraps = true,
@@ -137,7 +137,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												AutomaticSize = Enum.AutomaticSize.Y,
 												ListEnabled = true,
 												ListPadding = Scope:Computed(function(Use)
-													return UDim.new(0, Theme.Spacing["0.75"]:get())
+													return UDim.new(0, Use(Theme.Spacing["0.75"]))
 												end),
 												ListFillDirection = Enum.FillDirection.Horizontal,
 												ListWraps = true,
@@ -201,7 +201,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												AutomaticSize = Enum.AutomaticSize.Y,
 												ListEnabled = true,
 												ListPadding = Scope:Computed(function(Use)
-													return UDim.new(0, Theme.Spacing["0.75"]:get())
+													return UDim.new(0, Use(Theme.Spacing["0.75"]))
 												end),
 												ListFillDirection = Enum.FillDirection.Horizontal,
 												ListWraps = true,

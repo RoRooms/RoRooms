@@ -89,23 +89,23 @@ return function(Props: Props)
 		end),
 		BackgroundColor3 = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening),
 		PaddingLeft = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.Spacing["0.75"]:get())
+			return UDim.new(0, Use(Theme.Spacing["0.75"]))
 		end),
 		PaddingRight = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.Spacing["0.75"]:get())
+			return UDim.new(0, Use(Theme.Spacing["0.75"]))
 		end),
 		PaddingTop = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.Spacing["0.25"]:get())
+			return UDim.new(0, Use(Theme.Spacing["0.25"]))
 		end),
 		PaddingBottom = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.Spacing["0.25"]:get())
+			return UDim.new(0, Use(Theme.Spacing["0.25"]))
 		end),
 		CornerRadius = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.CornerRadius["1"]:get())
+			return UDim.new(0, Use(Theme.CornerRadius["1"]))
 		end),
 		ListEnabled = true,
 		ListPadding = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.Spacing["0.25"]:get())
+			return UDim.new(0, Use(Theme.Spacing["0.25"]))
 		end),
 		ListFillDirection = Enum.FillDirection.Horizontal,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,

@@ -34,7 +34,7 @@ return function(Props: { [any]: any })
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
 				ListPadding = Scope:Computed(function(Use)
-					return UDim.new(0, Theme.Spacing["0.25"]:get())
+					return UDim.new(0, Use(Theme.Spacing["0.25"]))
 				end),
 
 				[Children] = {
@@ -47,7 +47,7 @@ return function(Props: { [any]: any })
 							end
 						end),
 						Size = Scope:Computed(function(Use)
-							return UDim2.fromOffset(Theme.TextSize["1"]:get(), Theme.TextSize["1"]:get())
+							return UDim2.fromOffset(Use(Theme.TextSize["1"]), Use(Theme.TextSize["1"]))
 						end),
 					},
 					Text {
@@ -61,7 +61,7 @@ return function(Props: { [any]: any })
 				AutomaticSize = Enum.AutomaticSize.Y,
 				ListEnabled = true,
 				ListPadding = Scope:Computed(function(Use)
-					return UDim.new(0, Theme.Spacing["0.75"]:get())
+					return UDim.new(0, Use(Theme.Spacing["0.75"]))
 				end),
 				ListFillDirection = Enum.FillDirection.Horizontal,
 				ListWraps = true,

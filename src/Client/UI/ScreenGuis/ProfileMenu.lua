@@ -69,7 +69,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,
 						ListPadding = Scope:Computed(function(Use)
-							return UDim.new(0, Theme.Spacing["1"]:get())
+							return UDim.new(0, Use(Theme.Spacing["1"]))
 						end),
 
 						[Children] = {

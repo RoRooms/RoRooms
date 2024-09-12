@@ -71,7 +71,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ListEnabled = true,
 								ListFillDirection = Enum.FillDirection.Horizontal,
 								ListPadding = Scope:Computed(function(Use)
-									return UDim.new(0, Theme.Spacing["0.75"]:get())
+									return UDim.new(0, Use(Theme.Spacing["0.75"]))
 								end),
 
 								[Children] = {
@@ -86,11 +86,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 										ScrollBarThickness = Theme.StrokeThickness["1"],
 										ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
 										Padding = Scope:Computed(function(Use)
-											return UDim.new(0, Theme.StrokeThickness["1"]:get())
+											return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 										end),
 										ListEnabled = true,
 										ListPadding = Scope:Computed(function(Use)
-											return UDim.new(0, Theme.Spacing["1"]:get())
+											return UDim.new(0, Use(Theme.Spacing["1"]))
 										end),
 										ListFillDirection = Enum.FillDirection.Horizontal,
 										ListWraps = true,

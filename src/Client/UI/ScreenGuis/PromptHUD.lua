@@ -56,7 +56,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				[Children] = {
 					MenuFrame {
 						Size = Scope:Computed(function(Use)
-							return UDim2.fromOffset(Theme.Spacing["16"]:get() * 1.2, 0)
+							return UDim2.fromOffset(Use(Theme.Spacing["16"]) * 1.2, 0)
 						end),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Scope:Spring(
@@ -73,7 +73,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,
 						ListPadding = Scope:Computed(function(Use)
-							return UDim.new(0, Theme.Spacing["2"]:get())
+							return UDim.new(0, Use(Theme.Spacing["2"]))
 						end),
 
 						[Children] = {

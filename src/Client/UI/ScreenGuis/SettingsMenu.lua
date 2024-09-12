@@ -51,7 +51,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					Scope:Computed(function(Use)
 						local YPos = Use(States.TopbarBottomPos)
 						if not Use(MenuOpen) then
-							YPos = YPos + Theme.Spacing["1"]:get()
+							YPos = YPos + Use(Theme.Spacing["1"])
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
 					end),
@@ -92,10 +92,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
 								ListEnabled = true,
 								PaddingTop = Scope:Computed(function(Use)
-									return UDim.new(0, Theme.StrokeThickness["1"]:get())
+									return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 								end),
 								PaddingRight = Scope:Computed(function(Use)
-									return UDim.new(0, Theme.Spacing["1"]:get())
+									return UDim.new(0, Use(Theme.Spacing["1"]))
 								end),
 
 								[Children] = {

@@ -32,7 +32,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				Image = Props.Icon,
 				FallbackImage = Props.FallbackIcon,
 				Size = Scope:Computed(function(Use)
-					return UDim2.fromOffset(Theme.TextSize["1.5"]:get(), Theme.TextSize["1.5"]:get())
+					return UDim2.fromOffset(Use(Theme.TextSize["1.5"]), Use(Theme.TextSize["1.5"]))
 				end),
 				BackgroundTransparency = 1,
 			},

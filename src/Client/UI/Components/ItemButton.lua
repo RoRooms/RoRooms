@@ -103,14 +103,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
 				ListPadding = Scope:Computed(function(Use)
-					return UDim.new(0, Theme.Spacing["0.25"]:get())
+					return UDim.new(0, Use(Theme.Spacing["0.25"]))
 				end),
 
 				[Children] = {
 					Icon {
 						Name = "LabelIcon",
 						Size = Scope:Computed(function(Use)
-							return UDim2.fromOffset(Theme.TextSize["0.875"]:get(), Theme.TextSize["0.875"]:get())
+							return UDim2.fromOffset(Use(Theme.TextSize["0.875"]), Use(Theme.TextSize["0.875"]))
 						end),
 						Image = Scope:Computed(function(Use)
 							local LabelIcon = Use(Props.Item).LabelIcon

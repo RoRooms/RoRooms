@@ -13,19 +13,19 @@ return function(Props: Props)
 	return Button(CombineProps(Props, {
 		Color = Color,
 		CornerRadius = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.CornerRadius["2"]:get())
+			return UDim.new(0, Use(Theme.CornerRadius["2"]))
 		end),
 		PaddingTop = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.Spacing["0.5"]:get())
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end),
 		PaddingBottom = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.Spacing["0.5"]:get())
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end),
 		PaddingLeft = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.Spacing["0.5"]:get())
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end),
 		PaddingRight = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.Spacing["0.5"]:get())
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end),
 
 		IsHovering = IsHovering,

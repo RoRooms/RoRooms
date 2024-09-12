@@ -97,7 +97,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								AutomaticSize = Enum.AutomaticSize.Y,
 								ListEnabled = true,
 								ListPadding = Scope:Computed(function(Use)
-									return UDim.new(0, Theme.Spacing["1"]:get())
+									return UDim.new(0, Use(Theme.Spacing["1"]))
 								end),
 
 								[Children] = {
@@ -113,7 +113,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 80)),
 										ScaleType = Enum.ScaleType.Crop,
 										CornerRadius = Scope:Computed(function(Use)
-											return UDim.new(0, Theme.CornerRadius["1"]:get())
+											return UDim.new(0, Use(Theme.CornerRadius["1"]))
 										end),
 									},
 									Frame {
@@ -161,7 +161,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												RichText = false,
 												AutoLocalize = false,
 												MaxSize = Scope:Computed(function(Use)
-													return Vector2.new(math.huge, Theme.TextSize["1"]:get() * 2)
+													return Vector2.new(math.huge, Use(Theme.TextSize["1"]) * 2)
 												end),
 											},
 										},

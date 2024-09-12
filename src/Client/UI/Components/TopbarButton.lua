@@ -43,7 +43,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		AutomaticSize = Enum.AutomaticSize.None,
 		LayoutOrder = Props.LayoutOrder,
 		CornerRadius = Scope:Computed(function(Use)
-			return UDim.new(0, Theme.CornerRadius["Full"]:get())
+			return UDim.new(0, Use(Theme.CornerRadius["Full"]))
 		end),
 
 		IsHovering = IsHovering,
