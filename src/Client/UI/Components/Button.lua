@@ -24,18 +24,18 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
 
-	local Disabled = Scope:EnsureValue(Props.Disabled, false)
-	local Content = Scope:EnsureValue(Props.Content, {})
-	local Style = Scope:EnsureValue(Props.Style, "Filled")
-	local Color = Scope:EnsureValue(Props.Color, Theme.Util.Colors.Primary.Main)
-	local ContentColor = Scope:EnsureValue(
+	local Disabled = Util.Fallback(Props.Disabled, false)
+	local Content = Util.Fallback(Props.Content, {})
+	local Style = Util.Fallback(Props.Style, "Filled")
+	local Color = Util.Fallback(Props.Color, Theme.Util.Colors.Primary.Main)
+	local ContentColor = Util.Fallback(
 		Props.ContentColor,
 		"Color3",
 		Scope:Computed(function(Use)
 			return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Contrast))
 		end)
 	)
-	local ContentSize = Scope:EnsureValue(Props.ContentSize, Theme.TextSize["1"])
+	local ContentSize = Util.Fallback(Props.ContentSize, Theme.TextSize["1"])
 
 	local IsHolding = Scope:EnsureValue(Props.IsHolding, false)
 	local IsHovering = Scope:EnsureValue(Props.IsHovering, false)

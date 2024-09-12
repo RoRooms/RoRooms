@@ -14,9 +14,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
 
-	local ItemId = Scope:EnsureValue(Props.ItemId, "ItemId")
-	local Item = Scope:EnsureValue(Props.Item, {})
-	local Color = Scope:EnsureValue(Props.Color, Theme.Util.Colors.Neutral.Main)
+	local ItemId = Util.Fallback(Props.ItemId, "ItemId")
+	local Item = Util.Fallback(Props.Item, {})
+	local Color = Util.Fallback(Props.Color, Theme.Util.Colors.Neutral.Main)
 
 	local IsHolding = Scope:Value(false)
 	local IsEquipped = Scope:Computed(function(Use)

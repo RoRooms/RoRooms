@@ -13,11 +13,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
 
-	local CategoryName = Scope:EnsureValue(Props.CategoryName, "General")
-	local Name = Scope:EnsureValue(Props.Name, `{Use(Props.CategoryName)}EmotesCategory`)
-	local Size = Scope:EnsureValue(Props.Size, UDim2.fromScale(1, 0))
-	local AutomaticSize = Scope:EnsureValue(Props.AutomaticSize, Enum.AutomaticSize.Y)
-	local LayoutOrder = Scope:EnsureValue(Props.LayoutOrder, 0)
+	local CategoryName = Util.Fallback(Props.CategoryName, "General")
+	local Name = Util.Fallback(Props.Name, `{Use(Props.CategoryName)}EmotesCategory`)
+	local Size = Util.Fallback(Props.Size, UDim2.fromScale(1, 0))
+	local AutomaticSize = Util.Fallback(Props.AutomaticSize, Enum.AutomaticSize.Y)
+	local LayoutOrder = Util.Fallback(Props.LayoutOrder, 0)
 
 	local Category = Scope:Computed(function(Use)
 		return RoRooms.Config.Systems.Emotes.Categories[Use(Props.CategoryName)]

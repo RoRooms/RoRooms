@@ -16,7 +16,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
 
-	local PlaceId = Scope:EnsureValue(Props.PlaceId, nil)
+	local PlaceId = Util.Fallback(Props.PlaceId, nil)
 
 	local IsHolding = Scope:Value(false)
 	local PlaceInfo = Scope:Value({})

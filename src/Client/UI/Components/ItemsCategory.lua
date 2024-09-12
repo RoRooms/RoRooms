@@ -12,7 +12,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
 
-	local CategoryName = Scope:EnsureValue(Props.CategoryName, "Category")
+	local CategoryName = Util.Fallback(Props.CategoryName, "Category")
 
 	local Category = Scope:Computed(function(Use)
 		return RoRooms.Config.Systems.Items.Categories[Use(Props.CategoryName)]

@@ -13,11 +13,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
 
-	local Name = Scope:EnsureValue(Props.Name, "CategoryButton")
-	local Category = Scope:EnsureValue(Props.Category, "Category")
-	local Icon = Scope:EnsureValue(Props.Icon, nil)
-	local FallbackIcon = Scope:EnsureValue(Props.FallbackIcon, "rbxassetid://17266112920")
-	local OnActivated = Scope:EnsureValue(Props.OnActivated, function() end)
+	local Name = Util.Fallback(Props.Name, "CategoryButton")
+	local Category = Util.Fallback(Props.Category, "Category")
+	local Icon = Util.Fallback(Props.Icon, nil)
+	local FallbackIcon = Util.Fallback(Props.FallbackIcon, "rbxassetid://17266112920")
+	local OnActivated = Util.Fallback(Props.OnActivated, function() end)
 
 	local IsHolding = Scope:Value(false)
 

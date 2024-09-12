@@ -10,13 +10,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
 
-	local Title = Scope:EnsureValue(Props.Title, "General")
-	local Icon = Scope:EnsureValue(Props.Icon, "rbxassetid://17266112920")
-	local Name = Scope:EnsureValue(Props.Name, "WorldsCategory")
-	local Size = Scope:EnsureValue(Props.Size, UDim2.fromScale(1, 0))
-	local AutomaticSize = Scope:EnsureValue(Props.AutomaticSize, Enum.AutomaticSize.Y)
-	local LayoutOrder = Scope:EnsureValue(Props.LayoutOrder, 0)
-	local Visible = Scope:EnsureValue(Props.Visible, true)
+	local Title = Util.Fallback(Props.Title, "General")
+	local Icon = Util.Fallback(Props.Icon, "rbxassetid://17266112920")
+	local Name = Util.Fallback(Props.Name, "WorldsCategory")
+	local Size = Util.Fallback(Props.Size, UDim2.fromScale(1, 0))
+	local AutomaticSize = Util.Fallback(Props.AutomaticSize, Enum.AutomaticSize.Y)
+	local LayoutOrder = Util.Fallback(Props.LayoutOrder, 0)
+	local Visible = Util.Fallback(Props.Visible, true)
 
 	return Scope:Frame(Util.CombineProps(Props, {
 		Name = Props.Name,

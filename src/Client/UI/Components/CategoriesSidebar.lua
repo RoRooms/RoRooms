@@ -10,7 +10,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
 
-	local Name = Scope:EnsureValue(Props.Name, "CategoriesSidebar")
+	local Name = Util.Fallback(Props.Name, "CategoriesSidebar")
 
 	return Scope:Scroller {
 		Name = Props.Name,
