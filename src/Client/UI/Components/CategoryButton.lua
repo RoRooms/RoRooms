@@ -8,7 +8,7 @@ local Children = Fusion.Children
 local Image = require(OnyxUI.Components.Image)
 local CustomButton = require(script.Parent.CustomButton)
 
-return function(Props)
+return function(Scope: Fusion.Scope<any>, Props)
 	Props.Name = Scope:EnsureValue(Props.Name, "string", "CategoryButton")
 	Props.Category = Scope:EnsureValue(Props.Category, "string", "Category")
 	Props.Icon = Scope:EnsureValue(Props.Icon, "string", nil)

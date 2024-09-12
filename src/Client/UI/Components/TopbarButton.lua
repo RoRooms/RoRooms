@@ -10,7 +10,7 @@ local BaseButton = require(OnyxUI.Components.BaseButton)
 local Icon = require(OnyxUI.Components.Icon)
 local Base = require(OnyxUI.Components.Base)
 
-return function(Props)
+return function(Scope: Fusion.Scope<any>, Props)
 	Props.SizeMultiplier = Scope:EnsureValue(Props.SizeMultiplier, "number", 1)
 	Props.IconImage = Scope:EnsureValue(Props.IconImage, "string", "")
 	Props.MenuName = Scope:EnsureValue(Props.MenuName, "string", "")

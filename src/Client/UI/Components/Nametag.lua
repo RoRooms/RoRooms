@@ -8,7 +8,7 @@ local Children = Fusion.Children
 local Base = require(OnyxUI.Components.Base)
 local Text = require(OnyxUI.Components.Text)
 
-return function(Props)
+return function(Scope: Fusion.Scope<any>, Props)
 	return Scope:Hydrate(Base {
 		ClassName = "BillboardGui",
 		Name = "Nametag",

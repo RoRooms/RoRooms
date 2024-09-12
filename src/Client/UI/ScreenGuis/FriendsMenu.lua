@@ -11,7 +11,7 @@ local TitleBar = require(OnyxUI.Components.TitleBar)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local FriendButton = require(RoRooms.Client.UI.Components.FriendButton)
 
-return function(Props)
+return function(Scope: Fusion.Scope<any>, Props)
 	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)

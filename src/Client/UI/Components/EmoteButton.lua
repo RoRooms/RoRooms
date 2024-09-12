@@ -11,7 +11,7 @@ local Icon = require(OnyxUI.Components.Icon)
 local Frame = require(OnyxUI.Components.Frame)
 local CustomButton = require(script.Parent.CustomButton)
 
-return function(Props)
+return function(Scope: Fusion.Scope<any>, Props)
 	Props.EmoteId = Scope:EnsureValue(Props.EmoteId, "string", "EmoteId")
 	Props.Emote = Scope:EnsureValue(Props.Emote, "table", {})
 	Props.Color = Scope:EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)

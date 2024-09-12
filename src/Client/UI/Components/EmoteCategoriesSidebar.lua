@@ -8,7 +8,7 @@ local Children = Fusion.Children
 local CategoriesSidebar = require(script.Parent.CategoriesSidebar)
 local CategoryButton = require(script.Parent.CategoryButton)
 
-return function(Props)
+return function(Scope: Fusion.Scope<any>, Props)
 	Props.Name = Scope:EnsureValue(Props.Name, "string", "EmoteCategoriesSidebar")
 
 	return CategoriesSidebar {

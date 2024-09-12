@@ -11,7 +11,7 @@ local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local ItemsCategory = require(RoRooms.Client.UI.Components.ItemsCategory)
 local ItemCategoriesSidebar = require(RoRooms.Client.UI.Components.ItemCategoriesSidebar)
 
-return function(Props)
+return function(Scope: Fusion.Scope<any>, Props)
 	local ItemsMenu = Scope:New "ScreenGui" {
 		Name = "ItemsMenu",
 		Parent = Props.Parent,

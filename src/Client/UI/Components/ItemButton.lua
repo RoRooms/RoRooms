@@ -12,7 +12,7 @@ local Frame = require(OnyxUI.Components.Frame)
 local Image = require(OnyxUI.Components.Image)
 local CustomButton = require(script.Parent.CustomButton)
 
-return function(Props)
+return function(Scope: Fusion.Scope<any>, Props)
 	Props.ItemId = Scope:EnsureValue(Props.ItemId, "string", "ItemId")
 	Props.Item = Scope:EnsureValue(Props.Item, "table", {})
 	Props.Color = Scope:EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)

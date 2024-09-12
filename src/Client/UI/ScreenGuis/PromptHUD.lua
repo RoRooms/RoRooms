@@ -13,7 +13,7 @@ local Text = require(OnyxUI.Components.Text)
 local Button = require(OnyxUI.Components.Button)
 local Frame = require(OnyxUI.Components.Frame)
 
-return function(Props)
+return function(Scope: Fusion.Scope<any>, Props)
 	local CurrentPrompt = Scope:Computed(function(Use)
 		return Use(States.Prompts)[#Use(States.Prompts)]
 	end)

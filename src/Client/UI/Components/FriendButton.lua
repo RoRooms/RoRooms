@@ -17,7 +17,7 @@ local Frame = require(OnyxUI.Components.Frame)
 local Avatar = require(OnyxUI.Components.Avatar)
 local CustomButton = require(RoRooms.Client.UI.Components.CustomButton)
 
-return function(Props)
+return function(Scope: Fusion.Scope<any>, Props)
 	Props.UserId = Scope:EnsureValue(Props.UserId, "number", 1)
 	Props.DisplayName = Scope:EnsureValue(Props.DisplayName, "string", "DisplayName")
 	Props.PlaceId = Scope:EnsureValue(Props.PlaceId, "number", nil)
