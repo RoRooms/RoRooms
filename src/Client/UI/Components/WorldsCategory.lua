@@ -9,13 +9,13 @@ local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 
 return function(Props: { [any]: any })
-	Props.Title = Scope:EnsureValue(Props.Title, "string", "General")
-	Props.Icon = Scope:EnsureValue(Props.Icon, "string", "rbxassetid://17266112920")
-	Props.Name = Scope:EnsureValue(Props.Name, "string", "WorldsCategory")
-	Props.Size = Scope:EnsureValue(Props.Size, "UDim2", UDim2.fromScale(1, 0))
-	Props.AutomaticSize = Scope:EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
-	Props.LayoutOrder = Scope:EnsureValue(Props.LayoutOrder, "number", 0)
-	Props.Visible = Scope:EnsureValue(Props.Visible, "boolean", true)
+	Props.Title = Scope:EnsureValue(Props.Title, "General")
+	Props.Icon = Scope:EnsureValue(Props.Icon, "rbxassetid://17266112920")
+	Props.Name = Scope:EnsureValue(Props.Name, "WorldsCategory")
+	Props.Size = Scope:EnsureValue(Props.Size, UDim2.fromScale(1, 0))
+	Props.AutomaticSize = Scope:EnsureValue(Props.AutomaticSize, Enum.AutomaticSize.Y)
+	Props.LayoutOrder = Scope:EnsureValue(Props.LayoutOrder, 0)
+	Props.Visible = Scope:EnsureValue(Props.Visible, true)
 
 	return Frame(CombineProps(Props, {
 		Name = Props.Name,

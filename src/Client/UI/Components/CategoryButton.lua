@@ -9,11 +9,11 @@ local Image = require(OnyxUI.Components.Image)
 local CustomButton = require(script.Parent.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
-	Props.Name = Scope:EnsureValue(Props.Name, "string", "CategoryButton")
-	Props.Category = Scope:EnsureValue(Props.Category, "string", "Category")
-	Props.Icon = Scope:EnsureValue(Props.Icon, "string", nil)
-	Props.FallbackIcon = Scope:EnsureValue(Props.FallbackIcon, "string", "rbxassetid://17266112920")
-	Props.OnActivated = Scope:EnsureValue(Props.OnActivated, "function", function() end)
+	Props.Name = Scope:EnsureValue(Props.Name, "CategoryButton")
+	Props.Category = Scope:EnsureValue(Props.Category, "Category")
+	Props.Icon = Scope:EnsureValue(Props.Icon, nil)
+	Props.FallbackIcon = Scope:EnsureValue(Props.FallbackIcon, "rbxassetid://17266112920")
+	Props.OnActivated = Scope:EnsureValue(Props.OnActivated, function() end)
 
 	local IsHolding = Scope:Value(false)
 

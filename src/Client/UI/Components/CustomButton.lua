@@ -7,8 +7,8 @@ local Button = require(script.Parent.Button)
 export type Props = Button.Props & {}
 
 return function(Props: Props)
-	local Color = Scope:EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
-	local IsHovering = Scope:EnsureValue(Props.IsHovering, "boolean", false)
+	local Color = Scope:EnsureValue(Props.Color, Theme.Colors.Neutral.Main)
+	local IsHovering = Scope:EnsureValue(Props.IsHovering, false)
 
 	return Button(CombineProps(Props, {
 		Color = Color,

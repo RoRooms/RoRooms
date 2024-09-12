@@ -12,9 +12,9 @@ local Frame = require(OnyxUI.Components.Frame)
 local CustomButton = require(script.Parent.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
-	Props.EmoteId = Scope:EnsureValue(Props.EmoteId, "string", "EmoteId")
-	Props.Emote = Scope:EnsureValue(Props.Emote, "table", {})
-	Props.Color = Scope:EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
+	Props.EmoteId = Scope:EnsureValue(Props.EmoteId, "EmoteId")
+	Props.Emote = Scope:EnsureValue(Props.Emote, {})
+	Props.Color = Scope:EnsureValue(Props.Color, Theme.Colors.Neutral.Main)
 
 	local IsHolding = Scope:Value(false)
 

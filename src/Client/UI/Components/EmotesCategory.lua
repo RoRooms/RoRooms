@@ -11,11 +11,11 @@ local Icon = require(OnyxUI.Components.Icon)
 local EmoteButton = require(RoRooms.Client.UI.Components.EmoteButton)
 
 return function(Props: { [any]: any })
-	Props.CategoryName = Scope:EnsureValue(Props.CategoryName, "string", "General")
-	Props.Name = Scope:EnsureValue(Props.Name, "string", `{Use(Props.CategoryName)}EmotesCategory`)
-	Props.Size = Scope:EnsureValue(Props.Size, "UDim2", UDim2.fromScale(1, 0))
-	Props.AutomaticSize = Scope:EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
-	Props.LayoutOrder = Scope:EnsureValue(Props.LayoutOrder, "number", 0)
+	Props.CategoryName = Scope:EnsureValue(Props.CategoryName, "General")
+	Props.Name = Scope:EnsureValue(Props.Name, `{Use(Props.CategoryName)}EmotesCategory`)
+	Props.Size = Scope:EnsureValue(Props.Size, UDim2.fromScale(1, 0))
+	Props.AutomaticSize = Scope:EnsureValue(Props.AutomaticSize, Enum.AutomaticSize.Y)
+	Props.LayoutOrder = Scope:EnsureValue(Props.LayoutOrder, 0)
 
 	local Category = Scope:Computed(function(Use)
 		return RoRooms.Config.Systems.Emotes.Categories[Use(Props.CategoryName)]

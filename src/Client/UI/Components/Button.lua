@@ -23,10 +23,10 @@ export type Props = BaseButton.Props & {
 }
 
 return function(Props: Props)
-	local Disabled = Scope:EnsureValue(Props.Disabled, "boolean", false)
-	local Content = Scope:EnsureValue(Props.Content, "table", {})
-	local Style = Scope:EnsureValue(Props.Style, "string", "Filled")
-	local Color = Scope:EnsureValue(Props.Color, "Color3", Theme.Colors.Primary.Main)
+	local Disabled = Scope:EnsureValue(Props.Disabled, false)
+	local Content = Scope:EnsureValue(Props.Content, {})
+	local Style = Scope:EnsureValue(Props.Style, "Filled")
+	local Color = Scope:EnsureValue(Props.Color, Theme.Colors.Primary.Main)
 	local ContentColor = Scope:EnsureValue(
 		Props.ContentColor,
 		"Color3",
@@ -34,10 +34,10 @@ return function(Props: Props)
 			return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Contrast))
 		end)
 	)
-	local ContentSize = Scope:EnsureValue(Props.ContentSize, "number", Theme.TextSize["1"])
+	local ContentSize = Scope:EnsureValue(Props.ContentSize, Theme.TextSize["1"])
 
-	local IsHolding = Scope:EnsureValue(Props.IsHolding, "boolean", false)
-	local IsHovering = Scope:EnsureValue(Props.IsHovering, "boolean", false)
+	local IsHolding = Scope:EnsureValue(Props.IsHolding, false)
+	local IsHovering = Scope:EnsureValue(Props.IsHovering, false)
 	local EffectiveColor = Scope:Computed(function(Use)
 		if Use(Disabled) then
 			return Use(Theme.Colors.BaseContent.Main)

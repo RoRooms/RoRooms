@@ -13,9 +13,9 @@ local Image = require(OnyxUI.Components.Image)
 local CustomButton = require(script.Parent.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
-	Props.ItemId = Scope:EnsureValue(Props.ItemId, "string", "ItemId")
-	Props.Item = Scope:EnsureValue(Props.Item, "table", {})
-	Props.Color = Scope:EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
+	Props.ItemId = Scope:EnsureValue(Props.ItemId, "ItemId")
+	Props.Item = Scope:EnsureValue(Props.Item, {})
+	Props.Color = Scope:EnsureValue(Props.Color, Theme.Colors.Neutral.Main)
 
 	local IsHolding = Scope:Value(false)
 	local IsEquipped = Scope:Computed(function(Use)
