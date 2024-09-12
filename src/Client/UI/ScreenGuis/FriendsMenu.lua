@@ -4,8 +4,8 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
-local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 local FriendButton = require(RoRooms.Client.UI.Components.FriendButton)
 
@@ -107,7 +107,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	}
 
 	local DisconnectOpen = Scope:Observer(MenuOpen):onChange(function()
-		if Use(MenuOpen) then
+		if Peek(MenuOpen) then
 			if States.Controllers.FriendsController then
 				States.Controllers.FriendsController:UpdateFriends()
 			end

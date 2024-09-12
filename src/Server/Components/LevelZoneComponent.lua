@@ -3,6 +3,9 @@ local Component = require(RoRooms.Packages.Component)
 local Zone = require(RoRooms.Shared.ExtPackages.Zone)
 local Knit = require(RoRooms.Packages.Knit)
 local AttributeValue = require(RoRooms.Shared.ExtPackages.AttributeValue)
+local Fusion = require(RoRooms.Packages.Fusion)
+
+local Peek = Fusion.peek
 
 local PlayerDataService = Knit.GetService("PlayerDataService")
 
@@ -14,7 +17,7 @@ function LevelZoneComponent:Start()
 	self.Zone.playerEntered:Connect(function(Player: Player)
 		local Profile = PlayerDataService:GetProfile(Player)
 		if Profile then
-			if Profile.Data.Level < Use(self.LevelRequirement) then
+			if Profile.Data.Level < Peek(self.LevelRequirement) then
 				Player:LoadCharacter()
 			end
 		end

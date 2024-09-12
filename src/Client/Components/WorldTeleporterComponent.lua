@@ -10,13 +10,15 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local Prompts = require(RoRooms.Client.UI.States.Prompts)
 
+local Peek = Fusion.peek
+
 local WorldTeleporterComponent = Component.new {
 	Tag = "RR_WorldTeleporter",
 }
 
 function WorldTeleporterComponent:_PromptTeleport()
-	local PlaceId = Use(self.PlaceId)
-	local PlaceInfo = Use(self.PlaceInfo)
+	local PlaceId = Peek(self.PlaceId)
+	local PlaceInfo = Peek(self.PlaceInfo)
 
 	if PlaceId and PlaceInfo then
 		Prompts:PushPrompt({
@@ -53,17 +55,17 @@ end
 
 function WorldTeleporterComponent:Start()
 	Scope:Observer(self.PlaceId):onChange(function()
-		self:_UpdatePlaceInfo(Use(self.PlaceId))
+		self:_UpdatePlaceInfo(Peek(self.PlaceId))
 	end)
-	self:_UpdatePlaceInfo(Use(self.PlaceId))
+	self:_UpdatePlaceInfo(Peek(self.PlaceId))
 
 	self.Instance.Touched:Connect(function(TouchedPart: BasePart)
 		local Character = TouchedPart:FindFirstAncestorOfClass("Model")
 		if Character then
 			local Player = Players:GetPlayerFromCharacter(Character)
 			if Player == Players.LocalPlayer then
-				if #Use(States.Prompts) == 0 then
-					self:_PromptTeleport(Use(self.PlaceId), Use(self.PlaceInfo))
+				if #Peek(States.Prompts) == 0 then
+					self:_PromptTeleport(Peek(self.PlaceId), Peek(self.PlaceInfo))
 				end
 			end
 		end
@@ -78,7 +80,7 @@ function WorldTeleporterComponent:Construct()
 		warn("WorldTeleporter must be a BasePart object", self.Instance)
 		return
 	end
-	if not Use(self.PlaceId) then
+	if not Peek(self.PlaceId) then
 		warn("No RR_PlaceId attribute defined for WorldTeleporter", self.Instance)
 		return
 	end

@@ -6,6 +6,7 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 local CustomButton = require(script.Parent.CustomButton)
 
@@ -26,7 +27,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		LayoutOrder = Props.LayoutOrder,
 
 		OnActivated = function()
-			Use(Props.OnActivated)()
+			Peek(Props.OnActivated)()
 		end,
 		IsHolding = IsHolding,
 

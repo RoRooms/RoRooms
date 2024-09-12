@@ -10,6 +10,7 @@ local Prompts = require(RoRooms.Client.UI.States.Prompts)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
@@ -21,12 +22,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local PlaceInfo = Scope:Value({})
 
 	local function UpdatePlaceInfo()
-		if Use(States.WorldPageMenu.PlaceId) == nil then
+		if Peek(States.WorldPageMenu.PlaceId) == nil then
 			return
 		end
 
 		Future.Try(function()
-			return MarketplaceService:GetProductInfo(Use(States.WorldPageMenu.PlaceId))
+			return MarketplaceService:GetProductInfo(Peek(States.WorldPageMenu.PlaceId))
 		end):After(function(Success, Result)
 			if Success then
 				PlaceInfo:set(Result)
@@ -171,7 +172,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										OnActivated = function()
 											if States.Services.WorldsService then
 												States.Services.WorldsService
-													:TeleportToWorld(Use(States.WorldPageMenu.PlaceId))
+													:TeleportToWorld(Peek(States.WorldPageMenu.PlaceId))
 													:andThen(function(Success: boolean, Message: string)
 														States.CurrentMenu:set(nil)
 

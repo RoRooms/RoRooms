@@ -7,6 +7,7 @@ local States = require(RoRooms.Client.UI.States)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
@@ -50,11 +51,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 		IsHovering = IsHovering,
 		IsHolding = IsHolding,
 		OnActivated = function()
-			if Use(States.CurrentMenu) == Use(Props.MenuName) then
+			if Peek(States.CurrentMenu) == Peek(Props.MenuName) then
 				States.CurrentMenu:set()
 			else
-				States.CurrentMenu:set(Use(Props.MenuName))
-				if Use(States.ScreenSize).Y < 900 then
+				States.CurrentMenu:set(Peek(Props.MenuName))
+				if Peek(States.ScreenSize).Y < 900 then
 					States.ItemsMenu.Open:set()
 				end
 			end

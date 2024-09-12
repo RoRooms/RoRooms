@@ -7,6 +7,9 @@ local FriendsMenu = require(RoRooms.Client.UI.ScreenGuis.FriendsMenu)
 local States = require(RoRooms.Client.UI.States)
 local Knit = require(RoRooms.Packages.Knit)
 local Topbar = require(RoRooms.Client.UI.States.Topbar)
+local Fusion = require(RoRooms.Packages.Fusion)
+
+local Peek = Fusion.peek
 
 local WorldRegistryService
 
@@ -72,7 +75,7 @@ function FriendsController:KnitStart()
 
 	while task.wait(1) do
 		local SecondsSinceUpdated = os.time() - self.FriendsOnlineLastUpdated
-		if (SecondsSinceUpdated > FRIENDS_ONLINE_CACHE_PERIOD) and (Use(States.CurrentMenu) == "FriendsMenu") then
+		if (SecondsSinceUpdated > FRIENDS_ONLINE_CACHE_PERIOD) and (Peek(States.CurrentMenu) == "FriendsMenu") then
 			self:UpdateFriends()
 		end
 	end

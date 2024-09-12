@@ -3,6 +3,11 @@ local States = require(script.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 
+local Peek = Fusion.peek
+local Themer = OnyxUI.Themer
+
+local Theme = Themer.Theme:now()
+
 local Topbar = {
 	NativeButtons = {
 		Settings = {
@@ -59,7 +64,7 @@ function Topbar:AddTopbarButton(
 		},
 	}
 )
-	local TopbarButtons = Use(States.TopbarButtons)
+	local TopbarButtons = Peek(States.TopbarButtons)
 
 	TopbarButtons[Name] = Button
 
@@ -67,7 +72,7 @@ function Topbar:AddTopbarButton(
 end
 
 function Topbar:RemoveTopbarButton(Name: string)
-	local TopbarButtons = Use(States.TopbarButtons)
+	local TopbarButtons = Peek(States.TopbarButtons)
 
 	TopbarButtons[Name] = nil
 

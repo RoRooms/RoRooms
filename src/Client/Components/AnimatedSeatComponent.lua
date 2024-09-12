@@ -6,6 +6,8 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local AttributeValue = require(RoRooms.Shared.ExtPackages.AttributeValue)
 
+local Peek = Fusion.peek
+
 local AnimatedSeatComponent = Component.new {
 	Tag = "RR_AnimatedSeat",
 }
@@ -24,7 +26,7 @@ function AnimatedSeatComponent:UpdateOccupant()
 			self.Occupant:set(Players:GetPlayerFromCharacter(Character))
 		end
 
-		if Use(self.Occupant) == Players.LocalPlayer then
+		if Peek(self.Occupant) == Players.LocalPlayer then
 			local Animator = Humanoid:FindFirstChild("Animator")
 			if Animator then
 				local AnimationTrack = Animator:LoadAnimation(self.Animation)
@@ -63,7 +65,7 @@ function AnimatedSeatComponent:GetProximityPrompt()
 
 	Scope:Hydrate(ProximityPrompt) {
 		Enabled = Scope:Computed(function(Use)
-			return Use(self.Occupant) == nil
+			return Peek(self.Occupant) == nil
 		end),
 	}
 
@@ -71,9 +73,9 @@ function AnimatedSeatComponent:GetProximityPrompt()
 end
 
 function AnimatedSeatComponent:Start()
-	self.Instance.Disabled = not Use(self.SitOnTouch)
+	self.Instance.Disabled = not Peek(self.SitOnTouch)
 
-	if Use(self.PromptToSit) then
+	if Peek(self.PromptToSit) then
 		self.ProximityPrompt = self:GetProximityPrompt()
 
 		self.ProximityPrompt.Triggered:Connect(function(Player: Player)

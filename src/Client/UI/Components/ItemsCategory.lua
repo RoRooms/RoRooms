@@ -5,6 +5,7 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 local ItemButton = require(RoRooms.Client.UI.Components.ItemButton)
 
@@ -79,7 +80,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							ItemCategory = "General"
 						end
 
-						if ItemCategory == Use(Props.CategoryName) then
+						if ItemCategory == Peek(Props.CategoryName) then
 							return ItemId,
 								ItemButton {
 									ItemId = ItemId,

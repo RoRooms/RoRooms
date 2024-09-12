@@ -13,6 +13,7 @@ local Prompts = require(RoRooms.Client.UI.States.Prompts)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 local CustomButton = require(RoRooms.Client.UI.Components.CustomButton)
 
@@ -31,12 +32,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local PlaceInfo = Scope:Value({})
 
 	local function UpdatePlaceInfo()
-		if Use(Props.PlaceId) == nil then
+		if Peek(Props.PlaceId) == nil then
 			return
 		end
 
 		Future.Try(function()
-			return MarketplaceService:GetProductInfo(Use(Props.PlaceId))
+			return MarketplaceService:GetProductInfo(Peek(Props.PlaceId))
 		end):After(function(Success, Result)
 			if Success then
 				PlaceInfo:set(Result)
@@ -71,8 +72,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 		OnActivated = function()
 			States.CurrentMenu:set(nil)
 
-			if Use(Props.InRoRooms) then
-				if Use(Props.JobId) == game.JobId then
+			if Peek(Props.InRoRooms) then
+				if Peek(Props.JobId) == game.JobId then
 					Prompts:PushPrompt({
 						Title = "Failure",
 						Text = "You're already in the same server as this person.",
@@ -85,7 +86,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				else
 					Prompts:PushPrompt({
 						Title = "Teleport",
-						Text = `Do you want to join friend in {Use(PlaceInfo).Name}?`,
+						Text = `Do you want to join friend in {Peek(PlaceInfo).Name}?`,
 						Buttons = {
 							{
 								Contents = { "Cancel" },
@@ -95,7 +96,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								Contents = { "Teleport" },
 								Callback = function()
 									if States.Services.WorldsService then
-										States.Services.WorldsService:TeleportToWorld(Use(Props.PlaceId))
+										States.Services.WorldsService:TeleportToWorld(Peek(Props.PlaceId))
 									end
 								end,
 							},
@@ -106,7 +107,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				SocialService:PromptGameInvite(
 					Players.LocalPlayer,
 					Scope:New "ExperienceInviteOptions" {
-						InviteUser = Use(Props.UserId),
+						InviteUser = Peek(Props.UserId),
 					}
 				)
 			end
@@ -116,7 +117,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 		[Children] = {
 			Scope:Avatar {
 				Size = UDim2.fromOffset(80, 80),
-				BackgroundColor3 = ColorUtils.Lighten(Use(Props.Color), 0.06),
+				BackgroundColor3 = Scope:Computed(function(Use)
+					return ColorUtils.Lighten(Use(Props.Color), 0.06)
+				end),
 				Image = Scope:Computed(function(Use)
 					return `rbxthumb://type=AvatarHeadShot&id={Use(Props.UserId)}&w=150&h=150`
 				end),

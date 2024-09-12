@@ -1,6 +1,9 @@
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Parent)
 local ReconcileTable = require(RoRooms.Shared.ExtPackages.ReconcileTable)
 local States = require(script.Parent)
+local Fusion = require(RoRooms.Packages.Fusion)
+
+local Peek = Fusion.peek
 
 type Prompt = {
 	Title: string,
@@ -24,7 +27,7 @@ local PROMPT_TEMPLATE = {
 local Prompts = {}
 
 function Prompts:PushPrompt(Prompt: Prompt)
-	local NewPrompts = Use(States.Prompts)
+	local NewPrompts = Peek(States.Prompts)
 
 	ReconcileTable(Prompt, PROMPT_TEMPLATE)
 
@@ -40,7 +43,7 @@ function Prompts:PushPrompt(Prompt: Prompt)
 end
 
 function Prompts:RemovePrompt(Prompt: Prompt)
-	local NewPrompts = Use(States.Prompts)
+	local NewPrompts = Peek(States.Prompts)
 
 	for Index = #NewPrompts, 1, -1 do
 		if NewPrompts[Index] == Prompt then

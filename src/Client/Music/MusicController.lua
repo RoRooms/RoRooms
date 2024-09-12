@@ -6,6 +6,8 @@ local States = require(RoRooms.Client.UI.States)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 
+local Peek = Fusion.peek
+
 local MusicService
 
 local MusicController = {
@@ -27,7 +29,7 @@ function MusicController:KnitStart()
 	MusicService = Knit.GetService("MusicService")
 
 	Scope:Observer(States.UserSettings.MuteMusic):onChange(function()
-		self:SetMuted(Use(States.UserSettings.MuteMusic))
+		self:SetMuted(Peek(States.UserSettings.MuteMusic))
 	end)
 
 	self.SoundGroup = RoRooms.Config.Systems.Music.SoundGroup

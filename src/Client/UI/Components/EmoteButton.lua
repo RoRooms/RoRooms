@@ -7,6 +7,7 @@ local ColorUtils = require(RoRooms.Packages.ColorUtils)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 local CustomButton = require(script.Parent.CustomButton)
 
@@ -34,7 +35,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				Props.Callback()
 			end
 			if States.Controllers.EmotesController then
-				States.Controllers.EmotesController:PlayEmote(Use(Props.EmoteId))
+				States.Controllers.EmotesController:PlayEmote(Peek(Props.EmoteId))
 			end
 		end,
 		IsHolding = IsHolding,

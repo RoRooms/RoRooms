@@ -6,6 +6,7 @@ local States = require(RoRooms.Client.UI.States)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 local EmotesCategory = require(RoRooms.Client.UI.Components.EmotesCategory)
 local EmoteCategoriesSidebar = require(RoRooms.Client.UI.Components.EmoteCategoriesSidebar)
@@ -119,7 +120,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local DisconnectFocusedCategory = Scope:Observer(States.EmotesMenu.FocusedCategory):onChange(function()
 		local EmotesList = EmotesMenu.AutoScaleFrame.MenuFrame.Contents.Frame.EmotesList
-		local Category = EmotesList:FindFirstChild(`{Use(States.EmotesMenu.FocusedCategory)}EmotesCategory`)
+		local Category = EmotesList:FindFirstChild(`{Peek(States.EmotesMenu.FocusedCategory)}EmotesCategory`)
 		if Category then
 			EmotesList.CanvasPosition = Vector2.new(0, 0)
 			EmotesList.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - EmotesList.AbsolutePosition.Y)

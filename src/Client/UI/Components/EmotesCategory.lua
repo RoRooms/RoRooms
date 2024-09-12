@@ -14,7 +14,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Theme = Themer.Theme:now()
 
 	local CategoryName = Util.Fallback(Props.CategoryName, "General")
-	local Name = Util.Fallback(Props.Name, `{Use(Props.CategoryName)}EmotesCategory`)
+	local Name = Util.Fallback(Props.Name, `EmotesCategory`)
 	local Size = Util.Fallback(Props.Size, UDim2.fromScale(1, 0))
 	local AutomaticSize = Util.Fallback(Props.AutomaticSize, Enum.AutomaticSize.Y)
 	local LayoutOrder = Util.Fallback(Props.LayoutOrder, 0)
@@ -69,7 +69,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListWraps = true,
 
 				[Children] = {
-					Scope:ForPairs(RoRooms.Config.Systems.Emotes.Emotes, function(EmoteId, Emote)
+					Scope:ForPairs(RoRooms.Config.Systems.Emotes.Emotes, function(Use, Scope, EmoteId, Emote)
 						local EmoteCategory = Emote.Category
 						if EmoteCategory == nil then
 							EmoteCategory = "General"

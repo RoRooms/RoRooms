@@ -8,13 +8,15 @@ local States = require(RoRooms.Client.UI.States)
 local ItemsController = require(RoRooms.Client.Items.ItemsController)
 local AttributeValue = require(RoRooms.Shared.ExtPackages.AttributeValue)
 
+local Peek = Fusion.peek
+
 local ItemGiverComponent = Component.new {
 	Tag = "RR_ItemGiver",
 }
 
 function ItemGiverComponent:GiveItem(Player: Player)
 	if Player == Players.LocalPlayer then
-		ItemsController:ToggleEquipItem(Use(self.ItemId))
+		ItemsController:ToggleEquipItem(Peek(self.ItemId))
 	end
 end
 
@@ -74,11 +76,11 @@ function ItemGiverComponent:Construct()
 		return table.find(Use(States.EquippedItems), Use(self.ItemId)) ~= nil
 	end)
 
-	if not Use(self.ItemId) then
+	if not Peek(self.ItemId) then
 		warn("No RR_ItemId attribute defined for ItemGiver", self.Instance)
 	end
-	if not Use(self.Item) then
-		warn("Could not find item from RR_ItemId", Use(self.ItemId), self.Instance)
+	if not Peek(self.Item) then
+		warn("Could not find item from RR_ItemId", Peek(self.ItemId), self.Instance)
 	end
 end
 

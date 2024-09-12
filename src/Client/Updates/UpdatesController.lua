@@ -1,9 +1,10 @@
 local RunService = game:GetService("RunService")
 local RoRooms = require(script.Parent.Parent.Parent.Parent)
-local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
+
+local Peek = Fusion.peek
 
 local UpdatesController = {
 	Name = script.Name,
@@ -14,7 +15,7 @@ function UpdatesController:KnitStart()
 
 	if RunService:IsStudio() then
 		Scope:Observer(States.RoRooms.UpToDate):onChange(function()
-			local UpToDate = Use(States.RoRooms.UpToDate)
+			local UpToDate = Peek(States.RoRooms.UpToDate)
 			if not UpToDate and (LastUpToDate ~= UpToDate) then
 				Prompts:PushPrompt({
 					Title = "Update available ✨",
@@ -27,7 +28,7 @@ function UpdatesController:KnitStart()
 				})
 			end
 
-			LastUpToDate = Use(States.RoRooms.UpToDate)
+			LastUpToDate = Peek(States.RoRooms.UpToDate)
 		end)
 	end
 end

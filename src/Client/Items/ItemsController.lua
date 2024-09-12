@@ -8,6 +8,8 @@ local States = require(RoRooms.Client.UI.States)
 local Prompts = require(RoRooms.Client.UI.States.Prompts)
 local UIController = require(RoRooms.Client.UI.UIController)
 
+local Peek = Fusion.peek
+
 local ItemsMenu = require(RoRooms.Client.UI.ScreenGuis.ItemsMenu)
 
 local ItemsService
@@ -58,7 +60,7 @@ function ItemsController:_AddNeoHotbarButton()
 	end
 
 	NeoHotbar:AddCustomButton("ItemsMenuButton", "rbxassetid://6966623635", function()
-		if not Use(States.ItemsMenu.Open) then
+		if not Peek(States.ItemsMenu.Open) then
 			States.ItemsMenu.Open:set(true)
 		else
 			States.ItemsMenu.Open:set(false)

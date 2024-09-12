@@ -4,6 +4,7 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(script.Parent)
+local Peek = Fusion.peek
 
 local CoreGui = {
 	IsUnibarOpen = Scope:Computed(function(Use)
@@ -23,15 +24,15 @@ function CoreGui:Start()
 	end)
 
 	Scope:Observer(self.IsUnibarOpen):onChange(function()
-		States.TopbarVisible:set(not Use(CoreGui.IsUnibarOpen))
-		if Use(CoreGui.IsUnibarOpen) then
+		States.TopbarVisible:set(not Peek(CoreGui.IsUnibarOpen))
+		if Peek(CoreGui.IsUnibarOpen) then
 			States.CurrentMenu:set(nil)
 		end
 	end)
 
 	Scope:Observer(States.RobloxMenuOpen):onChange(function()
-		States.TopbarVisible:set(not Use(States.RobloxMenuOpen))
-		if Use(States.RobloxMenuOpen) then
+		States.TopbarVisible:set(not Peek(States.RobloxMenuOpen))
+		if Peek(States.RobloxMenuOpen) then
 			States.CurrentMenu:set(nil)
 			States.ItemsMenu.Open:set(false)
 		end

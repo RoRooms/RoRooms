@@ -6,6 +6,7 @@ local States = require(RoRooms.Client.UI.States)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
@@ -90,7 +91,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 										OnFocusLost = function()
 											if States.Services.UserProfileService then
-												States.Services.UserProfileService:SetNickname(Use(NicknameText))
+												States.Services.UserProfileService:SetNickname(Peek(NicknameText))
 											end
 										end,
 									},
@@ -105,7 +106,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 										OnFocusLost = function()
 											if States.Services.UserProfileService then
-												States.Services.UserProfileService:SetStatus(Use(StatusText))
+												States.Services.UserProfileService:SetStatus(Peek(StatusText))
 											end
 										end,
 									},

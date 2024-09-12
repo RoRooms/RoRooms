@@ -6,6 +6,7 @@ local States = require(RoRooms.Client.UI.States)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 local ItemsCategory = require(RoRooms.Client.UI.Components.ItemsCategory)
 local ItemCategoriesSidebar = require(RoRooms.Client.UI.Components.ItemCategoriesSidebar)
@@ -97,8 +98,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local DisconnectOpen = Scope:Observer(States.ItemsMenu.Open):onChange(function()
 		local TextClasses = { "TextLabel", "TextButton", "TextBox" }
-		if Use(States.ItemsMenu.Open) then
-			if Use(States.ScreenSize).Y < 1000 then
+		if Peek(States.ItemsMenu.Open) then
+			if Peek(States.ScreenSize).Y < 1000 then
 				States.CurrentMenu:set()
 			end
 		end
@@ -111,7 +112,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local DisconnectFocusedCategory = Scope:Observer(States.ItemsMenu.FocusedCategory):onChange(function()
 		local Items = ItemsMenu.AutoScaleFrame.MenuFrame.Contents.Items
-		local Category = Items:FindFirstChild(`{Use(States.ItemsMenu.FocusedCategory)}ItemsCategory`)
+		local Category = Items:FindFirstChild(`{Peek(States.ItemsMenu.FocusedCategory)}ItemsCategory`)
 		if Category then
 			Items.CanvasPosition = Vector2.new(0, 0)
 			Items.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - Items.AbsolutePosition.Y)

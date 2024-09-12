@@ -1,4 +1,8 @@
+local LonekaUniversal = require(script.Parent.Parent.Parent.Parent.Parent)
+local Fusion = require(LonekaUniversal.Packages.Fusion)
 local States = require(script.Parent)
+
+local Peek = Fusion.peek
 
 type World = {
 	PlaceId: number,
@@ -21,9 +25,9 @@ function Worlds:FetchTopWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 
 	if States.Services.TopWorldsService then
 		return States.Services.TopWorldsService
-			:GetTopWorlds(math.floor(#Use(States.Worlds.TopWorlds) / PAGE_SIZE), PageCount, PAGE_SIZE)
+			:GetTopWorlds(math.floor(#Peek(States.Worlds.TopWorlds) / PAGE_SIZE), PageCount, PAGE_SIZE)
 			:andThen(function(TopWorlds: WorldPages?)
-				if OnlyIfEmpty and #Use(States.Worlds.TopWorlds) > 0 then
+				if OnlyIfEmpty and #Peek(States.Worlds.TopWorlds) > 0 then
 					return
 				else
 					self:_AddTopWorlds(TopWorlds)
@@ -35,7 +39,7 @@ function Worlds:FetchTopWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 end
 
 function Worlds:_AddTopWorlds(TopWorlds: WorldPages)
-	local NewTopWorlds = Use(States.Worlds.TopWorlds)
+	local NewTopWorlds = Peek(States.Worlds.TopWorlds)
 
 	for _, Page in ipairs(TopWorlds) do
 		for _, World in ipairs(Page) do
@@ -57,7 +61,7 @@ function Worlds:FetchRandomWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 		return States.Services.RandomWorldsService
 			:GetRandomWorlds(nil, PageCount, PAGE_SIZE)
 			:andThen(function(RandomWorlds: WorldPages)
-				if OnlyIfEmpty and #Use(States.Worlds.RandomWorlds) > 0 then
+				if OnlyIfEmpty and #Peek(States.Worlds.RandomWorlds) > 0 then
 					return
 				else
 					self:_AddRandomWorlds(RandomWorlds)
@@ -69,7 +73,7 @@ function Worlds:FetchRandomWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 end
 
 function Worlds:_AddRandomWorlds(RandomWorlds: WorldPages)
-	local NewRandomWorlds = Use(States.Worlds.RandomWorlds)
+	local NewRandomWorlds = Peek(States.Worlds.RandomWorlds)
 
 	for _, Page in ipairs(RandomWorlds) do
 		for _, World in ipairs(Page) do
@@ -110,10 +114,10 @@ function Worlds:Start()
 		self:_AddRandomWorlds(RandomWorlds)
 	end)
 
-	if #Use(States.Worlds.TopWorlds) == 0 then
+	if #Peek(States.Worlds.TopWorlds) == 0 then
 		self:FetchTopWorlds(nil, true)
 	end
-	if #Use(States.Worlds.RandomWorlds) == 0 then
+	if #Peek(States.Worlds.RandomWorlds) == 0 then
 		self:FetchRandomWorlds(nil, true)
 	end
 end

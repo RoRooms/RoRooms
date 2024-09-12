@@ -7,6 +7,7 @@ local ColorUtils = require(RoRooms.Packages.ColorUtils)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 local CustomButton = require(script.Parent.CustomButton)
 
@@ -51,7 +52,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				Props.Callback()
 			end
 			if States.Controllers.ItemsController then
-				States.Controllers.ItemsController:ToggleEquipItem(Use(Props.ItemId))
+				States.Controllers.ItemsController:ToggleEquipItem(Peek(Props.ItemId))
 			end
 		end,
 

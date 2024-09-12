@@ -6,6 +6,7 @@ local States = require(RoRooms.Client.UI.States)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 local Components = RoRooms.Client.UI.Components
 local TopbarButton = require(Components.TopbarButton)
@@ -97,7 +98,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						StrokeColor = Theme.Util.Colors.Neutral.Main,
 
 						OnActivated = function()
-							States.TopbarVisible:set(not Use(States.TopbarVisible))
+							States.TopbarVisible:set(not Peek(States.TopbarVisible))
 							States.CurrentMenu:set(nil)
 						end,
 

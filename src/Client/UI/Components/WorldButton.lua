@@ -9,6 +9,7 @@ local States = require(RoRooms.Client.UI.States)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
 local CustomButton = require(script.Parent.CustomButton)
 
@@ -23,7 +24,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local function UpdatePlaceInfo()
 		Future.Try(function()
-			return MarketplaceService:GetProductInfo(Use(Props.PlaceId))
+			return MarketplaceService:GetProductInfo(Peek(Props.PlaceId))
 		end):After(function(Success, Result)
 			if Success then
 				PlaceInfo:set(Result)
@@ -46,7 +47,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 
 		OnActivated = function()
-			States.WorldPageMenu.PlaceId:set(Use(Props.PlaceId))
+			States.WorldPageMenu.PlaceId:set(Peek(Props.PlaceId))
 			States.CurrentMenu:set("WorldPageMenu")
 		end,
 
