@@ -18,8 +18,8 @@ local WorldTeleporterComponent = Component.new {
 }
 
 function WorldTeleporterComponent:_PromptTeleport()
-	local PlaceId = self.PlaceId:get()
-	local PlaceInfo = self.PlaceInfo:get()
+	local PlaceId = Use(self.PlaceId)
+	local PlaceInfo = Use(self.PlaceInfo)
 
 	if PlaceId and PlaceInfo then
 		Prompts:PushPrompt({
@@ -56,17 +56,17 @@ end
 
 function WorldTeleporterComponent:Start()
 	Observer(self.PlaceId):onChange(function()
-		self:_UpdatePlaceInfo(self.PlaceId:get())
+		self:_UpdatePlaceInfo(Use(self.PlaceId))
 	end)
-	self:_UpdatePlaceInfo(self.PlaceId:get())
+	self:_UpdatePlaceInfo(Use(self.PlaceId))
 
 	self.Instance.Touched:Connect(function(TouchedPart: BasePart)
 		local Character = TouchedPart:FindFirstAncestorOfClass("Model")
 		if Character then
 			local Player = Players:GetPlayerFromCharacter(Character)
 			if Player == Players.LocalPlayer then
-				if #States.Prompts:get() == 0 then
-					self:_PromptTeleport(self.PlaceId:get(), self.PlaceInfo:get())
+				if #Use(States.Prompts) == 0 then
+					self:_PromptTeleport(Use(self.PlaceId), Use(self.PlaceInfo))
 				end
 			end
 		end
@@ -81,7 +81,7 @@ function WorldTeleporterComponent:Construct()
 		warn("WorldTeleporter must be a BasePart object", self.Instance)
 		return
 	end
-	if not self.PlaceId:get() then
+	if not Use(self.PlaceId) then
 		warn("No RR_PlaceId attribute defined for WorldTeleporter", self.Instance)
 		return
 	end

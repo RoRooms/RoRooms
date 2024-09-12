@@ -16,7 +16,7 @@ function UpdatesController:KnitStart()
 
 	if RunService:IsStudio() then
 		Observer(States.RoRooms.UpToDate):onChange(function()
-			local UpToDate = States.RoRooms.UpToDate:get()
+			local UpToDate = Use(States.RoRooms.UpToDate)
 			if not UpToDate and (LastUpToDate ~= UpToDate) then
 				Prompts:PushPrompt({
 					Title = "Update available ✨",
@@ -29,7 +29,7 @@ function UpdatesController:KnitStart()
 				})
 			end
 
-			LastUpToDate = States.RoRooms.UpToDate:get()
+			LastUpToDate = Use(States.RoRooms.UpToDate)
 		end)
 	end
 end

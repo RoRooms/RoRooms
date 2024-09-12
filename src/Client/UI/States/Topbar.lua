@@ -14,7 +14,7 @@ local Topbar = {
 			LayoutOrder = 5,
 			IndicatorColor = Theme.Colors.Warning.Main,
 			IndicatorEnabled = Computed(function()
-				return States.RoRooms.UpToDate:get() == false
+				return Use(States.RoRooms.UpToDate) == false
 			end),
 		},
 		Emotes = {
@@ -61,7 +61,7 @@ function Topbar:AddTopbarButton(
 		},
 	}
 )
-	local TopbarButtons = States.TopbarButtons:get()
+	local TopbarButtons = Use(States.TopbarButtons)
 
 	TopbarButtons[Name] = Button
 
@@ -69,7 +69,7 @@ function Topbar:AddTopbarButton(
 end
 
 function Topbar:RemoveTopbarButton(Name: string)
-	local TopbarButtons = States.TopbarButtons:get()
+	local TopbarButtons = Use(States.TopbarButtons)
 
 	TopbarButtons[Name] = nil
 

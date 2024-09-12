@@ -29,7 +29,7 @@ function AnimatedSeatComponent:UpdateOccupant()
 			self.Occupant:set(Players:GetPlayerFromCharacter(Character))
 		end
 
-		if self.Occupant:get() == Players.LocalPlayer then
+		if Use(self.Occupant) == Players.LocalPlayer then
 			local Animator = Humanoid:FindFirstChild("Animator")
 			if Animator then
 				local AnimationTrack = Animator:LoadAnimation(self.Animation)
@@ -68,7 +68,7 @@ function AnimatedSeatComponent:GetProximityPrompt()
 
 	Hydrate(ProximityPrompt) {
 		Enabled = Computed(function()
-			return self.Occupant:get() == nil
+			return Use(self.Occupant) == nil
 		end),
 	}
 
@@ -76,9 +76,9 @@ function AnimatedSeatComponent:GetProximityPrompt()
 end
 
 function AnimatedSeatComponent:Start()
-	self.Instance.Disabled = not self.SitOnTouch:get()
+	self.Instance.Disabled = not Use(self.SitOnTouch)
 
-	if self.PromptToSit:get() then
+	if Use(self.PromptToSit) then
 		self.ProximityPrompt = self:GetProximityPrompt()
 
 		self.ProximityPrompt.Triggered:Connect(function(Player: Player)

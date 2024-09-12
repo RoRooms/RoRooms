@@ -30,7 +30,7 @@ return function(Props)
 				Position = Spring(
 					Computed(function()
 						local YPos = 68 + 15
-						if not States.ItemsMenu.Open:get() then
+						if not Use(States.ItemsMenu.Open) then
 							YPos -= 15
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(1, -YPos))
@@ -48,7 +48,7 @@ return function(Props)
 						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Spring(
 							Computed(function()
-								if States.ItemsMenu.Open:get() then
+								if Use(States.ItemsMenu.Open) then
 									return 0
 								else
 									return 1
@@ -97,8 +97,8 @@ return function(Props)
 
 	local DisconnectOpen = Observer(States.ItemsMenu.Open):onChange(function()
 		local TextClasses = { "TextLabel", "TextButton", "TextBox" }
-		if States.ItemsMenu.Open:get() then
-			if States.ScreenSize:get().Y < 1000 then
+		if Use(States.ItemsMenu.Open) then
+			if Use(States.ScreenSize).Y < 1000 then
 				States.CurrentMenu:set()
 			end
 		end
@@ -111,7 +111,7 @@ return function(Props)
 
 	local DisconnectFocusedCategory = Observer(States.ItemsMenu.FocusedCategory):onChange(function()
 		local Items = ItemsMenu.AutoScaleFrame.MenuFrame.Contents.Items
-		local Category = Items:FindFirstChild(`{States.ItemsMenu.FocusedCategory:get()}ItemsCategory`)
+		local Category = Items:FindFirstChild(`{Use(States.ItemsMenu.FocusedCategory)}ItemsCategory`)
 		if Category then
 			Items.CanvasPosition = Vector2.new(0, 0)
 			Items.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - Items.AbsolutePosition.Y)

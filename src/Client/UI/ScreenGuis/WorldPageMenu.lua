@@ -25,17 +25,17 @@ local Image = require(OnyxUI.Components.Image)
 
 return function(Props)
 	local MenuOpen = Computed(function()
-		return States.CurrentMenu:get() == script.Name
+		return Use(States.CurrentMenu) == script.Name
 	end)
 	local PlaceInfo = Value({})
 
 	local function UpdatePlaceInfo()
-		if States.WorldPageMenu.PlaceId:get() == nil then
+		if Use(States.WorldPageMenu.PlaceId) == nil then
 			return
 		end
 
 		Future.Try(function()
-			return MarketplaceService:GetProductInfo(States.WorldPageMenu.PlaceId:get())
+			return MarketplaceService:GetProductInfo(Use(States.WorldPageMenu.PlaceId))
 		end):After(function(Success, Result)
 			if Success then
 				PlaceInfo:set(Result)
@@ -63,8 +63,8 @@ return function(Props)
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Spring(
 					Computed(function()
-						local YPos = States.TopbarBottomPos:get()
-						if not MenuOpen:get() then
+						local YPos = Use(States.TopbarBottomPos)
+						if not Use(MenuOpen) then
 							YPos = YPos + 15
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
@@ -80,7 +80,7 @@ return function(Props)
 						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Spring(
 							Computed(function()
-								if MenuOpen:get() then
+								if Use(MenuOpen) then
 									return 0
 								else
 									return 1
@@ -110,8 +110,8 @@ return function(Props)
 									Image {
 										Name = "Thumbnail",
 										Image = Computed(function()
-											if PlaceInfo:get() and PlaceInfo:get().IconImageAssetId then
-												return `rbxassetid://{PlaceInfo:get().IconImageAssetId}`
+											if Use(PlaceInfo) and Use(PlaceInfo).IconImageAssetId then
+												return `rbxassetid://{Use(PlaceInfo).IconImageAssetId}`
 											else
 												return "rbxasset://textures/ui/GuiImagePlaceholder.png"
 											end
@@ -134,8 +134,8 @@ return function(Props)
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 												Text = Computed(function()
-													if PlaceInfo:get() and PlaceInfo:get().Name then
-														return PlaceInfo:get().Name
+													if Use(PlaceInfo) and Use(PlaceInfo).Name then
+														return Use(PlaceInfo).Name
 													else
 														return "Name"
 													end
@@ -143,8 +143,8 @@ return function(Props)
 												TextSize = Theme.TextSize["1.5"],
 												FontFace = Computed(function()
 													return Font.new(
-														Theme.Font.Heading:get(),
-														Theme.FontWeight.Heading:get()
+														Use(Theme.Font.Heading),
+														Use(Theme.FontWeight.Heading)
 													)
 												end),
 												TextTruncate = Enum.TextTruncate.AtEnd,
@@ -154,8 +154,8 @@ return function(Props)
 											Text {
 												Name = "Description",
 												Text = Computed(function()
-													if PlaceInfo:get() and PlaceInfo:get().Description then
-														return PlaceInfo:get().Description
+													if Use(PlaceInfo) and Use(PlaceInfo).Description then
+														return Use(PlaceInfo).Description
 													else
 														return "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 													end
@@ -182,7 +182,7 @@ return function(Props)
 										OnActivated = function()
 											if States.Services.WorldsService then
 												States.Services.WorldsService
-													:TeleportToWorld(States.WorldPageMenu.PlaceId:get())
+													:TeleportToWorld(Use(States.WorldPageMenu.PlaceId))
 													:andThen(function(Success: boolean, Message: string)
 														States.CurrentMenu:set(nil)
 

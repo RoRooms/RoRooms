@@ -18,7 +18,7 @@ local ItemGiverComponent = Component.new {
 
 function ItemGiverComponent:GiveItem(Player: Player)
 	if Player == Players.LocalPlayer then
-		ItemsController:ToggleEquipItem(self.ItemId:get())
+		ItemsController:ToggleEquipItem(Use(self.ItemId))
 	end
 end
 
@@ -36,22 +36,22 @@ function ItemGiverComponent:GetProximityPrompt()
 
 	Hydrate(ProximityPrompt) {
 		Enabled = Computed(function()
-			return self.Item:get() ~= nil
+			return Use(self.Item) ~= nil
 		end),
 		ActionText = Computed(function()
-			if self.Item:get() then
-				if self.Equipped:get() then
+			if Use(self.Item) then
+				if Use(self.Equipped) then
 					return "Unequip"
 				else
 					return "Equip"
 				end
 			else
-				return self.ItemId:get()
+				return Use(self.ItemId)
 			end
 		end),
 		ObjectText = Computed(function()
-			if self.Item:get() then
-				return self.Item:get().Name
+			if Use(self.Item) then
+				return Use(self.Item).Name
 			else
 				return "Invalid item"
 			end
@@ -72,17 +72,17 @@ end
 function ItemGiverComponent:Construct()
 	self.ItemId = AttributeValue(self.Instance, "RR_ItemId")
 	self.Item = Computed(function()
-		return RoRooms.Config.Systems.Items.Items[self.ItemId:get()]
+		return RoRooms.Config.Systems.Items.Items[Use(self.ItemId)]
 	end)
 	self.Equipped = Computed(function()
-		return table.find(States.EquippedItems:get(), self.ItemId:get()) ~= nil
+		return table.find(Use(States.EquippedItems), Use(self.ItemId)) ~= nil
 	end)
 
-	if not self.ItemId:get() then
+	if not Use(self.ItemId) then
 		warn("No RR_ItemId attribute defined for ItemGiver", self.Instance)
 	end
-	if not self.Item:get() then
-		warn("Could not find item from RR_ItemId", self.ItemId:get(), self.Instance)
+	if not Use(self.Item) then
+		warn("Could not find item from RR_ItemId", Use(self.ItemId), self.Instance)
 	end
 end
 

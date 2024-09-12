@@ -24,14 +24,14 @@ return function(Props)
 	local IsHovering = Value(false)
 	local IsHolding = Value(false)
 	local MenuOpen = Computed(function()
-		return States.CurrentMenu:get() == Props.MenuName:get()
+		return Use(States.CurrentMenu) == Use(Props.MenuName)
 	end)
 
 	return BaseButton {
 		Name = "TopbarButton",
 		BackgroundColor3 = Theme.Colors.BaseContent.Main,
 		BackgroundTransparency = Computed(function()
-			if IsHovering:get() or MenuOpen:get() then
+			if Use(IsHovering) or Use(MenuOpen) then
 				return 0.9
 			else
 				return 1
@@ -39,7 +39,7 @@ return function(Props)
 		end),
 		Size = Computed(function()
 			local BaseSize = UDim2.fromOffset(45, 45)
-			local SizeMultiplier = Props.SizeMultiplier:get()
+			local SizeMultiplier = Use(Props.SizeMultiplier)
 			return UDim2.fromOffset(BaseSize.X.Offset * SizeMultiplier, BaseSize.Y.Offset * SizeMultiplier)
 		end),
 		AutomaticSize = Enum.AutomaticSize.None,
@@ -51,11 +51,11 @@ return function(Props)
 		IsHovering = IsHovering,
 		IsHolding = IsHolding,
 		OnActivated = function()
-			if States.CurrentMenu:get() == Props.MenuName:get() then
+			if Use(States.CurrentMenu) == Use(Props.MenuName) then
 				States.CurrentMenu:set()
 			else
-				States.CurrentMenu:set(Props.MenuName:get())
-				if States.ScreenSize:get().Y < 900 then
+				States.CurrentMenu:set(Use(Props.MenuName))
+				if Use(States.ScreenSize).Y < 900 then
 					States.ItemsMenu.Open:set()
 				end
 			end
@@ -65,10 +65,10 @@ return function(Props)
 			Icon {
 				Name = "Icon",
 				Image = Computed(function()
-					if MenuOpen:get() then
-						return Props.IconFilled:get()
+					if Use(MenuOpen) then
+						return Use(Props.IconFilled)
 					else
-						return Props.Icon:get()
+						return Use(Props.Icon)
 					end
 				end),
 				Size = UDim2.fromOffset(30, 30),
@@ -83,7 +83,7 @@ return function(Props)
 				AnchorPoint = Vector2.new(0.5, 1),
 				Position = UDim2.fromScale(0.5, 1),
 				CornerRadius = Computed(function()
-					return UDim.new(0, Theme.CornerRadius.Full:get())
+					return UDim.new(0, Use(Theme.CornerRadius.Full))
 				end),
 				Visible = IndicatorEnabled,
 			},

@@ -15,16 +15,16 @@ return function(Props: { [any]: any })
 	Props.CategoryName = EnsureValue(Props.CategoryName, "string", "Category")
 
 	local Category = Computed(function()
-		return RoRooms.Config.Systems.Items.Categories[Props.CategoryName:get()]
+		return RoRooms.Config.Systems.Items.Categories[Use(Props.CategoryName)]
 	end)
 
 	return Frame {
-		Name = `{Props.CategoryName:get()}ItemsCategory`,
+		Name = `{Use(Props.CategoryName)}ItemsCategory`,
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		LayoutOrder = Computed(function()
-			if Category:get() then
-				return Category:get().LayoutOrder
+			if Use(Category) then
+				return Use(Category).LayoutOrder
 			else
 				return 0
 			end
@@ -46,8 +46,8 @@ return function(Props: { [any]: any })
 				[Children] = {
 					Icon {
 						Image = Computed(function()
-							if Category:get() and Category:get().Icon then
-								return Category:get().Icon
+							if Use(Category) and Use(Category).Icon then
+								return Use(Category).Icon
 							else
 								return "rbxassetid://17266112920"
 							end
@@ -79,7 +79,7 @@ return function(Props: { [any]: any })
 							ItemCategory = "General"
 						end
 
-						if ItemCategory == Props.CategoryName:get() then
+						if ItemCategory == Use(Props.CategoryName) then
 							return ItemId,
 								ItemButton {
 									ItemId = ItemId,

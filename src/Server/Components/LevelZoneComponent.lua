@@ -14,7 +14,7 @@ function LevelZoneComponent:Start()
 	self.Zone.playerEntered:Connect(function(Player: Player)
 		local Profile = PlayerDataService:GetProfile(Player)
 		if Profile then
-			if Profile.Data.Level < self.LevelRequirement:get() then
+			if Profile.Data.Level < Use(self.LevelRequirement) then
 				Player:LoadCharacter()
 			end
 		end

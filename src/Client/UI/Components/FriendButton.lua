@@ -34,12 +34,12 @@ return function(Props)
 	local PlaceInfo = Value({})
 
 	local function UpdatePlaceInfo()
-		if Props.PlaceId:get() == nil then
+		if Use(Props.PlaceId) == nil then
 			return
 		end
 
 		Future.Try(function()
-			return MarketplaceService:GetProductInfo(Props.PlaceId:get())
+			return MarketplaceService:GetProductInfo(Use(Props.PlaceId))
 		end):After(function(Success, Result)
 			if Success then
 				PlaceInfo:set(Result)
@@ -55,7 +55,7 @@ return function(Props)
 	UpdatePlaceInfo()
 
 	local StatusColor = Computed(function()
-		if Props.InRoRooms:get() then
+		if Use(Props.InRoRooms) then
 			return Color3.fromRGB(2, 183, 87)
 		else
 			return Color3.fromRGB(0, 162, 255)
@@ -76,8 +76,8 @@ return function(Props)
 		OnActivated = function()
 			States.CurrentMenu:set(nil)
 
-			if Props.InRoRooms:get() then
-				if Props.JobId:get() == game.JobId then
+			if Use(Props.InRoRooms) then
+				if Use(Props.JobId) == game.JobId then
 					Prompts:PushPrompt({
 						Title = "Failure",
 						Text = "You're already in the same server as this person.",
@@ -90,7 +90,7 @@ return function(Props)
 				else
 					Prompts:PushPrompt({
 						Title = "Teleport",
-						Text = `Do you want to join friend in {PlaceInfo:get().Name}?`,
+						Text = `Do you want to join friend in {Use(PlaceInfo).Name}?`,
 						Buttons = {
 							{
 								Contents = { "Cancel" },
@@ -100,7 +100,7 @@ return function(Props)
 								Contents = { "Teleport" },
 								Callback = function()
 									if States.Services.WorldsService then
-										States.Services.WorldsService:TeleportToWorld(Props.PlaceId:get())
+										States.Services.WorldsService:TeleportToWorld(Use(Props.PlaceId))
 									end
 								end,
 							},
@@ -111,7 +111,7 @@ return function(Props)
 				SocialService:PromptGameInvite(
 					Players.LocalPlayer,
 					New "ExperienceInviteOptions" {
-						InviteUser = Props.UserId:get(),
+						InviteUser = Use(Props.UserId),
 					}
 				)
 			end
@@ -121,17 +121,17 @@ return function(Props)
 		[Children] = {
 			Avatar {
 				Size = UDim2.fromOffset(80, 80),
-				BackgroundColor3 = ColorUtils.Lighten(Props.Color:get(), 0.06),
+				BackgroundColor3 = ColorUtils.Lighten(Use(Props.Color), 0.06),
 				Image = Computed(function()
-					return `rbxthumb://type=AvatarHeadShot&id={Props.UserId:get()}&w=150&h=150`
+					return `rbxthumb://type=AvatarHeadShot&id={Use(Props.UserId)}&w=150&h=150`
 				end),
 				CornerRadius = Computed(function()
-					return UDim.new(0, Theme.CornerRadius.Full:get())
+					return UDim.new(0, Use(Theme.CornerRadius.Full))
 				end),
 				RingEnabled = Props.InRoRooms,
 				RingColor = Colors.Green["500"],
 				IndicatorEnabled = Computed(function()
-					return not Props.InRoRooms:get()
+					return not Use(Props.InRoRooms)
 				end),
 				IndicatorColor = StatusColor,
 			},
@@ -155,7 +155,7 @@ return function(Props)
 					Text {
 						Name = "Status",
 						Text = Computed(function()
-							return (Props.InRoRooms:get() and PlaceInfo:get().Name) or "Online"
+							return (Use(Props.InRoRooms) and Use(PlaceInfo).Name) or "Online"
 						end),
 						TextColor3 = StatusColor,
 						TextSize = Theme.TextSize["0.875"],

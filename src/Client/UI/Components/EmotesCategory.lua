@@ -14,13 +14,13 @@ local EmoteButton = require(RoRooms.Client.UI.Components.EmoteButton)
 
 return function(Props: { [any]: any })
 	Props.CategoryName = EnsureValue(Props.CategoryName, "string", "General")
-	Props.Name = EnsureValue(Props.Name, "string", `{Props.CategoryName:get()}EmotesCategory`)
+	Props.Name = EnsureValue(Props.Name, "string", `{Use(Props.CategoryName)}EmotesCategory`)
 	Props.Size = EnsureValue(Props.Size, "UDim2", UDim2.fromScale(1, 0))
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
 	Props.LayoutOrder = EnsureValue(Props.LayoutOrder, "number", 0)
 
 	local Category = Computed(function()
-		return RoRooms.Config.Systems.Emotes.Categories[Props.CategoryName:get()]
+		return RoRooms.Config.Systems.Emotes.Categories[Use(Props.CategoryName)]
 	end)
 
 	return Frame {
@@ -42,8 +42,8 @@ return function(Props: { [any]: any })
 				[Children] = {
 					Icon {
 						Image = Computed(function()
-							if Category:get() and Category:get().Icon then
-								return Category:get().Icon
+							if Use(Category) and Use(Category).Icon then
+								return Use(Category).Icon
 							else
 								return "rbxassetid://17266112920"
 							end
@@ -75,7 +75,7 @@ return function(Props: { [any]: any })
 							EmoteCategory = "General"
 						end
 
-						if EmoteCategory == Props.CategoryName:get() then
+						if EmoteCategory == Use(Props.CategoryName) then
 							return EmoteId,
 								EmoteButton {
 									EmoteId = EmoteId,
@@ -83,7 +83,7 @@ return function(Props: { [any]: any })
 									Color = Emote.TintColor,
 
 									Callback = function()
-										if States.ScreenSize:get().Y <= 500 then
+										if Use(States.ScreenSize).Y <= 500 then
 											States.CurrentMenu:set()
 										end
 									end,

@@ -26,7 +26,7 @@ local DEFAULT_REFRESH_BUTTON_CONTENTS = { "rbxassetid://13858012326", "Refresh" 
 
 return function(Props)
 	local MenuOpen = Computed(function()
-		return States.CurrentMenu:get() == script.Name
+		return Use(States.CurrentMenu) == script.Name
 	end)
 	local LoadMoreButtonContents = Value(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
 	local RefreshButtonContents = Value(DEFAULT_REFRESH_BUTTON_CONTENTS)
@@ -42,8 +42,8 @@ return function(Props)
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Spring(
 					Computed(function()
-						local YPos = States.TopbarBottomPos:get()
-						if not MenuOpen:get() then
+						local YPos = Use(States.TopbarBottomPos)
+						if not Use(MenuOpen) then
 							YPos = YPos + 15
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
@@ -60,7 +60,7 @@ return function(Props)
 						Size = UDim2.fromOffset(375, 0),
 						GroupTransparency = Spring(
 							Computed(function()
-								if MenuOpen:get() then
+								if Use(MenuOpen) then
 									return 0
 								else
 									return 1

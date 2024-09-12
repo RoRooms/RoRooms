@@ -21,9 +21,9 @@ function Worlds:FetchTopWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 
 	if States.Services.TopWorldsService then
 		return States.Services.TopWorldsService
-			:GetTopWorlds(math.floor(#States.Worlds.TopWorlds:get() / PAGE_SIZE), PageCount, PAGE_SIZE)
+			:GetTopWorlds(math.floor(#Use(States.Worlds.TopWorlds) / PAGE_SIZE), PageCount, PAGE_SIZE)
 			:andThen(function(TopWorlds: WorldPages?)
-				if OnlyIfEmpty and #States.Worlds.TopWorlds:get() > 0 then
+				if OnlyIfEmpty and #Use(States.Worlds.TopWorlds) > 0 then
 					return
 				else
 					self:_AddTopWorlds(TopWorlds)
@@ -35,7 +35,7 @@ function Worlds:FetchTopWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 end
 
 function Worlds:_AddTopWorlds(TopWorlds: WorldPages)
-	local NewTopWorlds = States.Worlds.TopWorlds:get()
+	local NewTopWorlds = Use(States.Worlds.TopWorlds)
 
 	for _, Page in ipairs(TopWorlds) do
 		for _, World in ipairs(Page) do
@@ -57,7 +57,7 @@ function Worlds:FetchRandomWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 		return States.Services.RandomWorldsService
 			:GetRandomWorlds(nil, PageCount, PAGE_SIZE)
 			:andThen(function(RandomWorlds: WorldPages)
-				if OnlyIfEmpty and #States.Worlds.RandomWorlds:get() > 0 then
+				if OnlyIfEmpty and #Use(States.Worlds.RandomWorlds) > 0 then
 					return
 				else
 					self:_AddRandomWorlds(RandomWorlds)
@@ -69,7 +69,7 @@ function Worlds:FetchRandomWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 end
 
 function Worlds:_AddRandomWorlds(RandomWorlds: WorldPages)
-	local NewRandomWorlds = States.Worlds.RandomWorlds:get()
+	local NewRandomWorlds = Use(States.Worlds.RandomWorlds)
 
 	for _, Page in ipairs(RandomWorlds) do
 		for _, World in ipairs(Page) do
@@ -110,10 +110,10 @@ function Worlds:Start()
 		self:_AddRandomWorlds(RandomWorlds)
 	end)
 
-	if #States.Worlds.TopWorlds:get() == 0 then
+	if #Use(States.Worlds.TopWorlds) == 0 then
 		self:FetchTopWorlds(nil, true)
 	end
-	if #States.Worlds.RandomWorlds:get() == 0 then
+	if #Use(States.Worlds.RandomWorlds) == 0 then
 		self:FetchRandomWorlds(nil, true)
 	end
 end

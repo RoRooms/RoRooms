@@ -18,7 +18,7 @@ local FriendButton = require(RoRooms.Client.UI.Components.FriendButton)
 
 return function(Props)
 	local MenuOpen = Computed(function()
-		return States.CurrentMenu:get() == script.Name
+		return Use(States.CurrentMenu) == script.Name
 	end)
 
 	local FriendsMenu = New "ScreenGui" {
@@ -32,8 +32,8 @@ return function(Props)
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Spring(
 					Computed(function()
-						local YPos = States.TopbarBottomPos:get()
-						if not MenuOpen:get() then
+						local YPos = Use(States.TopbarBottomPos)
+						if not Use(MenuOpen) then
 							YPos = YPos + 15
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
@@ -50,7 +50,7 @@ return function(Props)
 						Size = UDim2.fromOffset(345, 0),
 						GroupTransparency = Spring(
 							Computed(function()
-								if MenuOpen:get() then
+								if Use(MenuOpen) then
 									return 0
 								else
 									return 1
@@ -111,7 +111,7 @@ return function(Props)
 	}
 
 	local DisconnectOpen = Observer(MenuOpen):onChange(function()
-		if MenuOpen:get() then
+		if Use(MenuOpen) then
 			if States.Controllers.FriendsController then
 				States.Controllers.FriendsController:UpdateFriends()
 			end

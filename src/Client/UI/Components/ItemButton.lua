@@ -22,7 +22,7 @@ return function(Props)
 
 	local IsHolding = Value(false)
 	local IsEquipped = Computed(function()
-		return table.find(States.EquippedItems:get(), Props.ItemId:get()) ~= nil
+		return table.find(Use(States.EquippedItems), Use(Props.ItemId)) ~= nil
 	end)
 
 	return CustomButton {
@@ -32,15 +32,15 @@ return function(Props)
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
 		LayoutOrder = Computed(function()
-			return Props.Item:get().LayoutOrder or 0
+			return Use(Props.Item).LayoutOrder or 0
 		end),
 		StrokeEnabled = IsEquipped,
 		StrokeColor = Spring(
 			Computed(function()
-				if IsEquipped:get() then
-					return ColorUtils.Emphasize(Props.Color:get(), Theme.Emphasis.Light:get() * 4)
+				if Use(IsEquipped) then
+					return ColorUtils.Emphasize(Use(Props.Color), Use(Theme.Emphasis.Light) * 4)
 				else
-					return ColorUtils.Emphasize(Props.Color:get(), 0.2)
+					return ColorUtils.Emphasize(Use(Props.Color), 0.2)
 				end
 			end),
 			Theme.SpringSpeed["1"],
@@ -53,13 +53,13 @@ return function(Props)
 				Props.Callback()
 			end
 			if States.Controllers.ItemsController then
-				States.Controllers.ItemsController:ToggleEquipItem(Props.ItemId:get())
+				States.Controllers.ItemsController:ToggleEquipItem(Use(Props.ItemId))
 			end
 		end,
 
 		[Children] = {
 			Computed(function()
-				local Tool = Props.Item:get().Tool
+				local Tool = Use(Props.Item).Tool
 				if not Tool then
 					return
 				end
@@ -81,10 +81,10 @@ return function(Props)
 					return Text {
 						Name = "ItemName",
 						Text = Computed(function()
-							if Props.Item:get() and Props.Item:get().Name then
-								return Props.Item:get().Name
+							if Use(Props.Item) and Use(Props.Item).Name then
+								return Use(Props.Item).Name
 							else
-								return Props.ItemId:get()
+								return Use(Props.ItemId)
 							end
 						end),
 						TextSize = Theme.TextSize["1"],
@@ -116,8 +116,8 @@ return function(Props)
 							return UDim2.fromOffset(Theme.TextSize["0.875"]:get(), Theme.TextSize["0.875"]:get())
 						end),
 						Image = Computed(function()
-							local LabelIcon = Props.Item:get().LabelIcon
-							local LevelRequirement = Props.Item:get().LevelRequirement
+							local LabelIcon = Use(Props.Item).LabelIcon
+							local LevelRequirement = Use(Props.Item).LevelRequirement
 
 							if LabelIcon then
 								return LabelIcon
@@ -128,17 +128,17 @@ return function(Props)
 							end
 						end),
 						ImageColor3 = Computed(function()
-							return ColorUtils.Lighten(Props.Color:get(), 0.25)
+							return ColorUtils.Lighten(Use(Props.Color), 0.25)
 						end),
 					},
 					Text {
 						Name = "LabelText",
 						Text = Computed(function()
-							if Props.Item:get() then
-								if Props.Item:get().LabelText then
-									return Props.Item:get().LabelText
-								elseif Props.Item:get().LevelRequirement then
-									return Props.Item:get().LevelRequirement
+							if Use(Props.Item) then
+								if Use(Props.Item).LabelText then
+									return Use(Props.Item).LabelText
+								elseif Use(Props.Item).LevelRequirement then
+									return Use(Props.Item).LevelRequirement
 								else
 									return ""
 								end
@@ -148,7 +148,7 @@ return function(Props)
 						end),
 						TextSize = Theme.TextSize["0.875"],
 						TextColor3 = Computed(function()
-							return ColorUtils.Lighten(Props.Color:get(), 0.5)
+							return ColorUtils.Lighten(Use(Props.Color), 0.5)
 						end),
 						AutoLocalize = false,
 					},

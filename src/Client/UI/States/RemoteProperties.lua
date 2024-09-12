@@ -8,7 +8,7 @@ function RemoteProperties:Start()
 	end)
 
 	States.Services.PlayerDataService.Level:Observe(function(Level)
-		local LocalPlayerData = States.LocalPlayerData:get()
+		local LocalPlayerData = Use(States.LocalPlayerData)
 		LocalPlayerData.Level = Level
 		States.LocalPlayerData:set(LocalPlayerData)
 	end)

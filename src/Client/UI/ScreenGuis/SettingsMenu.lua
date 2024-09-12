@@ -24,15 +24,15 @@ local TOGGLEABLE_CORE_GUIS = { Enum.CoreGuiType.Chat, Enum.CoreGuiType.PlayerLis
 
 return function(Props)
 	local MenuOpen = Computed(function()
-		return States.CurrentMenu:get() == script.Name
+		return Use(States.CurrentMenu) == script.Name
 	end)
 
 	Observer(States.UserSettings.HideUI):onChange(function()
 		for _, CoreGuiType in ipairs(TOGGLEABLE_CORE_GUIS) do
-			StarterGui:SetCoreGuiEnabled(CoreGuiType, not States.UserSettings.HideUI:get())
+			StarterGui:SetCoreGuiEnabled(CoreGuiType, not Use(States.UserSettings.HideUI))
 		end
-		States.TopbarVisible:set(not States.UserSettings.HideUI:get())
-		if States.UserSettings.HideUI:get() then
+		States.TopbarVisible:set(not Use(States.UserSettings.HideUI))
+		if Use(States.UserSettings.HideUI) then
 			States.CurrentMenu:set(nil)
 		end
 	end)
@@ -53,8 +53,8 @@ return function(Props)
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Spring(
 					Computed(function()
-						local YPos = States.TopbarBottomPos:get()
-						if not MenuOpen:get() then
+						local YPos = Use(States.TopbarBottomPos)
+						if not Use(MenuOpen) then
 							YPos = YPos + Theme.Spacing["1"]:get()
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
@@ -72,7 +72,7 @@ return function(Props)
 						Size = UDim2.fromOffset(305, 0),
 						GroupTransparency = Spring(
 							Computed(function()
-								if MenuOpen:get() then
+								if Use(MenuOpen) then
 									return 0
 								else
 									return 1
@@ -115,17 +115,17 @@ return function(Props)
 									Text {
 										Text = Computed(function()
 											local VersionStamp = `[RoRooms v{Version}]`
-											if not States.RoRooms.UpToDate:get() then
+											if not Use(States.RoRooms.UpToDate) then
 												return `{VersionStamp} - Out of date`
 											else
 												return VersionStamp
 											end
 										end),
 										TextColor3 = Computed(function()
-											if not States.RoRooms.UpToDate:get() then
-												return Theme.Colors.Warning.Main:get()
+											if not Use(States.RoRooms.UpToDate) then
+												return Use(Theme.Colors.Warning.Main)
 											else
-												return Theme.Colors.NeutralContent.Dark:get()
+												return Use(Theme.Colors.NeutralContent.Dark)
 											end
 										end),
 									},

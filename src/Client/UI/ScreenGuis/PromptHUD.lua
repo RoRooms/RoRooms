@@ -19,14 +19,14 @@ local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
 	local CurrentPrompt = Computed(function()
-		return States.Prompts:get()[#States.Prompts:get()]
+		return Use(States.Prompts)[#Use(States.Prompts)]
 	end)
 	local PromptOpen = Computed(function()
-		return CurrentPrompt:get() ~= nil
+		return Use(CurrentPrompt) ~= nil
 	end)
 	local Buttons = Computed(function()
-		if CurrentPrompt:get() and CurrentPrompt:get().Buttons then
-			return CurrentPrompt:get().Buttons
+		if Use(CurrentPrompt) and Use(CurrentPrompt).Buttons then
+			return Use(CurrentPrompt).Buttons
 		else
 			return {}
 		end
@@ -45,7 +45,7 @@ return function(Props)
 				Position = Spring(
 					Computed(function()
 						local YPos = 0
-						if not PromptOpen:get() then
+						if not Use(PromptOpen) then
 							YPos = YPos + 15
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0.5, YPos))
@@ -65,7 +65,7 @@ return function(Props)
 						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Spring(
 							Computed(function()
-								if PromptOpen:get() then
+								if Use(PromptOpen) then
 									return 0
 								else
 									return 1
@@ -91,15 +91,15 @@ return function(Props)
 									Text {
 										Name = "Title",
 										Text = Computed(function()
-											if CurrentPrompt:get() and CurrentPrompt:get().Title then
-												return CurrentPrompt:get().Title
+											if Use(CurrentPrompt) and Use(CurrentPrompt).Title then
+												return Use(CurrentPrompt).Title
 											else
 												return "Title"
 											end
 										end),
 										TextSize = Theme.TextSize["1.25"],
 										FontFace = Computed(function()
-											return Font.new(Theme.Font.Heading:get(), Theme.FontWeight.Heading:get())
+											return Font.new(Use(Theme.Font.Heading), Use(Theme.FontWeight.Heading))
 										end),
 										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,
@@ -108,8 +108,8 @@ return function(Props)
 									Text {
 										Name = "Body",
 										Text = Computed(function()
-											if CurrentPrompt:get() and CurrentPrompt:get().Text then
-												return CurrentPrompt:get().Text
+											if Use(CurrentPrompt) and Use(CurrentPrompt).Text then
+												return Use(CurrentPrompt).Text
 											else
 												return "Prompt body text"
 											end
@@ -127,7 +127,7 @@ return function(Props)
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								Visible = Computed(function()
-									return #Buttons:get() >= 1
+									return #Use(Buttons) >= 1
 								end),
 								ListEnabled = true,
 								ListFillDirection = Enum.FillDirection.Horizontal,
@@ -142,7 +142,7 @@ return function(Props)
 											Disabled = PromptButton.Disabled,
 
 											OnActivated = function()
-												Prompts:RemovePrompt(CurrentPrompt:get())
+												Prompts:RemovePrompt(Use(CurrentPrompt))
 
 												if PromptButton.Callback then
 													PromptButton.Callback()

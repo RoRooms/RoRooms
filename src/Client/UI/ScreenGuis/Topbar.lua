@@ -37,10 +37,10 @@ return function(Props)
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Spring(
 					Computed(function()
-						if States.TopbarVisible:get() then
+						if Use(States.TopbarVisible) then
 							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, 14))
 						else
-							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, (-TopbarButtonsHeight:get()) - 2))
+							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, (-Use(TopbarButtonsHeight)) - 2))
 						end
 					end),
 					40,
@@ -67,7 +67,7 @@ return function(Props)
 						ListFillDirection = Enum.FillDirection.Horizontal,
 						ListVerticalAlignment = Enum.VerticalAlignment.Center,
 						CornerRadius = Computed(function()
-							return UDim.new(0, Theme.CornerRadius.Full:get())
+							return UDim.new(0, Use(Theme.CornerRadius.Full))
 						end),
 						Padding = Computed(function()
 							return UDim.new(0, Theme.Spacing["0.5"]:get() / 1.25)
@@ -84,11 +84,11 @@ return function(Props)
 						BackgroundTransparency = States.PreferredTransparency,
 						BackgroundColor3 = Theme.Colors.Base.Main,
 						Visible = Computed(function()
-							return not (typeof(States.CurrentMenu:get()) == "string")
+							return not (typeof(Use(States.CurrentMenu)) == "string")
 						end),
 						TextSize = 0,
 						CornerRadius = Computed(function()
-							return UDim.new(0, Theme.CornerRadius.Full:get())
+							return UDim.new(0, Use(Theme.CornerRadius.Full))
 						end),
 						PaddingTop = Computed(function()
 							return UDim.new(0, Theme.Spacing["0.5"]:get())
@@ -105,7 +105,7 @@ return function(Props)
 						StrokeColor = Theme.Colors.Neutral.Main,
 
 						OnActivated = function()
-							States.TopbarVisible:set(not States.TopbarVisible:get())
+							States.TopbarVisible:set(not Use(States.TopbarVisible))
 							States.CurrentMenu:set(nil)
 						end,
 

@@ -24,7 +24,7 @@ return function(Props)
 
 	local function UpdatePlaceInfo()
 		Future.Try(function()
-			return MarketplaceService:GetProductInfo(Props.PlaceId:get())
+			return MarketplaceService:GetProductInfo(Use(Props.PlaceId))
 		end):After(function(Success, Result)
 			if Success then
 				PlaceInfo:set(Result)
@@ -47,7 +47,7 @@ return function(Props)
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 
 		OnActivated = function()
-			States.WorldPageMenu.PlaceId:set(Props.PlaceId:get())
+			States.WorldPageMenu.PlaceId:set(Use(Props.PlaceId))
 			States.CurrentMenu:set("WorldPageMenu")
 		end,
 
@@ -58,8 +58,8 @@ return function(Props)
 				Name = "Icon",
 				Size = UDim2.fromOffset(90, 90),
 				Image = Computed(function()
-					if PlaceInfo:get() and PlaceInfo:get().IconImageAssetId then
-						return `rbxassetid://{PlaceInfo:get().IconImageAssetId}`
+					if Use(PlaceInfo) and Use(PlaceInfo).IconImageAssetId then
+						return `rbxassetid://{Use(PlaceInfo).IconImageAssetId}`
 					else
 						return "rbxasset://textures/ui/GuiImagePlaceholder.png"
 					end
@@ -75,8 +75,8 @@ return function(Props)
 			Text {
 				Name = "Title",
 				Text = Computed(function()
-					if PlaceInfo:get() and PlaceInfo:get().Name then
-						return PlaceInfo:get().Name
+					if Use(PlaceInfo) and Use(PlaceInfo).Name then
+						return Use(PlaceInfo).Name
 					else
 						return "Title"
 					end

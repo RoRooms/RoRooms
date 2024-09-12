@@ -25,7 +25,7 @@ return function(Props)
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
 		LayoutOrder = Computed(function()
-			return Props.Emote:get().LayoutOrder or 0
+			return Use(Props.Emote).LayoutOrder or 0
 		end),
 		ListEnabled = false,
 
@@ -34,7 +34,7 @@ return function(Props)
 				Props.Callback()
 			end
 			if States.Controllers.EmotesController then
-				States.Controllers.EmotesController:PlayEmote(Props.EmoteId:get())
+				States.Controllers.EmotesController:PlayEmote(Use(Props.EmoteId))
 			end
 		end,
 		IsHolding = IsHolding,
@@ -45,8 +45,8 @@ return function(Props)
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Position = UDim2.fromScale(0.5, 0.45),
 				Text = Computed(function()
-					if Props.Emote:get() and Props.Emote:get().Emoji then
-						return Props.Emote:get().Emoji
+					if Use(Props.Emote) and Use(Props.Emote).Emoji then
+						return Use(Props.Emote).Emoji
 					else
 						return "🪩"
 					end
@@ -63,7 +63,7 @@ return function(Props)
 				Position = UDim2.fromScale(0.5, 1),
 				Size = UDim2.fromScale(1, 0),
 				Text = Computed(function()
-					return Props.Emote:get().Name or Props.EmoteId:get()
+					return Use(Props.Emote).Name or Use(Props.EmoteId)
 				end),
 				TextSize = Theme.TextSize["0.875"],
 				TextTruncate = Enum.TextTruncate.AtEnd,
@@ -84,8 +84,8 @@ return function(Props)
 						Position = UDim2.fromScale(0, 0),
 						Size = UDim2.fromOffset(13, 13),
 						Image = Computed(function()
-							local LabelIcon = Props.Emote:get().LabelIcon
-							local LevelRequirement = Props.Emote:get().LevelRequirement
+							local LabelIcon = Use(Props.Emote).LabelIcon
+							local LevelRequirement = Use(Props.Emote).LevelRequirement
 							if LabelIcon then
 								return LabelIcon
 							elseif LevelRequirement then
@@ -95,7 +95,7 @@ return function(Props)
 							end
 						end),
 						ImageColor3 = Computed(function()
-							return ColorUtils.Lighten(Props.Color:get(), 0.25)
+							return ColorUtils.Lighten(Use(Props.Color), 0.25)
 						end),
 					},
 					Text {
@@ -103,8 +103,8 @@ return function(Props)
 						AnchorPoint = Vector2.new(0, 0),
 						Position = UDim2.fromScale(0, 0),
 						Text = Computed(function()
-							local LabelText = Props.Emote:get().LabelText
-							local LevelRequirement = Props.Emote:get().LevelRequirement
+							local LabelText = Use(Props.Emote).LabelText
+							local LevelRequirement = Use(Props.Emote).LevelRequirement
 							if LabelText then
 								return LabelText
 							elseif LevelRequirement then
@@ -115,7 +115,7 @@ return function(Props)
 						end),
 						TextSize = 13,
 						TextColor3 = Computed(function()
-							return ColorUtils.Lighten(Props.Color:get(), 0.5)
+							return ColorUtils.Lighten(Use(Props.Color), 0.5)
 						end),
 						ClipsDescendants = false,
 						AutoLocalize = false,

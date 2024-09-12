@@ -29,7 +29,7 @@ function MusicController:KnitStart()
 	MusicService = Knit.GetService("MusicService")
 
 	Observer(States.UserSettings.MuteMusic):onChange(function()
-		self:SetMuted(States.UserSettings.MuteMusic:get())
+		self:SetMuted(Use(States.UserSettings.MuteMusic))
 	end)
 
 	self.SoundGroup = RoRooms.Config.Systems.Music.SoundGroup

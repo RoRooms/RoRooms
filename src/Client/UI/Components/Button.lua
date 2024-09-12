@@ -34,7 +34,7 @@ return function(Props: Props)
 		Props.ContentColor,
 		"Color3",
 		Computed(function()
-			return ColorUtils.Emphasize(Color:get(), Theme.Emphasis.Contrast:get())
+			return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Contrast))
 		end)
 	)
 	local ContentSize = EnsureValue(Props.ContentSize, "number", Theme.TextSize["1"])
@@ -42,35 +42,35 @@ return function(Props: Props)
 	local IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
 	local IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
 	local EffectiveColor = Computed(function()
-		if Disabled:get() then
-			return Theme.Colors.BaseContent.Main:get()
+		if Use(Disabled) then
+			return Use(Theme.Colors.BaseContent.Main)
 		else
-			if IsHolding:get() then
-				return ColorUtils.Emphasize(Color:get(), Theme.Emphasis.Regular:get())
-			elseif IsHovering:get() then
-				return ColorUtils.Emphasize(Color:get(), Theme.Emphasis.Light:get())
+			if Use(IsHolding) then
+				return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Regular))
+			elseif Use(IsHovering) then
+				return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Light))
 			else
-				return Color:get()
+				return Use(Color)
 			end
 		end
 	end)
 	local EffectiveContentColor = Computed(function()
-		if Disabled:get() then
-			return Theme.Colors.BaseContent.Main:get()
+		if Use(Disabled) then
+			return Use(Theme.Colors.BaseContent.Main)
 		else
-			if Style:get() == "Filled" then
-				return ContentColor:get()
-			elseif Style:get() == "Outlined" then
-				return EffectiveColor:get()
-			elseif Style:get() == "Ghost" then
-				return EffectiveColor:get()
+			if Use(Style) == "Filled" then
+				return Use(ContentColor)
+			elseif Use(Style) == "Outlined" then
+				return Use(EffectiveColor)
+			elseif Use(Style) == "Ghost" then
+				return Use(EffectiveColor)
 			else
-				return ContentColor:get()
+				return Use(ContentColor)
 			end
 		end
 	end)
 	local EffectiveContentTransparency = Computed(function()
-		if Disabled:get() then
+		if Use(Disabled) then
 			return DISABLED_CONTENT_TRANSPARENCY
 		else
 			return 0
@@ -80,8 +80,8 @@ return function(Props: Props)
 	return BaseButton(CombineProps(Props, {
 		Name = "Button",
 		BackgroundTransparency = Computed(function()
-			if Style:get() == "Filled" then
-				if Disabled:get() then
+			if Use(Style) == "Filled" then
+				if Use(Disabled) then
 					return DISABLED_BACKGROUND_TRANSPARENCY
 				else
 					return 0
@@ -116,9 +116,9 @@ return function(Props: Props)
 		StrokeEnabled = true,
 		StrokeColor = Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening),
 		StrokeTransparency = Computed(function()
-			if Style:get() == "Ghost" then
+			if Use(Style) == "Ghost" then
 				return 1
-			elseif Disabled:get() then
+			elseif Use(Disabled) then
 				return DISABLED_BACKGROUND_TRANSPARENCY
 			else
 				return 0
@@ -134,7 +134,7 @@ return function(Props: Props)
 						Image = ContentString,
 						ImageColor3 = EffectiveContentColor,
 						Size = Computed(function()
-							return UDim2.fromOffset(ContentSize:get(), ContentSize:get())
+							return UDim2.fromOffset(Use(ContentSize), Use(ContentSize))
 						end),
 						ImageTransparency = EffectiveContentTransparency,
 					}

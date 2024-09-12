@@ -24,7 +24,7 @@ local PROMPT_TEMPLATE = {
 local Prompts = {}
 
 function Prompts:PushPrompt(Prompt: Prompt)
-	local NewPrompts = States.Prompts:get()
+	local NewPrompts = Use(States.Prompts)
 
 	ReconcileTable(Prompt, PROMPT_TEMPLATE)
 
@@ -40,7 +40,7 @@ function Prompts:PushPrompt(Prompt: Prompt)
 end
 
 function Prompts:RemovePrompt(Prompt: Prompt)
-	local NewPrompts = States.Prompts:get()
+	local NewPrompts = Use(States.Prompts)
 
 	for Index = #NewPrompts, 1, -1 do
 		if NewPrompts[Index] == Prompt then

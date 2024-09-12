@@ -24,7 +24,7 @@ return function(Props)
 		LayoutOrder = Props.LayoutOrder,
 
 		OnActivated = function()
-			Props.OnActivated:get()()
+			Use(Props.OnActivated)()
 		end,
 		IsHolding = IsHolding,
 

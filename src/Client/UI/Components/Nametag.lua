@@ -29,13 +29,13 @@ return function(Props)
 				Name = "Nickname",
 				Text = Props.Nickname,
 				Visible = Computed(function()
-					return Props.Nickname:get() ~= ""
+					return Use(Props.Nickname) ~= ""
 				end),
 				Size = UDim2.fromScale(1, 0.45),
 				AutomaticSize = Enum.AutomaticSize.None,
 				TextScaled = true,
 				FontFace = Computed(function()
-					return Font.new(Theme.Font.Heading:get(), Theme.FontWeight.Heading:get())
+					return Font.new(Use(Theme.Font.Heading), Use(Theme.FontWeight.Heading))
 				end),
 				RichText = false,
 				TextXAlignment = Enum.TextXAlignment.Center,
@@ -45,7 +45,7 @@ return function(Props)
 				Name = "Status",
 				Text = Props.Status,
 				Visible = Computed(function()
-					return Props.Status:get() ~= ""
+					return Use(Props.Status) ~= ""
 				end),
 				Size = UDim2.fromScale(1, 0.25),
 				AutomaticSize = Enum.AutomaticSize.None,
