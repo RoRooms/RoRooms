@@ -79,7 +79,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 								[Children] = {
 									Scope:ForValues((States.Friends.InRoRooms, function(Friend)
-										return FriendButton {
+										return Scope:FriendButton {
 											UserId = Friend.VisitorId,
 											DisplayName = Friend.DisplayName,
 											PlaceId = Friend.PlaceId,
@@ -88,7 +88,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										}
 									end),
 									Scope:ForValues((States.Friends.NotInRoRooms, function(Friend)
-										return FriendButton {
+										return Scope:FriendButton {
 											UserId = Friend.VisitorId,
 											DisplayName = Friend.DisplayName,
 											PlaceId = Friend.PlaceId,

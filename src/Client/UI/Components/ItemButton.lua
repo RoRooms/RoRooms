@@ -18,7 +18,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		return table.find(Use(States.EquippedItems), Use(Props.ItemId)) ~= nil
 	end)
 
-	return CustomButton {
+	return Scope:CustomButton {
 		Name = "ItemButton",
 		Color = Props.Color,
 		IsHolding = IsHolding,

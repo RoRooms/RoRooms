@@ -54,7 +54,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end
 	end)
 
-	return CustomButton {
+	return Scope:CustomButton {
 		Name = "FriendButton",
 		Parent = Props.Parent,
 		ClipsDescendants = true,

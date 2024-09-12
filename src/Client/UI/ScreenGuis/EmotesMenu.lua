@@ -70,7 +70,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								end),
 
 								[Children] = {
-									EmoteCategoriesSidebar {
+									Scope:EmoteCategoriesSidebar {
 										Size = UDim2.fromScale(0, 1),
 									},
 									Scope:Scroller {
@@ -95,7 +95,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												RoRooms.Config.Systems.Emotes.Categories,
 												function(Name: string, Category)
 													return Name,
-														EmotesCategory {
+														Scope:EmotesCategory {
 															CategoryName = Name,
 															LayoutOrder = Category.LayoutOrder,
 														}

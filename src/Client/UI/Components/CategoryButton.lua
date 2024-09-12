@@ -16,7 +16,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local IsHolding = Scope:Value(false)
 
-	return CustomButton {
+	return Scope:CustomButton {
 		Name = Props.Name,
 		LayoutOrder = Props.LayoutOrder,
 

@@ -11,14 +11,14 @@ local CategoryButton = require(script.Parent.CategoryButton)
 return function(Scope: Fusion.Scope<any>, Props)
 	local Name = Scope:EnsureValue(Props.Name, "ItemCategoriesSidebar")
 
-	return CategoriesSidebar {
+	return Scope:CategoriesSidebar {
 		Name = Props.Name,
 		Size = Props.Size,
 
 		[Children] = {
 			Scope:ForPairs(RoRooms.Config.Systems.Items.Categories, function(CategoryName: string, Category)
 				return CategoryName,
-					CategoryButton {
+					Scope:CategoryButton {
 						Name = "ItemCategoryButton",
 						Category = CategoryName,
 						Icon = Category.Icon,

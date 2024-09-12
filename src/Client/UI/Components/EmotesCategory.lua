@@ -72,7 +72,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 						if EmoteCategory == Use(Props.CategoryName) then
 							return EmoteId,
-								EmoteButton {
+								Scope:EmoteButton {
 									EmoteId = EmoteId,
 									Emote = Emote,
 									Color = Emote.TintColor,

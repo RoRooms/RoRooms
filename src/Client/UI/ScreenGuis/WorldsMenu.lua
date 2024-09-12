@@ -91,7 +91,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ListWraps = true,
 
 								[Children] = {
-									WorldsCategory {
+									Scope:WorldsCategory {
 										Name = "Featured",
 										Title = "From creator",
 										Icon = "rbxassetid://17292608120",
@@ -115,7 +115,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 													Scope:ForValues((
 														RoRooms.Config.Systems.Worlds.FeaturedWorlds,
 														function(PlaceId: number)
-															return WorldButton {
+															return Scope:WorldButton {
 																PlaceId = PlaceId,
 															}
 														end
@@ -124,7 +124,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 											},
 										},
 									},
-									WorldsCategory {
+									Scope:WorldsCategory {
 										Name = "Popular",
 										Title = "Popular",
 										Icon = "rbxassetid://17292608258",
@@ -187,7 +187,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 											},
 										},
 									},
-									WorldsCategory {
+									Scope:WorldsCategory {
 										Name = "Random",
 										Title = "Random",
 										Icon = "rbxassetid://17292608467",

@@ -51,7 +51,7 @@ function NametaggedCharacterComponent:Start()
 		self:UpdateStatus()
 	end)
 
-	self.Nametag = Nametag {
+	self.Nametag = Scope:Nametag {
 		Parent = self.Instance,
 		Adornee = self.Head,
 		Nickname = self.Nickname,

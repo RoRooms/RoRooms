@@ -33,7 +33,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	}
 	UpdatePlaceInfo()
 
-	return CustomButton {
+	return Scope:CustomButton {
 		Name = "WorldButton",
 		IsHolding = IsHolding,
 		ListEnabled = true,

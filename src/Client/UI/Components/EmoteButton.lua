@@ -15,7 +15,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local IsHolding = Scope:Value(false)
 
-	return CustomButton {
+	return Scope:CustomButton {
 		Name = "EmoteButton",
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,

@@ -54,7 +54,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						ListFillDirection = Enum.FillDirection.Horizontal,
 
 						[Children] = {
-							ItemCategoriesSidebar {
+							Scope:ItemCategoriesSidebar {
 								Size = UDim2.fromScale(0, 1),
 							},
 							Scope:Scroller {
@@ -75,7 +75,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										RoRooms.Config.Systems.Items.Categories,
 										function(Name: string, Category)
 											return Name,
-												ItemsCategory {
+												Scope:ItemsCategory {
 													CategoryName = Name,
 													LayoutOrder = Category.LayoutOrder,
 												}

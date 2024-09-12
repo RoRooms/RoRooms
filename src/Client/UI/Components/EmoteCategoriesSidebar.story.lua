@@ -2,7 +2,7 @@ local EmoteCategoriesSidebar = require(script.Parent.EmoteCategoriesSidebar)
 
 return {
 	story = function(Parent: GuiObject, _Props: { [string]: any })
-		local Instance = EmoteCategoriesSidebar {
+		local Instance = Scope:EmoteCategoriesSidebar {
 			Parent = Parent,
 			Size = UDim2.fromOffset(0, 200),
 		}
