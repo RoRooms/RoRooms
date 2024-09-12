@@ -3,8 +3,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-local ForPairs = Fusion.ForPairs
 
 local Frame = require(OnyxUI.Components.Frame)
 local Text = require(OnyxUI.Components.Text)

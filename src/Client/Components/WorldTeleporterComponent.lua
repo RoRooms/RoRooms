@@ -10,9 +10,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local Prompts = require(RoRooms.Client.UI.States.Prompts)
 
-local Value = Fusion.Value
-local Observer = Fusion.Observer
-
 local WorldTeleporterComponent = Component.new {
 	Tag = "RR_WorldTeleporter",
 }

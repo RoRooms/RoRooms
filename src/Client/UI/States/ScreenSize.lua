@@ -5,7 +5,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(script.Parent)
 
-local Hydrate = Fusion.Hydrate
 local Out = Fusion.Out
 
 local ScreenSize = {}

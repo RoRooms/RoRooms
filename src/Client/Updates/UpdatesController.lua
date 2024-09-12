@@ -5,8 +5,6 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 
-local Observer = Fusion.Observer
-
 local UpdatesController = {
 	Name = script.Name,
 }

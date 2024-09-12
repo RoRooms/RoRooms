@@ -4,9 +4,6 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local ColorUtils = require(RoRooms.Packages.ColorUtils)
 
 local Children = Fusion.Children
-local Scope:ForValues( = Fusion.Scope:ForValues(
-local Computed = Fusion.Computed
-local Spring = Fusion.Spring
 
 local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)

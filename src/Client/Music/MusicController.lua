@@ -8,8 +8,6 @@ local Fusion = require(RoRooms.Packages.Fusion)
 
 local MusicService
 
-local Observer = Fusion.Observer
-
 local MusicController = {
 	Name = "MusicController",
 }

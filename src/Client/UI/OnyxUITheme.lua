@@ -3,8 +3,6 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 
-local New = Fusion.New
-
 return {
 	Colors = {
 		Primary = {

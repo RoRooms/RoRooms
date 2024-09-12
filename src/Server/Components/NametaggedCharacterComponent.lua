@@ -6,8 +6,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local Nametag = require(RoRooms.Client.UI.Components.Nametag)
 
-local Value = Fusion.Value
-
 local NametaggedCharacterComponent = Component.new {
 	Tag = "RR_NametaggedCharacter",
 }

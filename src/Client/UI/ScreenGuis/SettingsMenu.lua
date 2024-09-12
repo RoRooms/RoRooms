@@ -8,10 +8,6 @@ local States = require(RoRooms.SourceCode.Client.UI.States)
 local Version = require(RoRooms.Version)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-local Spring = Fusion.Spring
-local Observer = Fusion.Observer
-local New = Fusion.New
 
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)

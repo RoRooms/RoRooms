@@ -5,9 +5,6 @@ local States = require(RoRooms.Client.UI.States)
 local ColorUtils = require(RoRooms.Packages.ColorUtils)
 
 local Children = Fusion.Children
-local Spring = Fusion.Spring
-local Computed = Fusion.Computed
-local Value = Fusion.Value
 
 local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)

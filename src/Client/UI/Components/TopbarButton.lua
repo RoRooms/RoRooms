@@ -5,8 +5,6 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-local Value = Fusion.Value
 
 local BaseButton = require(OnyxUI.Components.BaseButton)
 local Icon = require(OnyxUI.Components.Icon)

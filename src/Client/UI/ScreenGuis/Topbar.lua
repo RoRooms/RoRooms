@@ -4,12 +4,6 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-local Scope:ForValues( = Fusion.Scope:ForValues(
-local New = Fusion.New
-local Spring = Fusion.Spring
-local Value = Fusion.Value
-local Cleanup = Fusion.Cleanup
 
 local Components = RoRooms.Client.UI.Components
 local TopbarButton = require(Components.TopbarButton)

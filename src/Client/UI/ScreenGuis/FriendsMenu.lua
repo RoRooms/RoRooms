@@ -4,11 +4,6 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-local Scope:ForValues( = Fusion.Scope:ForValues(
-local New = Fusion.New
-local Observer = Fusion.Observer
-local Spring = Fusion.Spring
 
 local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local MenuFrame = require(OnyxUI.Components.MenuFrame)

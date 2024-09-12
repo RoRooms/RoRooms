@@ -3,8 +3,6 @@ local States = require(script.Parent)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 
-local Computed = Fusion.Computed
-
 local Topbar = {
 	NativeButtons = {
 		Settings = {

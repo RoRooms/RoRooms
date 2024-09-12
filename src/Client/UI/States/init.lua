@@ -3,8 +3,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local Loader = require(RoRooms.Packages.Loader)
 
-local Value = Fusion.Value
-
 local States = {
 	Services = {
 		UserProfileService = nil,

@@ -8,10 +8,6 @@ local States = require(RoRooms.Client.UI.States)
 local ItemsController = require(RoRooms.Client.Items.ItemsController)
 local AttributeValue = require(RoRooms.Shared.ExtPackages.AttributeValue)
 
-local New = Fusion.New
-local Computed = Fusion.Computed
-local Hydrate = Fusion.Hydrate
-
 local ItemGiverComponent = Component.new {
 	Tag = "RR_ItemGiver",
 }

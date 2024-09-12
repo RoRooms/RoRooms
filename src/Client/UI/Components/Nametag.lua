@@ -4,8 +4,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-local Hydrate = Fusion.Hydrate
 
 local Base = require(OnyxUI.Components.Base)
 local Text = require(OnyxUI.Components.Text)

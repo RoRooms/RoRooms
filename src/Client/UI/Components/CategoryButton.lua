@@ -4,8 +4,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-local Value = Fusion.Value
 
 local Image = require(OnyxUI.Components.Image)
 local CustomButton = require(script.Parent.CustomButton)

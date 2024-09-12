@@ -3,7 +3,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
 
-local ForPairs = Fusion.ForPairs
 local Children = Fusion.Children
 
 local CategoriesSidebar = require(script.Parent.CategoriesSidebar)

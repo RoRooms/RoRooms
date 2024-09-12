@@ -5,9 +5,6 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local AttributeValue = require(RoRooms.Shared.ExtPackages.AttributeValue)
 local States = require(RoRooms.Client.UI.States)
 
-local Computed = Fusion.Computed
-local Observer = Fusion.Observer
-
 local LevelDoorComponent = Component.new {
 	Tag = "RR_LevelDoor",
 }

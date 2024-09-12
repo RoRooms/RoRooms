@@ -6,11 +6,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local AttributeValue = require(RoRooms.Shared.ExtPackages.AttributeValue)
 
-local Value = Fusion.Value
-local New = Fusion.New
-local Computed = Fusion.Computed
-local Hydrate = Fusion.Hydrate
-
 local AnimatedSeatComponent = Component.new {
 	Tag = "RR_AnimatedSeat",
 }

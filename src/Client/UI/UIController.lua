@@ -5,8 +5,6 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
 local Theme = require(script.Parent.OnyxUITheme)
 
-local New = Fusion.New
-
 local Base = require(OnyxUI.Components.Base)
 
 local DEFAULT_UIS = { "Topbar", "PromptHUD" }

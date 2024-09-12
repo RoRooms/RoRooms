@@ -5,9 +5,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(script.Parent)
 
-local Computed = Fusion.Computed
-local Observer = Fusion.Observer
-
 local CoreGui = {
 	IsUnibarOpen = Scope:Computed(function(Use)
 		return Use(States.TopbarInset).Min.X > 250
