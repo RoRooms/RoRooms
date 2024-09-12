@@ -3,7 +3,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
 
-local Themer = require(OnyxUI.Utils.Themer)
 local Prompts = require(RoRooms.Client.UI.States.Prompts)
 
 local Children = Fusion.Children

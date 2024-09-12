@@ -3,7 +3,6 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
 
-local Themer = require(OnyxUI.Utils.Themer)
 local Worlds = require(RoRooms.Client.UI.States.Worlds)
 
 local Children = Fusion.Children
