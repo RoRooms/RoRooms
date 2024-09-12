@@ -13,13 +13,13 @@ local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
 
 export type Props = BaseButton.Props & {
-	Disabled: PubTypes.CanBeState<boolean>?,
-	Content: PubTypes.CanBeState<{ string }>?,
-	Style: PubTypes.CanBeState<string>?,
-	Color: PubTypes.CanBeState<Color3>?,
-	ContentColor: PubTypes.CanBeState<Color3>?,
-	ContentSize: PubTypes.CanBeState<number>?,
-	IsHolding: PubTypes.CanBeState<boolean>?,
+	Disabled: Fusion.UsedAs<boolean>?,
+	Content: Fusion.UsedAs<{ string }>?,
+	Style: Fusion.UsedAs<string>?,
+	Color: Fusion.UsedAs<Color3>?,
+	ContentColor: Fusion.UsedAs<Color3>?,
+	ContentSize: Fusion.UsedAs<number>?,
+	IsHolding: Fusion.UsedAs<boolean>?,
 }
 
 return function(Scope: Fusion.Scope<any>, Props: Props)
