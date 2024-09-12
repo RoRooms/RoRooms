@@ -1,4 +1,4 @@
-local RoRooms = script.Parent.Parent.Parent.Parent
+local RoRooms = require(script.Parent.Parent.Parent.Parent)
 local Version = require(RoRooms.Version)
 local Fetch = require(RoRooms.Parent.Fetch)
 local Future = require(RoRooms.Parent.Future)
