@@ -28,7 +28,7 @@ return function(Props)
 	Props.PlaceId = EnsureValue(Props.PlaceId, "number", nil)
 	Props.JobId = EnsureValue(Props.JobId, "string", nil)
 	Props.InRoRooms = EnsureValue(Props.InRoRooms, "boolean", false)
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Main)
+	Props.Color = EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
 
 	local IsHolding = Value(false)
 	local PlaceInfo = Value({})
@@ -126,7 +126,7 @@ return function(Props)
 					return `rbxthumb://type=AvatarHeadShot&id={Props.UserId:get()}&w=150&h=150`
 				end),
 				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+					return UDim.new(0, Theme.CornerRadius.Full:get())
 				end),
 				RingEnabled = Props.InRoRooms,
 				RingColor = Colors.Green["500"],
@@ -158,7 +158,7 @@ return function(Props)
 							return (Props.InRoRooms:get() and PlaceInfo:get().Name) or "Online"
 						end),
 						TextColor3 = StatusColor,
-						TextSize = Themer.Theme.TextSize["0.875"],
+						TextSize = Theme.TextSize["0.875"],
 						TextTruncate = Enum.TextTruncate.AtEnd,
 						Size = UDim2.fromScale(1, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,

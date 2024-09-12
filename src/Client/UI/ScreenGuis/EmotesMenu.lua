@@ -40,8 +40,8 @@ return function(Props)
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
 					end),
-					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
+					Theme.SpringSpeed["1"],
+					Theme.SpringDampening
 				),
 				BaseResolution = Vector2.new(739, 789),
 				MinScale = 1,
@@ -58,8 +58,8 @@ return function(Props)
 									return 1
 								end
 							end),
-							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening
+							Theme.SpringSpeed["1"],
+							Theme.SpringDampening
 						),
 						BackgroundTransparency = States.PreferredTransparency,
 						AutomaticSize = Enum.AutomaticSize.XY,
@@ -76,7 +76,7 @@ return function(Props)
 								ListEnabled = true,
 								ListFillDirection = Enum.FillDirection.Horizontal,
 								ListPadding = Computed(function()
-									return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+									return UDim.new(0, Theme.Spacing["0.75"]:get())
 								end),
 
 								[Children] = {
@@ -88,14 +88,14 @@ return function(Props)
 										Size = Computed(function()
 											return UDim2.new(UDim.new(0, 260), UDim.new(1, 0))
 										end),
-										ScrollBarThickness = Themer.Theme.StrokeThickness["1"],
-										ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
+										ScrollBarThickness = Theme.StrokeThickness["1"],
+										ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
 										Padding = Computed(function()
-											return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+											return UDim.new(0, Theme.StrokeThickness["1"]:get())
 										end),
 										ListEnabled = true,
 										ListPadding = Computed(function()
-											return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+											return UDim.new(0, Theme.Spacing["1"]:get())
 										end),
 										ListFillDirection = Enum.FillDirection.Horizontal,
 										ListWraps = true,

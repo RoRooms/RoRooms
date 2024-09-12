@@ -66,7 +66,7 @@ return function(Props)
 				end),
 				BackgroundTransparency = 1,
 				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+					return UDim.new(0, Theme.CornerRadius["1"]:get())
 				end),
 				AspectRatio = 1,
 				AspectType = Enum.AspectType.FitWithinMaxSize,
@@ -82,7 +82,7 @@ return function(Props)
 					end
 				end),
 				Size = Computed(function()
-					return UDim2.fromOffset(90, Themer.Theme.TextSize["1"]:get() * 2)
+					return UDim2.fromOffset(90, Theme.TextSize["1"]:get() * 2)
 				end),
 				AutomaticSize = Enum.AutomaticSize.None,
 				TextTruncate = Enum.TextTruncate.AtEnd,

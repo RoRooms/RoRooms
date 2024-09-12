@@ -36,7 +36,7 @@ return function(Props: { [any]: any })
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
 				ListPadding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+					return UDim.new(0, Theme.Spacing["0.25"]:get())
 				end),
 
 				[Children] = {
@@ -49,7 +49,7 @@ return function(Props: { [any]: any })
 							end
 						end),
 						Size = Computed(function()
-							return UDim2.fromOffset(Themer.Theme.TextSize["1"]:get(), Themer.Theme.TextSize["1"]:get())
+							return UDim2.fromOffset(Theme.TextSize["1"]:get(), Theme.TextSize["1"]:get())
 						end),
 					},
 					Text {
@@ -63,7 +63,7 @@ return function(Props: { [any]: any })
 				AutomaticSize = Enum.AutomaticSize.Y,
 				ListEnabled = true,
 				ListPadding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+					return UDim.new(0, Theme.Spacing["0.75"]:get())
 				end),
 				ListFillDirection = Enum.FillDirection.Horizontal,
 				ListWraps = true,

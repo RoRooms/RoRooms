@@ -12,7 +12,7 @@ local Topbar = {
 			Icon = "rbxassetid://17273236509",
 			IconFilled = "rbxassetid://17273236289",
 			LayoutOrder = 5,
-			IndicatorColor = Themer.Theme.Colors.Warning.Main,
+			IndicatorColor = Theme.Colors.Warning.Main,
 			IndicatorEnabled = Computed(function()
 				return States.RoRooms.UpToDate:get() == false
 			end),

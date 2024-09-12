@@ -29,7 +29,7 @@ return function(Props)
 
 	return BaseButton {
 		Name = "TopbarButton",
-		BackgroundColor3 = Themer.Theme.Colors.BaseContent.Main,
+		BackgroundColor3 = Theme.Colors.BaseContent.Main,
 		BackgroundTransparency = Computed(function()
 			if IsHovering:get() or MenuOpen:get() then
 				return 0.9
@@ -45,7 +45,7 @@ return function(Props)
 		AutomaticSize = Enum.AutomaticSize.None,
 		LayoutOrder = Props.LayoutOrder,
 		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["Full"]:get())
+			return UDim.new(0, Theme.CornerRadius["Full"]:get())
 		end),
 
 		IsHovering = IsHovering,
@@ -83,7 +83,7 @@ return function(Props)
 				AnchorPoint = Vector2.new(0.5, 1),
 				Position = UDim2.fromScale(0.5, 1),
 				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+					return UDim.new(0, Theme.CornerRadius.Full:get())
 				end),
 				Visible = IndicatorEnabled,
 			},

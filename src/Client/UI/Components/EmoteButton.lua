@@ -16,7 +16,7 @@ local CustomButton = require(script.Parent.CustomButton)
 return function(Props)
 	Props.EmoteId = EnsureValue(Props.EmoteId, "string", "EmoteId")
 	Props.Emote = EnsureValue(Props.Emote, "table", {})
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Main)
+	Props.Color = EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
 
 	local IsHolding = Value(false)
 
@@ -51,7 +51,7 @@ return function(Props)
 						return "🪩"
 					end
 				end),
-				TextSize = Themer.Theme.TextSize["1.875"],
+				TextSize = Theme.TextSize["1.875"],
 				LayoutOrder = 1,
 				RichText = false,
 				ClipsDescendants = false,
@@ -65,7 +65,7 @@ return function(Props)
 				Text = Computed(function()
 					return Props.Emote:get().Name or Props.EmoteId:get()
 				end),
-				TextSize = Themer.Theme.TextSize["0.875"],
+				TextSize = Theme.TextSize["0.875"],
 				TextTruncate = Enum.TextTruncate.AtEnd,
 				AutomaticSize = Enum.AutomaticSize.Y,
 				TextXAlignment = Enum.TextXAlignment.Center,

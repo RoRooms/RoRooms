@@ -55,7 +55,7 @@ return function(Props)
 					Computed(function()
 						local YPos = States.TopbarBottomPos:get()
 						if not MenuOpen:get() then
-							YPos = YPos + Themer.Theme.Spacing["1"]:get()
+							YPos = YPos + Theme.Spacing["1"]:get()
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
 					end),
@@ -78,8 +78,8 @@ return function(Props)
 									return 1
 								end
 							end),
-							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening
+							Theme.SpringSpeed["1"],
+							Theme.SpringDampening
 						),
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,
@@ -92,14 +92,14 @@ return function(Props)
 							ScrollingFrame {
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 135)),
 								AutomaticSize = Enum.AutomaticSize.None,
-								ScrollBarThickness = Themer.Theme.StrokeThickness["1"],
-								ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
+								ScrollBarThickness = Theme.StrokeThickness["1"],
+								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
 								ListEnabled = true,
 								PaddingTop = Computed(function()
-									return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+									return UDim.new(0, Theme.StrokeThickness["1"]:get())
 								end),
 								PaddingRight = Computed(function()
-									return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+									return UDim.new(0, Theme.Spacing["1"]:get())
 								end),
 
 								[Children] = {
@@ -123,9 +123,9 @@ return function(Props)
 										end),
 										TextColor3 = Computed(function()
 											if not States.RoRooms.UpToDate:get() then
-												return Themer.Theme.Colors.Warning.Main:get()
+												return Theme.Colors.Warning.Main:get()
 											else
-												return Themer.Theme.Colors.NeutralContent.Dark:get()
+												return Theme.Colors.NeutralContent.Dark:get()
 											end
 										end),
 									},

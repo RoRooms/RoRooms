@@ -48,8 +48,8 @@ return function(Props)
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
 					end),
-					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
+					Theme.SpringSpeed["1"],
+					Theme.SpringDampening
 				),
 				BaseResolution = Vector2.new(739, 789),
 				MinScale = 1,
@@ -67,13 +67,13 @@ return function(Props)
 									return 1
 								end
 							end),
-							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening
+							Theme.SpringSpeed["1"],
+							Theme.SpringDampening
 						),
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,
 						ListPadding = Computed(function()
-							return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+							return UDim.new(0, Theme.Spacing["1"]:get())
 						end),
 
 						[Children] = {

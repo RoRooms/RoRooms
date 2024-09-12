@@ -35,7 +35,7 @@ return function(Props)
 				AutomaticSize = Enum.AutomaticSize.None,
 				TextScaled = true,
 				FontFace = Computed(function()
-					return Font.new(Themer.Theme.Font.Heading:get(), Themer.Theme.FontWeight.Heading:get())
+					return Font.new(Theme.Font.Heading:get(), Theme.FontWeight.Heading:get())
 				end),
 				RichText = false,
 				TextXAlignment = Enum.TextXAlignment.Center,

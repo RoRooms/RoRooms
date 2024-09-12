@@ -69,8 +69,8 @@ return function(Props)
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
 					end),
-					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
+					Theme.SpringSpeed["1"],
+					Theme.SpringDampening
 				),
 				BaseResolution = Vector2.new(739, 789),
 
@@ -103,7 +103,7 @@ return function(Props)
 								AutomaticSize = Enum.AutomaticSize.Y,
 								ListEnabled = true,
 								ListPadding = Computed(function()
-									return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+									return UDim.new(0, Theme.Spacing["1"]:get())
 								end),
 
 								[Children] = {
@@ -119,7 +119,7 @@ return function(Props)
 										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 80)),
 										ScaleType = Enum.ScaleType.Crop,
 										CornerRadius = Computed(function()
-											return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+											return UDim.new(0, Theme.CornerRadius["1"]:get())
 										end),
 									},
 									Frame {
@@ -140,11 +140,11 @@ return function(Props)
 														return "Name"
 													end
 												end),
-												TextSize = Themer.Theme.TextSize["1.5"],
+												TextSize = Theme.TextSize["1.5"],
 												FontFace = Computed(function()
 													return Font.new(
-														Themer.Theme.Font.Heading:get(),
-														Themer.Theme.FontWeight.Heading:get()
+														Theme.Font.Heading:get(),
+														Theme.FontWeight.Heading:get()
 													)
 												end),
 												TextTruncate = Enum.TextTruncate.AtEnd,
@@ -167,7 +167,7 @@ return function(Props)
 												RichText = false,
 												AutoLocalize = false,
 												MaxSize = Computed(function()
-													return Vector2.new(math.huge, Themer.Theme.TextSize["1"]:get() * 2)
+													return Vector2.new(math.huge, Theme.TextSize["1"]:get() * 2)
 												end),
 											},
 										},
@@ -177,7 +177,7 @@ return function(Props)
 										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,
 										Contents = { "rbxassetid://17293685944" },
-										ContentSize = Themer.Theme.TextSize["1.5"],
+										ContentSize = Theme.TextSize["1.5"],
 
 										OnActivated = function()
 											if States.Services.WorldsService then

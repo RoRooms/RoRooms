@@ -29,26 +29,26 @@ return function(Props: Props)
 	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
 	local Content = EnsureValue(Props.Content, "table", {})
 	local Style = EnsureValue(Props.Style, "string", "Filled")
-	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	local Color = EnsureValue(Props.Color, "Color3", Theme.Colors.Primary.Main)
 	local ContentColor = EnsureValue(
 		Props.ContentColor,
 		"Color3",
 		Computed(function()
-			return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
+			return ColorUtils.Emphasize(Color:get(), Theme.Emphasis.Contrast:get())
 		end)
 	)
-	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
+	local ContentSize = EnsureValue(Props.ContentSize, "number", Theme.TextSize["1"])
 
 	local IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
 	local IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
 	local EffectiveColor = Computed(function()
 		if Disabled:get() then
-			return Themer.Theme.Colors.BaseContent.Main:get()
+			return Theme.Colors.BaseContent.Main:get()
 		else
 			if IsHolding:get() then
-				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Regular:get())
+				return ColorUtils.Emphasize(Color:get(), Theme.Emphasis.Regular:get())
 			elseif IsHovering:get() then
-				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Light:get())
+				return ColorUtils.Emphasize(Color:get(), Theme.Emphasis.Light:get())
 			else
 				return Color:get()
 			end
@@ -56,7 +56,7 @@ return function(Props: Props)
 	end)
 	local EffectiveContentColor = Computed(function()
 		if Disabled:get() then
-			return Themer.Theme.Colors.BaseContent.Main:get()
+			return Theme.Colors.BaseContent.Main:get()
 		else
 			if Style:get() == "Filled" then
 				return ContentColor:get()
@@ -90,31 +90,31 @@ return function(Props: Props)
 				return 1
 			end
 		end),
-		BackgroundColor3 = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		BackgroundColor3 = Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening),
 		PaddingLeft = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+			return UDim.new(0, Theme.Spacing["0.75"]:get())
 		end),
 		PaddingRight = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+			return UDim.new(0, Theme.Spacing["0.75"]:get())
 		end),
 		PaddingTop = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+			return UDim.new(0, Theme.Spacing["0.25"]:get())
 		end),
 		PaddingBottom = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+			return UDim.new(0, Theme.Spacing["0.25"]:get())
 		end),
 		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+			return UDim.new(0, Theme.CornerRadius["1"]:get())
 		end),
 		ListEnabled = true,
 		ListPadding = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+			return UDim.new(0, Theme.Spacing["0.25"]:get())
 		end),
 		ListFillDirection = Enum.FillDirection.Horizontal,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 		ListVerticalAlignment = Enum.VerticalAlignment.Center,
 		StrokeEnabled = true,
-		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		StrokeColor = Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening),
 		StrokeTransparency = Computed(function()
 			if Style:get() == "Ghost" then
 				return 1

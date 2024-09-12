@@ -50,8 +50,8 @@ return function(Props)
 						end
 						return UDim2.new(UDim.new(0.5, 0), UDim.new(0.5, YPos))
 					end),
-					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
+					Theme.SpringSpeed["1"],
+					Theme.SpringDampening
 				),
 				BaseResolution = Vector2.new(739, 789),
 				MinScale = 1,
@@ -60,7 +60,7 @@ return function(Props)
 				[Children] = {
 					MenuFrame {
 						Size = Computed(function()
-							return UDim2.fromOffset(Themer.Theme.Spacing["16"]:get() * 1.2, 0)
+							return UDim2.fromOffset(Theme.Spacing["16"]:get() * 1.2, 0)
 						end),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						GroupTransparency = Spring(
@@ -71,13 +71,13 @@ return function(Props)
 									return 1
 								end
 							end),
-							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening
+							Theme.SpringSpeed["1"],
+							Theme.SpringDampening
 						),
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,
 						ListPadding = Computed(function()
-							return UDim.new(0, Themer.Theme.Spacing["2"]:get())
+							return UDim.new(0, Theme.Spacing["2"]:get())
 						end),
 
 						[Children] = {
@@ -97,12 +97,9 @@ return function(Props)
 												return "Title"
 											end
 										end),
-										TextSize = Themer.Theme.TextSize["1.25"],
+										TextSize = Theme.TextSize["1.25"],
 										FontFace = Computed(function()
-											return Font.new(
-												Themer.Theme.Font.Heading:get(),
-												Themer.Theme.FontWeight.Heading:get()
-											)
+											return Font.new(Theme.Font.Heading:get(), Theme.FontWeight.Heading:get())
 										end),
 										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,

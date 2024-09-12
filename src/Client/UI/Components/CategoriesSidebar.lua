@@ -18,10 +18,10 @@ return function(Props)
 		ScrollBarImageTransparency = 1,
 		ListEnabled = true,
 		ListPadding = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			return UDim.new(0, Theme.Spacing["0.5"]:get())
 		end),
 		Padding = Computed(function()
-			return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+			return UDim.new(0, Theme.StrokeThickness["1"]:get())
 		end),
 
 		[Children] = {

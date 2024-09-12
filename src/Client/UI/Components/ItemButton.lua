@@ -18,7 +18,7 @@ local CustomButton = require(script.Parent.CustomButton)
 return function(Props)
 	Props.ItemId = EnsureValue(Props.ItemId, "string", "ItemId")
 	Props.Item = EnsureValue(Props.Item, "table", {})
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Main)
+	Props.Color = EnsureValue(Props.Color, "Color3", Theme.Colors.Neutral.Main)
 
 	local IsHolding = Value(false)
 	local IsEquipped = Computed(function()
@@ -38,13 +38,13 @@ return function(Props)
 		StrokeColor = Spring(
 			Computed(function()
 				if IsEquipped:get() then
-					return ColorUtils.Emphasize(Props.Color:get(), Themer.Theme.Emphasis.Light:get() * 4)
+					return ColorUtils.Emphasize(Props.Color:get(), Theme.Emphasis.Light:get() * 4)
 				else
 					return ColorUtils.Emphasize(Props.Color:get(), 0.2)
 				end
 			end),
-			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
+			Theme.SpringSpeed["1"],
+			Theme.SpringDampening
 		),
 		ListEnabled = false,
 
@@ -87,7 +87,7 @@ return function(Props)
 								return Props.ItemId:get()
 							end
 						end),
-						TextSize = Themer.Theme.TextSize["1"],
+						TextSize = Theme.TextSize["1"],
 						AnchorPoint = AnchorPoint,
 						Position = Position,
 						Size = Size,
@@ -106,17 +106,14 @@ return function(Props)
 				ListEnabled = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,
 				ListPadding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+					return UDim.new(0, Theme.Spacing["0.25"]:get())
 				end),
 
 				[Children] = {
 					Icon {
 						Name = "LabelIcon",
 						Size = Computed(function()
-							return UDim2.fromOffset(
-								Themer.Theme.TextSize["0.875"]:get(),
-								Themer.Theme.TextSize["0.875"]:get()
-							)
+							return UDim2.fromOffset(Theme.TextSize["0.875"]:get(), Theme.TextSize["0.875"]:get())
 						end),
 						Image = Computed(function()
 							local LabelIcon = Props.Item:get().LabelIcon
@@ -149,7 +146,7 @@ return function(Props)
 								return ""
 							end
 						end),
-						TextSize = Themer.Theme.TextSize["0.875"],
+						TextSize = Theme.TextSize["0.875"],
 						TextColor3 = Computed(function()
 							return ColorUtils.Lighten(Props.Color:get(), 0.5)
 						end),
