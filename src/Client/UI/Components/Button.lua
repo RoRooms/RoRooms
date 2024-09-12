@@ -22,7 +22,7 @@ export type Props = BaseButton.Props & {
 	IsHolding: PubTypes.CanBeState<boolean>?,
 }
 
-return function(Props: Props)
+return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Disabled = Scope:EnsureValue(Props.Disabled, false)
 	local Content = Scope:EnsureValue(Props.Content, {})
 	local Style = Scope:EnsureValue(Props.Style, "Filled")

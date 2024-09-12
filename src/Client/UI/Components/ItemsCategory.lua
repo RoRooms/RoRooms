@@ -9,7 +9,7 @@ local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 local ItemButton = require(RoRooms.Client.UI.Components.ItemButton)
 
-return function(Props: { [any]: any })
+return function(Scope: Fusion.Scope<any>, Props)
 	local CategoryName = Scope:EnsureValue(Props.CategoryName, "Category")
 
 	local Category = Scope:Computed(function(Use)

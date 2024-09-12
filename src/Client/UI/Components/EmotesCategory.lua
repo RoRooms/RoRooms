@@ -10,7 +10,7 @@ local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 local EmoteButton = require(RoRooms.Client.UI.Components.EmoteButton)
 
-return function(Props: { [any]: any })
+return function(Scope: Fusion.Scope<any>, Props)
 	local CategoryName = Scope:EnsureValue(Props.CategoryName, "General")
 	local Name = Scope:EnsureValue(Props.Name, `{Use(Props.CategoryName)}EmotesCategory`)
 	local Size = Scope:EnsureValue(Props.Size, UDim2.fromScale(1, 0))

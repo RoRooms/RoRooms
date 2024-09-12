@@ -6,7 +6,7 @@ local Button = require(script.Parent.Button)
 
 export type Props = Button.Props & {}
 
-return function(Props: Props)
+return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Color = Scope:EnsureValue(Props.Color, Theme.Colors.Neutral.Main)
 	local IsHovering = Scope:EnsureValue(Props.IsHovering, false)
 
