@@ -6,6 +6,9 @@ local States = require(RoRooms.Client.UI.States)
 local Children = Fusion.Children
 
 return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)

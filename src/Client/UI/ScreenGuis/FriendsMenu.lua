@@ -12,6 +12,9 @@ local Children = Fusion.Children
 local FriendButton = require(RoRooms.Client.UI.Components.FriendButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+	
 	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)

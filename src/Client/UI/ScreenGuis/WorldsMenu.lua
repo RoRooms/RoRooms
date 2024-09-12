@@ -20,6 +20,9 @@ local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { "rbxassetid://17293213744", "Load mo
 local DEFAULT_REFRESH_BUTTON_CONTENTS = { "rbxassetid://13858012326", "Refresh" }
 
 return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)

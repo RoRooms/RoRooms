@@ -7,6 +7,9 @@ local Button = require(script.Parent.Button)
 export type Props = Button.Props & {}
 
 return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	local Color = Scope:EnsureValue(Props.Color, Theme.Util.Colors.Neutral.Main)
 	local IsHovering = Scope:EnsureValue(Props.IsHovering, false)
 

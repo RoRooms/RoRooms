@@ -23,6 +23,9 @@ export type Props = BaseButton.Props & {
 }
 
 return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	local Disabled = Scope:EnsureValue(Props.Disabled, false)
 	local Content = Scope:EnsureValue(Props.Content, {})
 	local Style = Scope:EnsureValue(Props.Style, "Filled")

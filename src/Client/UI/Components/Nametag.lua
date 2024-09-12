@@ -6,6 +6,9 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local Children = Fusion.Children
 
 return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	return Scope:Hydrate(Scope:Base {
 		ClassName = "BillboardGui",
 		Name = "Nametag",

@@ -9,6 +9,9 @@ local ItemsCategory = require(RoRooms.Client.UI.Components.ItemsCategory)
 local ItemCategoriesSidebar = require(RoRooms.Client.UI.Components.ItemCategoriesSidebar)
 
 return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	local ItemsMenu = Scope:New "ScreenGui" {
 		Name = "ItemsMenu",
 		Parent = Props.Parent,

@@ -8,6 +8,9 @@ local Children = Fusion.Children
 local EmoteButton = require(RoRooms.Client.UI.Components.EmoteButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	local CategoryName = Scope:EnsureValue(Props.CategoryName, "General")
 	local Name = Scope:EnsureValue(Props.Name, `{Use(Props.CategoryName)}EmotesCategory`)
 	local Size = Scope:EnsureValue(Props.Size, UDim2.fromScale(1, 0))

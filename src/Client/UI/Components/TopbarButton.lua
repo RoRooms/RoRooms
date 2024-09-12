@@ -7,6 +7,9 @@ local States = require(RoRooms.Client.UI.States)
 local Children = Fusion.Children
 
 return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	local SizeMultiplier = Scope:EnsureValue(Props.SizeMultiplier, 1)
 	local IconImage = Scope:EnsureValue(Props.IconImage, "")
 	local MenuName = Scope:EnsureValue(Props.MenuName, "")

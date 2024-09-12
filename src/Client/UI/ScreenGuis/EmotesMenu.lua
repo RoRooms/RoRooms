@@ -9,6 +9,9 @@ local EmotesCategory = require(RoRooms.Client.UI.Components.EmotesCategory)
 local EmoteCategoriesSidebar = require(RoRooms.Client.UI.Components.EmoteCategoriesSidebar)
 
 return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)

@@ -15,6 +15,9 @@ local Children = Fusion.Children
 local CustomButton = require(RoRooms.Client.UI.Components.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	local UserId = Scope:EnsureValue(Props.UserId, 1)
 	local DisplayName = Scope:EnsureValue(Props.DisplayName, "DisplayName")
 	local PlaceId = Scope:EnsureValue(Props.PlaceId, nil)

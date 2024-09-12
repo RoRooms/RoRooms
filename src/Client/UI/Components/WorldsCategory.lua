@@ -5,6 +5,9 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local Children = Fusion.Children
 
 return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	local Title = Scope:EnsureValue(Props.Title, "General")
 	local Icon = Scope:EnsureValue(Props.Icon, "rbxassetid://17266112920")
 	local Name = Scope:EnsureValue(Props.Name, "WorldsCategory")

@@ -9,6 +9,9 @@ local Children = Fusion.Children
 local CustomButton = require(script.Parent.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	local ItemId = Scope:EnsureValue(Props.ItemId, "ItemId")
 	local Item = Scope:EnsureValue(Props.Item, {})
 	local Color = Scope:EnsureValue(Props.Color, Theme.Util.Colors.Neutral.Main)

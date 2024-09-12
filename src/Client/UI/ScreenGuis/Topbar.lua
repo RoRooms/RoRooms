@@ -12,6 +12,9 @@ local TopbarButton = require(Components.TopbarButton)
 
 
 return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
+
 	local TopbarButtonsHeight = Scope:Value(0)
 
 	local CleanupHolder = {}
