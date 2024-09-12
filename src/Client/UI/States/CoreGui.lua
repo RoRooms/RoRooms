@@ -2,7 +2,7 @@ local GuiService = game:GetService("GuiService")
 local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Parent)
 
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
-local Fusion = require(OnyxUI.Parent.Fusion)
+local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(script.Parent)
 
 local Computed = Fusion.Computed

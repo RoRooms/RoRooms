@@ -4,7 +4,7 @@ local RoRooms = require(script.Parent.Parent.Parent.Parent)
 local Knit = require(RoRooms.Packages.Knit)
 local States = require(RoRooms.Client.UI.States)
 local OnyxUI = require(RoRooms.Packages.OnyxUI)
-local Fusion = require(OnyxUI.Parent.Fusion)
+local Fusion = require(RoRooms.Packages.Fusion)
 
 local MusicService
 

@@ -1,6 +1,6 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(OnyxUI.Parent.Fusion)
+local Fusion = require(RoRooms.Packages.Fusion)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)

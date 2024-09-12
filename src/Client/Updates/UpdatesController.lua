@@ -1,7 +1,7 @@
 local RunService = game:GetService("RunService")
 local RoRooms = script.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(OnyxUI.Parent.Fusion)
+local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 
