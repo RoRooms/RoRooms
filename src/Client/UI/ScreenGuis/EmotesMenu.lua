@@ -4,6 +4,7 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
+local Util = OnyxUI.Util
 
 local EmotesCategory = require(RoRooms.Client.UI.Components.EmotesCategory)
 local EmoteCategoriesSidebar = require(RoRooms.Client.UI.Components.EmoteCategoriesSidebar)

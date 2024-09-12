@@ -4,6 +4,7 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
+local Util = OnyxUI.Util
 
 local Components = RoRooms.Client.UI.Components
 local TopbarButton = require(Components.TopbarButton)

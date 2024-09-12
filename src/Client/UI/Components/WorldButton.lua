@@ -7,6 +7,7 @@ local Fusion = require(RoRooms.Packages.Fusion)
 local States = require(RoRooms.Client.UI.States)
 
 local Children = Fusion.Children
+local Util = OnyxUI.Util
 
 local CustomButton = require(script.Parent.CustomButton)
 

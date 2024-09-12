@@ -8,6 +8,7 @@ local States = require(RoRooms.SourceCode.Client.UI.States)
 local Version = require(RoRooms.Version)
 
 local Children = Fusion.Children
+local Util = OnyxUI.Util
 
 local TOGGLEABLE_CORE_GUIS = { Enum.CoreGuiType.Chat, Enum.CoreGuiType.PlayerList }
 
