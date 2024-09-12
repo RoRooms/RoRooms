@@ -23,7 +23,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	return Scope:BaseButton {
 		Name = "TopbarButton",
-		BackgroundColor3 = Theme.Colors.BaseContent.Main,
+		BackgroundColor3 = Theme.Util.Colors.BaseContent.Main,
 		BackgroundTransparency = Scope:Computed(function(Use)
 			if Use(IsHovering) or Use(MenuOpen) then
 				return 0.9

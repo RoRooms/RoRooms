@@ -11,7 +11,7 @@ local CustomButton = require(script.Parent.CustomButton)
 return function(Scope: Fusion.Scope<any>, Props)
 	local EmoteId = Scope:EnsureValue(Props.EmoteId, "EmoteId")
 	local Emote = Scope:EnsureValue(Props.Emote, {})
-	local Color = Scope:EnsureValue(Props.Color, Theme.Colors.Neutral.Main)
+	local Color = Scope:EnsureValue(Props.Color, Theme.Util.Colors.Neutral.Main)
 
 	local IsHolding = Scope:Value(false)
 

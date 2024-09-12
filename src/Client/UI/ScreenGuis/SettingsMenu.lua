@@ -82,7 +82,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 135)),
 								AutomaticSize = Enum.AutomaticSize.None,
 								ScrollBarThickness = Theme.StrokeThickness["1"],
-								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
+								ScrollBarImageColor3 = Theme.Util.Colors.NeutralContent.Dark,
 								ListEnabled = true,
 								PaddingTop = Scope:Computed(function(Use)
 									return UDim.new(0, Use(Theme.StrokeThickness["1"]))
@@ -112,9 +112,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 										end),
 										TextColor3 = Scope:Computed(function(Use)
 											if not Use(States.RoRooms.UpToDate) then
-												return Use(Theme.Colors.Warning.Main)
+												return Use(Theme.Util.Colors.Warning.Main)
 											else
-												return Use(Theme.Colors.NeutralContent.Dark)
+												return Use(Theme.Util.Colors.NeutralContent.Dark)
 											end
 										end),
 									},

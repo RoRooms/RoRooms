@@ -7,10 +7,10 @@ local Button = require(script.Parent.Button)
 export type Props = Button.Props & {}
 
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Color = Scope:EnsureValue(Props.Color, Theme.Colors.Neutral.Main)
+	local Color = Scope:EnsureValue(Props.Color, Theme.Util.Colors.Neutral.Main)
 	local IsHovering = Scope:EnsureValue(Props.IsHovering, false)
 
-	return Button(CombineProps(Props, {
+	return Button(Util.CombineProps(Props, {
 		Color = Color,
 		CornerRadius = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.CornerRadius["2"]))

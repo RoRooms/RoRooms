@@ -13,7 +13,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local LayoutOrder = Scope:EnsureValue(Props.LayoutOrder, 0)
 	local Visible = Scope:EnsureValue(Props.Visible, true)
 
-	return Frame(CombineProps(Props, {
+	return Frame(Util.CombineProps(Props, {
 		Name = Props.Name,
 		Size = Props.Size,
 		AutomaticSize = Props.AutomaticSize,

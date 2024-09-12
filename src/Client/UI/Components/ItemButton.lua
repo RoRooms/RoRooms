@@ -11,7 +11,7 @@ local CustomButton = require(script.Parent.CustomButton)
 return function(Scope: Fusion.Scope<any>, Props)
 	local ItemId = Scope:EnsureValue(Props.ItemId, "ItemId")
 	local Item = Scope:EnsureValue(Props.Item, {})
-	local Color = Scope:EnsureValue(Props.Color, Theme.Colors.Neutral.Main)
+	local Color = Scope:EnsureValue(Props.Color, Theme.Util.Colors.Neutral.Main)
 
 	local IsHolding = Scope:Value(false)
 	local IsEquipped = Scope:Computed(function(Use)

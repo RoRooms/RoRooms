@@ -5,40 +5,40 @@ local OnyxUI = require(RoRooms.Packages.OnyxUI)
 return {
 	Colors = {
 		Primary = {
-			Main = Colors.Violet["400"],
+			Main = Util.Colors.Violet["400"],
 		},
 		Secondary = {
-			Main = Colors.White,
+			Main = Util.Colors.White,
 		},
 		Accent = {
-			Main = Colors.White,
+			Main = Util.Colors.White,
 		},
 
 		Neutral = {
-			Main = Colors.Slate["700"],
+			Main = Util.Colors.Slate["700"],
 		},
 		NeutralContent = {
-			Main = Colors.Slate["300"],
+			Main = Util.Colors.Slate["300"],
 		},
 
 		Base = {
-			Main = Colors.Slate["950"],
+			Main = Util.Colors.Slate["950"],
 		},
 		BaseContent = {
-			Main = Colors.White,
+			Main = Util.Colors.White,
 		},
 
 		Success = {
-			Main = Colors.Green["500"],
+			Main = Util.Colors.Green["500"],
 		},
 		Error = {
-			Main = Colors.Red["500"],
+			Main = Util.Colors.Red["500"],
 		},
 		Warning = {
-			Main = Colors.Amber["500"],
+			Main = Util.Colors.Amber["500"],
 		},
 		Info = {
-			Main = Colors.Cyan["400"],
+			Main = Util.Colors.Cyan["400"],
 		},
 	},
 	Font = {

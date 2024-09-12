@@ -20,7 +20,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local PlaceId = Scope:EnsureValue(Props.PlaceId, nil)
 	local JobId = Scope:EnsureValue(Props.JobId, nil)
 	local InRoRooms = Scope:EnsureValue(Props.InRoRooms, false)
-	local Color = Scope:EnsureValue(Props.Color, Theme.Colors.Neutral.Main)
+	local Color = Scope:EnsureValue(Props.Color, Theme.Util.Colors.Neutral.Main)
 
 	local IsHolding = Scope:Value(false)
 	local PlaceInfo = Scope:Value({})
@@ -119,7 +119,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					return UDim.new(0, Use(Theme.CornerRadius.Full))
 				end),
 				RingEnabled = Props.InRoRooms,
-				RingColor = Colors.Green["500"],
+				RingColor = Util.Colors.Green["500"],
 				IndicatorEnabled = Scope:Computed(function(Use)
 					return not Use(Props.InRoRooms)
 				end),

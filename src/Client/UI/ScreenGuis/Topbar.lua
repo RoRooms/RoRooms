@@ -48,7 +48,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				[Children] = {
 					Scope:Frame {
 						Name = "TopbarButtons",
-						BackgroundColor3 = Theme.Colors.Base.Main,
+						BackgroundColor3 = Theme.Util.Colors.Base.Main,
 						BackgroundTransparency = States.PreferredTransparency,
 						ListEnabled = true,
 						ListPadding = Scope:Computed(function(Use)
@@ -72,7 +72,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					Scope:BaseButton {
 						Name = "PullButton",
 						BackgroundTransparency = States.PreferredTransparency,
-						BackgroundColor3 = Theme.Colors.Base.Main,
+						BackgroundColor3 = Theme.Util.Colors.Base.Main,
 						Visible = Scope:Computed(function(Use)
 							return not (typeof(Use(States.CurrentMenu)) == "string")
 						end),
@@ -92,7 +92,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						PaddingBottom = Scope:Computed(function(Use)
 							return UDim.new(0, Use(Theme.Spacing["0.5"]))
 						end),
-						StrokeColor = Theme.Colors.Neutral.Main,
+						StrokeColor = Theme.Util.Colors.Neutral.Main,
 
 						OnActivated = function()
 							States.TopbarVisible:set(not Use(States.TopbarVisible))
@@ -106,7 +106,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								end),
 								AutomaticSize = Enum.AutomaticSize.None,
 								BackgroundTransparency = 0,
-								BackgroundColor3 = Theme.Colors.BaseContent.Main,
+								BackgroundColor3 = Theme.Util.Colors.BaseContent.Main,
 							},
 						},
 					},

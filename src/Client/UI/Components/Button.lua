@@ -26,7 +26,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Disabled = Scope:EnsureValue(Props.Disabled, false)
 	local Content = Scope:EnsureValue(Props.Content, {})
 	local Style = Scope:EnsureValue(Props.Style, "Filled")
-	local Color = Scope:EnsureValue(Props.Color, Theme.Colors.Primary.Main)
+	local Color = Scope:EnsureValue(Props.Color, Theme.Util.Colors.Primary.Main)
 	local ContentColor = Scope:EnsureValue(
 		Props.ContentColor,
 		"Color3",
@@ -40,7 +40,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local IsHovering = Scope:EnsureValue(Props.IsHovering, false)
 	local EffectiveColor = Scope:Computed(function(Use)
 		if Use(Disabled) then
-			return Use(Theme.Colors.BaseContent.Main)
+			return Use(Theme.Util.Colors.BaseContent.Main)
 		else
 			if Use(IsHolding) then
 				return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Regular))
@@ -53,7 +53,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	end)
 	local EffectiveContentColor = Scope:Computed(function(Use)
 		if Use(Disabled) then
-			return Use(Theme.Colors.BaseContent.Main)
+			return Use(Theme.Util.Colors.BaseContent.Main)
 		else
 			if Use(Style) == "Filled" then
 				return Use(ContentColor)
@@ -74,7 +74,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		end
 	end)
 
-	return BaseButton(CombineProps(Props, {
+	return BaseButton(Util.CombineProps(Props, {
 		Name = "Button",
 		BackgroundTransparency = Scope:Computed(function(Use)
 			if Use(Style) == "Filled" then
