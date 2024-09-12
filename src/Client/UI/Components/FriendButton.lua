@@ -4,18 +4,18 @@ local SocialService = game:GetService("SocialService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Future)
-local OnyxUI = require(RoRooms.Packages.OnyxUI)
-local Fusion = require(RoRooms.Packages.Fusion)
-local ColorUtils = require(RoRooms.Packages.ColorUtils)
-local States = require(RoRooms.Client.UI.States)
-local Prompts = require(RoRooms.Client.UI.States.Prompts)
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
+local ColorUtils = require(RoRooms.Parent.ColorUtils)
+local States = require(RoRooms.SourceCode.Client.UI.States)
+local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 local Peek = Fusion.peek
 
-local CustomButton = require(RoRooms.Client.UI.Components.CustomButton)
+local CustomButton = require(RoRooms.SourceCode.Client.UI.Components.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)

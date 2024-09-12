@@ -3,7 +3,7 @@ local RunService = game:GetService("RunService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
-local BloxstrapRPC = require(RoRooms.Packages.BloxstrapRPC)
+local BloxstrapRPC = require(RoRooms.Parent.BloxstrapRPC)
 
 local BloxstrapController = {
 	Name = "BloxstrapController",

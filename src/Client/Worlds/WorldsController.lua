@@ -1,10 +1,10 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Packages.Knit)
-local Topbar = require(RoRooms.Client.UI.States.Topbar)
-local UIController = require(RoRooms.Client.UI.UIController)
+local Knit = require(RoRooms.Parent.Knit)
+local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
+local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
 
-local WorldsMenu = require(RoRooms.Client.UI.ScreenGuis.WorldsMenu)
-local WorldPageMenu = require(RoRooms.Client.UI.ScreenGuis.WorldPageMenu)
+local WorldsMenu = require(RoRooms.SourceCode.Client.UI.ScreenGuis.WorldsMenu)
+local WorldPageMenu = require(RoRooms.SourceCode.Client.UI.ScreenGuis.WorldPageMenu)
 
 local WorldsController = {
 	Name = "WorldsController",

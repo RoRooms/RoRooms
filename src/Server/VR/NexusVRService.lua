@@ -1,5 +1,5 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
-local NexusVR = require(RoRooms.Shared.ExtPackages.NexusVRCharacterModel)
+local NexusVR = require(RoRooms.SourceCode.Shared.ExtPackages.NexusVRCharacterModel)
 
 local NEXUS_VR_CONFIGURATION = {
 	Appearance = {

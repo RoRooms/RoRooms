@@ -1,7 +1,7 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Packages.OnyxUI)
-local Fusion = require(RoRooms.Packages.Fusion)
-local Loader = require(RoRooms.Packages.Loader)
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
+local Loader = require(RoRooms.Parent.Loader)
 
 local States = {
 	Services = {

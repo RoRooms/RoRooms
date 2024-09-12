@@ -1,6 +1,6 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
-local PlayerDataService = require(RoRooms.Server.PlayerData.PlayerDataService)
-local t = require(RoRooms.Packages.t)
+local PlayerDataService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataService)
+local t = require(RoRooms.Parent.t)
 
 local ItemsService = {
 	Name = "ItemsService",

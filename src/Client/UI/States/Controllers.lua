@@ -1,5 +1,5 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Packages.Knit)
+local Knit = require(RoRooms.Parent.Knit)
 local States = require(script.Parent)
 
 local CONTROLLERS = { "UIController", "EmotesController", "ItemsController", "FriendsController" }

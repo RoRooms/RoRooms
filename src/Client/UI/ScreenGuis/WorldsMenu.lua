@@ -1,16 +1,16 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Packages.OnyxUI)
-local Fusion = require(RoRooms.Packages.Fusion)
-local States = require(RoRooms.Client.UI.States)
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
+local States = require(RoRooms.SourceCode.Client.UI.States)
 
-local Worlds = require(RoRooms.Client.UI.States.Worlds)
+local Worlds = require(RoRooms.SourceCode.Client.UI.States.Worlds)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 
-local WorldButton = require(RoRooms.Client.UI.Components.WorldButton)
-local WorldsCategory = require(RoRooms.Client.UI.Components.WorldsCategory)
+local WorldButton = require(RoRooms.SourceCode.Client.UI.Components.WorldButton)
+local WorldsCategory = require(RoRooms.SourceCode.Client.UI.Components.WorldsCategory)
 
 local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { "rbxassetid://17293213744", "Load more" }
 local DEFAULT_REFRESH_BUTTON_CONTENTS = { "rbxassetid://13858012326", "Refresh" }

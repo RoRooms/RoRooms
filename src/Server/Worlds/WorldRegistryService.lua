@@ -3,8 +3,8 @@ local MarketplaceService = game:GetService("MarketplaceService")
 
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent
-local Signal = require(RoRooms.Packages.Signal)
-local t = require(RoRooms.Packages.t)
+local Signal = require(RoRooms.Parent.Signal)
+local t = require(RoRooms.Parent.t)
 
 local REGISTRY_UPDATE_DELAY = 10 * 60
 local REGISTRY_ASSET_ID = 16007140043

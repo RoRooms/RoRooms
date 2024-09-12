@@ -1,7 +1,7 @@
 local SoundService = game:GetService("SoundService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Packages.Knit)
+local Knit = require(RoRooms.Parent.Knit)
 
 local MusicService = {
 	Name = "MusicService",

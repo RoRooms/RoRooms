@@ -1,10 +1,10 @@
 local Players = game:GetService("Players")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
-local Component = require(RoRooms.Packages.Component)
-local OnyxUI = require(RoRooms.Packages.OnyxUI)
-local Fusion = require(RoRooms.Packages.Fusion)
-local Nametag = require(RoRooms.Client.UI.Components.Nametag)
+local Component = require(RoRooms.Parent.Component)
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
+local Nametag = require(RoRooms.SourceCode.Client.UI.Components.Nametag)
 
 local NametaggedCharacterComponent = Component.new {
 	Tag = "RR_NametaggedCharacter",

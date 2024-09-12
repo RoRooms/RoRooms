@@ -1,13 +1,13 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Packages.OnyxUI)
-local Fusion = require(RoRooms.Packages.Fusion)
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 local Peek = Fusion.peek
 
-local ItemButton = require(RoRooms.Client.UI.Components.ItemButton)
+local ItemButton = require(RoRooms.SourceCode.Client.UI.Components.ItemButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)

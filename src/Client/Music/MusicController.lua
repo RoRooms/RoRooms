@@ -1,10 +1,10 @@
 local SoundService = game:GetService("SoundService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Packages.Knit)
-local States = require(RoRooms.Client.UI.States)
-local OnyxUI = require(RoRooms.Packages.OnyxUI)
-local Fusion = require(RoRooms.Packages.Fusion)
+local Knit = require(RoRooms.Parent.Knit)
+local States = require(RoRooms.SourceCode.Client.UI.States)
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
 
 local Peek = Fusion.peek
 

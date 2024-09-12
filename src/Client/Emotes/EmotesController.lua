@@ -1,10 +1,10 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Packages.Knit)
-local Topbar = require(RoRooms.Client.UI.States.Topbar)
-local Prompts = require(RoRooms.Client.UI.States.Prompts)
-local UIController = require(RoRooms.Client.UI.UIController)
+local Knit = require(RoRooms.Parent.Knit)
+local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
+local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
+local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
 
-local EmotesMenu = require(RoRooms.Client.UI.ScreenGuis.EmotesMenu)
+local EmotesMenu = require(RoRooms.SourceCode.Client.UI.ScreenGuis.EmotesMenu)
 
 local EmotesService
 

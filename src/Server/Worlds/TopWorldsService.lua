@@ -3,10 +3,10 @@ local Players = game:GetService("Players")
 
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent
-local WorldRegistryService = require(RoRooms.Server.Worlds.WorldRegistryService)
-local Knit = require(RoRooms.Packages.Knit)
-local GetPagesFromArray = require(RoRooms.Shared.ExtPackages.GetPagesFromArray)
-local t = require(RoRooms.Packages.t)
+local WorldRegistryService = require(RoRooms.SourceCode.Server.Worlds.WorldRegistryService)
+local Knit = require(RoRooms.Parent.Knit)
+local GetPagesFromArray = require(RoRooms.SourceCode.Shared.ExtPackages.GetPagesFromArray)
+local t = require(RoRooms.Parent.t)
 
 type TopWorld = {
 	PlaceId: number,

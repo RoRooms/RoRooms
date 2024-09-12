@@ -1,8 +1,8 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Packages.Knit)
-local FilterString = require(RoRooms.Storage.ExtPackages.FilterString)
-local PlayerDataService = require(RoRooms.Server.PlayerData.PlayerDataService)
-local t = require(RoRooms.Packages.t)
+local Knit = require(RoRooms.Parent.Knit)
+local FilterString = require(RoRooms.SourceCode.Storage.ExtPackages.FilterString)
+local PlayerDataService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataService)
+local t = require(RoRooms.Parent.t)
 
 local UserProfileService = {
 	Name = "UserProfileService",

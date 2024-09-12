@@ -1,9 +1,9 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
-local Component = require(RoRooms.Packages.Component)
-local Zone = require(RoRooms.Shared.ExtPackages.Zone)
-local Knit = require(RoRooms.Packages.Knit)
-local AttributeValue = require(RoRooms.Shared.ExtPackages.AttributeValue)
-local Fusion = require(RoRooms.Packages.Fusion)
+local Component = require(RoRooms.Parent.Component)
+local Zone = require(RoRooms.SourceCode.Shared.ExtPackages.Zone)
+local Knit = require(RoRooms.Parent.Knit)
+local AttributeValue = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeValue)
+local Fusion = require(RoRooms.Parent.Fusion)
 
 local Peek = Fusion.peek
 

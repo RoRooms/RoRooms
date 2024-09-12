@@ -1,16 +1,16 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Packages.Knit)
-local OnyxUI = require(RoRooms.Packages.OnyxUI)
-local Fusion = require(RoRooms.Packages.Fusion)
-local Signal = require(RoRooms.Packages.Signal)
-local NeoHotbar = require(RoRooms.Packages.NeoHotbar)
-local States = require(RoRooms.Client.UI.States)
-local Prompts = require(RoRooms.Client.UI.States.Prompts)
-local UIController = require(RoRooms.Client.UI.UIController)
+local Knit = require(RoRooms.Parent.Knit)
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
+local Signal = require(RoRooms.Parent.Signal)
+local NeoHotbar = require(RoRooms.Parent.NeoHotbar)
+local States = require(RoRooms.SourceCode.Client.UI.States)
+local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
+local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
 
 local Peek = Fusion.peek
 
-local ItemsMenu = require(RoRooms.Client.UI.ScreenGuis.ItemsMenu)
+local ItemsMenu = require(RoRooms.SourceCode.Client.UI.ScreenGuis.ItemsMenu)
 
 local ItemsService
 

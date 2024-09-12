@@ -1,12 +1,12 @@
 local Players = game:GetService("Players")
 
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Packages.Knit)
-local ProfileService = require(RoRooms.Storage.ExtPackages.ProfileService)
-local LeaderStats = require(RoRooms.Storage.ExtPackages.LeaderStats)
-local XPToLevelUp = require(RoRooms.Shared.XPToLevelUp)
-local Trove = require(RoRooms.Packages.Trove)
-local Signal = require(RoRooms.Packages.Signal)
+local Knit = require(RoRooms.Parent.Knit)
+local ProfileService = require(RoRooms.SourceCode.Storage.ExtPackages.ProfileService)
+local LeaderStats = require(RoRooms.SourceCode.Storage.ExtPackages.LeaderStats)
+local XPToLevelUp = require(RoRooms.SourceCode.Shared.XPToLevelUp)
+local Trove = require(RoRooms.Parent.Trove)
+local Signal = require(RoRooms.Parent.Signal)
 
 local PROFILE_TEMPLATE = {
 	Level = 1,

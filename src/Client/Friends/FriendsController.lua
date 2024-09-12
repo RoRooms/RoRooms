@@ -2,12 +2,12 @@ local Players = game:GetService("Players")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
-local UIController = require(RoRooms.Client.UI.UIController)
-local FriendsMenu = require(RoRooms.Client.UI.ScreenGuis.FriendsMenu)
-local States = require(RoRooms.Client.UI.States)
-local Knit = require(RoRooms.Packages.Knit)
-local Topbar = require(RoRooms.Client.UI.States.Topbar)
-local Fusion = require(RoRooms.Packages.Fusion)
+local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
+local FriendsMenu = require(RoRooms.SourceCode.Client.UI.ScreenGuis.FriendsMenu)
+local States = require(RoRooms.SourceCode.Client.UI.States)
+local Knit = require(RoRooms.Parent.Knit)
+local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
+local Fusion = require(RoRooms.Parent.Fusion)
 
 local Peek = Fusion.peek
 

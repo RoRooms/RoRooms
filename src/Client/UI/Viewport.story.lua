@@ -1,6 +1,6 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent
-local Topbar = require(RoRooms.Client.UI.States.Topbar)
-local OnyxUI = require(RoRooms.Packages.OnyxUI)
+local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Theme = require(script.Parent.OnyxUITheme)
 
 local ROROOMS_CONFIG = {
