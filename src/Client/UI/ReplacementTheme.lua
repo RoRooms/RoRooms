@@ -67,6 +67,8 @@ return {
 	SpringSpeed = {
 		Base = 25,
 	},
-	SpringDampening = 1,
+	SpringDampening = {
+		Base = 1,
+	},
 	Sound = {},
 }
