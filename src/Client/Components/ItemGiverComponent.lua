@@ -5,8 +5,9 @@ local Component = require(RoRooms.Parent.Component)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local ItemsController = require(RoRooms.SourceCode.Client.Items.ItemsController)
-local AttributeValue = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeValue)
 local Config = require(RoRooms.Config)
+local AttributeBind = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
+local Trove = require(RoRooms.Parent.Trove)
 
 local Peek = Fusion.peek
 
@@ -68,11 +69,14 @@ function ItemGiverComponent:Start()
 end
 
 function ItemGiverComponent:Construct()
-	self.Scope = Fusion.scoped(Fusion, {
-		AttributeValue = AttributeValue,
-	})
+	self.Scope = Fusion.scoped(Fusion)
+	self.Trove = Trove.new()
 
-	self.ItemId = self.Scope:AttributeValue(self.Instance, "RR_ItemId")
+	self.ItemId = self.Scope:Value()
+	self.Trove:Add(AttributeBind.Bind(self.Instance, "RR_ItemId")):Observe(function(Value)
+		self.ItemId:set(Value)
+	end)
+
 	self.Item = self.Scope:Computed(function(Use)
 		return Config.Systems.Items.Items[Use(self.ItemId)]
 	end)
@@ -89,7 +93,7 @@ function ItemGiverComponent:Construct()
 end
 
 function ItemGiverComponent:Stop()
-	self.DisconnectLevelMetScope:Observer()
+	self.Trove:Destroy()
 end
 
 return ItemGiverComponent

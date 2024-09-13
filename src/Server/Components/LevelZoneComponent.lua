@@ -2,8 +2,9 @@ local RoRooms = script.Parent.Parent.Parent.Parent
 local Component = require(RoRooms.Parent.Component)
 local Zone = require(RoRooms.SourceCode.Shared.ExtPackages.Zone)
 local Knit = require(RoRooms.Parent.Knit)
-local AttributeValue = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeValue)
 local Fusion = require(RoRooms.Parent.Fusion)
+local AttributeBind = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
+local Trove = require(RoRooms.Parent.Trove)
 
 local Peek = Fusion.peek
 
@@ -25,14 +26,20 @@ function LevelZoneComponent:Start()
 end
 
 function LevelZoneComponent:Construct()
-	self.Scope = Fusion.scoped(Fusion, {
-		AttributeValue = AttributeValue,
-	})
+	self.Scope = Fusion.scoped(Fusion)
+	self.Trove = Trove.new()
 
-	self.LevelRequirement = self.Scope:AttributeValue(self.Instance, "RR_LevelRequirement", 0)
+	self.LevelRequirement = self.Scope:Value()
+	self.Trove:Add(AttributeBind.Bind(self.Instance, "RR_LevelRequirement", 0)):Observe(function(Value)
+		self.LevelRequirement:set(Value)
+	end)
 
 	self.Zone = Zone.new(self.Instance)
 	self.Zone:setAccuracy("Low")
+end
+
+function LevelZoneComponent:Stop()
+	self.Trove:Destroy()
 end
 
 return LevelZoneComponent

@@ -3,7 +3,8 @@ local Players = game:GetService("Players")
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Component = require(RoRooms.Parent.Component)
 local Fusion = require(RoRooms.Parent.Fusion)
-local AttributeValue = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeValue)
+local AttributeBind = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
+local Trove = require(RoRooms.Parent.Trove)
 
 local Peek = Fusion.peek
 
@@ -88,12 +89,19 @@ function AnimatedSeatComponent:Start()
 end
 
 function AnimatedSeatComponent:Construct()
-	self.Scope = Fusion.scoped(Fusion, {
-		AttributeValue = AttributeValue,
-	})
+	self.Scope = Fusion.scoped(Fusion)
+	self.Trove = Trove.new()
 
-	self.PromptToSit = self.Scope:AttributeValue(self.Instance, "RR_PromptToSit", true)
-	self.SitOnTouch = self.Scope:AttributeValue(self.Instance, "RR_SitOnTouch", false)
+	self.PromptToSit = self.Scope:Value()
+	self.Trove:Add(AttributeBind.Bind(self.Instance, "RR_PromptToSit", true)):Observe(function(Value)
+		self.PromptToSit:set(Value)
+	end)
+
+	self.SitOnTouch = self.Scope:Value()
+	self.Trove:Add(AttributeBind.Bind(self.Instance, "RR_PromptToSit", true)):Observe(function(Value)
+		self.SitOnTouch:set(Value)
+	end)
+
 	self.Occupant = self.Scope:Value(nil)
 
 	if not self.Instance:IsA("Seat") then
@@ -108,6 +116,10 @@ function AnimatedSeatComponent:Construct()
 		warn("No Animation inside AnimatedSeat", self.Instance)
 		return
 	end
+end
+
+function AnimatedSeatComponent:Stop()
+	self.Trove:Destroy()
 end
 
 return AnimatedSeatComponent

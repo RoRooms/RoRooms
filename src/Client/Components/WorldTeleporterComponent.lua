@@ -1,13 +1,15 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
+local AttributeBind = require(ReplicatedStorage.RoRooms.Packages.RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
 local Component = require(RoRooms.Parent.Component)
 local States = require(RoRooms.SourceCode.Client.UI.States)
-local AttributeValue = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeValue)
 local Fusion = require(RoRooms.Parent.Fusion)
 local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
+local Trove = require(RoRooms.Parent.Trove)
 
 local Peek = Fusion.peek
 
@@ -72,11 +74,14 @@ function WorldTeleporterComponent:Start()
 end
 
 function WorldTeleporterComponent:Construct()
-	self.Scope = Fusion.scoped(Fusion, {
-		AttributeValue = AttributeValue,
-	})
+	self.Scope = Fusion.scoped(Fusion)
+	self.Trove = Trove.new()
 
-	self.PlaceId = self.Scope:AttributeValue(self.Instance, "RR_PlaceId")
+	self.PlaceId = self.Scope:Value()
+	self.Trove:Add(AttributeBind.Bind(self.Instance, "RR_PlaceId")):Observe(function(Value)
+		self.PlaceId:set(Value)
+	end)
+
 	self.PlaceInfo = self.Scope:Value({})
 
 	if not self.Instance:IsA("BasePart") then
@@ -87,6 +92,10 @@ function WorldTeleporterComponent:Construct()
 		warn("No RR_PlaceId attribute defined for WorldTeleporter", self.Instance)
 		return
 	end
+end
+
+function WorldTeleporterComponent:Stop()
+	self.Trove:Destroy()
 end
 
 return WorldTeleporterComponent
