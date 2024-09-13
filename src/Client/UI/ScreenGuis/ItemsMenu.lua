@@ -20,6 +20,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Parent = Props.Parent,
 		AutomaticSize = Enum.AutomaticSize.Y,
 		Size = UDim2.fromOffset(385, 0),
+		AnchorPoint = Vector2.new(0.5, 1),
+		Position = Scope:Computed(function(Use)
+			local YPos = 68 + 15
+			if not Use(States.ItemsMenu.Open) then
+				YPos -= 15
+			end
+			return UDim2.new(UDim.new(0.5, 0), UDim.new(1, -YPos))
+		end),
 		ListFillDirection = Enum.FillDirection.Horizontal,
 
 		[Children] = {

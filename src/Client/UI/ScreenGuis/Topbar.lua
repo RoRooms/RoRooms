@@ -18,7 +18,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local CleanupHolder = {}
 
 	local TopbarInstance = Scope:New "ScreenGui" {
-		Name = "Topbar",
+		Name = "TopbarHUD",
 		Parent = Props.Parent,
 		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
 		ResetOnSpawn = false,
@@ -120,6 +120,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local TopbarPully = TopbarInstance.AutoScaleFrame.PullButton
 
 	local function UpdateTopbarBottomPos()
+		print(TopbarPully.AbsolutePosition.Y)
 		States.TopbarBottomPos:set(TopbarPully.AbsolutePosition.Y)
 	end
 
@@ -136,6 +137,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 		TopbarButtons:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarButtonsHeight)
 	)
 	UpdateTopbarButtonsHeight()
+
+	table.insert(Scope, {
+		function()
+			Fusion.doCleanup(CleanupHolder)
+		end,
+	})
 
 	return TopbarInstance
 end

@@ -23,6 +23,17 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local Name = Util.Fallback(Props.Name, "Menu")
 	local Open = Util.Fallback(Props.Open, false)
+	local AnchorPoint = Util.Fallback(Props.AnchorPoint, Vector2.new(0.5, 0))
+	local Position = Util.Fallback(
+		Props.Position,
+		Scope:Computed(function(Use)
+			local YPos = Use(States.TopbarBottomPos)
+			if not Use(Open) then
+				YPos = YPos + 15
+			end
+			return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
+		end)
+	)
 	local Size = Util.Fallback(Props.Size, UDim2.fromOffset(0, 0))
 	local AutomaticSize = Util.Fallback(Props.AutomaticSize, Enum.AutomaticSize.Y)
 	local ListFillDirection = Util.Fallback(Props.ListFillDirection, Enum.FillDirection.Vertical)
@@ -30,24 +41,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 	return Scope:New "ScreenGui" {
 		Name = Name,
 		Parent = Props.Parent,
-		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
 		Enabled = Open,
 		ResetOnSpawn = false,
 
 		[Children] = {
 			Scope:AutoScaleFrame {
-				AnchorPoint = Vector2.new(0.5, 0),
-				Position = Scope:Spring(
-					Scope:Computed(function(Use)
-						local YPos = Use(States.TopbarBottomPos)
-						if not Use(Open) then
-							YPos = YPos + 15
-						end
-						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
-					end),
-					Theme.SpringSpeed["1"],
-					Theme.SpringDampening["1.5"]
-				),
+				AnchorPoint = AnchorPoint,
+				Position = Scope:Spring(Position, Theme.SpringSpeed["1"], Theme.SpringDampening["1.5"]),
 				BaseResolution = Vector2.new(739, 789),
 				MinScale = 1,
 				MaxScale = 1,
