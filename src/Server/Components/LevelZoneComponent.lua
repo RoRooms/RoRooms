@@ -25,7 +25,11 @@ function LevelZoneComponent:Start()
 end
 
 function LevelZoneComponent:Construct()
-	self.LevelRequirement = AttributeValue(self.Instance, "RR_LevelRequirement", 0)
+	self.Scope = Fusion.scoped(Fusion, {
+		AttributeValue = AttributeValue,
+	})
+
+	self.LevelRequirement = self.Scope:AttributeValue(self.Instance, "RR_LevelRequirement", 0)
 
 	self.Zone = Zone.new(self.Instance)
 	self.Zone:setAccuracy("Low")

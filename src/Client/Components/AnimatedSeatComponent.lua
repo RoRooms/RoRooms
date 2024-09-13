@@ -88,10 +88,12 @@ function AnimatedSeatComponent:Start()
 end
 
 function AnimatedSeatComponent:Construct()
-	self.Scope = Fusion.scoped(Fusion)
+	self.Scope = Fusion.scoped(Fusion, {
+		AttributeValue = AttributeValue,
+	})
 
-	self.PromptToSit = AttributeValue(self.Instance, "RR_PromptToSit", true)
-	self.SitOnTouch = AttributeValue(self.Instance, "RR_SitOnTouch", false)
+	self.PromptToSit = self.Scope:AttributeValue(self.Instance, "RR_PromptToSit", true)
+	self.SitOnTouch = self.Scope:AttributeValue(self.Instance, "RR_SitOnTouch", false)
 	self.Occupant = self.Scope:Value(nil)
 
 	if not self.Instance:IsA("Seat") then

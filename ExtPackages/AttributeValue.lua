@@ -1,15 +1,16 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent.Parent)
-local OnyxUI = require(RoRooms.Packages.OnyxUI)
-local Fusion = require(OnyxUI.Parent.Fusion)
+local RoRooms = script.Parent.Parent.Parent.Parent
+local Fusion = require(RoRooms.Parent.Fusion)
 
-local Value = Fusion.Value
+local InnerScope = Fusion.innerScope
 
-return function(Instance: Instance, AttributeName: string, DefaultValue: any?)
+return function(Scope: Fusion.Scope<any>, Instance: Instance, AttributeName: string, DefaultValue: any?)
+	local Scope = InnerScope(Scope, Fusion)
+
 	if Instance:GetAttribute(AttributeName) == nil then
 		Instance:SetAttribute(AttributeName, DefaultValue)
 	end
 
-	local AttributeValue = Value(Instance:GetAttribute(AttributeName))
+	local AttributeValue = Scope:Value(Instance:GetAttribute(AttributeName))
 
 	Instance:GetAttributeChangedSignal(AttributeName):Connect(function()
 		AttributeValue:set(Instance:GetAttribute(AttributeName))

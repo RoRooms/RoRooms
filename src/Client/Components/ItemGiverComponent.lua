@@ -68,9 +68,11 @@ function ItemGiverComponent:Start()
 end
 
 function ItemGiverComponent:Construct()
-	self.Scope = Fusion.scoped(Fusion)
+	self.Scope = Fusion.scoped(Fusion, {
+		AttributeValue = AttributeValue,
+	})
 
-	self.ItemId = AttributeValue(self.Instance, "RR_ItemId")
+	self.ItemId = self.Scope:AttributeValue(self.Instance, "RR_ItemId")
 	self.Item = self.Scope:Computed(function(Use)
 		return Config.Systems.Items.Items[Use(self.ItemId)]
 	end)

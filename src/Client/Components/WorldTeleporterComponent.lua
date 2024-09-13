@@ -72,9 +72,11 @@ function WorldTeleporterComponent:Start()
 end
 
 function WorldTeleporterComponent:Construct()
-	self.Scope = Fusion.scoped(Fusion)
+	self.Scope = Fusion.scoped(Fusion, {
+		AttributeValue = AttributeValue,
+	})
 
-	self.PlaceId = AttributeValue(self.Instance, "RR_PlaceId")
+	self.PlaceId = self.Scope:AttributeValue(self.Instance, "RR_PlaceId")
 	self.PlaceInfo = self.Scope:Value({})
 
 	if not self.Instance:IsA("BasePart") then

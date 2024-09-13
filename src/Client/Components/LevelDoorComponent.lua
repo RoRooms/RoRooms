@@ -17,9 +17,11 @@ function LevelDoorComponent:Start()
 end
 
 function LevelDoorComponent:Construct()
-	self.Scope = Fusion.scoped(Fusion)
+	self.Scope = Fusion.scoped(Fusion, {
+		AttributeValue = AttributeValue,
+	})
 
-	self.LevelRequirement = AttributeValue(self.Instance, "RR_LevelRequirement", 0)
+	self.LevelRequirement = self.Scope:AttributeValue(self.Instance, "RR_LevelRequirement", 0)
 	self.LevelMet = self.Scope:Computed(function(Use)
 		if Use(States.LocalPlayerData) and Use(States.LocalPlayerData).Level then
 			return Use(States.LocalPlayerData).Level >= Use(self.LevelRequirement)
