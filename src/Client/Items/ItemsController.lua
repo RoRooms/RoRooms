@@ -96,7 +96,9 @@ function ItemsController:KnitStart()
 end
 
 function ItemsController:KnitInit()
-	self.EquippedItems = Fusion.Value({})
+	self.Scope = Fusion.scoped(Fusion)
+
+	self.EquippedItems = self.Scope:Value({})
 	self.EquippedItemsUpdated = Signal.new()
 end
 

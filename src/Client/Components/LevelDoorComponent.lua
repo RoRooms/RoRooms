@@ -11,14 +11,16 @@ local LevelDoorComponent = Component.new {
 }
 
 function LevelDoorComponent:Start()
-	self.DisconnectLevelMetObserver = Scope:Observer(self.LevelMet):onChange(function()
+	self.DisconnectLevelMetObserver = self.Scope:Observer(self.LevelMet):onChange(function()
 		self.Instance.CanCollide = Peek(self.LevelMet) == false
 	end)
 end
 
 function LevelDoorComponent:Construct()
+	self.Scope = Fusion.scoped(Fusion)
+
 	self.LevelRequirement = AttributeValue(self.Instance, "RR_LevelRequirement", 0)
-	self.LevelMet = Scope:Computed(function(Use)
+	self.LevelMet = self.Scope:Computed(function(Use)
 		if Use(States.LocalPlayerData) and Use(States.LocalPlayerData).Level then
 			return Use(States.LocalPlayerData).Level >= Use(self.LevelRequirement)
 		else

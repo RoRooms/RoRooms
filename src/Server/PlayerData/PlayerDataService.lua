@@ -1,6 +1,6 @@
 local Players = game:GetService("Players")
 
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent
+local RoRooms = script.Parent.Parent.Parent.Parent
 local Knit = require(RoRooms.Parent.Knit)
 local ProfileService = require(RoRooms.SourceCode.Storage.ExtPackages.ProfileService)
 local LeaderStats = require(RoRooms.SourceCode.Storage.ExtPackages.LeaderStats)

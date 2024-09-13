@@ -27,7 +27,7 @@ end
 function MusicController:KnitStart()
 	MusicService = Knit.GetService("MusicService")
 
-	Scope:Observer(States.UserSettings.MuteMusic):onChange(function()
+	self.Scope:Observer(States.UserSettings.MuteMusic):onChange(function()
 		self:SetMuted(Peek(States.UserSettings.MuteMusic))
 	end)
 
@@ -47,6 +47,8 @@ function MusicController:KnitStart()
 end
 
 function MusicController:KnitInit()
+	self.Scope = Fusion.scoped(Fusion)
+
 	self.Muted = false
 end
 

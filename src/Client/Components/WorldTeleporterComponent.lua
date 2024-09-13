@@ -53,7 +53,7 @@ function WorldTeleporterComponent:_UpdatePlaceInfo(PlaceId: number)
 end
 
 function WorldTeleporterComponent:Start()
-	Scope:Observer(self.PlaceId):onChange(function()
+	self.Scope:Observer(self.PlaceId):onChange(function()
 		self:_UpdatePlaceInfo(Peek(self.PlaceId))
 	end)
 	self:_UpdatePlaceInfo(Peek(self.PlaceId))
@@ -72,8 +72,10 @@ function WorldTeleporterComponent:Start()
 end
 
 function WorldTeleporterComponent:Construct()
+	self.Scope = Fusion.scoped(Fusion)
+
 	self.PlaceId = AttributeValue(self.Instance, "RR_PlaceId")
-	self.PlaceInfo = Scope:Value({})
+	self.PlaceInfo = self.Scope:Value({})
 
 	if not self.Instance:IsA("BasePart") then
 		warn("WorldTeleporter must be a BasePart object", self.Instance)

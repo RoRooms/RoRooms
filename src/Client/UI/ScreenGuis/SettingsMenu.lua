@@ -10,11 +10,16 @@ local Version = require(RoRooms.Version)
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
+
+local SettingToggle = require(script.Parent.Parent.Components.SettingToggle)
 
 local TOGGLEABLE_CORE_GUIS = { Enum.CoreGuiType.Chat, Enum.CoreGuiType.PlayerList }
 
 return function(Scope: Fusion.Scope<any>, Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, {
+		SettingToggle = SettingToggle,
+	})
 	local Theme = Themer.Theme:now()
 
 	local MenuOpen = Scope:Computed(function(Use)
@@ -23,10 +28,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	Scope:Observer(States.UserSettings.HideUI):onChange(function()
 		for _, CoreGuiType in ipairs(TOGGLEABLE_CORE_GUIS) do
-			StarterGui:SetCoreGuiEnabled(CoreGuiType, not Use(States.UserSettings.HideUI))
+			StarterGui:SetCoreGuiEnabled(CoreGuiType, not Peek(States.UserSettings.HideUI))
 		end
-		States.TopbarVisible:set(not Use(States.UserSettings.HideUI))
-		if Use(States.UserSettings.HideUI) then
+		States.TopbarVisible:set(not Peek(States.UserSettings.HideUI))
+		if Peek(States.UserSettings.HideUI) then
 			States.CurrentMenu:set(nil)
 		end
 	end)
@@ -97,11 +102,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 								end),
 
 								[Children] = {
-									SettingToggle {
+									Scope:SettingToggle {
 										Label = "Mute music",
 										Switched = States.UserSettings.MuteMusic,
 									},
-									SettingToggle {
+									Scope:SettingToggle {
 										Label = "Hide UI",
 										Switched = States.UserSettings.HideUI,
 									},

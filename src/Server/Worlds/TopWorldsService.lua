@@ -1,8 +1,8 @@
 local DataStoreService = game:GetService("DataStoreService")
 local Players = game:GetService("Players")
 
-local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent
+local RoRooms = script.Parent.Parent.Parent.Parent
+local Future = require(RoRooms.Parent.Future)
 local WorldRegistryService = require(RoRooms.SourceCode.Server.Worlds.WorldRegistryService)
 local Knit = require(RoRooms.Parent.Knit)
 local GetPagesFromArray = require(RoRooms.SourceCode.Shared.ExtPackages.GetPagesFromArray)

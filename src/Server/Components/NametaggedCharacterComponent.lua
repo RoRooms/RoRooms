@@ -50,7 +50,7 @@ function NametaggedCharacterComponent:Start()
 		self:UpdateStatus()
 	end)
 
-	self.Nametag = Scope:Nametag {
+	self.Nametag = self.Scope:Nametag {
 		Parent = self.Instance,
 		Adornee = self.Head,
 		Nickname = self.Nickname,
@@ -59,12 +59,16 @@ function NametaggedCharacterComponent:Start()
 end
 
 function NametaggedCharacterComponent:Construct()
-	self.Nickname = Scope:Value("")
-	self.Status = Scope:Value("")
+	self.Scope = Fusion.scoped(Fusion, {
+		Nametag = Nametag,
+	})
+
+	self.Nickname = self.Scope:Value("")
+	self.Status = self.Scope:Value("")
 
 	self.Player = Players:GetPlayerFromCharacter(self.Instance)
 	self.Humanoid = self.Instance:WaitForChild("Humanoid")
-	self.Head = Scope:Value(self.Instance:WaitForChild("Head"))
+	self.Head = self.Scope:Value(self.Instance:WaitForChild("Head"))
 end
 
 return NametaggedCharacterComponent

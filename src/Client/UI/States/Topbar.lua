@@ -9,41 +9,43 @@ local Themer = OnyxUI.Themer
 local Theme = Themer.Theme:now()
 
 local Topbar = {
-	NativeButtons = {
-		Settings = {
-			MenuName = "SettingsMenu",
-			Icon = "rbxassetid://17273236509",
-			IconFilled = "rbxassetid://17273236289",
-			LayoutOrder = 5,
-			IndicatorColor = Theme.Util.Colors.Warning.Main,
-			IndicatorEnabled = Scope:Computed(function(Use)
-				return Use(States.RoRooms.UpToDate) == false
-			end),
-		},
-		Emotes = {
-			MenuName = "EmotesMenu",
-			Icon = "rbxassetid://17273236115",
-			IconFilled = "rbxassetid://17273235955",
-			LayoutOrder = 3,
-		},
-		Friends = {
-			MenuName = "FriendsMenu",
-			Icon = "rbxassetid://17273235804",
-			IconFilled = "rbxassetid://17273235655",
-			LayoutOrder = 2,
-		},
-		Profile = {
-			MenuName = "ProfileMenu",
-			Icon = "rbxassetid://17273235245",
-			IconFilled = "rbxassetid://17273235099",
-			LayoutOrder = 1,
-		},
-		Worlds = {
-			MenuName = "WorldsMenu",
-			Icon = "rbxassetid://17273758646",
-			IconFilled = "rbxassetid://17273758509",
-			LayoutOrder = 4,
-		},
+	Scope = Fusion.scoped(Fusion),
+}
+
+Topbar.NativeButtons = {
+	Settings = {
+		MenuName = "SettingsMenu",
+		Icon = "rbxassetid://17273236509",
+		IconFilled = "rbxassetid://17273236289",
+		LayoutOrder = 5,
+		IndicatorColor = Theme.Util.Colors.Warning.Main,
+		IndicatorEnabled = Topbar.Scope:Computed(function(Use)
+			return Use(States.RoRooms.UpToDate) == false
+		end),
+	},
+	Emotes = {
+		MenuName = "EmotesMenu",
+		Icon = "rbxassetid://17273236115",
+		IconFilled = "rbxassetid://17273235955",
+		LayoutOrder = 3,
+	},
+	Friends = {
+		MenuName = "FriendsMenu",
+		Icon = "rbxassetid://17273235804",
+		IconFilled = "rbxassetid://17273235655",
+		LayoutOrder = 2,
+	},
+	Profile = {
+		MenuName = "ProfileMenu",
+		Icon = "rbxassetid://17273235245",
+		IconFilled = "rbxassetid://17273235099",
+		LayoutOrder = 1,
+	},
+	Worlds = {
+		MenuName = "WorldsMenu",
+		Icon = "rbxassetid://17273758646",
+		IconFilled = "rbxassetid://17273758509",
+		LayoutOrder = 4,
 	},
 }
 

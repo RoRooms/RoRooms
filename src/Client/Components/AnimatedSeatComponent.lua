@@ -53,7 +53,7 @@ end
 function AnimatedSeatComponent:GetProximityPrompt()
 	local ProximityPrompt = self.Instance:FindFirstChild("RR_SitPrompt")
 	if not ProximityPrompt then
-		ProximityPrompt = Scope:New "ProximityPrompt" {
+		ProximityPrompt = self.Scope:New "ProximityPrompt" {
 			Name = "RR_SitPrompt",
 			Parent = self.Instance,
 			ActionText = "",
@@ -62,8 +62,8 @@ function AnimatedSeatComponent:GetProximityPrompt()
 		}
 	end
 
-	Scope:Hydrate(ProximityPrompt) {
-		Enabled = Scope:Computed(function(Use)
+	self.Scope:Hydrate(ProximityPrompt) {
+		Enabled = self.Scope:Computed(function(Use)
 			return Peek(self.Occupant) == nil
 		end),
 	}
@@ -88,9 +88,11 @@ function AnimatedSeatComponent:Start()
 end
 
 function AnimatedSeatComponent:Construct()
+	self.Scope = Fusion.scoped(Fusion)
+
 	self.PromptToSit = AttributeValue(self.Instance, "RR_PromptToSit", true)
 	self.SitOnTouch = AttributeValue(self.Instance, "RR_SitOnTouch", false)
-	self.Occupant = Scope:Value(nil)
+	self.Occupant = self.Scope:Value(nil)
 
 	if not self.Instance:IsA("Seat") then
 		warn("AnimatedSeat must be a Seat object", self.Instance)

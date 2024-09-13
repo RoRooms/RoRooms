@@ -8,13 +8,14 @@ local Peek = Fusion.peek
 
 local UpdatesController = {
 	Name = script.Name,
+	Scope = Fusion.scoped(Fusion),
 }
 
 function UpdatesController:KnitStart()
 	local LastUpToDate: boolean?
 
 	if RunService:IsStudio() then
-		Scope:Observer(States.RoRooms.UpToDate):onChange(function()
+		self.Scope:Observer(States.RoRooms.UpToDate):onChange(function()
 			local UpToDate = Peek(States.RoRooms.UpToDate)
 			if not UpToDate and (LastUpToDate ~= UpToDate) then
 				Prompts:PushPrompt({

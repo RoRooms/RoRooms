@@ -1,6 +1,9 @@
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent
+local RoRooms = script.Parent.Parent.Parent.Parent
 local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
 local Theme = require(script.Parent.OnyxUITheme)
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+
+local Themer = OnyxUI.Themer
 
 local ROROOMS_CONFIG = {
 	ItemsSystem = {
@@ -150,13 +153,15 @@ local Viewport = function(Props)
 end
 
 return function(Target)
-	local ViewportGuis = Viewport {
-		Target = Target,
-	}
+	local ViewportGuis
+
+	Themer.Theme:is(Theme):during(function()
+		ViewportGuis = Viewport {
+			Target = Target,
+		}
+	end)
 
 	RoRooms.Config:Update(ROROOMS_CONFIG)
-
-	Themer:Set(Theme)
 
 	Topbar:AddDefaultButtons()
 
