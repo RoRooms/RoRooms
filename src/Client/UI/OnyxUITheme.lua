@@ -4,10 +4,11 @@ local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 
 local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
 
 local Scope = Fusion.scoped(Fusion)
 
-return {
+return Themer.NewTheme(Scope, {
 	Colors = {
 		Primary = {
 			Main = Util.Colors.White,
@@ -95,4 +96,4 @@ return {
 		Strong = 0.5,
 		Contrast = 1,
 	},
-}
+})
