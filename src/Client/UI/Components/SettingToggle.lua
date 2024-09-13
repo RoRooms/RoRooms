@@ -1,10 +1,10 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Themer = require(OnyxUI.Themer)
 local Fusion = require(RoRooms.Parent.Fusion)
-local Util = require(OnyxUI.Util)
 
+local Themer = OnyxUI.Themer
 local Children = Fusion.Children
+local Util = OnyxUI.Util
 
 local DISABLED_TRANSPARENCY = 0.5
 
