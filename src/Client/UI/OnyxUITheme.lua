@@ -71,7 +71,6 @@ return {
 	SpringSpeed = {
 		Base = 50,
 	},
-	SpringDampening = 1,
 	Sound = {
 		Hover = Scope:New "Sound" {
 			SoundId = "rbxassetid://10066936758",
