@@ -85,7 +85,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 						if ItemCategory == Peek(CategoryName) then
 							return ItemId,
-								ItemButton {
+								Scope:ItemButton {
 									ItemId = ItemId,
 									Item = Item,
 									Color = Item.TintColor,
