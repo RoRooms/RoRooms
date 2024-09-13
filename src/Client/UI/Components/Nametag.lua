@@ -11,20 +11,26 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
 
-	return Scope:Hydrate(Scope:Base {
-		ClassName = "BillboardGui",
+	return Scope:Hydrate(Scope:New "BillboardGui" {
 		Name = "Nametag",
 		Parent = Props.Parent,
 		Enabled = Props.Enabled,
 		Size = UDim2.fromScale(5, 1.55),
-		ListEnabled = true,
-		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
-		ListVerticalAlignment = Enum.VerticalAlignment.Bottom,
-		ListPadding = Scope:Computed(function(Use)
-			return UDim.new(0, 0)
-		end),
+		Adornee = Props.Adornee,
+		StudsOffset = Vector3.new(0, 2.4, 0),
+		MaxDistance = 75,
+		LightInfluence = 0,
+		Brightness = 1.3,
+		ResetOnSpawn = false,
 
 		[Children] = {
+			Scope:New "UIListLayout" {
+				HorizontalAlignment = Enum.HorizontalAlignment.Center,
+				VerticalAlignment = Enum.VerticalAlignment.Bottom,
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, 0)
+				end),
+			},
 			Scope:Text {
 				Name = "Nickname",
 				Text = Props.Nickname,
@@ -55,12 +61,5 @@ return function(Scope: Fusion.Scope<any>, Props)
 				TextYAlignment = Enum.TextYAlignment.Bottom,
 			},
 		},
-	}) {
-		Adornee = Props.Adornee,
-		StudsOffset = Vector3.new(0, 2.4, 0),
-		MaxDistance = 75,
-		LightInfluence = 0,
-		Brightness = 1.3,
-		ResetOnSpawn = false,
-	}
+	})
 end

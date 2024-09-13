@@ -36,9 +36,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end)
 	end
 
-	local Observers = {
-		Scope:Observer(PlaceId):onChange(UpdatePlaceInfo),
-	}
+	Scope:Observer(PlaceId):onChange(UpdatePlaceInfo)
 	UpdatePlaceInfo()
 
 	return Scope:CustomButton {

@@ -38,9 +38,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end)
 	end
 
-	local Observers = {
-		Scope:Observer(States.WorldPageMenu.PlaceId):onChange(UpdatePlaceInfo),
-	}
+	Scope:Observer(States.WorldPageMenu.PlaceId):onChange(UpdatePlaceInfo)
 	UpdatePlaceInfo()
 
 	local WorldPageMenu = Scope:New "ScreenGui" {

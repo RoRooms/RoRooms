@@ -105,17 +105,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 		},
 	}
 
-	local DisconnectOpen = Scope:Observer(MenuOpen):onChange(function()
+	Scope:Observer(MenuOpen):onChange(function()
 		if Peek(MenuOpen) then
 			if States.Controllers.FriendsController then
 				States.Controllers.FriendsController:UpdateFriends()
 			end
-		end
-	end)
-
-	FriendsMenu:GetPropertyChangedSignal("Parent"):Connect(function()
-		if FriendsMenu.Parent == nil then
-			DisconnectOpen()
 		end
 	end)
 

@@ -23,9 +23,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 	})
 	local Theme = Themer.Theme:now()
 
+	local PlaceId = Scope:EnsureValue(Util.Fallback(Props.PlaceId, nil))
 	local UserId = Util.Fallback(Props.UserId, 1)
 	local DisplayName = Util.Fallback(Props.DisplayName, "DisplayName")
-	local PlaceId = Util.Fallback(Props.PlaceId, nil)
 	local JobId = Util.Fallback(Props.JobId, nil)
 	local InRoRooms = Util.Fallback(Props.InRoRooms, false)
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
@@ -49,9 +49,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end)
 	end
 
-	local Observers = {
-		Scope:Observer(PlaceId):onChange(UpdatePlaceInfo),
-	}
+	Scope:Observer(PlaceId):onChange(UpdatePlaceInfo)
 	UpdatePlaceInfo()
 
 	local StatusColor = Scope:Computed(function(Use)

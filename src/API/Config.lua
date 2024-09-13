@@ -159,7 +159,6 @@ local Config = table.clone(CONFIG_TEMPLATE)
 
 function Config:Update(ConfigModifier: Config)
 	ReconcileTable(Config, ConfigModifier)
-	print(Config, ConfigModifier)
 end
 
 return Config

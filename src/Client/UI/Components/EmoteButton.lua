@@ -118,7 +118,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						end),
 						TextSize = 13,
 						TextColor3 = Scope:Computed(function(Use)
-							return ColorUtils.Lighten(Use(Props.Color), 0.5)
+							return ColorUtils.Lighten(Use(Color), 0.5)
 						end),
 						ClipsDescendants = false,
 						AutoLocalize = false,
