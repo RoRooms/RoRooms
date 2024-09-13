@@ -18,7 +18,7 @@ Topbar.NativeButtons = {
 		Icon = "rbxassetid://17273236509",
 		IconFilled = "rbxassetid://17273236289",
 		LayoutOrder = 5,
-		IndicatorColor = Theme.Util.Colors.Warning.Main,
+		IndicatorColor = Theme.Colors.Warning.Main,
 		IndicatorEnabled = Topbar.Scope:Computed(function(Use)
 			return Use(States.RoRooms.UpToDate) == false
 		end),

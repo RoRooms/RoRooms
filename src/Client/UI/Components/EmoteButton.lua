@@ -17,7 +17,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local EmoteId = Util.Fallback(Props.EmoteId, "EmoteId")
 	local Emote = Util.Fallback(Props.Emote, {})
-	local Color = Util.Fallback(Props.Color, Theme.Util.Colors.Neutral.Main)
+	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
 
 	local IsHolding = Scope:Value(false)
 

@@ -17,7 +17,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local ItemId = Util.Fallback(Props.ItemId, "ItemId")
 	local Item = Util.Fallback(Props.Item, {})
-	local Color = Util.Fallback(Props.Color, Theme.Util.Colors.Neutral.Main)
+	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
 	local Callback = Util.Fallback(Props.Callback, function() end)
 
 	local IsHolding = Scope:Value(false)

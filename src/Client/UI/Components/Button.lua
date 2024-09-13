@@ -27,7 +27,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Disabled = Util.Fallback(Props.Disabled, false)
 	local Content = Util.Fallback(Props.Content, {})
 	local Style = Util.Fallback(Props.Style, "Filled")
-	local Color = Util.Fallback(Props.Color, Theme.Util.Colors.Primary.Main)
+	local Color = Util.Fallback(Props.Color, Theme.Colors.Primary.Main)
 	local ContentColor = Util.Fallback(
 		Props.ContentColor,
 		"Color3",
@@ -41,7 +41,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local IsHovering = Scope:EnsureValue(Props.IsHovering, false)
 	local EffectiveColor = Scope:Computed(function(Use)
 		if Use(Disabled) then
-			return Use(Theme.Util.Colors.BaseContent.Main)
+			return Use(Theme.Colors.BaseContent.Main)
 		else
 			if Use(IsHolding) then
 				return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Regular))
@@ -54,7 +54,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	end)
 	local EffectiveContentColor = Scope:Computed(function(Use)
 		if Use(Disabled) then
-			return Use(Theme.Util.Colors.BaseContent.Main)
+			return Use(Theme.Colors.BaseContent.Main)
 		else
 			if Use(Style) == "Filled" then
 				return Use(ContentColor)
