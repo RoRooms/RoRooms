@@ -2,8 +2,8 @@ local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
-
 local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
+local Components = require(RoRooms.SourceCode.Client.UI.Components)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -11,7 +11,7 @@ local Themer = OnyxUI.Themer
 local Peek = Fusion.peek
 
 return function(Scope: Fusion.Scope<any>, Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components)
 	local Theme = Themer.Theme:now()
 
 	local CurrentPrompt = Scope:Computed(function(Use)

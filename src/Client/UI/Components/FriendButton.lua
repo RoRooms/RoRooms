@@ -18,7 +18,9 @@ local Peek = Fusion.peek
 local CustomButton = require(RoRooms.SourceCode.Client.UI.Components.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, {
+		CustomButton = CustomButton,
+	})
 	local Theme = Themer.Theme:now()
 
 	local UserId = Util.Fallback(Props.UserId, 1)

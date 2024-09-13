@@ -4,19 +4,17 @@ local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Worlds = require(RoRooms.SourceCode.Client.UI.States.Worlds)
 local Config = require(RoRooms.Config)
+local Components = require(RoRooms.SourceCode.Client.UI.Components)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 
-local WorldButton = require(RoRooms.SourceCode.Client.UI.Components.WorldButton)
-local WorldsCategory = require(RoRooms.SourceCode.Client.UI.Components.WorldsCategory)
-
 local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { "rbxassetid://17293213744", "Load more" }
 local DEFAULT_REFRESH_BUTTON_CONTENTS = { "rbxassetid://13858012326", "Refresh" }
 
 return function(Scope: Fusion.Scope<any>, Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components)
 	local Theme = Themer.Theme:now()
 
 	local MenuOpen = Scope:Computed(function(Use)

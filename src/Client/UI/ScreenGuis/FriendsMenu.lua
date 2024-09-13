@@ -2,15 +2,14 @@ local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
+local Components = require(RoRooms.SourceCode.Client.UI.Components)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
 local Peek = Fusion.peek
 
-local FriendButton = require(RoRooms.SourceCode.Client.UI.Components.FriendButton)
-
 return function(Scope: Fusion.Scope<any>, Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components)
 	local Theme = Themer.Theme:now()
 
 	local MenuOpen = Scope:Computed(function(Use)

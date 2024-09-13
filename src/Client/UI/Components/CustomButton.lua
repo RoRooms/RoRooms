@@ -5,8 +5,6 @@ local Fusion = require(RoRooms.Parent.Fusion)
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 
-local Button = require(script.Parent.Button)
-
 export type Props = Button.Props & {}
 
 return function(Scope: Fusion.Scope<any>, Props: Props)

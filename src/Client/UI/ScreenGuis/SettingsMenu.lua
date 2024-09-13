@@ -6,20 +6,17 @@ local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Version = require(RoRooms.Version)
+local Components = require(RoRooms.SourceCode.Client.UI.Components)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 local Peek = Fusion.peek
 
-local SettingToggle = require(script.Parent.Parent.Components.SettingToggle)
-
 local TOGGLEABLE_CORE_GUIS = { Enum.CoreGuiType.Chat, Enum.CoreGuiType.PlayerList }
 
 return function(Scope: Fusion.Scope<any>, Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, {
-		SettingToggle = SettingToggle,
-	})
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components)
 	local Theme = Themer.Theme:now()
 
 	local MenuOpen = Scope:Computed(function(Use)

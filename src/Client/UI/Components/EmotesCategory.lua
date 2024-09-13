@@ -11,7 +11,9 @@ local Themer = OnyxUI.Themer
 local EmoteButton = require(RoRooms.SourceCode.Client.UI.Components.EmoteButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, {
+		EmoteButton = EmoteButton,
+	})
 	local Theme = Themer.Theme:now()
 
 	local CategoryName = Util.Fallback(Props.CategoryName, "General")

@@ -3,17 +3,15 @@ local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Config = require(RoRooms.Config)
+local Components = require(RoRooms.SourceCode.Client.UI.Components)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 local Peek = Fusion.peek
 
-local ItemsCategory = require(RoRooms.SourceCode.Client.UI.Components.ItemsCategory)
-local ItemCategoriesSidebar = require(RoRooms.SourceCode.Client.UI.Components.ItemCategoriesSidebar)
-
 return function(Scope: Fusion.Scope<any>, Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components)
 	local Theme = Themer.Theme:now()
 
 	local ItemsMenu = Scope:New "ScreenGui" {

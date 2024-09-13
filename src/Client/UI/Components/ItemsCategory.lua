@@ -11,7 +11,9 @@ local Peek = Fusion.peek
 local ItemButton = require(RoRooms.SourceCode.Client.UI.Components.ItemButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, {
+		ItemButton = ItemButton,
+	})
 	local Theme = Themer.Theme:now()
 
 	local CategoryName = Util.Fallback(Props.CategoryName, "Category")
