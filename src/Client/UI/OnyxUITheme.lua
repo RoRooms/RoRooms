@@ -70,10 +70,10 @@ return Themer.NewTheme(Scope, {
 		Base = 14,
 	},
 	SpringSpeed = {
-		Base = 40,
+		Base = 60,
 	},
 	SpringDampening = {
-		Base = 1.5,
+		Base = 1.25,
 	},
 	Sound = {
 		Hover = Scope:New "Sound" {

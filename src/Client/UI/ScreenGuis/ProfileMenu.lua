@@ -28,113 +28,71 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end)
 	end
 
-	local ProfileMenu = Scope:New "ScreenGui" {
-		Name = "ProfileMenu",
+	local ProfileMenu = Scope:Menu {
+		Name = script.Name,
+		Open = MenuOpen,
 		Parent = Props.Parent,
-		Enabled = MenuOpen,
-		ResetOnSpawn = false,
+		AutomaticSize = Enum.AutomaticSize.Y,
+		Size = UDim2.fromOffset(280, 0),
 
 		[Children] = {
-			Scope:AutoScaleFrame {
-				AnchorPoint = Vector2.new(0.5, 0),
-				Position = Scope:Spring(
-					Scope:Computed(function(Use)
-						local YPos = Use(States.TopbarBottomPos)
-						if not Use(MenuOpen) then
-							YPos = YPos + 15
-						end
-						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
-					end),
-					Theme.SpringSpeed["1"],
-					Theme.SpringDampening["1"]
-				),
-				BaseResolution = Vector2.new(739, 789),
-				MinScale = 1,
-				MaxScale = 1,
+			Scope:TitleBar {
+				Title = "Profile",
+				CloseButtonDisabled = true,
+			},
+			Scope:Frame {
+				Size = UDim2.fromScale(1, 0),
+				ListEnabled = true,
 
 				[Children] = {
-					Scope:MenuFrame {
-						Size = UDim2.fromOffset(270, 0),
+					Scope:TextInput {
+						Name = "NicknameInput",
+						PlaceholderText = "Nickname",
+						CharacterLimit = Config.Systems.Profiles.NicknameCharacterLimit,
+						Size = UDim2.fromScale(1, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
-						GroupTransparency = Scope:Spring(
-							Scope:Computed(function(Use)
-								if Use(MenuOpen) then
-									return 0
-								else
-									return 1
-								end
-							end),
-							Theme.SpringSpeed["1"],
-							Theme.SpringDampening["1"]
-						),
-						BackgroundTransparency = States.PreferredTransparency,
-						ListEnabled = true,
-						ListPadding = Scope:Computed(function(Use)
-							return UDim.new(0, Use(Theme.Spacing["1"]))
-						end),
+						Text = NicknameText,
 
-						[Children] = {
-							Scope:TitleBar {
-								Title = "Profile",
-								CloseButtonDisabled = true,
-							},
-							Scope:Frame {
-								Size = UDim2.fromScale(1, 0),
-								ListEnabled = true,
+						OnFocusLost = function()
+							if States.Services.UserProfileService then
+								States.Services.UserProfileService:SetNickname(Peek(NicknameText))
+							end
+						end,
+					},
+					Scope:TextInput {
+						Name = "StatusInput",
+						PlaceholderText = "Status",
+						Text = StatusText,
+						CharacterLimit = Config.Systems.Profiles.BioCharacterLimit,
+						TextWrapped = true,
+						Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 60)),
+						AutomaticSize = Enum.AutomaticSize.Y,
 
-								[Children] = {
-									Scope:TextInput {
-										Name = "NicknameInput",
-										PlaceholderText = "Nickname",
-										CharacterLimit = Config.Systems.Profiles.NicknameCharacterLimit,
-										Size = UDim2.fromScale(1, 0),
-										AutomaticSize = Enum.AutomaticSize.Y,
-										Text = NicknameText,
-
-										OnFocusLost = function()
-											if States.Services.UserProfileService then
-												States.Services.UserProfileService:SetNickname(Peek(NicknameText))
-											end
-										end,
-									},
-									Scope:TextInput {
-										Name = "StatusInput",
-										PlaceholderText = "Status",
-										Text = StatusText,
-										CharacterLimit = Config.Systems.Profiles.BioCharacterLimit,
-										TextWrapped = true,
-										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 60)),
-										AutomaticSize = Enum.AutomaticSize.Y,
-
-										OnFocusLost = function()
-											if States.Services.UserProfileService then
-												States.Services.UserProfileService:SetStatus(Peek(StatusText))
-											end
-										end,
-									},
-								},
-							},
-							Scope:Button {
-								Name = "EditAvatarButton",
-								Content = { "rbxassetid://13285615740", "Edit Avatar" },
-								Color = Theme.Colors.Primary.Main,
-								Size = UDim2.fromScale(1, 0),
-								AutomaticSize = Enum.AutomaticSize.Y,
-								Visible = Scope:Computed(function(Use)
-									return Config.Systems.Profiles.AvatarEditorCallback ~= nil
-								end),
-
-								OnActivated = function()
-									States.CurrentMenu:set()
-
-									if Config.Systems.Profiles.AvatarEditorCallback then
-										Config.Systems.Profiles.AvatarEditorCallback()
-									end
-								end,
-							},
-						},
+						OnFocusLost = function()
+							if States.Services.UserProfileService then
+								States.Services.UserProfileService:SetStatus(Peek(StatusText))
+							end
+						end,
 					},
 				},
+			},
+			Scope:Button {
+				Name = "EditAvatarButton",
+				Content = { "rbxassetid://13285615740", "Edit Avatar" },
+				Color = Theme.Colors.Primary.Main,
+				Size = UDim2.fromScale(1, 0),
+				AutomaticSize = Enum.AutomaticSize.Y,
+				Visible = Scope:Computed(function(Use)
+					return Config.Systems.Profiles.AvatarEditorCallback ~= nil
+				end),
+
+				OnActivated = function()
+					States.CurrentMenu:set()
+
+					if Config.Systems.Profiles.AvatarEditorCallback then
+						Config.Systems.Profiles.AvatarEditorCallback()
+					end
+				end,
 			},
 		},
 	}

@@ -16,6 +16,7 @@ local Components = {
 	TopbarButton = require(script.TopbarButton),
 	WorldButton = require(script.WorldButton),
 	WorldsCategory = require(script.WorldsCategory),
+	Menu = require(script.Menu),
 }
 
 for _, Child in ipairs(script:GetChildren()) do

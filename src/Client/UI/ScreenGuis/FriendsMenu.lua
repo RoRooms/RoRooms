@@ -16,90 +16,52 @@ return function(Scope: Fusion.Scope<any>, Props)
 		return Use(States.CurrentMenu) == script.Name
 	end)
 
-	local FriendsMenu = Scope:New "ScreenGui" {
-		Name = "FriendsMenu",
+	local FriendsMenu = Scope:Menu {
+		Name = script.Name,
+		Open = MenuOpen,
 		Parent = Props.Parent,
-		Enabled = MenuOpen,
-		ResetOnSpawn = false,
+		AutomaticSize = Enum.AutomaticSize.Y,
+		Size = UDim2.fromOffset(350, 0),
 
 		[Children] = {
-			Scope:AutoScaleFrame {
-				AnchorPoint = Vector2.new(0.5, 0),
-				Position = Scope:Spring(
-					Scope:Computed(function(Use)
-						local YPos = Use(States.TopbarBottomPos)
-						if not Use(MenuOpen) then
-							YPos = YPos + 15
-						end
-						return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
-					end),
-					Theme.SpringSpeed["1"],
-					Theme.SpringDampening["1"]
-				),
-				BaseResolution = Vector2.new(739, 789),
-				MinScale = 1,
-				MaxScale = 1,
+			Scope:TitleBar {
+				Title = "Friends",
+				CloseButtonDisabled = true,
+			},
+			Scope:Scroller {
+				Name = "FriendsList",
+				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
+				ScrollBarThickness = Theme.StrokeThickness["1"],
+				ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
+				end),
+				ListEnabled = true,
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.75"]))
+				end),
+				ListFillDirection = Enum.FillDirection.Horizontal,
+				ListWraps = true,
 
 				[Children] = {
-					Scope:MenuFrame {
-						Size = UDim2.fromOffset(345, 0),
-						GroupTransparency = Scope:Spring(
-							Scope:Computed(function(Use)
-								if Use(MenuOpen) then
-									return 0
-								else
-									return 1
-								end
-							end),
-							Theme.SpringSpeed["1"],
-							Theme.SpringDampening["1"]
-						),
-						BackgroundTransparency = States.PreferredTransparency,
-						ListEnabled = true,
-
-						[Children] = {
-							Scope:TitleBar {
-								Title = "Friends",
-								CloseButtonDisabled = true,
-							},
-							Scope:Scroller {
-								Name = "FriendsList",
-								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
-								ScrollBarThickness = Theme.StrokeThickness["1"],
-								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
-								Padding = Scope:Computed(function(Use)
-									return UDim.new(0, Use(Theme.StrokeThickness["1"]))
-								end),
-								ListEnabled = true,
-								ListPadding = Scope:Computed(function(Use)
-									return UDim.new(0, Use(Theme.Spacing["0.75"]))
-								end),
-								ListFillDirection = Enum.FillDirection.Horizontal,
-								ListWraps = true,
-
-								[Children] = {
-									Scope:ForValues(States.Friends.InRoRooms, function(Use, Scope, Friend)
-										return Scope:FriendButton {
-											UserId = Friend.VisitorId,
-											DisplayName = Friend.DisplayName,
-											PlaceId = Friend.PlaceId,
-											JobId = Friend.GameId,
-											InRoRooms = true,
-										}
-									end),
-									Scope:ForValues(States.Friends.NotInRoRooms, function(Use, Scope, Friend)
-										return Scope:FriendButton {
-											UserId = Friend.VisitorId,
-											DisplayName = Friend.DisplayName,
-											PlaceId = Friend.PlaceId,
-											JobId = Friend.GameId,
-											InRoRooms = false,
-										}
-									end),
-								},
-							},
-						},
-					},
+					Scope:ForValues(States.Friends.InRoRooms, function(Use, Scope, Friend)
+						return Scope:FriendButton {
+							UserId = Friend.VisitorId,
+							DisplayName = Friend.DisplayName,
+							PlaceId = Friend.PlaceId,
+							JobId = Friend.GameId,
+							InRoRooms = true,
+						}
+					end),
+					Scope:ForValues(States.Friends.NotInRoRooms, function(Use, Scope, Friend)
+						return Scope:FriendButton {
+							UserId = Friend.VisitorId,
+							DisplayName = Friend.DisplayName,
+							PlaceId = Friend.PlaceId,
+							JobId = Friend.GameId,
+							InRoRooms = false,
+						}
+					end),
 				},
 			},
 		},

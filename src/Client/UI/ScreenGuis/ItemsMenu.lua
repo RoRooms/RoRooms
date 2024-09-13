@@ -14,82 +14,39 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components)
 	local Theme = Themer.Theme:now()
 
-	local ItemsMenu = Scope:New "ScreenGui" {
-		Name = "ItemsMenu",
+	local ItemsMenu = Scope:Menu {
+		Name = script.Name,
+		Open = States.ItemsMenu.Open,
 		Parent = Props.Parent,
-		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
-		Enabled = States.ItemsMenu.Open,
-		ResetOnSpawn = false,
+		AutomaticSize = Enum.AutomaticSize.Y,
+		Size = UDim2.fromOffset(385, 0),
+		ListFillDirection = Enum.FillDirection.Horizontal,
 
 		[Children] = {
-			Scope:AutoScaleFrame {
-				AnchorPoint = Vector2.new(0.5, 1),
-				Position = Scope:Spring(
-					Scope:Computed(function(Use)
-						local YPos = 68 + 15
-						if not Use(States.ItemsMenu.Open) then
-							YPos -= 15
-						end
-						return UDim2.new(UDim.new(0.5, 0), UDim.new(1, -YPos))
-					end),
-					Theme.SpringSpeed["1"],
-					Theme.SpringDampening["1"]
-				),
-				BaseResolution = Vector2.new(739, 789),
-				MinScale = 1,
-				MaxScale = 1,
+			Scope:ItemCategoriesSidebar {
+				Size = UDim2.fromScale(0, 1),
+			},
+			Scope:Scroller {
+				Name = "Items",
+				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 220)),
+				ScrollBarThickness = Theme.StrokeThickness["1"],
+				ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
+				end),
+				ListEnabled = true,
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.75"]))
+				end),
 
 				[Children] = {
-					Scope:MenuFrame {
-						Size = UDim2.fromOffset(385, 0),
-						AutomaticSize = Enum.AutomaticSize.Y,
-						GroupTransparency = Scope:Spring(
-							Scope:Computed(function(Use)
-								if Use(States.ItemsMenu.Open) then
-									return 0
-								else
-									return 1
-								end
-							end),
-							Theme.SpringSpeed["1"],
-							Theme.SpringDampening["1"]
-						),
-						BackgroundTransparency = States.PreferredTransparency,
-						ListEnabled = true,
-						ListFillDirection = Enum.FillDirection.Horizontal,
-
-						[Children] = {
-							Scope:ItemCategoriesSidebar {
-								Size = UDim2.fromScale(0, 1),
-							},
-							Scope:Scroller {
-								Name = "Items",
-								Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 220)),
-								ScrollBarThickness = Theme.StrokeThickness["1"],
-								ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
-								Padding = Scope:Computed(function(Use)
-									return UDim.new(0, Use(Theme.StrokeThickness["1"]))
-								end),
-								ListEnabled = true,
-								ListPadding = Scope:Computed(function(Use)
-									return UDim.new(0, Use(Theme.Spacing["0.75"]))
-								end),
-
-								[Children] = {
-									Scope:ForPairs(
-										Config.Systems.Items.Categories,
-										function(Use, Scope, Name: string, Category)
-											return Name,
-												Scope:ItemsCategory {
-													CategoryName = Name,
-													LayoutOrder = Category.LayoutOrder,
-												}
-										end
-									),
-								},
-							},
-						},
-					},
+					Scope:ForPairs(Config.Systems.Items.Categories, function(Use, Scope, Name: string, Category)
+						return Name,
+							Scope:ItemsCategory {
+								CategoryName = Name,
+								LayoutOrder = Category.LayoutOrder,
+							}
+					end),
 				},
 			},
 		},
