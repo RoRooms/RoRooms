@@ -14,7 +14,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Theme = Themer.Theme:now()
 
 	local SizeMultiplier = Util.Fallback(Props.SizeMultiplier, 1)
-	local IconImage = Util.Fallback(Props.IconImage, "")
 	local MenuName = Util.Fallback(Props.MenuName, "")
 	local Icon = Util.Fallback(Props.Icon, "")
 	local IconFilled = Util.Fallback(Props.IconFilled, "")
@@ -39,8 +38,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end),
 		Size = Scope:Computed(function(Use)
 			local BaseSize = UDim2.fromOffset(45, 45)
-			local SizeMultiplier = Use(SizeMultiplier)
-			return UDim2.fromOffset(BaseSize.X.Offset * SizeMultiplier, BaseSize.Y.Offset * SizeMultiplier)
+			local SizeMultiplierValue = Use(SizeMultiplier)
+			return UDim2.fromOffset(BaseSize.X.Offset * SizeMultiplierValue, BaseSize.Y.Offset * SizeMultiplierValue)
 		end),
 		AutomaticSize = Enum.AutomaticSize.None,
 		LayoutOrder = Props.LayoutOrder,

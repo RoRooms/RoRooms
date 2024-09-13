@@ -37,10 +37,13 @@ function RandomWorldsService.Client:GetRandomWorlds(
 
 	if StartingPage == nil then
 		local MaxPages = math.ceil(#self.Server.RandomWorlds / PageSize)
-		StartingPage = math.random(0, MaxPages)
-		if StartingPage == MaxPages then
-			StartingPage -= 1
+		local NewStartingPage = math.random(0, MaxPages)
+
+		if NewStartingPage == MaxPages then
+			NewStartingPage -= 1
 		end
+
+		StartingPage = NewStartingPage
 	end
 
 	return self.Server:GetRandomWorlds(StartingPage, PageCount, PageSize)

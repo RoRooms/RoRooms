@@ -25,6 +25,7 @@ function EmotesService:PlayEmote(Player: Player, EmoteId: string)
 				local CharacterClass = PlayerCharacterComponent:FromInstance(Character)
 				if CharacterClass then
 					CharacterClass:PlayEmote(EmoteId, Emote)
+					return true
 				end
 			end
 		else
@@ -33,6 +34,8 @@ function EmotesService:PlayEmote(Player: Player, EmoteId: string)
 	else
 		return false, "Emote does not exist."
 	end
+
+	return false, "Error occurred."
 end
 
 function EmotesService:CanPlayerUseEmote(Player: Player, EmoteId: string, Emote)

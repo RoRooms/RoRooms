@@ -23,7 +23,7 @@ function UpdatesController:KnitStart()
 					Text = "RoRooms is out of date. Please update to receive the latest bug-fixes and improvements.",
 					Buttons = {
 						{
-							Contents = { "Close" },
+							Content = { "Close" },
 						},
 					},
 				})

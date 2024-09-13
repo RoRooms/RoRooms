@@ -6,7 +6,6 @@ local Config = require(RoRooms.Config)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
-local Themer = OnyxUI.Themer
 
 local CategoriesSidebar = require(script.Parent.CategoriesSidebar)
 local CategoryButton = require(script.Parent.CategoryButton)
@@ -16,7 +15,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 		CategoriesSidebar = CategoriesSidebar,
 		CategoryButton = CategoryButton,
 	})
-	local Theme = Themer.Theme:now()
 
 	local Name = Util.Fallback(Props.Name, "ItemCategoriesSidebar")
 

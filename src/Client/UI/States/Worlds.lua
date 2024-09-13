@@ -36,6 +36,8 @@ function Worlds:FetchTopWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 				return TopWorlds
 			end)
 	end
+
+	return nil
 end
 
 function Worlds:_AddTopWorlds(TopWorlds: WorldPages)
@@ -70,6 +72,8 @@ function Worlds:FetchRandomWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 				return RandomWorlds
 			end)
 	end
+
+	return nil
 end
 
 function Worlds:_AddRandomWorlds(RandomWorlds: WorldPages)

@@ -30,6 +30,9 @@ local PlayerDataService = {
 		Level = Knit.CreateProperty(0),
 		UserProfile = Knit.CreateProperty({ Nickname = "", Status = "" }),
 	},
+
+	ProfileLoaded = Signal.new(),
+	Profiles = {},
 }
 
 function PlayerDataService:ChangeProfile(Player: Player, ProfileChanges: { [any]: any })
@@ -77,6 +80,8 @@ function PlayerDataService:ChangeXP(Player: Player, Amount: number)
 			PlayerLeaderStats:SetStat(LEADERBOARD_LABELS.Level, Profile.Data.Level)
 		end
 	end
+
+	return nil
 end
 
 function PlayerDataService:SetXPMultiplier(Player: Player, Name: string, MultiplierAddon: number | nil)
@@ -187,9 +192,6 @@ function PlayerDataService:KnitStart()
 	end)
 end
 
-function PlayerDataService:KnitInit()
-	self.Profiles = {}
-	self.ProfileLoaded = Signal.new()
-end
+function PlayerDataService:KnitInit() end
 
 return PlayerDataService

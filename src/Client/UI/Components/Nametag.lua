@@ -4,7 +4,6 @@ local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 
 local Children = Fusion.Children
-local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 
 return function(Scope: Fusion.Scope<any>, Props)

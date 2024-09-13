@@ -16,12 +16,14 @@ end
 
 function ItemsService:ToggleEquipItemForPlayer(Player: Player, ItemId: string)
 	if self:_PlayerHasItem(Player, ItemId) then
-		self:TakeItemFromPlayer(Player, ItemId)
+		return self:TakeItemFromPlayer(Player, ItemId)
 	else
 		if #self:_FindItemsInPlayer(Player) < Config.Systems.Items.MaxItemsEquippable then
 			return self:GiveItemToPlayer(Player, ItemId)
 		end
 	end
+
+	return false
 end
 
 function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassRequirement: boolean | nil)
@@ -66,6 +68,8 @@ function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassReq
 		end
 		return AbleToEquip, FailureReason, ResponseCode
 	end
+
+	return false
 end
 
 function ItemsService:TakeItemFromPlayer(Player: Player, ItemId: string)
@@ -100,8 +104,15 @@ function ItemsService:_PlayerHasItem(Player: Player, ItemId: string)
 				return true
 			end
 		end
+
+		return false
 	end
-	return ScanDirectory(Player.Backpack) or ScanDirectory(Player.Character)
+
+	if Player.Character ~= nil then
+		return ScanDirectory(Player.Backpack) or ScanDirectory(Player.Character)
+	end
+
+	return false
 end
 
 function ItemsService:KnitStart() end

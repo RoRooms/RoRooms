@@ -20,7 +20,7 @@ function EmotesController:PlayEmote(EmoteId: string)
 				Text = FailureReason,
 				Buttons = {
 					{
-						Contents = { "Close" },
+						Content = { "Close" },
 					},
 				},
 			})

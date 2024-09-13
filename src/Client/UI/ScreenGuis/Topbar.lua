@@ -5,7 +5,6 @@ local States = require(RoRooms.SourceCode.Client.UI.States)
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
 
 local Children = Fusion.Children
-local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 local Peek = Fusion.peek
 

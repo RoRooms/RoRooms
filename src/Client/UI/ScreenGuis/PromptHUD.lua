@@ -135,7 +135,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 										return Scope:ForValues(Buttons, function(Use, Scope, PromptButton)
 											return Scope:Button {
-												Content = PromptButton.Contents,
+												Content = PromptButton.Content,
 												Style = PromptButton.Style,
 												Color = Scope:Computed(function(Use)
 													if PromptButton.Color == nil then

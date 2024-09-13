@@ -24,6 +24,8 @@ function UpdatesService:IsUpToDate()
 
 			return UpToDate
 		end
+
+		return nil
 	end)
 end
 
@@ -37,6 +39,8 @@ function UpdatesService:GetLatestVersion()
 				return Data.tag_name
 			end
 		end
+
+		return nil
 	end)
 end
 

@@ -17,7 +17,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Theme = Themer.Theme:now()
 
 	local Name = Util.Fallback(Props.Name, "CategoryButton")
-	local Category = Util.Fallback(Props.Category, "Category")
 	local Icon = Util.Fallback(Props.Icon, nil)
 	local FallbackIcon = Util.Fallback(Props.FallbackIcon, "rbxassetid://17266112920")
 	local OnActivated = Util.Fallback(Props.OnActivated, function() end)

@@ -27,11 +27,11 @@ function WorldTeleporterComponent:_PromptTeleport()
 			Text = `Do you want to teleport to world {PlaceInfo.Name}?`,
 			Buttons = {
 				{
-					Contents = { "Cancel" },
+					Content = { "Cancel" },
 					Style = "Outlined",
 				},
 				{
-					Contents = { "Teleport" },
+					Content = { "Teleport" },
 					Style = "Filled",
 					Callback = function()
 						if States.Services.WorldsService then

@@ -10,7 +10,7 @@ type Prompt = {
 	Text: string,
 	Buttons: {
 		[number]: {
-			Contents: { [number]: string },
+			Content: { [number]: string },
 			Style: string?,
 			Disabled: boolean?,
 			Callback: () -> ()?,
