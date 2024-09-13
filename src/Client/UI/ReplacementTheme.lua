@@ -1,7 +1,5 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent.Parent
 
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-
 return {
 	Colors = {
 		Primary = {

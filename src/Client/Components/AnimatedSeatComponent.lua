@@ -2,7 +2,6 @@ local Players = game:GetService("Players")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Component = require(RoRooms.Parent.Component)
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local AttributeValue = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeValue)
 
