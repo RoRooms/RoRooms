@@ -132,7 +132,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								[Children] = {
 									Scope:ForValues(Buttons, function(Use, Scope, PromptButton)
 										return Scope:Button {
-											Contents = PromptButton.Contents,
+											Content = PromptButton.Contents,
 											Style = PromptButton.Style,
 											Color = PromptButton.Color,
 											Disabled = PromptButton.Disabled,

@@ -20,8 +20,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.CurrentMenu) == script.Name
 	end)
-	local LoadMoreButtonContents = Scope:Value(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
-	local RefreshButtonContents = Scope:Value(DEFAULT_REFRESH_BUTTON_CONTENTS)
+	local LoadMoreButtonContent = Scope:Value(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
+	local RefreshButtonContent = Scope:Value(DEFAULT_REFRESH_BUTTON_CONTENTS)
 
 	local WorldsMenu = Scope:New "ScreenGui" {
 		Name = "WorldsMenu",
@@ -149,7 +149,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 											},
 											Scope:Button {
 												Name = "LoadMoreButton",
-												Contents = LoadMoreButtonContents,
+												Content = LoadMoreButtonContents,
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 
@@ -212,7 +212,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 											},
 											Scope:Button {
 												Name = "RefreshButton",
-												Contents = RefreshButtonContents,
+												Content = RefreshButtonContents,
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 

@@ -81,7 +81,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						Text = "You're already in the same server as this person.",
 						Buttons = {
 							{
-								Contents = { "Close" },
+								Content = { "Close" },
 							},
 						},
 					})
@@ -91,11 +91,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 						Text = `Do you want to join friend in {Peek(PlaceInfo).Name}?`,
 						Buttons = {
 							{
-								Contents = { "Cancel" },
+								Content = { "Cancel" },
 								Style = "Outlined",
 							},
 							{
-								Contents = { "Teleport" },
+								Content = { "Teleport" },
 								Callback = function()
 									if States.Services.WorldsService then
 										States.Services.WorldsService:TeleportToWorld(Peek(PlaceId))

@@ -167,7 +167,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										Name = "PlayButton",
 										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,
-										Contents = { "rbxassetid://17293685944" },
+										Content = { "rbxassetid://17293685944" },
 										ContentSize = Theme.TextSize["1.5"],
 
 										OnActivated = function()
@@ -183,7 +183,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 																Text = Message,
 																Buttons = {
 																	{
-																		Contents = { "Dismiss" },
+																		Content = { "Dismiss" },
 																	},
 																},
 															})
