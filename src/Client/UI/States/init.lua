@@ -2,7 +2,7 @@ local RoRooms = script.Parent.Parent.Parent.Parent
 local Fusion = require(RoRooms.Parent.Fusion)
 local Loader = require(RoRooms.Parent.Loader)
 
-local Scope = Fusion.scoped()
+local Scope = Fusion.scoped(Fusion)
 
 local States = {
 	Services = {
