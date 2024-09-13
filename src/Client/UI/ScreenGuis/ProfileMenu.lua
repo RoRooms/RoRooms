@@ -117,6 +117,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							Scope:Button {
 								Name = "EditAvatarButton",
 								Content = { "rbxassetid://13285615740", "Edit Avatar" },
+								Color = Theme.Colors.Primary.Main,
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								Visible = Scope:Computed(function(Use)

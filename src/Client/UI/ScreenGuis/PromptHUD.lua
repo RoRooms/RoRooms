@@ -4,9 +4,9 @@ local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
+local OnyxUITheme = require(RoRooms.SourceCode.Client.UI.OnyxUITheme)
 
 local Children = Fusion.Children
-local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 local Peek = Fusion.peek
 
@@ -130,21 +130,31 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ListHorizontalAlignment = Enum.HorizontalAlignment.Right,
 
 								[Children] = {
-									Scope:ForValues(Buttons, function(Use, Scope, PromptButton)
-										return Scope:Button {
-											Content = PromptButton.Contents,
-											Style = PromptButton.Style,
-											Color = PromptButton.Color,
-											Disabled = PromptButton.Disabled,
+									Themer.Theme:is(OnyxUITheme):during(function()
+										local Theme = Themer.Theme:now()
 
-											OnActivated = function()
-												Prompts:RemovePrompt(Peek(CurrentPrompt))
+										return Scope:ForValues(Buttons, function(Use, Scope, PromptButton)
+											return Scope:Button {
+												Content = PromptButton.Contents,
+												Style = PromptButton.Style,
+												Color = Scope:Computed(function(Use)
+													if PromptButton.Color == nil then
+														return Use(Theme.Colors.Primary.Main)
+													else
+														return PromptButton.Color
+													end
+												end),
+												Disabled = PromptButton.Disabled,
 
-												if PromptButton.Callback then
-													PromptButton.Callback()
-												end
-											end,
-										}
+												OnActivated = function()
+													Prompts:RemovePrompt(Peek(CurrentPrompt))
+
+													if PromptButton.Callback then
+														PromptButton.Callback()
+													end
+												end,
+											}
+										end)
 									end),
 								},
 							},

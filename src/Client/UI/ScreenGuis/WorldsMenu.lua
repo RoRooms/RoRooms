@@ -7,7 +7,6 @@ local Config = require(RoRooms.Config)
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
 
 local Children = Fusion.Children
-local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 
 local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { "rbxassetid://17293213744", "Load more" }
@@ -149,35 +148,32 @@ return function(Scope: Fusion.Scope<any>, Props)
 											},
 											Scope:Button {
 												Name = "LoadMoreButton",
-												Content = LoadMoreButtonContents,
+												Content = LoadMoreButtonContent,
+												Color = Theme.Colors.Primary.Main,
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 
 												OnActivated = function()
-													LoadMoreButtonContents:set({
+													LoadMoreButtonContent:set({
 														"rbxassetid://14906067807",
 														"Loading",
 													})
 
 													Worlds:FetchTopWorlds():andThen(function(Result)
 														if typeof(Result) == "table" then
-															LoadMoreButtonContents:set({
+															LoadMoreButtonContent:set({
 																"rbxassetid://13858820127",
 																"Loaded",
 															})
 															task.wait(0.5)
-															LoadMoreButtonContents:set(
-																DEFAULT_LOAD_MORE_BUTTON_CONTENTS
-															)
+															LoadMoreButtonContent:set(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
 														else
-															LoadMoreButtonContents:set({
+															LoadMoreButtonContent:set({
 																"rbxassetid://14906266795",
 																"Error",
 															})
 															task.wait(0.5)
-															LoadMoreButtonContents:set(
-																DEFAULT_LOAD_MORE_BUTTON_CONTENTS
-															)
+															LoadMoreButtonContent:set(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
 														end
 													end)
 												end,
@@ -212,12 +208,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 											},
 											Scope:Button {
 												Name = "RefreshButton",
-												Content = RefreshButtonContents,
+												Content = RefreshButtonContent,
+												Color = Theme.Colors.Primary.Main,
 												Size = UDim2.fromScale(1, 0),
 												AutomaticSize = Enum.AutomaticSize.Y,
 
 												OnActivated = function()
-													RefreshButtonContents:set({
+													RefreshButtonContent:set({
 														"rbxassetid://14906067807",
 														"Refreshing",
 													})
@@ -225,19 +222,19 @@ return function(Scope: Fusion.Scope<any>, Props)
 													Worlds:ClearRandomWorlds()
 													Worlds:FetchRandomWorlds(1, true):andThen(function(Result)
 														if typeof(Result) == "table" then
-															RefreshButtonContents:set({
+															RefreshButtonContent:set({
 																"rbxassetid://13858820127",
 																"Refreshed",
 															})
 															task.wait(0.5)
-															RefreshButtonContents:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
+															RefreshButtonContent:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
 														else
-															RefreshButtonContents:set({
+															RefreshButtonContent:set({
 																"rbxassetid://14906266795",
 																"Error",
 															})
 															task.wait(0.5)
-															RefreshButtonContents:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
+															RefreshButtonContent:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
 														end
 													end)
 												end,

@@ -164,6 +164,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 									Scope:Button {
 										Name = "PlayButton",
 										Size = UDim2.fromScale(1, 0),
+										Color = Theme.Colors.Primary.Main,
 										AutomaticSize = Enum.AutomaticSize.Y,
 										Content = { "rbxassetid://17293685944" },
 										ContentSize = Theme.TextSize["1.5"],
