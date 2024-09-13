@@ -3,6 +3,7 @@ local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
 local Theme = require(script.Parent.OnyxUITheme)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Config = require(RoRooms.Config)
+local Fusion = require(RoRooms.Parent.Fusion)
 
 local Themer = OnyxUI.Themer
 
@@ -131,7 +132,7 @@ local ROROOMS_CONFIG = {
 	},
 }
 
-local Viewport = function(Props)
+local Viewport = function(Scope: Fusion.Scope<any>, Props)
 	local ReturnedGuis = {}
 
 	for _, GuiModule in ipairs(script.Parent.ScreenGuis:GetChildren()) do
@@ -142,10 +143,10 @@ local Viewport = function(Props)
 			local Gui = require(GuiModule)
 			table.insert(
 				ReturnedGuis,
-				Gui {
+				Gui(Scope, {
 					Name = GuiModule.Name,
 					Parent = Props.Target,
-				}
+				})
 			)
 		end
 	end
@@ -154,10 +155,12 @@ local Viewport = function(Props)
 end
 
 return function(Target)
-	local ViewportGuis
+	local Scope = Fusion.scoped(Fusion, {
+		Viewport = Viewport,
+	})
 
 	Themer.Theme:is(Theme):during(function()
-		ViewportGuis = Viewport {
+		Scope:Viewport {
 			Target = Target,
 		}
 	end)
@@ -167,8 +170,6 @@ return function(Target)
 	Topbar:AddDefaultButtons()
 
 	return function()
-		for _, Gui in ipairs(ViewportGuis) do
-			Gui:Destroy()
-		end
+		Scope:doCleanup()
 	end
 end
