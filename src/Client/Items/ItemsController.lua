@@ -6,6 +6,7 @@ local NeoHotbar = require(RoRooms.Parent.NeoHotbar)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
+local Config = require(RoRooms.Config)
 
 local Peek = Fusion.peek
 
@@ -42,7 +43,7 @@ function ItemsController:UpdateEquippedItems()
 		end
 		for _, Child in ipairs(Directory:GetChildren()) do
 			local ItemId = Child:GetAttribute("RR_ItemId")
-			if Child:IsA("Tool") and RoRooms.Config.Systems.Items.Items[ItemId] then
+			if Child:IsA("Tool") and Config.Systems.Items.Items[ItemId] then
 				table.insert(self.EquippedItems, ItemId)
 			end
 		end

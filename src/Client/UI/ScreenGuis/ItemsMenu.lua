@@ -2,6 +2,7 @@ local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
+local Config = require(RoRooms.Config)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -77,16 +78,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 								end),
 
 								[Children] = {
-									Scope:ForPairs(
-										RoRooms.Config.Systems.Items.Categories,
-										function(Name: string, Category)
-											return Name,
-												Scope:ItemsCategory {
-													CategoryName = Name,
-													LayoutOrder = Category.LayoutOrder,
-												}
-										end
-									),
+									Scope:ForPairs(Config.Systems.Items.Categories, function(Name: string, Category)
+										return Name,
+											Scope:ItemsCategory {
+												CategoryName = Name,
+												LayoutOrder = Category.LayoutOrder,
+											}
+									end),
 								},
 							},
 						},

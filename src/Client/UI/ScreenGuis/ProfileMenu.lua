@@ -2,6 +2,7 @@ local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
+local Config = require(RoRooms.Config)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -84,7 +85,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 									Scope:TextInput {
 										Name = "NicknameInput",
 										PlaceholderText = "Nickname",
-										CharacterLimit = RoRooms.Config.Systems.Profiles.NicknameCharacterLimit,
+										CharacterLimit = Config.Systems.Profiles.NicknameCharacterLimit,
 										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,
 										Text = NicknameText,
@@ -99,7 +100,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										Name = "StatusInput",
 										PlaceholderText = "Status",
 										Text = StatusText,
-										CharacterLimit = RoRooms.Config.Systems.Profiles.BioCharacterLimit,
+										CharacterLimit = Config.Systems.Profiles.BioCharacterLimit,
 										TextWrapped = true,
 										Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 60)),
 										AutomaticSize = Enum.AutomaticSize.Y,
@@ -118,14 +119,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								Visible = Scope:Computed(function(Use)
-									return RoRooms.Config.Systems.Profiles.AvatarEditorCallback ~= nil
+									return Config.Systems.Profiles.AvatarEditorCallback ~= nil
 								end),
 
 								OnActivated = function()
 									States.CurrentMenu:set()
 
-									if RoRooms.Config.Systems.Profiles.AvatarEditorCallback then
-										RoRooms.Config.Systems.Profiles.AvatarEditorCallback()
+									if Config.Systems.Profiles.AvatarEditorCallback then
+										Config.Systems.Profiles.AvatarEditorCallback()
 									end
 								end,
 							},

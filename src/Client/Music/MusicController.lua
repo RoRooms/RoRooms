@@ -4,6 +4,7 @@ local RoRooms = script.Parent.Parent.Parent.Parent
 local Knit = require(RoRooms.Parent.Knit)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Fusion = require(RoRooms.Parent.Fusion)
+local Config = require(RoRooms.Config)
 
 local Peek = Fusion.peek
 
@@ -31,7 +32,7 @@ function MusicController:KnitStart()
 		self:SetMuted(Peek(States.UserSettings.MuteMusic))
 	end)
 
-	self.SoundGroup = RoRooms.Config.Systems.Music.SoundGroup
+	self.SoundGroup = Config.Systems.Music.SoundGroup
 	self.SoundGroup.Parent = SoundService
 
 	MusicService.CurrentSong:Observe(function(CurrentSong)

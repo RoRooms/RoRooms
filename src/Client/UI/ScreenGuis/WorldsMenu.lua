@@ -2,8 +2,8 @@ local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
-
 local Worlds = require(RoRooms.SourceCode.Client.UI.States.Worlds)
+local Config = require(RoRooms.Config)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -95,7 +95,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										Title = "From creator",
 										Icon = "rbxassetid://17292608120",
 										Visible = Scope:Computed(function(Use)
-											return #RoRooms.Config.Systems.Worlds.FeaturedWorlds >= 1
+											return #Config.Systems.Worlds.FeaturedWorlds >= 1
 										end),
 
 										[Children] = {
@@ -112,7 +112,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 												[Children] = {
 													Scope:ForValues(
-														RoRooms.Config.Systems.Worlds.FeaturedWorlds,
+														Config.Systems.Worlds.FeaturedWorlds,
 														function(PlaceId: number)
 															return Scope:WorldButton {
 																PlaceId = PlaceId,

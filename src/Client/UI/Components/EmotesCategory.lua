@@ -2,6 +2,7 @@ local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
+local Config = require(RoRooms.Config)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -20,7 +21,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local LayoutOrder = Util.Fallback(Props.LayoutOrder, 0)
 
 	local Category = Scope:Computed(function(Use)
-		return RoRooms.Config.Systems.Emotes.Categories[Use(CategoryName)]
+		return Config.Systems.Emotes.Categories[Use(CategoryName)]
 	end)
 
 	return Scope:Frame {
@@ -69,7 +70,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListWraps = true,
 
 				[Children] = {
-					Scope:ForPairs(RoRooms.Config.Systems.Emotes.Emotes, function(Use, Scope, EmoteId, Emote)
+					Scope:ForPairs(Config.Systems.Emotes.Emotes, function(Use, Scope, EmoteId, Emote)
 						local EmoteCategory = Emote.Category
 						if EmoteCategory == nil then
 							EmoteCategory = "General"

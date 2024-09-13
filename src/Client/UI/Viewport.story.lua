@@ -2,6 +2,7 @@ local RoRooms = script.Parent.Parent.Parent.Parent
 local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
 local Theme = require(script.Parent.OnyxUITheme)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Config = require(RoRooms.Config)
 
 local Themer = OnyxUI.Themer
 
@@ -161,7 +162,7 @@ return function(Target)
 		}
 	end)
 
-	RoRooms.Config:Update(ROROOMS_CONFIG)
+	Config:Update(ROROOMS_CONFIG)
 
 	Topbar:AddDefaultButtons()
 

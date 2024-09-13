@@ -2,6 +2,7 @@ local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
+local Config = require(RoRooms.Config)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -21,7 +22,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Size = Props.Size,
 
 		[Children] = {
-			Scope:ForPairs(RoRooms.Config.Systems.Emotes.Categories, function(CategoryName: string, Category)
+			Scope:ForPairs(Config.Systems.Emotes.Categories, function(CategoryName: string, Category)
 				return CategoryName,
 					Scope:CategoryButton {
 						Name = "EmoteCategoryButton",

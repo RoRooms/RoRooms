@@ -1,6 +1,7 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
 local PlayerDataService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataService)
 local t = require(RoRooms.Parent.t)
+local Config = require(RoRooms.Config)
 
 local ItemsService = {
 	Name = "ItemsService",
@@ -17,7 +18,7 @@ function ItemsService:ToggleEquipItemForPlayer(Player: Player, ItemId: string)
 	if self:_PlayerHasItem(Player, ItemId) then
 		self:TakeItemFromPlayer(Player, ItemId)
 	else
-		if #self:_FindItemsInPlayer(Player) < RoRooms.Config.Systems.Items.MaxItemsEquippable then
+		if #self:_FindItemsInPlayer(Player) < Config.Systems.Items.MaxItemsEquippable then
 			return self:GiveItemToPlayer(Player, ItemId)
 		end
 	end
@@ -27,7 +28,7 @@ function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassReq
 	if not Player.Backpack then
 		return
 	end
-	local Item = RoRooms.Config.Systems.Items.Items[ItemId]
+	local Item = Config.Systems.Items.Items[ItemId]
 	if Item and Item.Tool then
 		local AbleToEquip = false
 		local FailureReason
@@ -106,7 +107,7 @@ end
 function ItemsService:KnitStart() end
 
 function ItemsService:KnitInit()
-	for ItemId, Item in pairs(RoRooms.Config.Systems.Items.Items) do
+	for ItemId, Item in pairs(Config.Systems.Items.Items) do
 		if Item.Tool then
 			Item.Tool:SetAttribute("RR_ItemId", ItemId)
 			Item.Tool.CanBeDropped = false

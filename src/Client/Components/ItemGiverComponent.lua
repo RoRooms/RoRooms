@@ -6,6 +6,7 @@ local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local ItemsController = require(RoRooms.SourceCode.Client.Items.ItemsController)
 local AttributeValue = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeValue)
+local Config = require(RoRooms.Config)
 
 local Peek = Fusion.peek
 
@@ -71,7 +72,7 @@ function ItemGiverComponent:Construct()
 
 	self.ItemId = AttributeValue(self.Instance, "RR_ItemId")
 	self.Item = self.Scope:Computed(function(Use)
-		return RoRooms.Config.Systems.Items.Items[Use(self.ItemId)]
+		return Config.Systems.Items.Items[Use(self.ItemId)]
 	end)
 	self.Equipped = self.Scope:Computed(function(Use)
 		return table.find(Use(States.EquippedItems), Use(self.ItemId)) ~= nil

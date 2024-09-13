@@ -7,6 +7,7 @@ local LeaderStats = require(RoRooms.SourceCode.Storage.ExtPackages.LeaderStats)
 local XPToLevelUp = require(RoRooms.SourceCode.Shared.XPToLevelUp)
 local Trove = require(RoRooms.Parent.Trove)
 local Signal = require(RoRooms.Parent.Signal)
+local Config = require(RoRooms.Config)
 
 local PROFILE_TEMPLATE = {
 	Level = 1,
@@ -151,7 +152,7 @@ function PlayerDataService:_PlayerAdded(Player: Player)
 					Total *= TotalMultiplier
 					return Total
 				end
-				local XPTotal = CalculateTotal(RoRooms.Config.Systems.Leveling.XPPerMinute, Profile.XPMultipliers)
+				local XPTotal = CalculateTotal(Config.Systems.Leveling.XPPerMinute, Profile.XPMultipliers)
 				self:ChangeXP(Player, XPTotal)
 			end
 		end))

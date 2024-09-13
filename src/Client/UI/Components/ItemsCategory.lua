@@ -1,6 +1,7 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
+local Config = require(RoRooms.Config)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -16,7 +17,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local CategoryName = Util.Fallback(Props.CategoryName, "Category")
 
 	local Category = Scope:Computed(function(Use)
-		return RoRooms.Config.Systems.Items.Categories[Use(CategoryName)]
+		return Config.Systems.Items.Categories[Use(CategoryName)]
 	end)
 
 	return Scope:Frame {
@@ -74,7 +75,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				end),
 
 				[Children] = {
-					Scope:ForPairs(RoRooms.Config.Systems.Items.Items, function(ItemId, Item)
+					Scope:ForPairs(Config.Systems.Items.Items, function(ItemId, Item)
 						local ItemCategory = Item.Category
 						if ItemCategory == nil then
 							ItemCategory = "General"

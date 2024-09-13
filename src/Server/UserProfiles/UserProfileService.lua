@@ -3,6 +3,7 @@ local Knit = require(RoRooms.Parent.Knit)
 local FilterString = require(RoRooms.SourceCode.Storage.ExtPackages.FilterString)
 local PlayerDataService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataService)
 local t = require(RoRooms.Parent.t)
+local Config = require(RoRooms.Config)
 
 local UserProfileService = {
 	Name = "UserProfileService",
@@ -11,17 +12,14 @@ local UserProfileService = {
 
 function UserProfileService.Client:SetNickname(Player: Player, Nickname: string)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Nickname)))
-	assert(
-		utf8.len(Nickname) <= RoRooms.Config.Systems.Profiles.NicknameCharacterLimit,
-		"Nickname exceeds character limit"
-	)
+	assert(utf8.len(Nickname) <= Config.Systems.Profiles.NicknameCharacterLimit, "Nickname exceeds character limit")
 
 	self.Server:SetPlayerNickname(Player, FilterString(Nickname, Player))
 end
 
 function UserProfileService.Client:SetStatus(Player: Player, Status: string)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Status)))
-	assert(utf8.len(Status) <= RoRooms.Config.Systems.Profiles.BioCharacterLimit, "Status exceeds character limit")
+	assert(utf8.len(Status) <= Config.Systems.Profiles.BioCharacterLimit, "Status exceeds character limit")
 
 	self.Server:SetPlayerStatus(Player, FilterString(Status, Player))
 end

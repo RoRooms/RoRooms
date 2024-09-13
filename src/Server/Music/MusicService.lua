@@ -2,6 +2,7 @@ local SoundService = game:GetService("SoundService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Knit = require(RoRooms.Parent.Knit)
+local Config = require(RoRooms.Config)
 
 local MusicService = {
 	Name = "MusicService",
@@ -44,7 +45,7 @@ end
 
 function MusicService:KnitInit()
 	self.CurrentIndex = 0
-	self.Songs = RoRooms.Config.Systems.Music.SoundGroup:GetChildren()
+	self.Songs = Config.Systems.Music.SoundGroup:GetChildren()
 
 	for _, Song in ipairs(self.Songs) do
 		if not Song:IsA("Sound") then
