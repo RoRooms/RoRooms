@@ -12,7 +12,7 @@ local UserProfileController = {
 function UserProfileController:KnitStart()
 	UIController = Knit.GetController("UIController")
 
-	UIController:MountUI(ProfileMenu {})
+	UIController:MountUI(ProfileMenu)
 
 	Topbar:AddTopbarButton("Profile", Topbar.NativeButtons.Profile)
 end

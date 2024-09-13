@@ -12,7 +12,7 @@ local SettingsController = {
 function SettingsController:KnitStart()
 	UIController = Knit.GetController("UIController")
 
-	UIController:MountUI(SettingsMenu {})
+	UIController:MountUI(SettingsMenu)
 
 	Topbar:AddTopbarButton("Settings", Topbar.NativeButtons.Settings)
 end

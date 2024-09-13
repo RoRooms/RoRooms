@@ -32,7 +32,7 @@ function EmotesController:KnitStart()
 	UIController = Knit.GetController("UIController")
 	EmotesService = Knit.GetService("EmotesService")
 
-	UIController:MountUI(EmotesMenu {})
+	UIController:MountUI(EmotesMenu)
 
 	Topbar:AddTopbarButton("Emotes", Topbar.NativeButtons.Emotes)
 end

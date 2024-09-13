@@ -11,13 +11,14 @@ local DEFAULT_UIS = { "Topbar", "PromptHUD" }
 
 local UIController = {
 	Name = "UIController",
+	Scope = Fusion.scoped(Fusion),
 }
 
 function UIController:MountUI(Component)
 	Themer.Theme:is(OnyxUITheme):during(function()
-		Component {
+		Component(self.Scope, {
 			Parent = self.RoRoomsUI,
-		}
+		})
 	end)
 end
 
@@ -28,14 +29,12 @@ function UIController:KnitStart()
 		local GuiModule = RoRooms.SourceCode.Client.UI.ScreenGuis:FindFirstChild(GuiName)
 		if GuiModule then
 			local Gui = require(GuiModule)
-			self:MountUI(Gui {})
+			self:MountUI(Gui)
 		end
 	end
 end
 
 function UIController:KnitInit()
-	self.Scope = Fusion.scoped(Fusion)
-
 	self.RoRoomsUI = self.Scope:New "ScreenGui" {
 		Name = "RoRoomsUI",
 		Parent = Knit.Player:WaitForChild("PlayerGui"),

@@ -13,8 +13,8 @@ local WorldsController = {
 function WorldsController:KnitStart()
 	UIController = Knit.GetController("UIController")
 
-	UIController:MountUI(WorldsMenu {})
-	UIController:MountUI(WorldPageMenu {})
+	UIController:MountUI(WorldsMenu)
+	UIController:MountUI(WorldPageMenu)
 
 	Topbar:AddTopbarButton("Worlds", Topbar.NativeButtons.Worlds)
 end

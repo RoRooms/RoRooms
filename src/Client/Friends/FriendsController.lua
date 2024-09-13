@@ -68,7 +68,7 @@ end
 function FriendsController:KnitStart()
 	WorldRegistryService = Knit.GetService("WorldRegistryService")
 
-	UIController:MountUI(FriendsMenu {})
+	UIController:MountUI(FriendsMenu)
 	Topbar:AddTopbarButton("Friends", Topbar.NativeButtons.Friends)
 
 	self:UpdateFriends(true)

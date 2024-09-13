@@ -91,7 +91,7 @@ function ItemsController:KnitStart()
 		end)
 	end)
 
-	UIController:MountUI(ItemsMenu {})
+	UIController:MountUI(ItemsMenu)
 
 	self:_AddNeoHotbarButton()
 end
