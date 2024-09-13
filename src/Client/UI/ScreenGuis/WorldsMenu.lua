@@ -111,7 +111,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												[Children] = {
 													Scope:ForValues(
 														Config.Systems.Worlds.FeaturedWorlds,
-														function(PlaceId: number)
+														function(Use, Scope, PlaceId: number)
 															return Scope:WorldButton {
 																PlaceId = PlaceId,
 															}
@@ -141,7 +141,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												[Children] = {
 													Scope:ForValues(
 														States.Worlds.TopWorlds,
-														function(World: { [string]: any })
+														function(Use, Scope, World: { [string]: any })
 															return Scope:WorldButton(table.clone(World))
 														end
 													),
@@ -204,7 +204,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												[Children] = {
 													Scope:ForValues(
 														States.Worlds.RandomWorlds,
-														function(World: { [string]: any })
+														function(Use, Scope, World: { [string]: any })
 															return Scope:WorldButton(table.clone(World))
 														end
 													),

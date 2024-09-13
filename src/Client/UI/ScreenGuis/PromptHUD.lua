@@ -130,7 +130,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ListHorizontalAlignment = Enum.HorizontalAlignment.Right,
 
 								[Children] = {
-									Scope:ForValues(Buttons, function(PromptButton)
+									Scope:ForValues(Buttons, function(Use, Scope, PromptButton)
 										return Scope:Button {
 											Contents = PromptButton.Contents,
 											Style = PromptButton.Style,

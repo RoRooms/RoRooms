@@ -98,7 +98,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										[Children] = {
 											Scope:ForPairs(
 												Config.Systems.Emotes.Categories,
-												function(Name: string, Category)
+												function(Use, Scope, Name: string, Category)
 													return Name,
 														Scope:EmotesCategory {
 															CategoryName = Name,

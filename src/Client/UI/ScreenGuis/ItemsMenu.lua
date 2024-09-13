@@ -76,13 +76,16 @@ return function(Scope: Fusion.Scope<any>, Props)
 								end),
 
 								[Children] = {
-									Scope:ForPairs(Config.Systems.Items.Categories, function(Name: string, Category)
-										return Name,
-											Scope:ItemsCategory {
-												CategoryName = Name,
-												LayoutOrder = Category.LayoutOrder,
-											}
-									end),
+									Scope:ForPairs(
+										Config.Systems.Items.Categories,
+										function(Use, Scope, Name: string, Category)
+											return Name,
+												Scope:ItemsCategory {
+													CategoryName = Name,
+													LayoutOrder = Category.LayoutOrder,
+												}
+										end
+									),
 								},
 							},
 						},

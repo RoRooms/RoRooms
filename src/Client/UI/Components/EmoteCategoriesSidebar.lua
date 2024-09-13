@@ -25,7 +25,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Size = Props.Size,
 
 		[Children] = {
-			Scope:ForPairs(Config.Systems.Emotes.Categories, function(CategoryName: string, Category)
+			Scope:ForPairs(Config.Systems.Emotes.Categories, function(Use, Scope, CategoryName: string, Category)
 				return CategoryName,
 					Scope:CategoryButton {
 						Name = "EmoteCategoryButton",

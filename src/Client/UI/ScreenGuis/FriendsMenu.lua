@@ -78,7 +78,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ListWraps = true,
 
 								[Children] = {
-									Scope:ForValues(States.Friends.InRoRooms, function(Friend)
+									Scope:ForValues(States.Friends.InRoRooms, function(Use, Scope, Friend)
 										return Scope:FriendButton {
 											UserId = Friend.VisitorId,
 											DisplayName = Friend.DisplayName,
@@ -87,7 +87,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 											InRoRooms = true,
 										}
 									end),
-									Scope:ForValues(States.Friends.NotInRoRooms, function(Friend)
+									Scope:ForValues(States.Friends.NotInRoRooms, function(Use, Scope, Friend)
 										return Scope:FriendButton {
 											UserId = Friend.VisitorId,
 											DisplayName = Friend.DisplayName,

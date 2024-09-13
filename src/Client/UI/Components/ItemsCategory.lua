@@ -77,7 +77,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				end),
 
 				[Children] = {
-					Scope:ForPairs(Config.Systems.Items.Items, function(ItemId, Item)
+					Scope:ForPairs(Config.Systems.Items.Items, function(Use, Scope, ItemId, Item)
 						local ItemCategory = Item.Category
 						if ItemCategory == nil then
 							ItemCategory = "General"
