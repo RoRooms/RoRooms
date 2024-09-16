@@ -2,132 +2,134 @@ local RoRooms = script.Parent.Parent.Parent.Parent
 local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
 local Theme = require(script.Parent.OnyxUITheme)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Config = require(RoRooms.Config).Config
+local Config = require(RoRooms.Config)
 local Fusion = require(RoRooms.Parent.Fusion)
 
 local Themer = OnyxUI.Themer
 
 local ROROOMS_CONFIG = {
-	ItemsSystem = {
-		Categories = {
-			General = {
-				LayoutOrder = 1,
-				Icon = "rbxassetid://12988755627",
-			},
-			Unlockable = {
-				LayoutOrder = 2,
-				Icon = "rbxassetid://5743022869",
-			},
-			Robux = {
-				LayoutOrder = 3,
-				Icon = "rbxassetid://7058763764",
-			},
-		},
+	Systems = {
 		Items = {
-			Item1 = {
-				Name = "Bloxy Cola",
-				Tool = Instance.new("Tool"),
+			Categories = {
+				General = {
+					LayoutOrder = 1,
+					Icon = "rbxassetid://12988755627",
+				},
+				Unlockable = {
+					LayoutOrder = 2,
+					Icon = "rbxassetid://5743022869",
+				},
+				Robux = {
+					LayoutOrder = 3,
+					Icon = "rbxassetid://7058763764",
+				},
 			},
-			Item2 = {
-				Name = "Camera",
-				Tool = Instance.new("Tool"),
-			},
-			Item3 = {
-				Name = "Flash Light",
-				Tool = Instance.new("Tool"),
-			},
-			Item4 = {
-				Name = "Frog",
-				Tool = Instance.new("Tool"),
-			},
-			Item5 = {
-				Name = "Sharky",
-				Tool = Instance.new("Tool"),
-			},
-			Item6 = {
-				Name = "Sword",
-				Tool = Instance.new("Tool"),
-			},
-			Item7 = {
-				Name = "Test",
-				Tool = Instance.new("Tool"),
-				Category = "Unlockable",
-				LevelRequirement = 55,
-			},
-			Item8 = {
-				Name = "Blabla",
-				Tool = Instance.new("Tool"),
-				Category = "Unlockable",
-				LevelRequirement = 100,
-			},
-		},
-	},
-	EmotesSystem = {
-		Categories = {
-			General = {
-				LayoutOrder = 1,
-				Icon = "rbxassetid://12988755627",
-			},
-			Unlockable = {
-				LayoutOrder = 2,
-				Icon = "rbxassetid://5743022869",
-			},
-			Robux = {
-				LayoutOrder = 3,
-				Icon = "rbxassetid://7058763764",
+			Items = {
+				Item1 = {
+					Name = "Bloxy Cola",
+					Tool = Instance.new("Tool"),
+				},
+				Item2 = {
+					Name = "Camera",
+					Tool = Instance.new("Tool"),
+				},
+				Item3 = {
+					Name = "Flash Light",
+					Tool = Instance.new("Tool"),
+				},
+				Item4 = {
+					Name = "Frog",
+					Tool = Instance.new("Tool"),
+				},
+				Item5 = {
+					Name = "Sharky",
+					Tool = Instance.new("Tool"),
+				},
+				Item6 = {
+					Name = "Sword",
+					Tool = Instance.new("Tool"),
+				},
+				Item7 = {
+					Name = "Test",
+					Tool = Instance.new("Tool"),
+					Category = "Unlockable",
+					LevelRequirement = 55,
+				},
+				Item8 = {
+					Name = "Blabla",
+					Tool = Instance.new("Tool"),
+					Category = "Unlockable",
+					LevelRequirement = 100,
+				},
 			},
 		},
 		Emotes = {
-			Emote1 = {
-				Name = "Emote",
-				Emoji = "😼",
-				Animation = Instance.new("Animation"),
+			Categories = {
+				General = {
+					LayoutOrder = 1,
+					Icon = "rbxassetid://12988755627",
+				},
+				Unlockable = {
+					LayoutOrder = 2,
+					Icon = "rbxassetid://5743022869",
+				},
+				Robux = {
+					LayoutOrder = 3,
+					Icon = "rbxassetid://7058763764",
+				},
 			},
-			Emote2 = {
-				Name = "Emote",
-				Emoji = "🤞",
-				Animation = Instance.new("Animation"),
-			},
-			Emote3 = {
-				Name = "Emote",
-				Emoji = "💖",
-				Animation = Instance.new("Animation"),
-			},
-			Emote4 = {
-				Name = "Emote Gaga",
-				Emoji = "⭐",
-				Animation = Instance.new("Animation"),
-			},
-			Emote5 = {
-				Name = "Emote",
-				Emoji = "🛍️",
-				Animation = Instance.new("Animation"),
-			},
-			Emote6 = {
-				Name = "Emote",
-				Emoji = "💖",
-				Animation = Instance.new("Animation"),
-				Category = "Unlockable",
-			},
-			Emote7 = {
-				Name = "Emote",
-				Emoji = "⭐",
-				Animation = Instance.new("Animation"),
-				Category = "Unlockable",
-			},
-			Emote8 = {
-				Name = "Emote",
-				Emoji = "🛍️",
-				Animation = Instance.new("Animation"),
-				Category = "Unlockable",
+			Emotes = {
+				Emote1 = {
+					Name = "Emote",
+					Emoji = "😼",
+					Animation = Instance.new("Animation"),
+				},
+				Emote2 = {
+					Name = "Emote",
+					Emoji = "🤞",
+					Animation = Instance.new("Animation"),
+				},
+				Emote3 = {
+					Name = "Emote",
+					Emoji = "💖",
+					Animation = Instance.new("Animation"),
+				},
+				Emote4 = {
+					Name = "Emote Gaga",
+					Emoji = "⭐",
+					Animation = Instance.new("Animation"),
+				},
+				Emote5 = {
+					Name = "Emote",
+					Emoji = "🛍️",
+					Animation = Instance.new("Animation"),
+				},
+				Emote6 = {
+					Name = "Emote",
+					Emoji = "💖",
+					Animation = Instance.new("Animation"),
+					Category = "Unlockable",
+				},
+				Emote7 = {
+					Name = "Emote",
+					Emoji = "⭐",
+					Animation = Instance.new("Animation"),
+					Category = "Unlockable",
+				},
+				Emote8 = {
+					Name = "Emote",
+					Emoji = "🛍️",
+					Animation = Instance.new("Animation"),
+					Category = "Unlockable",
+				},
 			},
 		},
-	},
-	WorldsSystem = {
-		FeaturedWorlds = {
-			8310127828,
-			4960160668,
-			9298624201,
+		Worlds = {
+			FeaturedWorlds = {
+				8310127828,
+				4960160668,
+				9298624201,
+			},
 		},
 	},
 }
