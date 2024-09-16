@@ -11,7 +11,6 @@ local Components = {
 	ItemButton = require(script.ItemButton),
 	ItemCategoriesSidebar = require(script.ItemCategoriesSidebar),
 	ItemsCategory = require(script.ItemsCategory),
-	Nametag = require(script.Nametag),
 	SettingToggle = require(script.SettingToggle),
 	TopbarButton = require(script.TopbarButton),
 	WorldButton = require(script.WorldButton),

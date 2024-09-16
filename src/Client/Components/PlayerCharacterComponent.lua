@@ -3,6 +3,9 @@ local Players = game:GetService("Players")
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Component = require(RoRooms.Parent.Component)
 local RemoteComponent = require(RoRooms.Parent.RemoteComponent)
+local Nametagger = require(RoRooms.SourceCode.Shared.ExtPackages.Nametagger)
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local OnyxUITheme = require(RoRooms.SourceCode.Client.UI.OnyxUITheme)
 
 local PlayerCharacterComponent = Component.new {
 	Tag = "RR_PlayerCharacter",
@@ -25,10 +28,38 @@ function PlayerCharacterComponent:_PlayEmote(EmoteId: string, Emote: { [any]: an
 	self.Humanoid:PlayEmote(EmoteId)
 end
 
+function PlayerCharacterComponent:_UpdateNametag()
+	if self.Humanoid then
+		self.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+	end
+
+	OnyxUI.Themer.Theme:is(OnyxUITheme):during(function()
+		Nametagger:TagCharacter(self.Instance, {
+			DisplayName = self.Player:GetAttribute("RR_Nickname"),
+			Properties = {
+				{ Value = self.Player:GetAttribute("RR_Status") },
+			},
+		})
+	end)
+end
+
+function PlayerCharacterComponent:_StartNametag()
+	self.Player:GetAttributeChangedSignal("RR_Status"):Connect(function()
+		self:_UpdateNametag()
+	end)
+	self.Player:GetAttributeChangedSignal("RR_Nickname"):Connect(function()
+		self:_UpdateNametag()
+	end)
+
+	self:_UpdateNametag()
+end
+
 function PlayerCharacterComponent:Start()
 	self.Server.PlayEmote:Connect(function(EmoteId: string, Emote: { [any]: any })
 		self:_PlayEmote(EmoteId, Emote)
 	end)
+
+	self:_StartNametag()
 end
 
 function PlayerCharacterComponent:Construct()

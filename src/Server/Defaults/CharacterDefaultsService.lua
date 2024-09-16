@@ -9,7 +9,6 @@ function CharacterDefaultsService:KnitStart()
 	Players.PlayerAdded:Connect(function(Player)
 		Player.CharacterAdded:Connect(function(Char)
 			CollectionService:AddTag(Char, "RR_PlayerCharacter")
-			CollectionService:AddTag(Char, "RR_NametaggedCharacter")
 		end)
 	end)
 end
