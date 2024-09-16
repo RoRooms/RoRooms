@@ -1,5 +1,5 @@
-local LonekaUniversal = require(script.Parent.Parent.Parent.Parent.Parent)
-local Fusion = require(LonekaUniversal.Packages.Fusion)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent
+local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(script.Parent)
 
 local Peek = Fusion.peek

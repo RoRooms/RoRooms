@@ -1,10 +1,9 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
-local AttributeBind = require(ReplicatedStorage.RoRooms.Packages.RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
-local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
+local AttributeBind = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
+local Future = require(RoRooms.Parent.Future)
 local Component = require(RoRooms.Parent.Component)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Fusion = require(RoRooms.Parent.Fusion)
