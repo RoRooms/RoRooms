@@ -13,8 +13,6 @@ function DefaultsController:KnitStart()
 	Footstepper:Start()
 end
 
-function DefaultsController:KnitInit()
-	NeoHotbar:Start()
-end
+NeoHotbar:Start()
 
 return DefaultsController

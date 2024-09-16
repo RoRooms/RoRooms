@@ -117,14 +117,12 @@ end
 
 function ItemsService:KnitStart() end
 
-function ItemsService:KnitInit()
-	for ItemId, Item in pairs(Config.Systems.Items.Items) do
-		if Item.Tool then
-			Item.Tool:SetAttribute("RR_ItemId", ItemId)
-			Item.Tool.CanBeDropped = false
-		else
-			warn("No tool defined for " .. ItemId)
-		end
+for ItemId, Item in pairs(Config.Systems.Items.Items) do
+	if Item.Tool then
+		Item.Tool:SetAttribute("RR_ItemId", ItemId)
+		Item.Tool.CanBeDropped = false
+	else
+		warn("No tool defined for " .. ItemId)
 	end
 end
 

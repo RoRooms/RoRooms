@@ -65,6 +65,4 @@ end
 
 function EmotesService:KnitStart() end
 
-function EmotesService:KnitInit() end
-
 return EmotesService

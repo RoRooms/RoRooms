@@ -17,6 +17,4 @@ function SettingsController:KnitStart()
 	Topbar:AddTopbarButton("Settings", Topbar.NativeButtons.Settings)
 end
 
-function SettingsController:KnitInit() end
-
 return SettingsController

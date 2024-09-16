@@ -73,6 +73,4 @@ function RandomWorldsService:KnitStart()
 	end)
 end
 
-function RandomWorldsService:KnitInit() end
-
 return RandomWorldsService

@@ -19,6 +19,4 @@ function WorldsController:KnitStart()
 	Topbar:AddTopbarButton("Worlds", Topbar.NativeButtons.Worlds)
 end
 
-function WorldsController:KnitInit() end
-
 return WorldsController

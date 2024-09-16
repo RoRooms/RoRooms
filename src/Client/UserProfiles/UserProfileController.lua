@@ -17,6 +17,4 @@ function UserProfileController:KnitStart()
 	Topbar:AddTopbarButton("Profile", Topbar.NativeButtons.Profile)
 end
 
-function UserProfileController:KnitInit() end
-
 return UserProfileController

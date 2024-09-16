@@ -12,6 +12,9 @@ local MusicService
 
 local MusicController = {
 	Name = "MusicController",
+
+	Scope = Fusion.scoped(Fusion),
+	Muted = false,
 }
 
 function MusicController:SetMuted(Muted: boolean)
@@ -45,12 +48,6 @@ function MusicController:KnitStart()
 		CurrentSong.SoundGroup = self.SoundGroup
 		CurrentSong:Play()
 	end)
-end
-
-function MusicController:KnitInit()
-	self.Scope = Fusion.scoped(Fusion)
-
-	self.Muted = false
 end
 
 return MusicController

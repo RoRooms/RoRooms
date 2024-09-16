@@ -11,7 +11,9 @@ local DEFAULT_UIS = { "Topbar", "PromptHUD" }
 
 local UIController = {
 	Name = "UIController",
+
 	Scope = Fusion.scoped(Fusion),
+	XPMultiplierDropdownIcons = {},
 }
 
 function UIController:MountUI(Component)
@@ -34,14 +36,10 @@ function UIController:KnitStart()
 	end
 end
 
-function UIController:KnitInit()
-	self.RoRoomsUI = self.Scope:New "ScreenGui" {
-		Name = "RoRoomsUI",
-		Parent = Knit.Player:WaitForChild("PlayerGui"),
-		ResetOnSpawn = false,
-	}
-
-	self.XPMultiplierDropdownIcons = {}
-end
+UIController.RoRoomsUI = UIController.Scope:New "ScreenGui" {
+	Name = "RoRoomsUI",
+	Parent = Knit.Player:WaitForChild("PlayerGui"),
+	ResetOnSpawn = false,
+}
 
 return UIController

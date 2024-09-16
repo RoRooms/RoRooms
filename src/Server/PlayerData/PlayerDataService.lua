@@ -192,6 +192,4 @@ function PlayerDataService:KnitStart()
 	end)
 end
 
-function PlayerDataService:KnitInit() end
-
 return PlayerDataService

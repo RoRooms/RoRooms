@@ -10,6 +10,4 @@ function ComponentsController:KnitStart()
 	end
 end
 
-function ComponentsController:KnitInit() end
-
 return ComponentsController

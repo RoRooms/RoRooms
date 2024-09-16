@@ -87,6 +87,4 @@ function WorldRegistryService:KnitStart()
 	self:_SpawnRegistryUpdateLoop()
 end
 
-function WorldRegistryService:KnitInit() end
-
 return WorldRegistryService

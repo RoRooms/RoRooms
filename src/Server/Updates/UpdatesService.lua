@@ -11,6 +11,8 @@ local UpdatesService = {
 	Client = {
 		UpToDate = Knit.CreateProperty(),
 	},
+
+	UpToDate = false,
 }
 
 function UpdatesService:IsUpToDate()
@@ -46,10 +48,6 @@ end
 
 function UpdatesService:KnitStart()
 	self:IsUpToDate()
-end
-
-function UpdatesService:KnitInit()
-	self.UpToDate = nil
 end
 
 return UpdatesService

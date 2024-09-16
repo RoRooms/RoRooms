@@ -16,6 +16,9 @@ local ItemsService
 
 local ItemsController = {
 	Name = "ItemsController",
+
+	Scope = Fusion.scoped(Fusion),
+	EquippedItemsUpdated = Signal.new(),
 }
 
 function ItemsController:ToggleEquipItem(ItemId: string)
@@ -96,11 +99,6 @@ function ItemsController:KnitStart()
 	self:_AddNeoHotbarButton()
 end
 
-function ItemsController:KnitInit()
-	self.Scope = Fusion.scoped(Fusion)
-
-	self.EquippedItems = self.Scope:Value({})
-	self.EquippedItemsUpdated = Signal.new()
-end
+ItemsController.EquippedItems = ItemsController.Scope:Value({})
 
 return ItemsController

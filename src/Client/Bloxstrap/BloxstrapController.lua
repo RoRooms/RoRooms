@@ -37,6 +37,4 @@ function BloxstrapController:KnitStart()
 	end
 end
 
-function BloxstrapController:KnitInit() end
-
 return BloxstrapController

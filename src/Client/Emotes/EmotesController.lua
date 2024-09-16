@@ -37,6 +37,4 @@ function EmotesController:KnitStart()
 	Topbar:AddTopbarButton("Emotes", Topbar.NativeButtons.Emotes)
 end
 
-function EmotesController:KnitInit() end
-
 return EmotesController

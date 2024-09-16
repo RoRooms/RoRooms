@@ -17,6 +17,10 @@ local FRIENDS_ONLINE_CACHE_PERIOD = 30
 
 local FriendsController = {
 	Name = "FriendsController",
+	FriendsOnline = {},
+	FriendsInRoRooms = {},
+	FriendsNotInGame = {},
+	FriendsOnlineLastUpdated = os.time(),
 }
 
 function FriendsController:UpdateFriendsInRoRooms()
@@ -79,13 +83,6 @@ function FriendsController:KnitStart()
 			self:UpdateFriends()
 		end
 	end
-end
-
-function FriendsController:KnitInit()
-	self.FriendsOnline = {}
-	self.FriendsInRoRooms = {}
-	self.FriendsNotInGame = {}
-	self.FriendsOnlineLastUpdated = os.time()
 end
 
 return FriendsController

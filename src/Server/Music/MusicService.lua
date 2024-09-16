@@ -9,6 +9,9 @@ local MusicService = {
 	Client = {
 		CurrentSong = Knit.CreateProperty(),
 	},
+
+	CurrentIndex = 0,
+	Songs = Config.Systems.Music.SoundGroup:GetChildren(),
 }
 
 function MusicService:PlayNextSong()
@@ -43,18 +46,13 @@ function MusicService:KnitStart()
 	self:PlayNextSong()
 end
 
-function MusicService:KnitInit()
-	self.CurrentIndex = 0
-	self.Songs = Config.Systems.Music.SoundGroup:GetChildren()
-
-	for _, Song in ipairs(self.Songs) do
-		if not Song:IsA("Sound") then
-			Song:Destroy()
-		end
-		Song.Looped = false
-		Song.PlayOnRemove = false
-		Song.Playing = false
+for _, Song in ipairs(MusicService.Songs) do
+	if not Song:IsA("Sound") then
+		Song:Destroy()
 	end
+	Song.Looped = false
+	Song.PlayOnRemove = false
+	Song.Playing = false
 end
 
 return MusicService

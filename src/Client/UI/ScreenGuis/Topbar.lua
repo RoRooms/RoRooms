@@ -119,7 +119,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local TopbarPully = TopbarInstance.AutoScaleFrame.PullButton
 
 	local function UpdateTopbarBottomPos()
-		print(TopbarPully.AbsolutePosition.Y)
 		States.TopbarBottomPos:set(TopbarPully.AbsolutePosition.Y)
 	end
 

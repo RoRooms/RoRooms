@@ -34,6 +34,4 @@ function UpdatesController:KnitStart()
 	end
 end
 
-function UpdatesController:KnitInit() end
-
 return UpdatesController

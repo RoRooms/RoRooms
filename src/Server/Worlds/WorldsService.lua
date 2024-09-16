@@ -27,6 +27,4 @@ end
 
 function WorldsService:KnitStart() end
 
-function WorldsService:KnitInit() end
-
 return WorldsService

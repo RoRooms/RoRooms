@@ -10,6 +10,4 @@ function ComponentsService:KnitStart()
 	end
 end
 
-function ComponentsService:KnitInit() end
-
 return ComponentsService

@@ -29,6 +29,14 @@ local TopWorldsService = {
 	},
 
 	TopWorlds = {},
+	TeleportsStore = DataStoreService:GetOrderedDataStore(
+		DATASTORE_NAME,
+		tostring(math.floor(os.time() / WORLD_PERSISTENCE_TIME))
+	),
+	LastWeekTeleportsStore = DataStoreService:GetOrderedDataStore(
+		DATASTORE_NAME,
+		tostring(math.floor(os.time() / WORLD_PERSISTENCE_TIME) - 1)
+	),
 }
 
 function TopWorldsService.Client:GetTopWorlds(Player: Player, StartingPage: number, PageCount: number, PageSize: number)
@@ -174,15 +182,6 @@ function TopWorldsService:KnitStart()
 			self:_LogIncomingTeleport(JoinData.SourcePlaceId)
 		end
 	end)
-end
-
-function TopWorldsService:KnitInit()
-	self.TeleportsStore =
-		DataStoreService:GetOrderedDataStore(DATASTORE_NAME, tostring(math.floor(os.time() / WORLD_PERSISTENCE_TIME)))
-	self.LastWeekTeleportsStore = DataStoreService:GetOrderedDataStore(
-		DATASTORE_NAME,
-		tostring(math.floor(os.time() / WORLD_PERSISTENCE_TIME) - 1)
-	)
 end
 
 return TopWorldsService
