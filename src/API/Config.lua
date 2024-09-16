@@ -160,7 +160,7 @@ local Config = {
 }
 
 function Config:Update(ConfigModifier: Config)
-	ReconcileTable(Config, ConfigModifier)
+	ReconcileTable(Config.Config, ConfigModifier)
 end
 
 return Config
