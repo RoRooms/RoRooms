@@ -8,7 +8,7 @@ local RemoteProperties = {}
 
 function RemoteProperties:Start()
 	States.Controllers.ItemsController.EquippedItemsUpdated:Connect(function(EquippedItems)
-		States.EquippedItems:set(EquippedItems)
+		States.Items.Equipped:set(EquippedItems)
 	end)
 
 	States.Services.PlayerDataService.Level:Observe(function(Level)

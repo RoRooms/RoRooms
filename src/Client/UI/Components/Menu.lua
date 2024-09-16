@@ -27,7 +27,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Position = Util.Fallback(
 		Props.Position,
 		Scope:Computed(function(Use)
-			local YPos = Use(States.TopbarBottomPos)
+			local YPos = Use(States.Topbar.YPosition)
 			if not Use(Open) then
 				YPos = YPos + 15
 			end
@@ -67,7 +67,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							Theme.SpringSpeed["1"],
 							Theme.SpringDampening["1"]
 						),
-						BackgroundTransparency = States.PreferredTransparency,
+						BackgroundTransparency = States.CoreGui.PreferredTransparency,
 						ListEnabled = true,
 						ListFillDirection = ListFillDirection,
 

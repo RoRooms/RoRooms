@@ -66,19 +66,19 @@ function Topbar:AddTopbarButton(
 		},
 	}
 )
-	local TopbarButtons = Peek(States.TopbarButtons)
+	local TopbarButtons = Peek(States.Topbar.Buttons)
 
 	TopbarButtons[Name] = Button
 
-	States.TopbarButtons:set(TopbarButtons)
+	States.Topbar.Buttons:set(TopbarButtons)
 end
 
 function Topbar:RemoveTopbarButton(Name: string)
-	local TopbarButtons = Peek(States.TopbarButtons)
+	local TopbarButtons = Peek(States.Topbar.Buttons)
 
 	TopbarButtons[Name] = nil
 
-	States.TopbarButtons:set(TopbarButtons)
+	States.Topbar.Buttons:set(TopbarButtons)
 end
 
 return Topbar

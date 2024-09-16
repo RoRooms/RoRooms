@@ -24,7 +24,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local IsHolding = Scope:Value(false)
 	local IsEquipped = Scope:Computed(function(Use)
-		return table.find(Use(States.EquippedItems), Use(ItemId)) ~= nil
+		return table.find(Use(States.Items.Equipped), Use(ItemId)) ~= nil
 	end)
 
 	return Scope:CustomButton {

@@ -79,7 +79,9 @@ function FriendsController:KnitStart()
 
 	while task.wait(1) do
 		local SecondsSinceUpdated = os.time() - self.FriendsOnlineLastUpdated
-		if (SecondsSinceUpdated > FRIENDS_ONLINE_CACHE_PERIOD) and (Peek(States.CurrentMenu) == "FriendsMenu") then
+		if
+			(SecondsSinceUpdated > FRIENDS_ONLINE_CACHE_PERIOD) and (Peek(States.Menus.CurrentMenu) == "FriendsMenu")
+		then
 			self:UpdateFriends()
 		end
 	end

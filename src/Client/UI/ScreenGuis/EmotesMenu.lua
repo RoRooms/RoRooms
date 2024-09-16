@@ -14,7 +14,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Theme = Themer.Theme:now()
 
 	local MenuOpen = Scope:Computed(function(Use)
-		return Use(States.CurrentMenu) == script.Name
+		return Use(States.Menus.CurrentMenu) == script.Name
 	end)
 
 	local EmotesMenu = Scope:Menu {
@@ -76,9 +76,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 		},
 	}
 
-	Scope:Observer(States.EmotesMenu.FocusedCategory):onChange(function()
+	Scope:Observer(States.Menus.EmotesMenu.FocusedCategory):onChange(function()
 		local EmotesList = EmotesMenu.AutoScaleFrame.MenuFrame.Contents.Frame.EmotesList
-		local Category = EmotesList:FindFirstChild(`{Peek(States.EmotesMenu.FocusedCategory)}EmotesCategory`)
+		local Category = EmotesList:FindFirstChild(`{Peek(States.Menus.EmotesMenu.FocusedCategory)}EmotesCategory`)
 		if Category then
 			EmotesList.CanvasPosition = Vector2.new(0, 0)
 			EmotesList.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - EmotesList.AbsolutePosition.Y)

@@ -17,7 +17,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Theme = Themer.Theme:now()
 
 	local MenuOpen = Scope:Computed(function(Use)
-		return Use(States.CurrentMenu) == script.Name
+		return Use(States.Menus.CurrentMenu) == script.Name
 	end)
 	local PlaceInfo = Scope:Value({})
 
@@ -137,7 +137,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								States.Services.WorldsService
 									:TeleportToWorld(Peek(States.WorldPageMenu.PlaceId))
 									:andThen(function(Success: boolean, Message: string)
-										States.CurrentMenu:set(nil)
+										States.Menus.CurrentMenu:set(nil)
 
 										if not Success then
 											Prompts:PushPrompt({

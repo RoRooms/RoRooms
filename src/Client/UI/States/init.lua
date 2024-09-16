@@ -22,23 +22,27 @@ local States = {
 		FriendsController = nil,
 	},
 	Prompts = Scope:Value({}),
-	CurrentMenu = Scope:Value(),
-	TopbarBottomPos = Scope:Value(0),
-	TopbarVisible = Scope:Value(true),
-	TopbarButtons = Scope:Value({}),
-	ScreenSize = Scope:Value(Vector2.new()),
-	EquippedItems = Scope:Value({}),
-	ItemsMenu = {
-		Open = Scope:Value(false),
-		FocusedCategory = Scope:Value(nil),
+	Menus = {
+		CurrentMenu = Scope:Value(),
+		ItemsMenu = {
+			Open = Scope:Value(false),
+			FocusedCategory = Scope:Value(nil),
+		},
+		EmotesMenu = {
+			FocusedCategory = Scope:Value(nil),
+		},
 	},
-	EmotesMenu = {
-		FocusedCategory = Scope:Value(nil),
+	Topbar = {
+		YPosition = Scope:Value(0),
+		Visible = Scope:Value(true),
+		Buttons = Scope:Value({}),
+	},
+	Items = {
+		Equipped = Scope:Value({}),
 	},
 	WorldPageMenu = {
 		PlaceId = Scope:Value(),
 	},
-	ItemsMenuOpen = Scope:Value(false),
 	LocalPlayerData = Scope:Value({}),
 	UserSettings = {
 		MuteMusic = Scope:Value(false),
@@ -49,9 +53,12 @@ local States = {
 		InRoRooms = Scope:Value({}),
 		NotInRoRooms = Scope:Value({}),
 	},
-	TopbarInset = Scope:Value(Rect.new(Vector2.new(), Vector2.new())),
-	RobloxMenuOpen = Scope:Value(false),
-	PreferredTransparency = Scope:Value(0.25),
+	CoreGui = {
+		TopbarInset = Scope:Value(Rect.new(Vector2.new(), Vector2.new())),
+		RobloxMenuOpen = Scope:Value(false),
+		PreferredTransparency = Scope:Value(0.25),
+		ScreenSize = Scope:Value(Vector2.new()),
+	},
 	Worlds = {
 		TopWorlds = Scope:Value({}),
 		RandomWorlds = Scope:Value({}),

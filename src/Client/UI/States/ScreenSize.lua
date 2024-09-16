@@ -12,7 +12,7 @@ local ScreenSize = {
 
 function ScreenSize:Start()
 	self.Scope:Hydrate(Workspace.CurrentCamera) {
-		[Out "ViewportSize"] = States.ScreenSize,
+		[Out "ViewportSize"] = States.CoreGui.ScreenSize,
 	}
 end
 

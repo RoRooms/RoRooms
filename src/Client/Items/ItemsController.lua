@@ -63,10 +63,10 @@ function ItemsController:_AddNeoHotbarButton()
 	end
 
 	NeoHotbar:AddCustomButton("ItemsMenuButton", "rbxassetid://6966623635", function()
-		if not Peek(States.ItemsMenu.Open) then
-			States.ItemsMenu.Open:set(true)
+		if not Peek(States.Menus.ItemsMenu.Open) then
+			States.Menus.ItemsMenu.Open:set(true)
 		else
-			States.ItemsMenu.Open:set(false)
+			States.Menus.ItemsMenu.Open:set(false)
 		end
 	end)
 end

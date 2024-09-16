@@ -14,7 +14,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Theme = Themer.Theme:now()
 
 	local MenuOpen = Scope:Computed(function(Use)
-		return Use(States.CurrentMenu) == script.Name
+		return Use(States.Menus.CurrentMenu) == script.Name
 	end)
 
 	local NicknameText = Scope:Value("")
@@ -86,7 +86,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				end),
 
 				OnActivated = function()
-					States.CurrentMenu:set()
+					States.Menus.CurrentMenu:set()
 
 					if Config.Systems.Profiles.AvatarEditorCallback then
 						Config.Systems.Profiles.AvatarEditorCallback()

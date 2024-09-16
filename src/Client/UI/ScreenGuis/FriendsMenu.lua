@@ -13,7 +13,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Theme = Themer.Theme:now()
 
 	local MenuOpen = Scope:Computed(function(Use)
-		return Use(States.CurrentMenu) == script.Name
+		return Use(States.Menus.CurrentMenu) == script.Name
 	end)
 
 	local FriendsMenu = Scope:Menu {

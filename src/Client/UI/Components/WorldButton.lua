@@ -48,7 +48,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 		OnActivated = function()
 			States.WorldPageMenu.PlaceId:set(Peek(PlaceId))
-			States.CurrentMenu:set("WorldPageMenu")
+			States.Menus.CurrentMenu:set("WorldPageMenu")
 		end,
 
 		[Children] = {

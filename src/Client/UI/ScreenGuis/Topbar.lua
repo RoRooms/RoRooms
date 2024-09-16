@@ -27,7 +27,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Scope:Spring(
 					Scope:Computed(function(Use)
-						if Use(States.TopbarVisible) then
+						if Use(States.Topbar.Visible) then
 							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, 14))
 						else
 							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, (-Use(TopbarButtonsHeight)) - 2))
@@ -49,7 +49,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					Scope:Frame {
 						Name = "TopbarButtons",
 						BackgroundColor3 = Theme.Colors.Base.Main,
-						BackgroundTransparency = States.PreferredTransparency,
+						BackgroundTransparency = States.CoreGui.PreferredTransparency,
 						ListEnabled = true,
 						ListPadding = Scope:Computed(function(Use)
 							return UDim.new(0, Use(Theme.Spacing["0.25"]))
@@ -64,17 +64,17 @@ return function(Scope: Fusion.Scope<any>, Props)
 						end),
 
 						[Children] = {
-							Scope:ForValues(States.TopbarButtons, function(Use, Scope, Button)
+							Scope:ForValues(States.Topbar.Buttons, function(Use, Scope, Button)
 								return Scope:TopbarButton(table.clone(Button))
 							end),
 						},
 					},
 					Scope:BaseButton {
 						Name = "PullButton",
-						BackgroundTransparency = States.PreferredTransparency,
+						BackgroundTransparency = States.CoreGui.PreferredTransparency,
 						BackgroundColor3 = Theme.Colors.Base.Main,
 						Visible = Scope:Computed(function(Use)
-							return not (typeof(Use(States.CurrentMenu)) == "string")
+							return not (typeof(Use(States.Menus.CurrentMenu)) == "string")
 						end),
 						TextSize = 0,
 						CornerRadius = Scope:Computed(function(Use)
@@ -95,8 +95,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 						StrokeColor = Theme.Colors.Neutral.Main,
 
 						OnActivated = function()
-							States.TopbarVisible:set(not Peek(States.TopbarVisible))
-							States.CurrentMenu:set(nil)
+							States.Topbar.Visible:set(not Peek(States.Topbar.Visible))
+							States.Menus.CurrentMenu:set(nil)
 						end,
 
 						[Children] = {
@@ -119,7 +119,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local TopbarPully = TopbarInstance.AutoScaleFrame.PullButton
 
 	local function UpdateTopbarBottomPos()
-		States.TopbarBottomPos:set(TopbarPully.AbsolutePosition.Y)
+		States.Topbar.YPosition:set(TopbarPully.AbsolutePosition.Y)
 	end
 
 	table.insert(CleanupHolder, TopbarPully:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateTopbarBottomPos))

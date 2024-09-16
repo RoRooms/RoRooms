@@ -86,8 +86,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 									Color = Emote.TintColor,
 
 									Callback = function()
-										if Use(States.ScreenSize).Y <= 500 then
-											States.CurrentMenu:set()
+										if Use(States.CoreGui.ScreenSize).Y <= 500 then
+											States.Menus.CurrentMenu:set()
 										end
 									end,
 								}

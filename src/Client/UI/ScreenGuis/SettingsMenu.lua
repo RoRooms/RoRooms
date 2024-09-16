@@ -19,16 +19,16 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Theme = Themer.Theme:now()
 
 	local MenuOpen = Scope:Computed(function(Use)
-		return Use(States.CurrentMenu) == script.Name
+		return Use(States.Menus.CurrentMenu) == script.Name
 	end)
 
 	Scope:Observer(States.UserSettings.HideUI):onChange(function()
 		for _, CoreGuiType in ipairs(TOGGLEABLE_CORE_GUIS) do
 			StarterGui:SetCoreGuiEnabled(CoreGuiType, not Peek(States.UserSettings.HideUI))
 		end
-		States.TopbarVisible:set(not Peek(States.UserSettings.HideUI))
+		States.Topbar.Visible:set(not Peek(States.UserSettings.HideUI))
 		if Peek(States.UserSettings.HideUI) then
-			States.CurrentMenu:set(nil)
+			States.Menus.CurrentMenu:set(nil)
 		end
 	end)
 	if Players.LocalPlayer then

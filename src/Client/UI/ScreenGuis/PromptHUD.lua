@@ -70,7 +70,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							Theme.SpringSpeed["1"],
 							Theme.SpringDampening["1"]
 						),
-						BackgroundTransparency = States.PreferredTransparency,
+						BackgroundTransparency = States.CoreGui.PreferredTransparency,
 						ListEnabled = true,
 						ListPadding = Scope:Computed(function(Use)
 							return UDim.new(0, Use(Theme.Spacing["2"]))

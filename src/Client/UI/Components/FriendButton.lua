@@ -70,7 +70,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 
 		OnActivated = function()
-			States.CurrentMenu:set(nil)
+			States.Menus.CurrentMenu:set(nil)
 
 			if Peek(InRoRooms) then
 				if Peek(JobId) == game.JobId then

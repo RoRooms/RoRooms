@@ -15,14 +15,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local ItemsMenu = Scope:Menu {
 		Name = script.Name,
-		Open = States.ItemsMenu.Open,
+		Open = States.Menus.ItemsMenu.Open,
 		Parent = Props.Parent,
 		AutomaticSize = Enum.AutomaticSize.Y,
 		Size = UDim2.fromOffset(385, 0),
 		AnchorPoint = Vector2.new(0.5, 1),
 		Position = Scope:Computed(function(Use)
 			local YPos = 68 + 15
-			if not Use(States.ItemsMenu.Open) then
+			if not Use(States.Menus.ItemsMenu.Open) then
 				YPos -= 15
 			end
 			return UDim2.new(UDim.new(0.5, 0), UDim.new(1, -YPos))
@@ -59,11 +59,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 		},
 	}
 
-	Scope:Observer(States.ItemsMenu.Open):onChange(function()
+	Scope:Observer(States.Menus.ItemsMenu.Open):onChange(function()
 		local TextClasses = { "TextLabel", "TextButton", "TextBox" }
-		if Peek(States.ItemsMenu.Open) then
-			if Peek(States.ScreenSize).Y < 1000 then
-				States.CurrentMenu:set()
+		if Peek(States.Menus.ItemsMenu.Open) then
+			if Peek(States.CoreGui.ScreenSize).Y < 1000 then
+				States.Menus.CurrentMenu:set()
 			end
 		end
 		for _, Descendant in ipairs(ItemsMenu:GetDescendants()) do
@@ -72,9 +72,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 			end
 		end
 	end)
-	Scope:Observer(States.ItemsMenu.FocusedCategory):onChange(function()
+	Scope:Observer(States.Menus.ItemsMenu.FocusedCategory):onChange(function()
 		local Items = ItemsMenu.AutoScaleFrame.MenuFrame.Contents.Items
-		local Category = Items:FindFirstChild(`{Peek(States.ItemsMenu.FocusedCategory)}ItemsCategory`)
+		local Category = Items:FindFirstChild(`{Peek(States.Menus.ItemsMenu.FocusedCategory)}ItemsCategory`)
 		if Category then
 			Items.CanvasPosition = Vector2.new(0, 0)
 			Items.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - Items.AbsolutePosition.Y)

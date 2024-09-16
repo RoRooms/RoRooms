@@ -33,7 +33,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						LayoutOrder = Category.LayoutOrder,
 
 						OnActivated = function()
-							States.EmotesMenu.FocusedCategory:set(CategoryName, true)
+							States.Menus.EmotesMenu.FocusedCategory:set(CategoryName, true)
 						end,
 					}
 			end),

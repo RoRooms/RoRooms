@@ -81,7 +81,7 @@ function ItemGiverComponent:Construct()
 		return Config.Systems.Items.Items[Use(self.ItemId)]
 	end)
 	self.Equipped = self.Scope:Computed(function(Use)
-		return table.find(Use(States.EquippedItems), Use(self.ItemId)) ~= nil
+		return table.find(Use(States.Items.Equipped), Use(self.ItemId)) ~= nil
 	end)
 
 	if not Peek(self.ItemId) then

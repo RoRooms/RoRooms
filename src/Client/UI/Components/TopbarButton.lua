@@ -23,7 +23,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local IsHovering = Scope:Value(false)
 	local IsHolding = Scope:Value(false)
 	local MenuOpen = Scope:Computed(function(Use)
-		return Use(States.CurrentMenu) == Use(MenuName)
+		return Use(States.Menus.CurrentMenu) == Use(MenuName)
 	end)
 
 	return Scope:BaseButton {
@@ -50,12 +50,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 		IsHovering = IsHovering,
 		IsHolding = IsHolding,
 		OnActivated = function()
-			if Peek(States.CurrentMenu) == Peek(MenuName) then
-				States.CurrentMenu:set()
+			if Peek(States.Menus.CurrentMenu) == Peek(MenuName) then
+				States.Menus.CurrentMenu:set()
 			else
-				States.CurrentMenu:set(Peek(MenuName))
-				if Peek(States.ScreenSize).Y < 900 then
-					States.ItemsMenu.Open:set()
+				States.Menus.CurrentMenu:set(Peek(MenuName))
+				if Peek(States.CoreGui.ScreenSize).Y < 900 then
+					States.Menus.ItemsMenu.Open:set()
 				end
 			end
 		end,
