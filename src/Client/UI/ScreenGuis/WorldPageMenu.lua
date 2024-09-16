@@ -44,22 +44,23 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Name = script.Name,
 		Open = MenuOpen,
 		Parent = Props.Parent,
-		AutomaticSize = Enum.AutomaticSize.XY,
+		AutomaticSize = Enum.AutomaticSize.Y,
+		Size = UDim2.fromOffset(340, 0),
+		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
-
 			Scope:TitleBar {
 				Title = "World",
 				CloseButtonDisabled = true,
 			},
 			Scope:Frame {
 				Name = "Contents",
-				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
 				ListEnabled = true,
 				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.Spacing["1"]))
 				end),
+				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 				[Children] = {
 					Scope:Image {
@@ -79,14 +80,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 					},
 					Scope:Frame {
 						Name = "Details",
-						Size = UDim2.fromScale(1, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						ListEnabled = true,
+						ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 						[Children] = {
 							Scope:Text {
 								Name = "Name",
-								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								Text = Scope:Computed(function(Use)
 									if Use(PlaceInfo) and Use(PlaceInfo).Name then
@@ -112,7 +112,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 										return "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 									end
 								end),
-								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								TextTruncate = Enum.TextTruncate.AtEnd,
 								TextWrapped = true,
@@ -126,7 +125,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 					},
 					Scope:Button {
 						Name = "PlayButton",
-						Size = UDim2.fromScale(1, 0),
 						Color = Theme.Colors.Primary.Main,
 						AutomaticSize = Enum.AutomaticSize.Y,
 						Content = { "rbxassetid://17293685944" },

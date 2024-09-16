@@ -75,13 +75,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 						ListPadding = Scope:Computed(function(Use)
 							return UDim.new(0, Use(Theme.Spacing["2"]))
 						end),
+						ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 						[Children] = {
 							Scope:Frame {
 								Name = "Details",
-								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								ListEnabled = true,
+								ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 								[Children] = {
 									Scope:Text {
@@ -97,7 +98,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 										FontFace = Scope:Computed(function(Use)
 											return Font.new(Use(Theme.Font.Heading), Use(Theme.FontWeight.Heading))
 										end),
-										Size = UDim2.fromScale(1, 0),
 										AutomaticSize = Enum.AutomaticSize.Y,
 										TextWrapped = false,
 									},
@@ -120,7 +120,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 							},
 							Scope:Frame {
 								Name = "Buttons",
-								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								Visible = Scope:Computed(function(Use)
 									return #Use(Buttons) >= 1

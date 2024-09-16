@@ -26,8 +26,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Name = script.Name,
 		Open = MenuOpen,
 		Parent = Props.Parent,
-		AutomaticSize = Enum.AutomaticSize.XY,
+		AutomaticSize = Enum.AutomaticSize.Y,
 		Size = UDim2.fromOffset(375, 0),
+		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
 			Scope:TitleBar {
@@ -36,7 +37,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 			},
 			Scope:Scroller {
 				Name = "WorldsList",
-				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 205)),
+				Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 205)),
 				ScrollBarThickness = Theme.StrokeThickness["1"],
 				ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
 				Padding = Scope:Computed(function(Use)
@@ -64,7 +65,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 						[Children] = {
 							Scope:Frame {
 								Name = "Worlds",
-								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								ListEnabled = true,
 								ListPadding = Scope:Computed(function(Use)
@@ -94,7 +94,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 						[Children] = {
 							Scope:Frame {
 								Name = "Worlds",
-								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								ListEnabled = true,
 								ListPadding = Scope:Computed(function(Use)
@@ -116,7 +115,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 								Name = "LoadMoreButton",
 								Content = LoadMoreButtonContent,
 								Color = Theme.Colors.Primary.Main,
-								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 
 								OnActivated = function()
@@ -154,7 +152,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 						[Children] = {
 							Scope:Frame {
 								Name = "Worlds",
-								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								ListEnabled = true,
 								ListPadding = Scope:Computed(function(Use)
@@ -176,7 +173,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 								Name = "RefreshButton",
 								Content = RefreshButtonContent,
 								Color = Theme.Colors.Primary.Main,
-								Size = UDim2.fromScale(1, 0),
 								AutomaticSize = Enum.AutomaticSize.Y,
 
 								OnActivated = function()

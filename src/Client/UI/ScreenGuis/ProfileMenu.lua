@@ -33,6 +33,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Parent = Props.Parent,
 		AutomaticSize = Enum.AutomaticSize.Y,
 		Size = UDim2.fromOffset(280, 0),
+		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
 			Scope:TitleBar {
@@ -40,15 +41,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 				CloseButtonDisabled = true,
 			},
 			Scope:Frame {
-				Size = UDim2.fromScale(1, 0),
 				ListEnabled = true,
+				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 				[Children] = {
 					Scope:TextInput {
 						Name = "NicknameInput",
 						PlaceholderText = "Nickname",
 						CharacterLimit = Config.Systems.Profiles.NicknameCharacterLimit,
-						Size = UDim2.fromScale(1, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						Text = NicknameText,
 
@@ -64,7 +64,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						Text = StatusText,
 						CharacterLimit = Config.Systems.Profiles.BioCharacterLimit,
 						TextWrapped = true,
-						Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 60)),
+						Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 60)),
 						AutomaticSize = Enum.AutomaticSize.Y,
 
 						OnFocusLost = function()
@@ -79,7 +79,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 				Name = "EditAvatarButton",
 				Content = { "rbxassetid://13285615740", "Edit Avatar" },
 				Color = Theme.Colors.Primary.Main,
-				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
 				Visible = Scope:Computed(function(Use)
 					return Config.Systems.Profiles.AvatarEditorCallback ~= nil

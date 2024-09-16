@@ -42,6 +42,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Parent = Props.Parent,
 		Size = UDim2.fromOffset(305, 0),
 		Open = MenuOpen,
+		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
 			Scope:TitleBar {
@@ -60,6 +61,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				PaddingRight = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.Spacing["1"]))
 				end),
+				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 				[Children] = {
 					Scope:SettingToggle {

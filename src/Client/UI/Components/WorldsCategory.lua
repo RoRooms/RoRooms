@@ -25,6 +25,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		LayoutOrder = LayoutOrder,
 		Visible = Visible,
 		ListEnabled = true,
+		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
 			Scope:Frame {
@@ -44,14 +45,15 @@ return function(Scope: Fusion.Scope<any>, Props)
 					},
 					Scope:Text {
 						Text = Title,
+						TextWrapped = false,
 					},
 				},
 			},
 			Scope:Frame {
 				Name = "Contents",
-				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
 				ListEnabled = true,
+				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 				[Children] = Props[Children],
 			},

@@ -32,6 +32,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		AutomaticSize = AutomaticSize,
 		LayoutOrder = LayoutOrder,
 		ListEnabled = true,
+		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
 			Scope:Frame {
@@ -57,12 +58,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 					},
 					Scope:Text {
 						Text = CategoryName,
+						TextWrapped = false,
 					},
 				},
 			},
 			Scope:Frame {
 				Name = "Emotes",
-				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
 				ListEnabled = true,
 				ListPadding = Scope:Computed(function(Use)

@@ -13,6 +13,7 @@ export type Props = {
 	Size: Fusion.UsedAs<UDim2>?,
 	AutomaticSize: Fusion.UsedAs<Enum.AutomaticSize>?,
 	ListFillDirection: Fusion.UsedAs<Enum.FillDirection>?,
+	ListHorizontalFlex: Fusion.UsedAs<Enum.UIFlexAlignment>?,
 
 	[typeof(Children)]: { any },
 }
@@ -37,6 +38,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Size = Util.Fallback(Props.Size, UDim2.fromOffset(0, 0))
 	local AutomaticSize = Util.Fallback(Props.AutomaticSize, Enum.AutomaticSize.Y)
 	local ListFillDirection = Util.Fallback(Props.ListFillDirection, Enum.FillDirection.Vertical)
+	local ListHorizontalFlex = Util.Fallback(Props.ListHorizontalFlex, Enum.UIFlexAlignment.None)
 
 	return Scope:New "ScreenGui" {
 		Name = Name,
@@ -70,6 +72,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						BackgroundTransparency = States.CoreGui.PreferredTransparency,
 						ListEnabled = true,
 						ListFillDirection = ListFillDirection,
+						ListHorizontalFlex = ListHorizontalFlex,
 
 						[Children] = Props[Children],
 					},

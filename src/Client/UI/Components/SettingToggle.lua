@@ -25,7 +25,6 @@ local function SettingToggle(Scope: Fusion.Scope<any>, Props: Props)
 	Props.Switched = Switched
 
 	return Scope:SwitchGroup(Util.CombineProps(Props, {
-		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		Switched = Switched,
 		Disabled = Disabled,

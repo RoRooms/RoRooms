@@ -139,13 +139,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 				AutomaticSize = Enum.AutomaticSize.Y,
 				ListEnabled = true,
 				ListPadding = UDim.new(0, 0),
+				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 				[Children] = {
 					Scope:Text {
 						Name = "DisplayName",
 						Text = DisplayName,
 						TextTruncate = Enum.TextTruncate.AtEnd,
-						Size = UDim2.fromScale(1, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						TextXAlignment = Enum.TextXAlignment.Center,
 						TextWrapped = false,
@@ -158,7 +158,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 						TextColor3 = StatusColor,
 						TextSize = Theme.TextSize["0.875"],
 						TextTruncate = Enum.TextTruncate.AtEnd,
-						Size = UDim2.fromScale(1, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						TextXAlignment = Enum.TextXAlignment.Center,
 						TextWrapped = false,

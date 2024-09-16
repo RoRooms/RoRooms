@@ -24,7 +24,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	return Scope:Frame {
 		Name = `ItemsCategory`,
-		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		LayoutOrder = Scope:Computed(function(Use)
 			if Use(Category) then
@@ -37,6 +36,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListPadding = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.Spacing["0.75"]))
 		end),
+		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
 			Scope:Frame {
@@ -62,12 +62,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 					},
 					Scope:Text {
 						Text = CategoryName,
+						TextWrapped = false,
 					},
 				},
 			},
 			Scope:Frame {
 				Name = "Items",
-				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
 				ListEnabled = true,
 				ListWraps = true,
