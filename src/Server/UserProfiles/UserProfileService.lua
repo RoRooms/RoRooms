@@ -3,7 +3,7 @@ local Knit = require(RoRooms.Parent.Knit)
 local FilterString = require(RoRooms.SourceCode.Storage.ExtPackages.FilterString)
 local PlayerDataService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataService)
 local t = require(RoRooms.Parent.t)
-local Config = require(RoRooms.Config)
+local Config = require(RoRooms.Config).Config
 
 local UserProfileService = {
 	Name = "UserProfileService",

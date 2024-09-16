@@ -5,7 +5,7 @@ local Component = require(RoRooms.Parent.Component)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local ItemsController = require(RoRooms.SourceCode.Client.Items.ItemsController)
-local Config = require(RoRooms.Config)
+local Config = require(RoRooms.Config).Config
 local AttributeBind = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
 local Trove = require(RoRooms.Parent.Trove)
 

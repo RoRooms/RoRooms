@@ -7,7 +7,7 @@ local LeaderStats = require(RoRooms.SourceCode.Storage.ExtPackages.LeaderStats)
 local XPToLevelUp = require(RoRooms.SourceCode.Shared.XPToLevelUp)
 local Trove = require(RoRooms.Parent.Trove)
 local Signal = require(RoRooms.Parent.Signal)
-local Config = require(RoRooms.Config)
+local Config = require(RoRooms.Config).Config
 
 local PROFILE_TEMPLATE = {
 	Level = 1,

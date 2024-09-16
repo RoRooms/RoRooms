@@ -6,7 +6,7 @@ local NeoHotbar = require(RoRooms.Parent.NeoHotbar)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
-local Config = require(RoRooms.Config)
+local Config = require(RoRooms.Config).Config
 
 local Peek = Fusion.peek
 

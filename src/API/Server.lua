@@ -8,7 +8,7 @@ function RoRoomsServer:Start()
 	self.Started = true
 
 	local Packages = script.Parent.Parent
-	local Config = require(script.Parent.Config)
+	local Config = require(script.Parent.Config).Config
 
 	local Shared = ROROOMS_SOURCE.Shared
 	local Server = ROROOMS_SOURCE.Server

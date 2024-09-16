@@ -2,7 +2,7 @@ local RoRooms = script.Parent.Parent.Parent.Parent
 local PlayerCharacterComponent = require(RoRooms.SourceCode.Server.Components.PlayerCharacterComponent)
 local PlayerDataService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataService)
 local t = require(RoRooms.Parent.t)
-local Config = require(RoRooms.Config)
+local Config = require(RoRooms.Config).Config
 
 local EmotesService = {
 	Name = "EmotesService",

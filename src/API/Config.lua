@@ -1,14 +1,14 @@
-type CategoryName = string
-type Category = {
+export type CategoryName = string
+export type Category = {
 	DisplayName: string?,
 	Icon: string,
 	LayoutOrder: number?,
 	Color: Color3?,
 }
-type Categories = {
+export type Categories = {
 	[CategoryName]: Category,
 }
-type Item = {
+export type Item = {
 	Enabled: boolean?,
 	Tool: Tool,
 	DisplayName: string?,
@@ -19,7 +19,7 @@ type Item = {
 	LevelRequirement: number?,
 	CallbackRequirement: () -> ()?,
 }
-type Emote = {
+export type Emote = {
 	Enabled: boolean?,
 	Animation: Animation,
 	DisplayName: string?,
@@ -31,8 +31,8 @@ type Emote = {
 	LevelRequirement: number?,
 	CallbackRequirement: () -> ()?,
 }
-type PlaceId = number
-type Config = {
+export type PlaceId = number
+export type Config = {
 	Systems: {
 		Profiles: {
 			Enabled: boolean?,
@@ -155,7 +155,9 @@ local function ReconcileTable(Target, Template)
 	end
 end
 
-local Config = table.clone(CONFIG_TEMPLATE)
+local Config = {
+	Config = table.clone(CONFIG_TEMPLATE),
+}
 
 function Config:Update(ConfigModifier: Config)
 	ReconcileTable(Config, ConfigModifier)

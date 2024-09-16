@@ -8,7 +8,7 @@ function RoRoomsClient:Start()
 	assert(not self.Started, "RoRooms already started.")
 	self.Started = true
 
-	local Config = require(script.Parent.Config)
+	local Config = require(script.Parent.Config).Config
 	local Packages = script.Parent.Parent
 
 	local Shared = ROROOMS_SOURCE.Shared

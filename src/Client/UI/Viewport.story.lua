@@ -2,7 +2,7 @@ local RoRooms = script.Parent.Parent.Parent.Parent
 local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
 local Theme = require(script.Parent.OnyxUITheme)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Config = require(RoRooms.Config)
+local Config = require(RoRooms.Config).Config
 local Fusion = require(RoRooms.Parent.Fusion)
 
 local Themer = OnyxUI.Themer
