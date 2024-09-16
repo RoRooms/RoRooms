@@ -4,7 +4,7 @@ local Fetch = require(RoRooms.Parent.Fetch)
 local Future = require(RoRooms.Parent.Future)
 local Knit = require(RoRooms.Parent.Knit)
 
-local LATEST_RELEASE_URL = "https://api.github.com/repos/imavafe/onyxui/releases/latest"
+local LATEST_RELEASE_URL = "https://api.github.com/repos/RoRooms/RoRooms/releases/latest"
 
 local UpdatesService = {
 	Name = script.Name,
