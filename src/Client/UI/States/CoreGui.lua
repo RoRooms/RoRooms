@@ -40,7 +40,7 @@ function CoreGui:Start()
 	end)
 
 	local function UpdatePrefferedTransparency()
-		local Transparency = math.clamp(GuiService.PreferredTransparency / 3, 0, 0.2)
+		local Transparency = math.clamp(GuiService.PreferredTransparency / 4, 0, 0.15)
 		States.CoreGui.PreferredTransparency:set(Transparency)
 	end
 

@@ -56,7 +56,7 @@ local States = {
 	CoreGui = {
 		TopbarInset = Scope:Value(Rect.new(Vector2.new(), Vector2.new())),
 		RobloxMenuOpen = Scope:Value(false),
-		PreferredTransparency = Scope:Value(0.25),
+		PreferredTransparency = Scope:Value(0.15),
 		ScreenSize = Scope:Value(Vector2.new()),
 	},
 	Worlds = {

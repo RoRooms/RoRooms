@@ -21,7 +21,7 @@ return Themer.NewTheme(Scope, {
 		},
 
 		Neutral = {
-			Main = ColorUtils.Lighten(Util.Colors.Stone["800"], 0.1),
+			Main = ColorUtils.Lighten(Util.Colors.Stone["800"], 0.05),
 		},
 		NeutralContent = {
 			Main = Util.Colors.Stone["300"],
