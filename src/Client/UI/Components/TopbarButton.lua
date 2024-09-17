@@ -21,7 +21,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local IndicatorColor = Util.Fallback(Props.IndicatorColor, Color3.fromRGB(255, 255, 255))
 
 	local IsHovering = Scope:Value(false)
-	local IsHolding = Scope:Value(false)
 	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.Menus.CurrentMenu) == Use(MenuName)
 	end)
@@ -48,7 +47,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end),
 
 		IsHovering = IsHovering,
-		IsHolding = IsHolding,
 		OnActivated = function()
 			if Peek(States.Menus.CurrentMenu) == Peek(MenuName) then
 				States.Menus.CurrentMenu:set()

@@ -22,7 +22,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
 	local Callback = Util.Fallback(Props.Callback, function() end)
 
-	local IsHolding = Scope:Value(false)
 	local IsEquipped = Scope:Computed(function(Use)
 		return table.find(Use(States.Items.Equipped), Use(ItemId)) ~= nil
 	end)
@@ -30,7 +29,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 	return Scope:CustomButton {
 		Name = "ItemButton",
 		Color = Color,
-		IsHolding = IsHolding,
 		Size = UDim2.fromOffset(70, 70),
 		AutomaticSize = Enum.AutomaticSize.None,
 		LayoutOrder = Scope:Computed(function(Use)
@@ -39,11 +37,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		StrokeEnabled = IsEquipped,
 		StrokeColor = Scope:Spring(
 			Scope:Computed(function(Use)
-				if Use(IsEquipped) then
-					return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Light) * 4)
-				else
-					return ColorUtils.Emphasize(Use(Color), 0.2)
-				end
+				return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Strong))
 			end),
 			Theme.SpringSpeed["1"],
 			Theme.SpringDampening["1"]

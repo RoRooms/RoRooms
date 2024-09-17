@@ -3,6 +3,7 @@ local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
+local OnyxUITheme = require(RoRooms.SourceCode.Client.UI.OnyxUITheme)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -45,22 +46,26 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 				[Children] = {
 					Scope:ForValues(States.Friends.InRoRooms, function(Use, Scope, Friend)
-						return Scope:FriendButton {
-							UserId = Friend.VisitorId,
-							DisplayName = Friend.DisplayName,
-							PlaceId = Friend.PlaceId,
-							JobId = Friend.GameId,
-							InRoRooms = true,
-						}
+						return Themer.Theme:is(OnyxUITheme):during(function()
+							return Scope:FriendButton {
+								UserId = Friend.VisitorId,
+								DisplayName = Friend.DisplayName,
+								PlaceId = Friend.PlaceId,
+								JobId = Friend.GameId,
+								InRoRooms = true,
+							}
+						end)
 					end),
 					Scope:ForValues(States.Friends.NotInRoRooms, function(Use, Scope, Friend)
-						return Scope:FriendButton {
-							UserId = Friend.VisitorId,
-							DisplayName = Friend.DisplayName,
-							PlaceId = Friend.PlaceId,
-							JobId = Friend.GameId,
-							InRoRooms = false,
-						}
+						return Themer.Theme:is(OnyxUITheme):during(function()
+							return Scope:FriendButton {
+								UserId = Friend.VisitorId,
+								DisplayName = Friend.DisplayName,
+								PlaceId = Friend.PlaceId,
+								JobId = Friend.GameId,
+								InRoRooms = false,
+							}
+						end)
 					end),
 				},
 			},

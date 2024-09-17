@@ -30,7 +30,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local InRoRooms = Util.Fallback(Props.InRoRooms, false)
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
 
-	local IsHolding = Scope:Value(false)
 	local PlaceInfo = Scope:Value({})
 
 	local function UpdatePlaceInfo()
@@ -112,7 +111,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 				)
 			end
 		end,
-		IsHolding = IsHolding,
 
 		[Children] = {
 			Scope:Avatar {

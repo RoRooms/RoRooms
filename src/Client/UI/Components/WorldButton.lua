@@ -21,7 +21,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local PlaceId = Util.Fallback(Props.PlaceId, nil)
 
-	local IsHolding = Scope:Value(false)
 	local PlaceInfo = Scope:Value({})
 
 	local function UpdatePlaceInfo()
@@ -41,7 +40,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	return Scope:CustomButton {
 		Name = "WorldButton",
-		IsHolding = IsHolding,
 		ListEnabled = true,
 		ListFillDirection = Enum.FillDirection.Vertical,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,

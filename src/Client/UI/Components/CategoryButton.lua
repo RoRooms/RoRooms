@@ -21,8 +21,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local FallbackIcon = Util.Fallback(Props.FallbackIcon, "rbxassetid://17266112920")
 	local OnActivated = Util.Fallback(Props.OnActivated, function() end)
 
-	local IsHolding = Scope:Value(false)
-
 	return Scope:CustomButton {
 		Name = Name,
 		LayoutOrder = Props.LayoutOrder,
@@ -30,7 +28,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 		OnActivated = function()
 			Peek(OnActivated)()
 		end,
-		IsHolding = IsHolding,
 
 		[Children] = {
 			Scope:Image {

@@ -21,8 +21,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Emote = Util.Fallback(Props.Emote, {})
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
 
-	local IsHolding = Scope:Value(false)
-
 	return Scope:CustomButton {
 		Name = "EmoteButton",
 		Size = UDim2.fromOffset(70, 70),
@@ -40,7 +38,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 				States.Controllers.EmotesController:PlayEmote(Peek(EmoteId))
 			end
 		end,
-		IsHolding = IsHolding,
 
 		[Children] = {
 			Scope:Text {

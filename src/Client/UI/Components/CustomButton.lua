@@ -15,7 +15,6 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Theme = Themer.Theme:now()
 
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
-	local IsHovering = Scope:EnsureValue(Props.IsHovering, false)
 
 	return Scope:Button(Util.CombineProps(Props, {
 		Color = Color,
@@ -34,7 +33,5 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		PaddingRight = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end),
-
-		IsHovering = IsHovering,
 	}))
 end

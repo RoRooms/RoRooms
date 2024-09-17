@@ -1,7 +1,7 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
-
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
+local ColorUtils = require(RoRooms.Parent.ColorUtils)
 
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
@@ -21,7 +21,7 @@ return Themer.NewTheme(Scope, {
 		},
 
 		Neutral = {
-			Main = Util.Colors.Stone["800"],
+			Main = ColorUtils.Lighten(Util.Colors.Stone["800"], 0.1),
 		},
 		NeutralContent = {
 			Main = Util.Colors.Stone["300"],
@@ -95,7 +95,7 @@ return Themer.NewTheme(Scope, {
 	},
 	Emphasis = {
 		Light = 0.1,
-		Regular = 0.25,
+		Regular = 0.15,
 		Strong = 0.5,
 		Contrast = 1,
 	},
