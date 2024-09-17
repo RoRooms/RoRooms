@@ -5,6 +5,7 @@ local States = require(RoRooms.SourceCode.Client.UI.States)
 local Worlds = require(RoRooms.SourceCode.Client.UI.States.Worlds)
 local Config = require(RoRooms.Config).Config
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
+local OnyxUITheme = require(RoRooms.SourceCode.Client.UI.OnyxUITheme)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -75,9 +76,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 									Scope:ForValues(
 										Config.Systems.Worlds.FeaturedWorlds,
 										function(Use, Scope, PlaceId: number)
-											return Scope:WorldButton {
-												PlaceId = PlaceId,
-											}
+											return Themer.Theme:is(OnyxUITheme):during(function()
+												return Scope:WorldButton {
+													PlaceId = PlaceId,
+												}
+											end)
 										end
 									),
 								},
@@ -101,12 +104,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ListWraps = true,
 
 								[Children] = {
-									Scope:ForValues(
-										States.Worlds.TopWorlds,
-										function(Use, Scope, World: { [string]: any })
-											return Scope:WorldButton(table.clone(World))
-										end
-									),
+									Scope:ForValues(States.Worlds.TopWorlds, function(Use, Scope, World)
+										return Themer.Theme:is(OnyxUITheme):during(function()
+											return Scope:WorldButton {
+												PlaceId = World.PlaceId,
+											}
+										end)
+									end),
 								},
 							},
 							Scope:Button {
@@ -159,12 +163,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ListWraps = true,
 
 								[Children] = {
-									Scope:ForValues(
-										States.Worlds.RandomWorlds,
-										function(Use, Scope, World: { [string]: any })
-											return Scope:WorldButton(table.clone(World))
-										end
-									),
+									Scope:ForValues(States.Worlds.RandomWorlds, function(Use, Scope, World)
+										return Themer.Theme:is(OnyxUITheme):during(function()
+											return Scope:WorldButton {
+												PlaceId = World.PlaceId,
+											}
+										end)
+									end),
 								},
 							},
 							Scope:Button {

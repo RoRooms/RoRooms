@@ -34,10 +34,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 		LayoutOrder = Scope:Computed(function(Use)
 			return Use(Item).LayoutOrder or 0
 		end),
-		StrokeEnabled = IsEquipped,
 		StrokeColor = Scope:Spring(
 			Scope:Computed(function(Use)
-				return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Strong))
+				if Use(IsEquipped) then
+					return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Strong))
+				else
+					return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Regular))
+				end
 			end),
 			Theme.SpringSpeed["1"],
 			Theme.SpringDampening["1"]

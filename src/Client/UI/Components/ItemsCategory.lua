@@ -73,6 +73,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.Spacing["0.75"]))
 				end),
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
+				end),
 
 				[Children] = {
 					Scope:ForPairs(Config.Systems.Items.Items, function(Use, Scope, ItemId, Item)
