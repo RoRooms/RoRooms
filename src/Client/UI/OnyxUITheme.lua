@@ -24,7 +24,8 @@ return Themer.NewTheme(Scope, {
 			Main = ColorUtils.Lighten(Util.Colors.Stone["800"], 0.05),
 		},
 		NeutralContent = {
-			Main = Util.Colors.Stone["300"],
+			Main = Util.Colors.Stone["100"],
+			Dark = ColorUtils.Darken(Util.Colors.Stone["100"], 0.2),
 		},
 
 		Base = {
@@ -58,7 +59,7 @@ return Themer.NewTheme(Scope, {
 		Heading = Enum.FontWeight.Bold,
 	},
 	TextSize = {
-		Base = 16,
+		Base = 17,
 	},
 	CornerRadius = {
 		Base = 6,

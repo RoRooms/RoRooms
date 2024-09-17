@@ -14,14 +14,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Icon = Util.Fallback(Props.Icon, "rbxassetid://17266112920")
 	local Name = Util.Fallback(Props.Name, "WorldsCategory")
 	local Size = Util.Fallback(Props.Size, UDim2.fromScale(1, 0))
-	local AutomaticSize = Util.Fallback(Props.AutomaticSize, Enum.AutomaticSize.Y)
 	local LayoutOrder = Util.Fallback(Props.LayoutOrder, 0)
 	local Visible = Util.Fallback(Props.Visible, true)
 
 	return Scope:Frame(Util.CombineProps(Props, {
 		Name = Name,
 		Size = Size,
-		AutomaticSize = AutomaticSize,
 		LayoutOrder = LayoutOrder,
 		Visible = Visible,
 		ListEnabled = true,

@@ -80,7 +80,7 @@ local ROROOMS_CONFIG = {
 			},
 			Emotes = {
 				Emote1 = {
-					Name = "Emote",
+					Name = "Emote Test",
 					Emoji = "😼",
 					Animation = Instance.new("Animation"),
 				},
@@ -109,18 +109,21 @@ local ROROOMS_CONFIG = {
 					Emoji = "💖",
 					Animation = Instance.new("Animation"),
 					Category = "Unlockable",
+					LevelRequirement = 100,
 				},
 				Emote7 = {
 					Name = "Emote",
 					Emoji = "⭐",
 					Animation = Instance.new("Animation"),
 					Category = "Unlockable",
+					LevelRequirement = 100,
 				},
 				Emote8 = {
 					Name = "Emote",
 					Emoji = "🛍️",
 					Animation = Instance.new("Animation"),
 					Category = "Unlockable",
+					LevelRequirement = 100,
 				},
 			},
 		},

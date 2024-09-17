@@ -67,6 +67,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListEnabled = true,
 		ListFillDirection = Enum.FillDirection.Vertical,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+		ListPadding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
+		end),
 
 		OnActivated = function()
 			States.Menus.CurrentMenu:set(nil)
@@ -116,7 +119,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 			Scope:Avatar {
 				Size = UDim2.fromOffset(80, 80),
 				BackgroundColor3 = Scope:Computed(function(Use)
-					return ColorUtils.Lighten(Use(Color), 0.06)
+					return ColorUtils.Lighten(Use(Color), Use(Theme.Emphasis.Light))
 				end),
 				Image = Scope:Computed(function(Use)
 					return `rbxthumb://type=AvatarHeadShot&id={Use(UserId)}&w=150&h=150`

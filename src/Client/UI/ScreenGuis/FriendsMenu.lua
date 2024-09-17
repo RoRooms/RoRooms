@@ -33,7 +33,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 				Name = "FriendsList",
 				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
 				ScrollBarThickness = Theme.StrokeThickness["1"],
-				ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
 				Padding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 				end),

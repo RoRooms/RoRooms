@@ -39,7 +39,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 				Name = "WorldsList",
 				Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 205)),
 				ScrollBarThickness = Theme.StrokeThickness["1"],
-				ScrollBarImageColor3 = Theme.Colors.NeutralContent.Dark,
 				Padding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 				end),
@@ -50,8 +49,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.Spacing["1.5"]))
 				end),
-				ListFillDirection = Enum.FillDirection.Horizontal,
-				ListWraps = true,
+				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 				[Children] = {
 					Scope:WorldsCategory {

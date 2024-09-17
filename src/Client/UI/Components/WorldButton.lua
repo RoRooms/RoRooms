@@ -43,6 +43,18 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListEnabled = true,
 		ListFillDirection = Enum.FillDirection.Vertical,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+		ListPadding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
+		end),
+		PaddingLeft = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0"]))
+		end),
+		PaddingTop = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0"]))
+		end),
+		PaddingRight = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0"]))
+		end),
 
 		OnActivated = function()
 			States.WorldPageMenu.PlaceId:set(Peek(PlaceId))
@@ -52,7 +64,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		[Children] = {
 			Scope:Image {
 				Name = "Icon",
-				Size = UDim2.fromOffset(90, 90),
+				Size = UDim2.fromOffset(105, 105),
 				Image = Scope:Computed(function(Use)
 					if Use(PlaceInfo) and Use(PlaceInfo).IconImageAssetId then
 						return `rbxassetid://{Use(PlaceInfo).IconImageAssetId}`
@@ -62,7 +74,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				end),
 				BackgroundTransparency = 1,
 				CornerRadius = Scope:Computed(function(Use)
-					return UDim.new(0, Use(Theme.CornerRadius["1"]))
+					return UDim.new(0, Use(Theme.CornerRadius["1.5"]))
 				end),
 				AspectRatio = 1,
 				AspectType = Enum.AspectType.FitWithinMaxSize,

@@ -1,6 +1,7 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
+local ColorUtils = require(RoRooms.Parent.ColorUtils)
 
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
@@ -18,8 +19,11 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 	return Scope:Button(Util.CombineProps(Props, {
 		Color = Color,
+		StrokeColor = Scope:Computed(function(Use)
+			return ColorUtils.Emphasise(Use(Color), Use(Theme.Emphasis.Regular))
+		end),
 		CornerRadius = Scope:Computed(function(Use)
-			return UDim.new(0, Use(Theme.CornerRadius["2"]))
+			return UDim.new(0, Use(Theme.CornerRadius["1.5"]))
 		end),
 		PaddingTop = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.Spacing["0.5"]))

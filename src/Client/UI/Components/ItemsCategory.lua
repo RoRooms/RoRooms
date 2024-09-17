@@ -24,7 +24,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	return Scope:Frame {
 		Name = `ItemsCategory`,
-		AutomaticSize = Enum.AutomaticSize.Y,
 		LayoutOrder = Scope:Computed(function(Use)
 			if Use(Category) then
 				return Use(Category).LayoutOrder
@@ -68,7 +67,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 			},
 			Scope:Frame {
 				Name = "Items",
-				AutomaticSize = Enum.AutomaticSize.Y,
 				ListEnabled = true,
 				ListWraps = true,
 				ListFillDirection = Enum.FillDirection.Horizontal,

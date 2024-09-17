@@ -20,11 +20,40 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local EmoteId = Util.Fallback(Props.EmoteId, "EmoteId")
 	local Emote = Util.Fallback(Props.Emote, {})
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
+	local LevelRequirement = Scope:Computed(function(Use)
+		local EmoteValue = Use(Emote)
+		if EmoteValue and EmoteValue.LevelRequirement then
+			return EmoteValue.LevelRequirement
+		else
+			return nil
+		end
+	end)
+	local LabelText = Scope:Computed(function(Use)
+		local EmoteValue = Use(Emote)
+		local LevelRequirementValue = Use(LevelRequirement)
+		if EmoteValue and EmoteValue.LabelText then
+			return EmoteValue.LabelText
+		elseif LevelRequirementValue then
+			return LevelRequirementValue
+		else
+			return ""
+		end
+	end)
+	local LabelIcon = Scope:Computed(function(Use)
+		local EmoteValue = Use(Emote)
+		local LevelRequirementValue = Use(LevelRequirement)
+		if EmoteValue and EmoteValue.LabelIcon then
+			return EmoteValue.LabelIcon
+		elseif LevelRequirementValue then
+			return "rbxassetid://5743022869"
+		else
+			return ""
+		end
+	end)
 
 	return Scope:CustomButton {
 		Name = "EmoteButton",
-		Size = UDim2.fromOffset(70, 70),
-		AutomaticSize = Enum.AutomaticSize.None,
+		Color = Color,
 		LayoutOrder = Scope:Computed(function(Use)
 			return Use(Emote).LayoutOrder or 0
 		end),
@@ -40,87 +69,70 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end,
 
 		[Children] = {
-			Scope:Text {
-				Name = "Emoji",
-				AnchorPoint = Vector2.new(0.5, 0.5),
-				Position = UDim2.fromScale(0.5, 0.45),
-				Text = Scope:Computed(function(Use)
-					if Use(Props.Emote) and Use(Props.Emote).Emoji then
-						return Use(Props.Emote).Emoji
-					else
-						return "🪩"
-					end
-				end),
-				TextSize = Theme.TextSize["1.875"],
-				LayoutOrder = 1,
-				RichText = false,
-				ClipsDescendants = false,
-			},
-			Scope:Text {
-				Name = "EmoteName",
-				LayoutOrder = 3,
-				AnchorPoint = Vector2.new(0.5, 1),
-				Position = UDim2.fromScale(0.5, 1),
-				Size = UDim2.fromScale(1, 0),
-				Text = Scope:Computed(function(Use)
-					return Use(Props.Emote).Name or Use(Props.EmoteId)
-				end),
-				TextSize = Theme.TextSize["0.875"],
-				TextTruncate = Enum.TextTruncate.AtEnd,
-				AutomaticSize = Enum.AutomaticSize.Y,
-				TextXAlignment = Enum.TextXAlignment.Center,
-				TextWrapped = false,
-			},
 			Scope:Frame {
-				Name = "Label",
-				ZIndex = 2,
+				Name = "Details",
 				ListEnabled = true,
-				ListFillDirection = Enum.FillDirection.Horizontal,
+				ListFillDirection = Enum.FillDirection.Vertical,
+				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.5"]))
+				end),
+				PaddingTop = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["1"]))
+				end),
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0"]))
+				end),
 
 				[Children] = {
-					Scope:Icon {
-						Name = "LabelIcon",
-						AnchorPoint = Vector2.new(0, 0),
-						Position = UDim2.fromScale(0, 0),
-						Size = UDim2.fromOffset(13, 13),
-						Image = Scope:Computed(function(Use)
-							local LabelIcon = Use(Props.Emote).LabelIcon
-							local LevelRequirement = Use(Props.Emote).LevelRequirement
-							if LabelIcon then
-								return LabelIcon
-							elseif LevelRequirement then
-								return "rbxassetid://5743022869"
+					Scope:Text {
+						Name = "Emoji",
+						Text = Scope:Computed(function(Use)
+							if Use(Props.Emote) and Use(Props.Emote).Emoji then
+								return Use(Props.Emote).Emoji
 							else
-								return ""
+								return "🪩"
 							end
 						end),
-						ImageColor3 = Scope:Computed(function(Use)
-							return ColorUtils.Lighten(Use(Color), 0.25)
-						end),
+						TextSize = Theme.TextSize["2.25"],
+						RichText = false,
+						ClipsDescendants = false,
+						TextWrapped = false,
 					},
 					Scope:Text {
-						Name = "LabelText",
-						AnchorPoint = Vector2.new(0, 0),
-						Position = UDim2.fromScale(0, 0),
+						Name = "Name",
 						Text = Scope:Computed(function(Use)
-							local LabelText = Use(Emote).LabelText
-							local LevelRequirement = Use(Emote).LevelRequirement
-							if LabelText then
-								return LabelText
-							elseif LevelRequirement then
-								return LevelRequirement
-							else
-								return ""
-							end
+							return Use(Props.Emote).Name or Use(Props.EmoteId)
 						end),
-						TextSize = 13,
-						TextColor3 = Scope:Computed(function(Use)
-							return ColorUtils.Lighten(Use(Color), 0.5)
+						TextSize = Theme.TextSize["0.875"],
+						TextTruncate = Enum.TextTruncate.AtEnd,
+						AutomaticSize = Enum.AutomaticSize.None,
+						TextXAlignment = Enum.TextXAlignment.Center,
+						Size = Scope:Computed(function(Use)
+							return UDim2.fromOffset(Use(Theme.Spacing["4"]) * 1.1, Use(Theme.TextSize["0.875"]) * 2)
 						end),
-						ClipsDescendants = false,
-						AutoLocalize = false,
 					},
 				},
+			},
+			Scope:IconText {
+				Name = "Label",
+				Content = Scope:Computed(function(Use)
+					local LabelTextValue = Use(LabelText)
+					local LabelIconValue = Use(LabelIcon)
+					return { LabelIconValue, LabelTextValue }
+				end),
+				ContentSize = Theme.TextSize["0.75"],
+				ContentColor = Scope:Computed(function(Use)
+					return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Strong))
+				end),
+				Visible = Scope:Computed(function(Use)
+					local LabelTextValue = Use(LabelText)
+					local LabelIconValue = Use(LabelIcon)
+					return (LabelTextValue ~= nil) or (LabelIconValue ~= nil)
+				end),
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.25"]))
+				end),
 			},
 		},
 	}
