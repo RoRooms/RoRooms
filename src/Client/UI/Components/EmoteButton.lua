@@ -3,6 +3,7 @@ local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local ColorUtils = require(RoRooms.Parent.ColorUtils)
+local EmotesController = require(RoRooms.SourceCode.Client.Emotes.EmotesController)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -63,9 +64,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 			if Props.Callback then
 				Props.Callback()
 			end
-			if States.Controllers.EmotesController then
-				States.Controllers.EmotesController:PlayEmote(Peek(EmoteId))
-			end
+
+			EmotesController:PlayEmote(Peek(EmoteId))
 		end,
 
 		[Children] = {

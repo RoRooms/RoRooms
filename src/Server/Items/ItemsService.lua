@@ -1,5 +1,5 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
-local PlayerDataService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataService)
+local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataStoreService)
 local t = require(RoRooms.Parent.t)
 local Config = require(RoRooms.Config).Config
 
@@ -48,7 +48,7 @@ function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassReq
 				AbleToEquip = true
 			end
 			if AbleToEquip then
-				local Profile = PlayerDataService:GetProfile(Player)
+				local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 				if Profile then
 					if Item.LevelRequirement then
 						AbleToEquip = Profile.Data.Level >= Item.LevelRequirement

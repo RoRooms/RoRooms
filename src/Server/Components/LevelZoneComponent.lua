@@ -1,14 +1,12 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Component = require(RoRooms.Parent.Component)
-local Zone = require(RoRooms.SourceCode.Shared.Packages.Zone)
-local Knit = require(RoRooms.Parent.Knit)
+local Zone = require(RoRooms.Parent.Zone)
 local Fusion = require(RoRooms.Parent.Fusion)
 local AttributeBind = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
 local Trove = require(RoRooms.Parent.Trove)
+local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataStoreService)
 
 local Peek = Fusion.peek
-
-local PlayerDataService = Knit.GetService("PlayerDataService")
 
 local LevelZoneComponent = Component.new {
 	Tag = "RR_LevelZone",
@@ -16,7 +14,7 @@ local LevelZoneComponent = Component.new {
 
 function LevelZoneComponent:Start()
 	self.Zone.playerEntered:Connect(function(Player: Player)
-		local Profile = PlayerDataService:GetProfile(Player)
+		local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 		if Profile then
 			if Profile.Data.Level < Peek(self.LevelRequirement) then
 				Player:LoadCharacter()

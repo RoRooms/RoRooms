@@ -1,5 +1,5 @@
 local FEATURE_MODULES_MAP = {
-	Profiles = { "UserProfileService", "UserProfileController" },
+	Profiles = { "ProfilesService", "ProfilesController" },
 	Items = { "ItemsService", "ItemsController" },
 	Emotes = { "EmotesService", "EmotesController" },
 	Worlds = {

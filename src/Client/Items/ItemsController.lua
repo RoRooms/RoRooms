@@ -10,8 +10,6 @@ local Config = require(RoRooms.Config).Config
 
 local Peek = Fusion.peek
 
-local ItemsMenu = require(RoRooms.SourceCode.Client.UI.ScreenGuis.ItemsMenu)
-
 local ItemsService
 
 local ItemsController = {
@@ -94,7 +92,7 @@ function ItemsController:KnitStart()
 		end)
 	end)
 
-	UIController:MountUI(ItemsMenu)
+	UIController:MountUI(require(RoRooms.SourceCode.Client.UI.ScreenGuis.ItemsMenu))
 
 	self:_AddNeoHotbarButton()
 end

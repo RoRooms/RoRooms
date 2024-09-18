@@ -20,10 +20,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local NicknameText = Scope:Value("")
 	local StatusText = Scope:Value("")
 
-	if States.Services.PlayerDataService then
-		States.Services.PlayerDataService.UserProfile:Observe(function(UserProfile: { [any]: any })
-			NicknameText:set(UserProfile.Nickname)
-			StatusText:set(UserProfile.Status)
+	if States.Services.PlayerDataStoreService then
+		States.Services.PlayerDataStoreService.Profile:Observe(function(Profile: { [any]: any })
+			NicknameText:set(Profile.Nickname)
+			StatusText:set(Profile.Status)
 		end)
 	end
 
@@ -53,8 +53,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 						Text = NicknameText,
 
 						OnFocusLost = function()
-							if States.Services.UserProfileService then
-								States.Services.UserProfileService:SetNickname(Peek(NicknameText))
+							if States.Services.ProfilesService then
+								States.Services.ProfilesService:SetNickname(Peek(NicknameText))
 							end
 						end,
 					},
@@ -68,8 +68,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 						AutomaticSize = Enum.AutomaticSize.Y,
 
 						OnFocusLost = function()
-							if States.Services.UserProfileService then
-								States.Services.UserProfileService:SetStatus(Peek(StatusText))
+							if States.Services.ProfilesService then
+								States.Services.ProfilesService:SetStatus(Peek(StatusText))
 							end
 						end,
 					},

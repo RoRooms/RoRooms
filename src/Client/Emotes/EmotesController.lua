@@ -4,8 +4,6 @@ local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
 local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
 
-local EmotesMenu = require(RoRooms.SourceCode.Client.UI.ScreenGuis.EmotesMenu)
-
 local EmotesService
 
 local EmotesController = {
@@ -32,7 +30,7 @@ function EmotesController:KnitStart()
 	UIController = Knit.GetController("UIController")
 	EmotesService = Knit.GetService("EmotesService")
 
-	UIController:MountUI(EmotesMenu)
+	UIController:MountUI(require(RoRooms.SourceCode.Client.UI.ScreenGuis.EmotesMenu))
 
 	Topbar:AddTopbarButton("Emotes", Topbar.NativeButtons.Emotes)
 end

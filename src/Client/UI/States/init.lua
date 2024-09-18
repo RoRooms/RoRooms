@@ -6,14 +6,14 @@ local Scope = Fusion.scoped(Fusion)
 
 local States = {
 	Services = {
-		UserProfileService = nil,
+		ProfilesService = nil,
 		WorldsService = nil,
 		ItemsService = nil,
-		PlayerDataService = nil,
 		EmotesService = nil,
 		TopWorldsService = nil,
 		RandomWorldsService = nil,
 		UpdatesService = nil,
+		LevelingService = nil,
 	},
 	Controllers = {
 		UIController = nil,

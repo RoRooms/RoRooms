@@ -3,6 +3,7 @@ local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local ColorUtils = require(RoRooms.Parent.ColorUtils)
+local ItemsController = require(RoRooms.SourceCode.Client.Items.ItemsController)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -51,9 +52,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 			if Callback then
 				Callback()
 			end
-			if States.Controllers.ItemsController then
-				States.Controllers.ItemsController:ToggleEquipItem(Peek(ItemId))
-			end
+
+			ItemsController:ToggleEquipItem(Peek(ItemId))
 		end,
 
 		[Children] = {

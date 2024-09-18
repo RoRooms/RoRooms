@@ -1,6 +1,6 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
 local PlayerCharacterComponent = require(RoRooms.SourceCode.Server.Components.PlayerCharacterComponent)
-local PlayerDataService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataService)
+local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataStoreService)
 local t = require(RoRooms.Parent.t)
 local Config = require(RoRooms.Config).Config
 
@@ -43,7 +43,7 @@ function EmotesService:CanPlayerUseEmote(Player: Player, EmoteId: string, Emote)
 	local FailureReason = nil
 
 	if Emote.LevelRequirement then
-		local Profile = PlayerDataService:GetProfile(Player)
+		local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 		if Profile then
 			CanUse = Profile.Data.Level >= Emote.LevelRequirement
 		else

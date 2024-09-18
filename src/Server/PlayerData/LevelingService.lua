@@ -1,22 +1,34 @@
+local Players = game:GetService("Players")
+local RoRooms = script.Parent.Parent.Parent.Parent
 local PlayerDataStoreService = require(script.Parent.PlayerDataStoreService)
-local XPToLevelUp = require()
+local XPToLevelUp = require(RoRooms.SourceCode.Shared.XPToLevelUp)
+local Knit = require(RoRooms.Parent.Knit)
+local DataTemplate = require(RoRooms.SourceCode.Server.PlayerData.DataTemplate)
+local Config = require(RoRooms.Config)
 
 local LevelingService = {
 	Name = script.Name,
+	Client = {
+		Level = Knit.CreateProperty(DataTemplate.Level),
+		XPMultipliers = Knit.CreateProperty({}),
+	},
 }
 
-function LevelingService:ChangeXP(Player: Player, Amount: number)
+function LevelingService:ChangeXP(Player: Player, Amount: number): (boolean, number?)
 	Amount = math.floor(Amount)
-	local Profile = self:GetProfile(Player)
+
+	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 	if Profile then
 		local MaxAllowedXP = (
 			XPToLevelUp(Profile.Data.Level)
 			+ XPToLevelUp(Profile.Data.Level + 1)
 			+ XPToLevelUp(Profile.Data.Level + 2)
 		)
+
 		if Amount > MaxAllowedXP then
-			return MaxAllowedXP
+			return false, MaxAllowedXP
 		end
+
 		local RequiredXPToLevel = XPToLevelUp(Profile.Data.Level)
 		if (Profile.Data.XP + Amount) > RequiredXPToLevel then
 			local RemainingXP = (Profile.Data.XP + Amount) - RequiredXPToLevel
@@ -32,21 +44,61 @@ function LevelingService:ChangeXP(Player: Player, Amount: number)
 
 		self.Client.Level:SetFor(Player, Profile.Data.Level)
 
-		local PlayerLeaderStats = LeaderStats:Get(Player)
-		if PlayerLeaderStats then
-			PlayerLeaderStats:SetStat(LEADERBOARD_LABELS.Level, Profile.Data.Level)
-		end
+		return true
 	end
 
-	return nil
+	return false
 end
 
 function LevelingService:SetXPMultiplier(Player: Player, Name: string, MultiplierAddon: number | nil)
-	local Profile = self:GetProfile(Player)
+	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 	if Profile then
 		Profile.XPMultipliers[Name] = MultiplierAddon
 		self.Client.XPMultipliers:SetFor(Player, Profile.XPMultipliers)
 	end
+end
+
+function PlayerDataStoreService:_UpdateAllFriendMultipliers()
+	for _, Player in ipairs(Players:GetPlayers()) do
+		task.spawn(function()
+			local FriendsInGame = false
+			for _, OtherPlayer in ipairs(Players:GetPlayers()) do
+				if OtherPlayer ~= Player and OtherPlayer:IsFriendsWith(Player.UserId) then
+					FriendsInGame = true
+					break
+				end
+			end
+			local BaseMultiplier = 0.5
+			self:SetXPMultiplier(Player, "Friends", (FriendsInGame and BaseMultiplier) or 0)
+		end)
+	end
+end
+
+function PlayerDataStoreService:KnitStart()
+	PlayerDataStoreService.ProfileLoaded:Connect(function(Profile: PlayerDataStoreService.Profile)
+		self:_UpdateAllFriendMultipliers()
+
+		self.Client:SetFor(Profile.Player, Profile.Data.Level)
+	end)
+
+	task.spawn(function()
+		while task.wait(1) do
+			for _, Profile in pairs(PlayerDataStoreService:GetProfiles()) do
+				local function CalculateTotal(BaseNum: number, MultiplierAddons: { [any]: any })
+					local Total = BaseNum
+					local TotalMultiplier = 1
+					for _, MultiplierAddon in pairs(MultiplierAddons) do
+						TotalMultiplier += MultiplierAddon
+					end
+					Total *= TotalMultiplier
+					return Total
+				end
+
+				local XPTotal = CalculateTotal(Config.Systems.Leveling.XPPerMinute, Profile.XPMultipliers)
+				self:ChangeXP(Profile.Player, XPTotal)
+			end
+		end
+	end)
 end
 
 return LevelingService

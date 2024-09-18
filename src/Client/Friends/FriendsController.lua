@@ -3,7 +3,6 @@ local Players = game:GetService("Players")
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
 local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
-local FriendsMenu = require(RoRooms.SourceCode.Client.UI.ScreenGuis.FriendsMenu)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Knit = require(RoRooms.Parent.Knit)
 local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
@@ -17,6 +16,7 @@ local FRIENDS_ONLINE_CACHE_PERIOD = 30
 
 local FriendsController = {
 	Name = "FriendsController",
+
 	FriendsOnline = {},
 	FriendsInRoRooms = {},
 	FriendsNotInGame = {},
@@ -72,7 +72,7 @@ end
 function FriendsController:KnitStart()
 	WorldRegistryService = Knit.GetService("WorldRegistryService")
 
-	UIController:MountUI(FriendsMenu)
+	UIController:MountUI(require(RoRooms.SourceCode.Client.UI.ScreenGuis.FriendsMenu))
 	Topbar:AddTopbarButton("Friends", Topbar.NativeButtons.Friends)
 
 	self:UpdateFriends(true)
