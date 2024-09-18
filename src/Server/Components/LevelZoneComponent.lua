@@ -1,6 +1,6 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Component = require(RoRooms.Parent.Component)
-local Zone = require(RoRooms.SourceCode.Shared.ExtPackages.Zone)
+local Zone = require(RoRooms.SourceCode.Shared.Packages.Zone)
 local Knit = require(RoRooms.Parent.Knit)
 local Fusion = require(RoRooms.Parent.Fusion)
 local AttributeBind = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
