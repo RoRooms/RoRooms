@@ -27,8 +27,11 @@ function LevelDoorComponent:Construct()
 	end)
 
 	self.LevelMet = self.Scope:Computed(function(Use)
-		if Use(States.LocalPlayerData) and Use(States.LocalPlayerData).Level then
-			return Use(States.LocalPlayerData).Level >= Use(self.LevelRequirement)
+		local LevelValue = Use(States.Leveling.Level)
+		local LevelRequirementValue = Use(self.LevelRequirement)
+
+		if LevelValue then
+			return LevelValue >= LevelRequirementValue
 		else
 			return false
 		end

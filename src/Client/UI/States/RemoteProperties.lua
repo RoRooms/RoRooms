@@ -17,9 +17,7 @@ function RemoteProperties:Start()
 	local UpdatesService = Knit.GetService("UpdatesService")
 
 	LevelingService.Level:Observe(function(Level)
-		local LocalPlayerData = Peek(States.LocalPlayerData)
-		LocalPlayerData.Level = Level
-		States.LocalPlayerData:set(LocalPlayerData)
+		States.Leveling.Level:set(Level)
 	end)
 
 	UpdatesService.UpToDate:Observe(function(UpToDate)

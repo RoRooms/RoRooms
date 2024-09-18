@@ -51,7 +51,9 @@ local States = {
 	WorldPageMenu = {
 		PlaceId = Scope:Value(),
 	},
-	LocalPlayerData = Scope:Value({}),
+	Leveling = {
+		Level = Scope:Value(0),
+	},
 	UserSettings = {
 		MuteMusic = Scope:Value(false),
 		HideUI = Scope:Value(false),

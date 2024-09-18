@@ -37,17 +37,17 @@ function PlayerCharacterComponent:_UpdateNametag()
 		Nametagger:TagCharacter(self.Instance, {
 			DisplayName = self.Player:GetAttribute("RR_Nickname"),
 			Properties = {
-				{ Value = self.Player:GetAttribute("RR_Status") },
+				{ Value = self.Player:GetAttribute("RR_Level") },
 			},
 		})
 	end)
 end
 
 function PlayerCharacterComponent:_StartNametag()
-	self.Player:GetAttributeChangedSignal("RR_Status"):Connect(function()
+	self.Player:GetAttributeChangedSignal("RR_Nickname"):Connect(function()
 		self:_UpdateNametag()
 	end)
-	self.Player:GetAttributeChangedSignal("RR_Nickname"):Connect(function()
+	self.Player:GetAttributeChangedSignal("RR_Level"):Connect(function()
 		self:_UpdateNametag()
 	end)
 

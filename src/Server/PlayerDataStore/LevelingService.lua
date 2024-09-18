@@ -15,6 +15,16 @@ local LevelingService = {
 	},
 }
 
+function LevelingService:_SetLevel(Player: Player, Level: number)
+	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
+	if Profile then
+		Profile.Data.Level = Level
+
+		Player:SetAttribute("RR_Level", Level)
+		self.Client.Level:SetFor(Player, Level)
+	end
+end
+
 function LevelingService:ChangeXP(Player: Player, Amount: number): (boolean, number?)
 	Amount = math.floor(Amount)
 
@@ -43,7 +53,7 @@ function LevelingService:ChangeXP(Player: Player, Amount: number): (boolean, num
 			Profile.Data.XP += Amount
 		end
 
-		self.Client.Level:SetFor(Player, Profile.Data.Level)
+		self:_SetLevel(Player, Profile.Data.Level)
 
 		return true
 	end
@@ -79,7 +89,8 @@ end
 function LevelingService:KnitStart()
 	PlayerDataStoreService.ProfileLoaded:Connect(function(Profile: PlayerDataStoreService.Profile)
 		self:_UpdateAllFriendMultipliers()
-		self.Client.Level:SetFor(Profile.Player, Profile.Data.Level)
+
+		self:_SetLevel(Profile.Player, Profile.Data.Level)
 	end)
 
 	task.spawn(function()
