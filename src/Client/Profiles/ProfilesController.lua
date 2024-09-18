@@ -37,7 +37,6 @@ function ProfilesController:KnitStart()
 	local ProfilesService = Knit.GetService("ProfilesService")
 
 	ProfilesService.Nickname:Observe(function(Nickname: string)
-		print(Nickname)
 		States.Profile.Nickname:set(Nickname)
 	end)
 	ProfilesService.Status:Observe(function(Status: string)

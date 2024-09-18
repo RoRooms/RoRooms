@@ -5,6 +5,7 @@ local XPToLevelUp = require(RoRooms.SourceCode.Shared.XPToLevelUp)
 local Knit = require(RoRooms.Parent.Knit)
 local DataTemplate = require(RoRooms.SourceCode.Server.PlayerDataStore.DataTemplate)
 local Config = require(RoRooms.Config).Config
+local SessionStore = require(RoRooms.SourceCode.Shared.ExtPackages.SessionStore)
 
 local LevelingService = {
 	Name = script.Name,
@@ -52,9 +53,10 @@ end
 
 function LevelingService:SetXPMultiplier(Player: Player, Name: string, MultiplierAddon: number | nil)
 	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
+	local SessionProfile = SessionStore:GetProfileSafe(Player)
 	if Profile then
-		Profile.XPMultipliers[Name] = MultiplierAddon
-		self.Client.XPMultipliers:SetFor(Player, Profile.XPMultipliers)
+		SessionProfile.XPMultipliers[Name] = MultiplierAddon
+		self.Client.XPMultipliers:SetFor(Player, SessionProfile.XPMultipliers)
 	end
 end
 
@@ -77,8 +79,7 @@ end
 function LevelingService:KnitStart()
 	PlayerDataStoreService.ProfileLoaded:Connect(function(Profile: PlayerDataStoreService.Profile)
 		self:_UpdateAllFriendMultipliers()
-
-		self.Client:SetFor(Profile.Player, Profile.Data.Level)
+		self.Client.Level:SetFor(Profile.Player, Profile.Data.Level)
 	end)
 
 	task.spawn(function()
@@ -94,7 +95,8 @@ function LevelingService:KnitStart()
 					return Total
 				end
 
-				local XPTotal = CalculateTotal(Config.Systems.Leveling.XPPerMinute, Profile.XPMultipliers)
+				local SessionProfile = SessionStore:GetProfileSafe(Profile.Player)
+				local XPTotal = CalculateTotal(Config.Systems.Leveling.XPPerMinute, SessionProfile.Data.XPMultipliers)
 				self:ChangeXP(Profile.Player, XPTotal)
 			end
 		end

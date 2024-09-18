@@ -48,7 +48,6 @@ function ProfilesService:SetStatus(Player: Player, Status: string)
 end
 
 function ProfilesService:_UpdateFromDataStoreProfile(Player: Player)
-	print(Player)
 	if not Player then
 		return
 	end

@@ -50,10 +50,6 @@ function PlayerDataStoreService:_AddPlayer(Player: Player)
 			Profile:Release()
 			return
 		end
-
-		Profile.XPMultipliers = {}
-
-		self.Client.Profile:SetFor(Player, Profile.Data.Profile)
 	else
 		Player:Kick(KICK_MESSAGE)
 	end
