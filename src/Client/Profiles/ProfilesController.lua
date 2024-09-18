@@ -3,6 +3,7 @@ local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
 local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
+local Knit = require(RoRooms.Parent.Knit)
 
 local Scoped = Fusion.scoped
 local Peek = Fusion.peek
@@ -31,6 +32,16 @@ function ProfilesController:KnitStart()
 		if States.Services.ProfilesService then
 			States.Services.ProfilesService:SetStatus(StatusValue)
 		end
+	end)
+
+	local ProfilesService = Knit.GetService("ProfilesService")
+
+	ProfilesService.Nickname:Observe(function(Nickname: string)
+		print(Nickname)
+		States.Profile.Nickname:set(Nickname)
+	end)
+	ProfilesService.Status:Observe(function(Status: string)
+		States.Profile.Status:set(Status)
 	end)
 end
 

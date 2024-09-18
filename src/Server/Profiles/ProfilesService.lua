@@ -1,6 +1,4 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RoRooms = script.Parent.Parent.Parent.Parent
-local ProfileService = require(ReplicatedStorage.RoRooms.Packages.RoRooms.SourceCode.Storage.Packages.ProfileService)
 local Knit = require(RoRooms.Parent.Knit)
 local FilterString = require(RoRooms.SourceCode.Storage.ExtPackages.FilterString)
 local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataStoreService)
@@ -10,8 +8,8 @@ local Config = require(RoRooms.Config).Config
 local ProfilesService = {
 	Name = "ProfilesService",
 	Client = {
-		Nickname = Knit.CreateProperty(nil),
-		Status = Knit.CreateProperty(nil),
+		Nickname = Knit.CreateProperty(""),
+		Status = Knit.CreateProperty(""),
 	},
 }
 
@@ -49,14 +47,26 @@ function ProfilesService:SetStatus(Player: Player, Status: string)
 	end
 end
 
+function ProfilesService:_UpdateFromDataStoreProfile(Player: Player)
+	print(Player)
+	if not Player then
+		return
+	end
+
+	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
+	if Profile then
+		self:SetNickname(Player, Profile.Data.Profile.Nickname)
+		self:SetStatus(Player, Profile.Data.Profile.Status)
+	end
+end
+
 function ProfilesService:KnitStart()
 	PlayerDataStoreService.ProfileLoaded:Connect(function(Profile: PlayerDataStoreService.Profile)
-		local Player = Profile.Player
-		if Player then
-			self:SetNickname(Player, Profile.Data.Profile.Nickname)
-			self:SetStatus(Player, Profile.Data.Profile.Status)
-		end
+		self:_UpdateFromDataStoreProfile(Profile.Player)
 	end)
+	for _, Profile in pairs(PlayerDataStoreService:GetProfiles()) do
+		self:_UpdateFromDataStoreProfile(Profile.Player)
+	end
 end
 
 return ProfilesService
