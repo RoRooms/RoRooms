@@ -67,8 +67,6 @@ function PlayerDataStoreService:_RemovePlayer(Player: Player)
 end
 
 function PlayerDataStoreService:KnitStart()
-	print("started")
-
 	for _, Player in ipairs(Players:GetPlayers()) do
 		task.spawn(function()
 			self:_AddPlayer(Player)
@@ -77,6 +75,7 @@ function PlayerDataStoreService:KnitStart()
 	Players.PlayerAdded:Connect(function(Player)
 		self:_AddPlayer(Player)
 	end)
+
 	Players.PlayerRemoving:Connect(function(Player)
 		self:_RemovePlayer(Player)
 	end)

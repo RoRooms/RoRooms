@@ -74,7 +74,7 @@ function LevelingService:_UpdateAllFriendMultipliers()
 	end
 end
 
-function PlayerDataStoreService:KnitStart()
+function LevelingService:KnitStart()
 	PlayerDataStoreService.ProfileLoaded:Connect(function(Profile: PlayerDataStoreService.Profile)
 		self:_UpdateAllFriendMultipliers()
 
