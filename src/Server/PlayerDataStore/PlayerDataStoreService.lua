@@ -38,13 +38,13 @@ function PlayerDataStoreService:_AddPlayer(Player: Player)
 		Profile:AddUserId(Player.UserId)
 		Profile:Reconcile()
 		Profile:ListenToRelease(function()
-			self.Profiles[Player] = nil
+			self.Profiles[Player.UserId] = nil
 			Player:Kick(KICK_MESSAGE)
 		end)
 		Profile.Player = Player
 
 		if Player:IsDescendantOf(Players) then
-			self.Profiles[Player] = Profile
+			self.Profiles[Player.UserId] = Profile
 			self.ProfileLoaded:Fire(Profile)
 		else
 			Profile:Release()

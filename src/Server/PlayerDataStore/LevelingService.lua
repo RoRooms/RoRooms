@@ -55,7 +55,7 @@ function LevelingService:SetXPMultiplier(Player: Player, Name: string, Multiplie
 	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 	local SessionProfile = SessionStore:GetProfileSafe(Player)
 	if Profile then
-		SessionProfile.XPMultipliers[Name] = MultiplierAddon
+		SessionProfile.Data.XPMultipliers[Name] = MultiplierAddon
 		self.Client.XPMultipliers:SetFor(Player, SessionProfile.XPMultipliers)
 	end
 end
