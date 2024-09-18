@@ -12,7 +12,7 @@ local FEATURE_MODULES_MAP = {
 	Music = { "MusicService", "MusicController" },
 	Settings = { "SettingsController" },
 	Friends = { "FriendsController" },
-	VR = { "NexusVRService" },
+	Leveling = { "LevelingService" },
 }
 
 return function(Module)

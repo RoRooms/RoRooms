@@ -1,4 +1,6 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RoRooms = script.Parent.Parent.Parent.Parent
+local ProfileService = require(ReplicatedStorage.RoRooms.Packages.RoRooms.SourceCode.Storage.Packages.ProfileService)
 local Knit = require(RoRooms.Parent.Knit)
 local FilterString = require(RoRooms.SourceCode.Storage.ExtPackages.FilterString)
 local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataStoreService)
@@ -17,14 +19,14 @@ function ProfilesService.Client:SetNickname(Player: Player, Nickname: string)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Nickname)))
 	assert(utf8.len(Nickname) <= Config.Systems.Profiles.NicknameCharacterLimit, "Nickname exceeds character limit")
 
-	self.Server:SetPlayerNickname(Player, FilterString(Nickname, Player))
+	ProfilesService:SetNickname(Player, FilterString(Nickname, Player))
 end
 
 function ProfilesService.Client:SetStatus(Player: Player, Status: string)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Status)))
 	assert(utf8.len(Status) <= Config.Systems.Profiles.BioCharacterLimit, "Status exceeds character limit")
 
-	self.Server:SetPlayerStatus(Player, FilterString(Status, Player))
+	ProfilesService:SetStatus(Player, FilterString(Status, Player))
 end
 
 function ProfilesService:SetNickname(Player: Player, Nickname: string)

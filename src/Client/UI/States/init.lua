@@ -2,18 +2,22 @@ local RoRooms = script.Parent.Parent.Parent.Parent
 local Fusion = require(RoRooms.Parent.Fusion)
 local Loader = require(RoRooms.Parent.Loader)
 
+local function UnloadedService(): { [any]: any }
+	return {}
+end
+
 local Scope = Fusion.scoped(Fusion)
 
 local States = {
 	Services = {
-		ProfilesService = nil,
-		WorldsService = nil,
-		ItemsService = nil,
-		EmotesService = nil,
-		TopWorldsService = nil,
-		RandomWorldsService = nil,
-		UpdatesService = nil,
-		LevelingService = nil,
+		ProfilesService = UnloadedService(),
+		WorldsService = UnloadedService(),
+		ItemsService = UnloadedService(),
+		EmotesService = UnloadedService(),
+		TopWorldsService = UnloadedService(),
+		RandomWorldsService = UnloadedService(),
+		UpdatesService = UnloadedService(),
+		LevelingService = UnloadedService(),
 	},
 	Controllers = {
 		UIController = nil,
@@ -39,6 +43,10 @@ local States = {
 	},
 	Items = {
 		Equipped = Scope:Value({}),
+	},
+	Profile = {
+		Nickname = Scope:Value(""),
+		Status = Scope:Value(""),
 	},
 	WorldPageMenu = {
 		PlaceId = Scope:Value(),

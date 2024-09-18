@@ -1,7 +1,6 @@
 local Players = game:GetService("Players")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Parent.Knit)
 local ProfileService = require(RoRooms.SourceCode.Storage.Packages.ProfileService)
 local Signal = require(RoRooms.Parent.Signal)
 local DataTemplate = require(script.Parent.DataTemplate)
@@ -15,11 +14,6 @@ export type Profile = ProfileService.Profile<ProfileData, { Player: Player }, {}
 
 local PlayerDataStoreService = {
 	Name = "PlayerDataStoreService",
-	Client = {
-		XPMultipliers = Knit.CreateProperty({}),
-		Level = Knit.CreateProperty(0),
-		Profile = Knit.CreateProperty({ Nickname = "", Status = "" }),
-	},
 
 	ProfileStore = ProfileService.GetProfileStore("RoRoomsPlayerData", DataTemplate),
 	ProfileLoaded = Signal.new(),
