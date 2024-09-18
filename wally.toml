@@ -28,3 +28,8 @@ ColorUtils = "csqrl/colour-utils@1.4.1"
 Future = "red-blox/future@1.0.1"
 RateLimit = "red-blox/ratelimit@1.0.1"
 Fetch = "red-blox/fetch@2.0.0"
+Zone = "imavafe/zoneplus-reupload@3.2.0"
+Icon = "neura-studios/topbarplus@3.0.2"
+
+[server-dependencies]
+ProfileService = "grilme99/profileservice@1.0.0"
