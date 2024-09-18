@@ -1,5 +1,5 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
-local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataStoreService)
+local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
 local t = require(RoRooms.Parent.t)
 local Config = require(RoRooms.Config).Config
 
@@ -114,8 +114,6 @@ function ItemsService:_PlayerHasItem(Player: Player, ItemId: string)
 
 	return false
 end
-
-function ItemsService:KnitStart() end
 
 for ItemId, Item in pairs(Config.Systems.Items.Items) do
 	if Item.Tool then

@@ -3,8 +3,8 @@ local RoRooms = script.Parent.Parent.Parent.Parent
 local PlayerDataStoreService = require(script.Parent.PlayerDataStoreService)
 local XPToLevelUp = require(RoRooms.SourceCode.Shared.XPToLevelUp)
 local Knit = require(RoRooms.Parent.Knit)
-local DataTemplate = require(RoRooms.SourceCode.Server.PlayerData.DataTemplate)
-local Config = require(RoRooms.Config)
+local DataTemplate = require(RoRooms.SourceCode.Server.PlayerDataStore.DataTemplate)
+local Config = require(RoRooms.Config).Config
 
 local LevelingService = {
 	Name = script.Name,
@@ -58,7 +58,7 @@ function LevelingService:SetXPMultiplier(Player: Player, Name: string, Multiplie
 	end
 end
 
-function PlayerDataStoreService:_UpdateAllFriendMultipliers()
+function LevelingService:_UpdateAllFriendMultipliers()
 	for _, Player in ipairs(Players:GetPlayers()) do
 		task.spawn(function()
 			local FriendsInGame = false

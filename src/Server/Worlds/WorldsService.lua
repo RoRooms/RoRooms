@@ -25,6 +25,4 @@ function WorldsService:TeleportPlayerToWorld(Player: Player, PlaceId: number)
 	end
 end
 
-function WorldsService:KnitStart() end
-
 return WorldsService

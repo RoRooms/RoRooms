@@ -63,11 +63,12 @@ function PlayerDataStoreService:_RemovePlayer(Player: Player)
 	local Profile = self:GetProfile(Player.UserId)
 	if Profile ~= nil then
 		Profile:Release()
-		self:_UpdateAllFriendMultipliers()
 	end
 end
 
 function PlayerDataStoreService:KnitStart()
+	print("started")
+
 	for _, Player in ipairs(Players:GetPlayers()) do
 		task.spawn(function()
 			self:_AddPlayer(Player)

@@ -1,6 +1,6 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
 local PlayerCharacterComponent = require(RoRooms.SourceCode.Server.Components.PlayerCharacterComponent)
-local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataStoreService)
+local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
 local t = require(RoRooms.Parent.t)
 local Config = require(RoRooms.Config).Config
 
@@ -62,7 +62,5 @@ function EmotesService:CanPlayerUseEmote(Player: Player, EmoteId: string, Emote)
 
 	return CanUse, FailureReason
 end
-
-function EmotesService:KnitStart() end
 
 return EmotesService

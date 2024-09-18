@@ -4,7 +4,7 @@ local Zone = require(RoRooms.Parent.Zone)
 local Fusion = require(RoRooms.Parent.Fusion)
 local AttributeBind = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
 local Trove = require(RoRooms.Parent.Trove)
-local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerData.PlayerDataStoreService)
+local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
 
 local Peek = Fusion.peek
 
