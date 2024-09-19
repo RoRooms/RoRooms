@@ -9,6 +9,7 @@ local Config = require(script.Parent.Config)
 local Knit = require(PACKAGES.Knit)
 local Loader = require(PACKAGES.Loader)
 local FindFeatureFromModule = require(SHARED.FindFeatureFromModule)
+local Prompts = require(SOURCE.Client.UI.States.Prompts)
 
 local RoRoomsClient = {
 	Started = false,
@@ -37,6 +38,16 @@ function RoRoomsClient:Start()
 	end)
 
 	Knit.Start()
+end
+
+function RoRoomsClient:Configure(Configuration: Config.Config)
+	assert(not self.Started, "You cannot configure RoRooms after starting it.")
+
+	Config:Update(Configuration)
+end
+
+function RoRoomsClient:Prompt(Prompt)
+	Prompts:PushPrompt(Prompt)
 end
 
 return RoRoomsClient

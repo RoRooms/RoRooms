@@ -36,4 +36,10 @@ function RoRoomsServer:Start()
 	Knit.Start()
 end
 
+function RoRoomsServer:Configure(Configuration: Config.Config)
+	assert(not self.Started, "You cannot configure RoRooms after starting it.")
+
+	Config:Update(Configuration)
+end
+
 return RoRoomsServer
