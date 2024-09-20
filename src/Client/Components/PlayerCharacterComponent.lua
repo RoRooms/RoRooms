@@ -5,7 +5,21 @@ local Component = require(RoRooms.Parent.Component)
 local RemoteComponent = require(RoRooms.Parent.RemoteComponent)
 local Nametagger = require(RoRooms.SourceCode.Shared.ExtPackages.Nametagger)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local OnyxUITheme = require(RoRooms.SourceCode.Client.UI.OnyxUITheme)
+local Fusion = require(RoRooms.Parent.Fusion)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
+
+local NAMETAGGER_THEME = Fusion.scoped(OnyxUI.Themer):NewTheme({
+	Font = {
+		Body = "rbxasset://fonts/families/Montserrat.json",
+	},
+	FontWeight = {
+		Body = Enum.FontWeight.SemiBold,
+		Bold = Enum.FontWeight.Bold,
+	},
+	TextSize = {
+		Base = 20,
+	},
+})
 
 local PlayerCharacterComponent = Component.new {
 	Tag = "RR_PlayerCharacter",
@@ -33,11 +47,11 @@ function PlayerCharacterComponent:_UpdateNametag()
 		self.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
 	end
 
-	OnyxUI.Themer.Theme:is(OnyxUITheme):during(function()
+	OnyxUI.Themer.Theme:is(NAMETAGGER_THEME):during(function()
 		Nametagger:TagCharacter(self.Instance, {
 			DisplayName = self.Player:GetAttribute("RR_Nickname"),
 			Properties = {
-				{ Value = self.Player:GetAttribute("RR_Level") },
+				{ Value = self.Player:GetAttribute("RR_Level"), Image = Assets.Icons.UserBadges.Level },
 			},
 		})
 	end)
