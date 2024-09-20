@@ -7,6 +7,7 @@ local States = require(RoRooms.SourceCode.Client.UI.States)
 local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
 local Config = require(RoRooms.Config).Config
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Peek = Fusion.peek
 
@@ -60,7 +61,7 @@ function ItemsController:_AddNeoHotbarButton()
 		NeoHotbar:RemoveCustomButton("ItemsMenuButton")
 	end
 
-	NeoHotbar:AddCustomButton("ItemsMenuButton", "rbxassetid://6966623635", function()
+	NeoHotbar:AddCustomButton("ItemsMenuButton", Assets.Icons.General.Toolbox, function()
 		if not Peek(States.Menus.ItemsMenu.Open) then
 			States.Menus.ItemsMenu.Open:set(true)
 		else

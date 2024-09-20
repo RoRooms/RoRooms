@@ -1,6 +1,7 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -11,7 +12,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Theme = Themer.Theme:now()
 
 	local Title = Util.Fallback(Props.Title, "General")
-	local Icon = Util.Fallback(Props.Icon, "rbxassetid://17266112920")
+	local Icon = Util.Fallback(Props.Icon, Assets.Icons.Categories.General)
 	local Name = Util.Fallback(Props.Name, "WorldsCategory")
 	local Size = Util.Fallback(Props.Size, UDim2.fromScale(1, 0))
 	local LayoutOrder = Util.Fallback(Props.LayoutOrder, 0)

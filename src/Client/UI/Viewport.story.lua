@@ -4,6 +4,7 @@ local Theme = require(script.Parent.OnyxUITheme)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Config = require(RoRooms.Config)
 local Fusion = require(RoRooms.Parent.Fusion)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Themer = OnyxUI.Themer
 
@@ -13,15 +14,15 @@ local ROROOMS_CONFIG = {
 			Categories = {
 				General = {
 					LayoutOrder = 1,
-					Icon = "rbxassetid://12988755627",
+					Icon = Assets.Icons.Categories.General,
 				},
 				Unlockable = {
 					LayoutOrder = 2,
-					Icon = "rbxassetid://5743022869",
+					Icon = Assets.Icons.Categories.Unlockable,
 				},
 				Robux = {
 					LayoutOrder = 3,
-					Icon = "rbxassetid://7058763764",
+					Icon = Assets.Icons.Categories.Robux,
 				},
 			},
 			Items = {
@@ -67,15 +68,15 @@ local ROROOMS_CONFIG = {
 			Categories = {
 				General = {
 					LayoutOrder = 1,
-					Icon = "rbxassetid://12988755627",
+					Icon = Assets.Icons.Categories.General,
 				},
 				Unlockable = {
 					LayoutOrder = 2,
-					Icon = "rbxassetid://5743022869",
+					Icon = Assets.Icons.Categories.Unlockable,
 				},
 				Robux = {
 					LayoutOrder = 3,
-					Icon = "rbxassetid://7058763764",
+					Icon = Assets.Icons.Categories.Robux,
 				},
 			},
 			Emotes = {

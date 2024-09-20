@@ -3,6 +3,7 @@ local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Config = require(RoRooms.Config).Config
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -44,10 +45,16 @@ return function(Scope: Fusion.Scope<any>, Props)
 				[Children] = {
 					Scope:Icon {
 						Image = Scope:Computed(function(Use)
-							if Use(Category) and Use(Category).Icon then
+							local CategoryValue = Use(Category)
+							local CategoryNameValue = Use(CategoryName)
+							local DefaultIcon = Assets.Icons.Categories[CategoryNameValue]
+
+							if CategoryValue and Use(Category).Icon then
 								return Use(Category).Icon
+							elseif DefaultIcon then
+								return DefaultIcon
 							else
-								return "rbxassetid://17266112920"
+								return Assets.Icons.Categories.General
 							end
 						end),
 						Size = Scope:Computed(function(Use)

@@ -7,6 +7,7 @@ local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -127,7 +128,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						Name = "PlayButton",
 						Color = Theme.Colors.Primary.Main,
 						AutomaticSize = Enum.AutomaticSize.Y,
-						Content = { "rbxassetid://17293685944" },
+						Content = { Assets.Icons.General.Play },
 						ContentSize = Theme.TextSize["1.5"],
 
 						OnActivated = function()

@@ -1,9 +1,9 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
 local ColorUtils = require(RoRooms.Parent.ColorUtils)
 local EmotesController = require(RoRooms.SourceCode.Client.Emotes.EmotesController)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -46,7 +46,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		if EmoteValue and EmoteValue.LabelIcon then
 			return EmoteValue.LabelIcon
 		elseif LevelRequirementValue then
-			return "rbxassetid://5743022869"
+			return Assets.Icons.Categories.Unlockable
 		else
 			return ""
 		end

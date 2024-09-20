@@ -4,6 +4,7 @@ local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Config = require(RoRooms.Config).Config
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -73,7 +74,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 			},
 			Scope:Button {
 				Name = "EditAvatarButton",
-				Content = { "rbxassetid://13285615740", "Edit Avatar" },
+				Content = { Assets.Icons.General.EditPerson, "Edit Avatar" },
 				Color = Theme.Colors.Primary.Main,
 				AutomaticSize = Enum.AutomaticSize.Y,
 				Visible = Scope:Computed(function(Use)

@@ -27,7 +27,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				return CategoryName,
 					Scope:CategoryButton {
 						Name = "EmoteCategoryButton",
-						Category = CategoryName,
+						CategoryName = CategoryName,
 						Icon = Category.Icon,
 						Color = Category.TintColor,
 						LayoutOrder = Category.LayoutOrder,

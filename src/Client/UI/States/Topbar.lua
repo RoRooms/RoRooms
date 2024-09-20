@@ -2,6 +2,7 @@ local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local States = require(script.Parent)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Peek = Fusion.peek
 local Themer = OnyxUI.Themer
@@ -15,8 +16,8 @@ local Topbar = {
 Topbar.NativeButtons = {
 	Settings = {
 		MenuName = "SettingsMenu",
-		Icon = "rbxassetid://17273236509",
-		IconFilled = "rbxassetid://17273236289",
+		Icon = Assets.Icons.Topbar.Settings.Outlined,
+		IconFilled = Assets.Icons.Topbar.Settings.Filled,
 		LayoutOrder = 5,
 		IndicatorColor = Theme.Colors.Warning.Main,
 		IndicatorEnabled = Topbar.Scope:Computed(function(Use)
@@ -25,26 +26,26 @@ Topbar.NativeButtons = {
 	},
 	Emotes = {
 		MenuName = "EmotesMenu",
-		Icon = "rbxassetid://17273236115",
-		IconFilled = "rbxassetid://17273235955",
+		Icon = Assets.Icons.Topbar.Emotes.Outlined,
+		IconFilled = Assets.Icons.Topbar.Emotes.Filled,
 		LayoutOrder = 3,
 	},
 	Friends = {
 		MenuName = "FriendsMenu",
-		Icon = "rbxassetid://17273235804",
-		IconFilled = "rbxassetid://17273235655",
+		Icon = Assets.Icons.Topbar.Friends.Outlined,
+		IconFilled = Assets.Icons.Topbar.Friends.Filled,
 		LayoutOrder = 2,
 	},
 	Profile = {
 		MenuName = "ProfileMenu",
-		Icon = "rbxassetid://17273235245",
-		IconFilled = "rbxassetid://17273235099",
+		Icon = Assets.Icons.Topbar.Profile.Outlined,
+		IconFilled = Assets.Icons.Topbar.Profile.Filled,
 		LayoutOrder = 1,
 	},
 	Worlds = {
 		MenuName = "WorldsMenu",
-		Icon = "rbxassetid://17273758646",
-		IconFilled = "rbxassetid://17273758509",
+		Icon = Assets.Icons.Topbar.Worlds.Outlined,
+		IconFilled = Assets.Icons.Topbar.Worlds.Filled,
 		LayoutOrder = 4,
 	},
 }

@@ -4,6 +4,7 @@ local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local ColorUtils = require(RoRooms.Parent.ColorUtils)
 local ItemsController = require(RoRooms.SourceCode.Client.Items.ItemsController)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -121,7 +122,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							if LabelIcon then
 								return LabelIcon
 							elseif LevelRequirement then
-								return "rbxassetid://5743022869"
+								return Assets.Icons.Categories.Unlockable
 							else
 								return ""
 							end

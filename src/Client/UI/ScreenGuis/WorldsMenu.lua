@@ -6,12 +6,13 @@ local Worlds = require(RoRooms.SourceCode.Client.UI.States.Worlds)
 local Config = require(RoRooms.Config).Config
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
 local OnyxUITheme = require(RoRooms.SourceCode.Client.UI.OnyxUITheme)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
 
-local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { "rbxassetid://17293213744", "Load more" }
-local DEFAULT_REFRESH_BUTTON_CONTENTS = { "rbxassetid://13858012326", "Refresh" }
+local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { Assets.Icons.General.Download, "Load more" }
+local DEFAULT_REFRESH_BUTTON_CONTENTS = { Assets.Icons.General.Repeat, "Refresh" }
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components)
@@ -56,7 +57,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					Scope:WorldsCategory {
 						Name = "Featured",
 						Title = "From creator",
-						Icon = "rbxassetid://17292608120",
+						Icon = Assets.Icons.General.Star,
 						Visible = Scope:Computed(function(Use)
 							return #Config.Systems.Worlds.FeaturedWorlds >= 1
 						end),
@@ -90,7 +91,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					Scope:WorldsCategory {
 						Name = "Popular",
 						Title = "Popular",
-						Icon = "rbxassetid://17292608258",
+						Icon = Assets.Icons.General.People,
 
 						[Children] = {
 							Scope:Frame {
@@ -121,21 +122,20 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 								OnActivated = function()
 									LoadMoreButtonContent:set({
-										"rbxassetid://14906067807",
-										"Loading",
+										"Loading..",
 									})
 
 									Worlds:FetchTopWorlds():andThen(function(Result)
 										if typeof(Result) == "table" then
 											LoadMoreButtonContent:set({
-												"rbxassetid://13858820127",
+												Assets.Icons.General.Checkmark,
 												"Loaded",
 											})
 											task.wait(0.5)
 											LoadMoreButtonContent:set(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
 										else
 											LoadMoreButtonContent:set({
-												"rbxassetid://14906266795",
+												Assets.Icons.General.Warning,
 												"Error",
 											})
 											task.wait(0.5)
@@ -149,7 +149,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					Scope:WorldsCategory {
 						Name = "Random",
 						Title = "Random",
-						Icon = "rbxassetid://17292608467",
+						Icon = Assets.Icons.General.Die,
 
 						[Children] = {
 							Scope:Frame {
@@ -180,22 +180,21 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 								OnActivated = function()
 									RefreshButtonContent:set({
-										"rbxassetid://14906067807",
-										"Refreshing",
+										"Refreshing..",
 									})
 
 									Worlds:ClearRandomWorlds()
 									Worlds:FetchRandomWorlds(1, true):andThen(function(Result)
 										if typeof(Result) == "table" then
 											RefreshButtonContent:set({
-												"rbxassetid://13858820127",
+												Assets.Icons.General.Checkmark,
 												"Refreshed",
 											})
 											task.wait(0.5)
 											RefreshButtonContent:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
 										else
 											RefreshButtonContent:set({
-												"rbxassetid://14906266795",
+												Assets.Icons.General.Warning,
 												"Error",
 											})
 											task.wait(0.5)

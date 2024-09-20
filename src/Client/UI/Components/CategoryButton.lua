@@ -1,7 +1,7 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -17,8 +17,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Theme = Themer.Theme:now()
 
 	local Name = Util.Fallback(Props.Name, "CategoryButton")
+	local CategoryName = Util.Fallback(Props.CategoryName, "General")
 	local Icon = Util.Fallback(Props.Icon, nil)
-	local FallbackIcon = Util.Fallback(Props.FallbackIcon, "rbxassetid://17266112920")
+	local FallbackIcon = Util.Fallback(Props.FallbackIcon, Assets.Icons.Categories.General)
 	local OnActivated = Util.Fallback(Props.OnActivated, function() end)
 
 	return Scope:CustomButton {
@@ -32,7 +33,19 @@ return function(Scope: Fusion.Scope<any>, Props)
 		[Children] = {
 			Scope:Image {
 				Name = "Icon",
-				Image = Icon,
+				Image = Scope:Computed(function(Use)
+					local IconValue = Use(Icon)
+					local CategoryNameValue = Use(CategoryName)
+					local DefaultIcon = Assets.Icons.Categories[CategoryNameValue]
+
+					if IconValue then
+						return IconValue
+					elseif DefaultIcon then
+						return DefaultIcon
+					else
+						return Assets.Icons.Categories.General
+					end
+				end),
 				FallbackImage = FallbackIcon,
 				Size = Scope:Computed(function(Use)
 					return UDim2.fromOffset(Use(Theme.TextSize["1.5"]), Use(Theme.TextSize["1.5"]))
