@@ -1,5 +1,6 @@
+local Players = game:GetService("Players")
+
 local RoRooms = script.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Parent.Knit)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
@@ -7,7 +8,7 @@ local OnyxUITheme = require(script.Parent.OnyxUITheme)
 
 local Themer = OnyxUI.Themer
 
-local DEFAULT_UIS = { "Topbar", "PromptHUD" }
+local DEFAULT_UIS = { "TopbarHUD", "PromptHUD" }
 
 local UIController = {
 	Name = "UIController",
@@ -38,7 +39,7 @@ end
 
 UIController.RoRoomsUI = UIController.Scope:New "ScreenGui" {
 	Name = "RoRoomsUI",
-	Parent = Knit.Player:WaitForChild("PlayerGui"),
+	Parent = Players.LocalPlayer:WaitForChild("PlayerGui"),
 	ResetOnSpawn = false,
 }
 

@@ -23,7 +23,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ResetOnSpawn = false,
 
 		[Children] = {
-			Scope:AutoScaleFrame {
+			Scope:Frame {
+				Name = "Topbar",
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = Scope:Spring(
 					Scope:Computed(function(Use)
@@ -36,9 +37,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 					40,
 					1
 				),
-				BaseResolution = Vector2.new(739, 789),
-				MinScale = 1,
-				MaxScale = 1,
 				ListEnabled = true,
 				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.Spacing["0.5"]))
@@ -115,8 +113,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 		},
 	}
 
-	local TopbarButtons = TopbarInstance.AutoScaleFrame.TopbarButtons
-	local TopbarPully = TopbarInstance.AutoScaleFrame.PullButton
+	local TopbarButtons = TopbarInstance.Topbar.TopbarButtons
+	local TopbarPully = TopbarInstance.Topbar.PullButton
 
 	local function UpdateTopbarBottomPos()
 		States.Topbar.YPosition:set(TopbarPully.AbsolutePosition.Y)
