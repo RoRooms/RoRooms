@@ -1,9 +1,11 @@
+local RunService = game:GetService("RunService")
+
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local ColorUtils = require(RoRooms.Parent.ColorUtils)
-local ItemsController = require(RoRooms.SourceCode.Client.Items.ItemsController)
+local ItemsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Items.ItemsController)
 local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
@@ -84,7 +86,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 				Callback()
 			end
 
-			ItemsController:ToggleEquipItem(Peek(ItemId))
+			if ItemsController then
+				ItemsController:ToggleEquipItem(Peek(ItemId))
+			end
 		end,
 
 		[Children] = {

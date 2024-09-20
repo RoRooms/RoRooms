@@ -1,10 +1,12 @@
+local RunService = game:GetService("RunService")
+
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
 local OnyxUITheme = require(RoRooms.SourceCode.Client.UI.OnyxUITheme)
-local FriendsController = require(RoRooms.SourceCode.Client.Friends.FriendsController)
+local FriendsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Friends.FriendsController)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -72,7 +74,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	}
 
 	Scope:Observer(MenuOpen):onChange(function()
-		if Peek(MenuOpen) then
+		if Peek(MenuOpen) and FriendsController then
 			FriendsController:UpdateFriends()
 		end
 	end)

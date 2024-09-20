@@ -128,7 +128,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						ContentSize = Theme.TextSize["1.5"],
 
 						OnActivated = function()
-							if States.Services.WorldsService then
+							if next(States.Services.WorldsService) ~= nil then
 								States.Services.WorldsService
 									:TeleportToWorld(Peek(States.WorldPageMenu.PlaceId))
 									:andThen(function(Success: boolean, Message: string)

@@ -22,14 +22,14 @@ function ProfilesController:KnitStart()
 	self.Scope:Observer(States.Profile.Nickname):onChange(function()
 		local NicknameValue = Peek(States.Profile.Nickname)
 
-		if States.Services.ProfilesService then
+		if next(States.Services.WorldsService) ~= nil then
 			States.Services.ProfilesService:SetNickname(NicknameValue)
 		end
 	end)
 	self.Scope:Observer(States.Profile.Status):onChange(function()
 		local StatusValue = Peek(States.Profile.Status)
 
-		if States.Services.ProfilesService then
+		if next(States.Services.WorldsService) ~= nil then
 			States.Services.ProfilesService:SetStatus(StatusValue)
 		end
 	end)

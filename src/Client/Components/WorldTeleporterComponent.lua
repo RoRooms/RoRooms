@@ -33,7 +33,7 @@ function WorldTeleporterComponent:_PromptTeleport()
 					Content = { "Teleport" },
 					Style = "Filled",
 					Callback = function()
-						if States.Services.WorldsService then
+						if next(States.Services.WorldsService) ~= nil then
 							States.Services.WorldsService:TeleportToWorld(PlaceId)
 						end
 					end,

@@ -1,3 +1,4 @@
+local RunService = game:GetService("RunService")
 local TeleportService = game:GetService("TeleportService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
@@ -17,7 +18,9 @@ end
 
 function WorldsService:TeleportPlayerToWorld(Player: Player, PlaceId: number)
 	if WorldRegistryService:IsWorldRegistered(PlaceId) then
-		TeleportService:Teleport(PlaceId, Player)
+		if RunService:IsStudio() == false then
+			TeleportService:Teleport(PlaceId, Player)
+		end
 
 		return true
 	else
