@@ -80,6 +80,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 						AutomaticSize = Enum.AutomaticSize.Y,
 						ListEnabled = true,
 						ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+						ListPadding = Scope:Computed(function(Use)
+							return UDim.new(0, Use(Theme.Spacing["0.25"]))
+						end),
 
 						[Children] = {
 							Scope:Text {
@@ -127,7 +130,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						Content = { Assets.Icons.General.Play },
 						ContentSize = Theme.TextSize["1.5"],
 
-						OnActivated = function()
+						OnActivated = function(): ()
 							if next(States.Services.WorldsService) ~= nil then
 								States.Services.WorldsService
 									:TeleportToWorld(Peek(States.WorldPageMenu.PlaceId))
