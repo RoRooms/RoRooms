@@ -24,10 +24,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 		AutomaticSize = Enum.AutomaticSize.XY,
 
 		[Children] = {
-			Scope:TitleBar {
-				Title = "Emotes",
-				CloseButtonDisabled = true,
-			},
 			Scope:Frame {
 				Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 185)),
 				AutomaticSize = Enum.AutomaticSize.X,
@@ -50,6 +46,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 						ScrollBarThickness = Theme.StrokeThickness["1"],
 						Padding = Scope:Computed(function(Use)
 							return UDim.new(0, Use(Theme.StrokeThickness["1"]))
+						end),
+						PaddingRight = Scope:Computed(function(Use)
+							return UDim.new(0, Use(Theme.Spacing["1"]))
 						end),
 						ListEnabled = true,
 						ListPadding = Scope:Computed(function(Use)

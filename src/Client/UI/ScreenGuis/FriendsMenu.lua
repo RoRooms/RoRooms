@@ -23,19 +23,18 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Open = MenuOpen,
 		Parent = Props.Parent,
 		AutomaticSize = Enum.AutomaticSize.Y,
-		Size = UDim2.fromOffset(350, 0),
+		Size = UDim2.fromOffset(361, 0),
 
 		[Children] = {
-			Scope:TitleBar {
-				Title = "Friends",
-				CloseButtonDisabled = true,
-			},
 			Scope:Scroller {
 				Name = "FriendsList",
 				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
 				ScrollBarThickness = Theme.StrokeThickness["1"],
 				Padding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
+				end),
+				PaddingRight = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["1"]))
 				end),
 				ListEnabled = true,
 				ListPadding = Scope:Computed(function(Use)

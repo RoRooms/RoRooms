@@ -45,16 +45,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
-			Scope:TitleBar {
-				Title = "Settings",
-				CloseButtonDisabled = true,
-			},
 			Scope:Scroller {
 				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 135)),
 				AutomaticSize = Enum.AutomaticSize.None,
 				ScrollBarThickness = Theme.StrokeThickness["1"],
 				ListEnabled = true,
-				PaddingTop = Scope:Computed(function(Use)
+				Padding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 				end),
 				PaddingRight = Scope:Computed(function(Use)

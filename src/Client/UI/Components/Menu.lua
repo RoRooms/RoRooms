@@ -39,6 +39,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local AutomaticSize = Util.Fallback(Props.AutomaticSize, Enum.AutomaticSize.Y)
 	local ListFillDirection = Util.Fallback(Props.ListFillDirection, Enum.FillDirection.Vertical)
 	local ListHorizontalFlex = Util.Fallback(Props.ListHorizontalFlex, Enum.UIFlexAlignment.None)
+	local ListVerticalFlex = Util.Fallback(Props.ListVerticalFlex, Enum.UIFlexAlignment.None)
 
 	return Scope:New "ScreenGui" {
 		Name = Name,
@@ -73,6 +74,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 						ListEnabled = true,
 						ListFillDirection = ListFillDirection,
 						ListHorizontalFlex = ListHorizontalFlex,
+						ListVerticalFlex = ListVerticalFlex,
+						Padding = Scope:Computed(function(Use)
+							return UDim.new(0, Use(Theme.Spacing["1.5"]))
+						end),
 
 						[Children] = Props[Children],
 					},

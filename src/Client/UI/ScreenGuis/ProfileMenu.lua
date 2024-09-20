@@ -37,10 +37,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
-			Scope:TitleBar {
-				Title = "Profile",
-				CloseButtonDisabled = true,
-			},
 			Scope:Frame {
 				ListEnabled = true,
 				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,

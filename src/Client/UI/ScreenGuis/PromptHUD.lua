@@ -28,137 +28,99 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end
 	end)
 
-	return Scope:New "ScreenGui" {
-		Name = "PromptHUD",
+	return Scope:Menu {
+		Name = script.Name,
 		Parent = Props.Parent,
-		ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
-		Enabled = PromptOpen,
-		ResetOnSpawn = false,
+		Open = PromptOpen,
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.fromScale(0.5, 0.5),
+		Size = Scope:Computed(function(Use)
+			return UDim2.fromOffset(Use(Theme.Spacing["16"]) * 1.25, 0)
+		end),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
-			Scope:AutoScaleFrame {
-				AnchorPoint = Vector2.new(0.5, 0.5),
-				Position = Scope:Spring(
-					Scope:Computed(function(Use)
-						local YPos = 0
-						if not Use(PromptOpen) then
-							YPos = YPos + 15
-						end
-						return UDim2.new(UDim.new(0.5, 0), UDim.new(0.5, YPos))
-					end),
-					Theme.SpringSpeed["1"],
-					Theme.SpringDampening["1"]
-				),
-				BaseResolution = Vector2.new(739, 789),
-				MinScale = 1,
-				MaxScale = 1,
+			Scope:Frame {
+				Name = "Details",
+				AutomaticSize = Enum.AutomaticSize.Y,
+				ListEnabled = true,
+				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.5"]))
+				end),
 
 				[Children] = {
-					Scope:MenuFrame {
-						Size = Scope:Computed(function(Use)
-							return UDim2.fromOffset(Use(Theme.Spacing["16"]) * 1.2, 0)
+					Scope:Text {
+						Name = "Title",
+						Text = Scope:Computed(function(Use)
+							if Use(CurrentPrompt) and Use(CurrentPrompt).Title then
+								return Use(CurrentPrompt).Title
+							else
+								return "Title"
+							end
+						end),
+						TextSize = Theme.TextSize["1.25"],
+						FontFace = Scope:Computed(function(Use)
+							return Font.new(Use(Theme.Font.Heading), Use(Theme.FontWeight.Heading))
 						end),
 						AutomaticSize = Enum.AutomaticSize.Y,
-						GroupTransparency = Scope:Spring(
-							Scope:Computed(function(Use)
-								if Use(PromptOpen) then
-									return 0
-								else
-									return 1
-								end
-							end),
-							Theme.SpringSpeed["1"],
-							Theme.SpringDampening["1"]
-						),
-						BackgroundTransparency = States.CoreGui.PreferredTransparency,
-						ListEnabled = true,
-						ListPadding = Scope:Computed(function(Use)
-							return UDim.new(0, Use(Theme.Spacing["2"]))
-						end),
-						ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-
-						[Children] = {
-							Scope:Frame {
-								Name = "Details",
-								AutomaticSize = Enum.AutomaticSize.Y,
-								ListEnabled = true,
-								ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-
-								[Children] = {
-									Scope:Text {
-										Name = "Title",
-										Text = Scope:Computed(function(Use)
-											if Use(CurrentPrompt) and Use(CurrentPrompt).Title then
-												return Use(CurrentPrompt).Title
-											else
-												return "Title"
-											end
-										end),
-										TextSize = Theme.TextSize["1.25"],
-										FontFace = Scope:Computed(function(Use)
-											return Font.new(Use(Theme.Font.Heading), Use(Theme.FontWeight.Heading))
-										end),
-										AutomaticSize = Enum.AutomaticSize.Y,
-										TextWrapped = false,
-									},
-									Scope:Text {
-										Name = "Body",
-										Text = Scope:Computed(function(Use)
-											if Use(CurrentPrompt) and Use(CurrentPrompt).Text then
-												return Use(CurrentPrompt).Text
-											else
-												return "Prompt body text"
-											end
-										end),
-										Size = Scope:Computed(function(Use)
-											return UDim2.new(UDim.new(1, 0), UDim.new(0, 0))
-										end),
-										AutomaticSize = Enum.AutomaticSize.Y,
-										TextWrapped = true,
-									},
-								},
-							},
-							Scope:Frame {
-								Name = "Buttons",
-								AutomaticSize = Enum.AutomaticSize.Y,
-								Visible = Scope:Computed(function(Use)
-									return #Use(Buttons) >= 1
-								end),
-								ListEnabled = true,
-								ListFillDirection = Enum.FillDirection.Horizontal,
-								ListHorizontalAlignment = Enum.HorizontalAlignment.Right,
-
-								[Children] = {
-									Themer.Theme:is(OnyxUITheme):during(function()
-										local Theme = Themer.Theme:now()
-
-										return Scope:ForValues(Buttons, function(Use, Scope, PromptButton)
-											return Scope:Button {
-												Content = PromptButton.Content,
-												Style = PromptButton.Style,
-												Color = Scope:Computed(function(Use)
-													if PromptButton.Color == nil then
-														return Use(Theme.Colors.Primary.Main)
-													else
-														return PromptButton.Color
-													end
-												end),
-												Disabled = PromptButton.Disabled,
-
-												OnActivated = function()
-													Prompts:RemovePrompt(Peek(CurrentPrompt))
-
-													if PromptButton.Callback then
-														PromptButton.Callback()
-													end
-												end,
-											}
-										end)
-									end),
-								},
-							},
-						},
+						TextWrapped = false,
 					},
+					Scope:Text {
+						Name = "Body",
+						Text = Scope:Computed(function(Use)
+							if Use(CurrentPrompt) and Use(CurrentPrompt).Text then
+								return Use(CurrentPrompt).Text
+							else
+								return "Prompt body text"
+							end
+						end),
+						Size = Scope:Computed(function(Use)
+							return UDim2.new(UDim.new(1, 0), UDim.new(0, 0))
+						end),
+						AutomaticSize = Enum.AutomaticSize.Y,
+						TextWrapped = true,
+					},
+				},
+			},
+			Scope:Frame {
+				Name = "Buttons",
+				AutomaticSize = Enum.AutomaticSize.Y,
+				Visible = Scope:Computed(function(Use)
+					return #Use(Buttons) >= 1
+				end),
+				ListEnabled = true,
+				ListFillDirection = Enum.FillDirection.Horizontal,
+				ListHorizontalAlignment = Enum.HorizontalAlignment.Right,
+
+				[Children] = {
+					Themer.Theme:is(OnyxUITheme):during(function()
+						local Theme = Themer.Theme:now()
+
+						return Scope:ForValues(Buttons, function(Use, Scope, PromptButton)
+							return Scope:Button {
+								Content = PromptButton.Content,
+								Style = PromptButton.Style,
+								Color = Scope:Computed(function(Use)
+									if PromptButton.Color == nil then
+										return Use(Theme.Colors.Primary.Main)
+									else
+										return PromptButton.Color
+									end
+								end),
+								Disabled = PromptButton.Disabled,
+
+								OnActivated = function()
+									Prompts:RemovePrompt(Peek(CurrentPrompt))
+
+									if PromptButton.Callback then
+										PromptButton.Callback()
+									end
+								end,
+							}
+						end)
+					end),
 				},
 			},
 		},

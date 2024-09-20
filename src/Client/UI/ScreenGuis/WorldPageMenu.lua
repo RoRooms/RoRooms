@@ -50,10 +50,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
-			Scope:TitleBar {
-				Title = "World",
-				CloseButtonDisabled = true,
-			},
 			Scope:Frame {
 				Name = "Contents",
 				AutomaticSize = Enum.AutomaticSize.Y,

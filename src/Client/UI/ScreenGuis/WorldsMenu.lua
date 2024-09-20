@@ -29,14 +29,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Open = MenuOpen,
 		Parent = Props.Parent,
 		AutomaticSize = Enum.AutomaticSize.Y,
-		Size = UDim2.fromOffset(375, 0),
+		Size = UDim2.fromOffset(390, 0),
 		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
-			Scope:TitleBar {
-				Title = "Worlds",
-				CloseButtonDisabled = true,
-			},
 			Scope:Scroller {
 				Name = "WorldsList",
 				Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 205)),

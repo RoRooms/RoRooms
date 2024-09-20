@@ -17,8 +17,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Name = script.Name,
 		Open = States.Menus.ItemsMenu.Open,
 		Parent = Props.Parent,
-		AutomaticSize = Enum.AutomaticSize.Y,
-		Size = UDim2.fromOffset(385, 0),
+		AutomaticSize = Enum.AutomaticSize.X,
+		Size = UDim2.fromOffset(0, 220),
 		AnchorPoint = Vector2.new(0.5, 1),
 		Position = Scope:Computed(function(Use)
 			local YPos = 68 + 15
@@ -28,21 +28,26 @@ return function(Scope: Fusion.Scope<any>, Props)
 			return UDim2.new(UDim.new(0.5, 0), UDim.new(1, -YPos))
 		end),
 		ListFillDirection = Enum.FillDirection.Horizontal,
+		ListVerticalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
-			Scope:ItemCategoriesSidebar {
-				Size = UDim2.fromScale(0, 1),
-			},
+			Scope:ItemCategoriesSidebar {},
 			Scope:Scroller {
 				Name = "Items",
-				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 220)),
+				Size = Scope:Computed(function(Use)
+					return UDim2.fromOffset(252, 0)
+				end),
 				Padding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
+				end),
+				PaddingRight = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["1"]))
 				end),
 				ListEnabled = true,
 				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.Spacing["0.75"]))
 				end),
+				ScrollBarThickness = Theme.StrokeThickness["1"],
 
 				[Children] = {
 					Scope:ForPairs(Config.Systems.Items.Categories, function(Use, Scope, Name: string, Category)
