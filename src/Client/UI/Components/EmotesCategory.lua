@@ -18,8 +18,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Theme = Themer.Theme:now()
 
 	local CategoryName = Util.Fallback(Props.CategoryName, "General")
-	local Name = Util.Fallback(Props.Name, `EmotesCategory`)
-	local Size = Util.Fallback(Props.Size, UDim2.fromScale(1, 0))
+	local Name = Util.Fallback(Props.Name, script.Name)
 	local LayoutOrder = Util.Fallback(Props.LayoutOrder, 0)
 
 	local Category = Scope:Computed(function(Use)
@@ -28,7 +27,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	return Scope:Frame {
 		Name = Name,
-		Size = Size,
 		LayoutOrder = LayoutOrder,
 		ListEnabled = true,
 		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,

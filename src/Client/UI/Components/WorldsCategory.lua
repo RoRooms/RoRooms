@@ -13,7 +13,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local Title = Util.Fallback(Props.Title, "General")
 	local Icon = Util.Fallback(Props.Icon, Assets.Icons.Categories.General)
-	local Name = Util.Fallback(Props.Name, "WorldsCategory")
+	local Name = Util.Fallback(Props.Name, script.Name)
 	local Size = Util.Fallback(Props.Size, UDim2.fromScale(1, 0))
 	local LayoutOrder = Util.Fallback(Props.LayoutOrder, 0)
 	local Visible = Util.Fallback(Props.Visible, true)

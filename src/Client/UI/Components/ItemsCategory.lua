@@ -17,6 +17,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	})
 	local Theme = Themer.Theme:now()
 
+	local Name = Util.Fallback(Props.Name, script.Name)
 	local CategoryName = Util.Fallback(Props.CategoryName, "Category")
 
 	local Category = Scope:Computed(function(Use)
@@ -24,7 +25,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	end)
 
 	return Scope:Frame {
-		Name = `ItemsCategory`,
+		Name = Name,
 		LayoutOrder = Scope:Computed(function(Use)
 			if Use(Category) then
 				return Use(Category).LayoutOrder

@@ -63,6 +63,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								function(Use, Scope, Name: string, Category)
 									return Name,
 										Scope:EmotesCategory {
+											Name = Name,
 											CategoryName = Name,
 											LayoutOrder = Category.LayoutOrder,
 										}
@@ -75,9 +76,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 		},
 	}
 
+	local EmotesList = EmotesMenu.AutoScaleFrame.MenuFrame.Frame.EmotesList
 	Scope:Observer(States.Menus.EmotesMenu.FocusedCategory):onChange(function()
-		local EmotesList = EmotesMenu.AutoScaleFrame.MenuFrame.Contents.Frame.EmotesList
-		local Category = EmotesList:FindFirstChild(`{Peek(States.Menus.EmotesMenu.FocusedCategory)}EmotesCategory`)
+		local Category = EmotesList:FindFirstChild(`{Peek(States.Menus.EmotesMenu.FocusedCategory)}`)
 		if Category then
 			EmotesList.CanvasPosition = Vector2.new(0, 0)
 			EmotesList.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - EmotesList.AbsolutePosition.Y)

@@ -48,6 +48,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					Scope:ForPairs(Config.Systems.Items.Categories, function(Use, Scope, Name: string, Category)
 						return Name,
 							Scope:ItemsCategory {
+								Name = Name,
 								CategoryName = Name,
 								LayoutOrder = Category.LayoutOrder,
 							}
@@ -70,12 +71,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 			end
 		end
 	end)
+
+	local ItemsList = ItemsMenu.AutoScaleFrame.MenuFrame.Items
 	Scope:Observer(States.Menus.ItemsMenu.FocusedCategory):onChange(function()
-		local Items = ItemsMenu.AutoScaleFrame.MenuFrame.Contents.Items
-		local Category = Items:FindFirstChild(`{Peek(States.Menus.ItemsMenu.FocusedCategory)}ItemsCategory`)
+		local Category = ItemsList:FindFirstChild(`{Peek(States.Menus.ItemsMenu.FocusedCategory)}`)
 		if Category then
-			Items.CanvasPosition = Vector2.new(0, 0)
-			Items.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - Items.AbsolutePosition.Y)
+			ItemsList.CanvasPosition = Vector2.new(0, 0)
+			ItemsList.CanvasPosition = Vector2.new(0, Category.AbsolutePosition.Y - ItemsList.AbsolutePosition.Y)
 		end
 	end)
 
