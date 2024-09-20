@@ -23,6 +23,36 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Item = Util.Fallback(Props.Item, {})
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
 	local Callback = Util.Fallback(Props.Callback, function() end)
+	local LevelRequirement = Scope:Computed(function(Use)
+		local ItemValue = Use(Item)
+		if ItemValue and ItemValue.LevelRequirement then
+			return ItemValue.LevelRequirement
+		else
+			return nil
+		end
+	end)
+	local LabelText = Scope:Computed(function(Use)
+		local ItemValue = Use(Item)
+		local LevelRequirementValue = Use(LevelRequirement)
+		if ItemValue and ItemValue.LabelText then
+			return ItemValue.LabelText
+		elseif LevelRequirementValue then
+			return LevelRequirementValue
+		else
+			return ""
+		end
+	end)
+	local LabelIcon = Scope:Computed(function(Use)
+		local ItemValue = Use(Item)
+		local LevelRequirementValue = Use(LevelRequirement)
+		if ItemValue and ItemValue.LabelIcon then
+			return ItemValue.LabelIcon
+		elseif LevelRequirementValue then
+			return Assets.Icons.Categories.Unlockable
+		else
+			return ""
+		end
+	end)
 
 	local IsEquipped = Scope:Computed(function(Use)
 		return table.find(Use(States.Items.Equipped), Use(ItemId)) ~= nil
@@ -110,47 +140,26 @@ return function(Scope: Fusion.Scope<any>, Props)
 				end),
 
 				[Children] = {
-					Scope:Icon {
-						Name = "LabelIcon",
-						Size = Scope:Computed(function(Use)
-							return UDim2.fromOffset(Use(Theme.TextSize["0.875"]), Use(Theme.TextSize["0.875"]))
+					Scope:IconText {
+						Name = "Label",
+						Content = Scope:Computed(function(Use)
+							local LabelTextValue = Use(LabelText)
+							local LabelIconValue = Use(LabelIcon)
+							return { LabelIconValue, LabelTextValue }
 						end),
-						Image = Scope:Computed(function(Use)
-							local LabelIcon = Use(Item).LabelIcon
-							local LevelRequirement = Use(Item).LevelRequirement
-
-							if LabelIcon then
-								return LabelIcon
-							elseif LevelRequirement then
-								return Assets.Icons.Categories.Unlockable
-							else
-								return ""
-							end
+						ContentSize = Theme.TextSize["0.875"],
+						ContentColor = Scope:Computed(function(Use)
+							return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Strong))
 						end),
-						ImageColor3 = Scope:Computed(function(Use)
-							return ColorUtils.Lighten(Use(Color), 0.25)
+						ContentWrapped = false,
+						Visible = Scope:Computed(function(Use)
+							local LabelTextValue = Use(LabelText)
+							local LabelIconValue = Use(LabelIcon)
+							return (LabelTextValue ~= nil) or (LabelIconValue ~= nil)
 						end),
-					},
-					Scope:Text {
-						Name = "LabelText",
-						Text = Scope:Computed(function(Use)
-							if Use(Item) then
-								if Use(Item).LabelText then
-									return Use(Item).LabelText
-								elseif Use(Item).LevelRequirement then
-									return Use(Item).LevelRequirement
-								else
-									return ""
-								end
-							else
-								return ""
-							end
+						ListPadding = Scope:Computed(function(Use)
+							return UDim.new(0, Use(Theme.Spacing["0.25"]))
 						end),
-						TextSize = Theme.TextSize["0.875"],
-						TextColor3 = Scope:Computed(function(Use)
-							return ColorUtils.Lighten(Use(Color), 0.5)
-						end),
-						AutoLocalize = false,
 					},
 				},
 			},

@@ -121,10 +121,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 					local LabelIconValue = Use(LabelIcon)
 					return { LabelIconValue, LabelTextValue }
 				end),
-				ContentSize = Theme.TextSize["0.75"],
+				ContentSize = Theme.TextSize["0.875"],
 				ContentColor = Scope:Computed(function(Use)
 					return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Strong))
 				end),
+				ContentWrapped = false,
 				Visible = Scope:Computed(function(Use)
 					local LabelTextValue = Use(LabelText)
 					local LabelIconValue = Use(LabelIcon)
