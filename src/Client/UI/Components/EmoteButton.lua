@@ -134,6 +134,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.Spacing["0.25"]))
 				end),
+				ListVerticalAlignment = Enum.VerticalAlignment.Center,
 			},
 		},
 	}

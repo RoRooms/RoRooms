@@ -130,38 +130,27 @@ return function(Scope: Fusion.Scope<any>, Props)
 					}
 				end
 			end),
-			Scope:Frame {
+			Scope:IconText {
 				Name = "Label",
-				ZIndex = 2,
-				ListEnabled = true,
-				ListFillDirection = Enum.FillDirection.Horizontal,
+				Content = Scope:Computed(function(Use)
+					local LabelTextValue = Use(LabelText)
+					local LabelIconValue = Use(LabelIcon)
+					return { LabelIconValue, LabelTextValue }
+				end),
+				ContentSize = Theme.TextSize["0.875"],
+				ContentColor = Scope:Computed(function(Use)
+					return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Strong))
+				end),
+				ContentWrapped = false,
+				Visible = Scope:Computed(function(Use)
+					local LabelTextValue = Use(LabelText)
+					local LabelIconValue = Use(LabelIcon)
+					return (LabelTextValue ~= nil) or (LabelIconValue ~= nil)
+				end),
 				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.Spacing["0.25"]))
 				end),
-
-				[Children] = {
-					Scope:IconText {
-						Name = "Label",
-						Content = Scope:Computed(function(Use)
-							local LabelTextValue = Use(LabelText)
-							local LabelIconValue = Use(LabelIcon)
-							return { LabelIconValue, LabelTextValue }
-						end),
-						ContentSize = Theme.TextSize["0.875"],
-						ContentColor = Scope:Computed(function(Use)
-							return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Strong))
-						end),
-						ContentWrapped = false,
-						Visible = Scope:Computed(function(Use)
-							local LabelTextValue = Use(LabelText)
-							local LabelIconValue = Use(LabelIcon)
-							return (LabelTextValue ~= nil) or (LabelIconValue ~= nil)
-						end),
-						ListPadding = Scope:Computed(function(Use)
-							return UDim.new(0, Use(Theme.Spacing["0.25"]))
-						end),
-					},
-				},
+				ListVerticalAlignment = Enum.VerticalAlignment.Center,
 			},
 		},
 	}
