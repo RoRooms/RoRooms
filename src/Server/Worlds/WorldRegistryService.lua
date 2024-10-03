@@ -1,4 +1,4 @@
-local InsertService = game:GetService("InsertService")
+local HttpService = game:GetService("HttpService")
 local MarketplaceService = game:GetService("MarketplaceService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
@@ -52,21 +52,19 @@ end
 
 function WorldRegistryService:_FetchLatestRegistry()
 	return Future.Try(function()
-		local ModuleScript = InsertService:LoadAsset(REGISTRY_ASSET_ID):GetChildren()[1]
+		local WorldsJson =
+			HttpService:GetAsync("https://github.com/RoRooms/Worlds/releases/latest/download/worlds.json")
 
-		if ModuleScript:IsA("ModuleScript") then
-			local Data = require(ModuleScript)
+		if typeof(WorldsJson) == "string" then
+			local Worlds = HttpService:JSONDecode(WorldsJson)
 
-			assert(t.tuple())
-			if typeof(Data) == "table" then
-				return Data
+			if typeof(Worlds) == "table" then
+				return Worlds
 			else
-				warn("Latest world registry returns a non-table value. Report this ASAP.")
-
-				return {}
+				warn("Latest world registry version does not decode to JSON. Report this ASAP.")
 			end
 		else
-			warn("Latest world registry version is not a ModuleScript. Report this ASAP.")
+			warn("Latest world registry version is not a string. Report this ASAP.")
 
 			return {}
 		end
