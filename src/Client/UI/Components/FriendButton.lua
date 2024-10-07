@@ -1,5 +1,6 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 local SocialService = game:GetService("SocialService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
@@ -8,7 +9,7 @@ local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local ColorUtils = require(RoRooms.Parent.ColorUtils)
 local States = require(RoRooms.SourceCode.Client.UI.States)
-local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
+local WorldsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Worlds.WorldsController)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -75,35 +76,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 			States.Menus.CurrentMenu:set(nil)
 
 			if Peek(InRoRooms) then
-				if Peek(JobId) == game.JobId then
-					Prompts:PushPrompt({
-						Title = "Failure",
-						Text = "You're already in the same server as this person.",
-						Buttons = {
-							{
-								Content = { "Close" },
-							},
-						},
-					})
-				else
-					Prompts:PushPrompt({
-						Title = "Teleport",
-						Text = `Do you want to join friend in {Peek(PlaceInfo).Name}?`,
-						Buttons = {
-							{
-								Content = { "Cancel" },
-								Style = "Outlined",
-							},
-							{
-								Content = { "Teleport" },
-								Callback = function()
-									if next(States.Services.WorldsService) ~= nil then
-										States.Services.WorldsService:TeleportToWorld(Peek(PlaceId))
-									end
-								end,
-							},
-						},
-					})
+				if Peek(JobId) ~= nil then
+					if WorldsController then
+						WorldsController:TeleportToWorld(Peek(PlaceId), Peek(JobId))
+					end
 				end
 			else
 				SocialService:PromptGameInvite(

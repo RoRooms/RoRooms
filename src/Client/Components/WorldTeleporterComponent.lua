@@ -1,5 +1,6 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
 local AttributeBind = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
@@ -7,8 +8,8 @@ local Future = require(RoRooms.Parent.Future)
 local Component = require(RoRooms.Parent.Component)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Fusion = require(RoRooms.Parent.Fusion)
-local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 local Trove = require(RoRooms.Parent.Trove)
+local WorldsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Worlds.WorldsController)
 
 local Peek = Fusion.peek
 
@@ -21,25 +22,9 @@ function WorldTeleporterComponent:_PromptTeleport()
 	local PlaceInfo = Peek(self.PlaceInfo)
 
 	if PlaceId and PlaceInfo then
-		Prompts:PushPrompt({
-			Title = "Teleport",
-			Text = `Do you want to teleport to world {PlaceInfo.Name}?`,
-			Buttons = {
-				{
-					Content = { "Cancel" },
-					Style = "Outlined",
-				},
-				{
-					Content = { "Teleport" },
-					Style = "Filled",
-					Callback = function()
-						if next(States.Services.WorldsService) ~= nil then
-							States.Services.WorldsService:TeleportToWorld(PlaceId)
-						end
-					end,
-				},
-			},
-		})
+		if WorldsController ~= nil then
+			WorldsController:TeleportToWorld(PlaceId)
+		end
 	end
 end
 

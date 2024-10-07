@@ -1,13 +1,14 @@
 local MarketplaceService = game:GetService("MarketplaceService")
+local RunService = game:GetService("RunService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Future)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
-local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
 local Assets = require(RoRooms.SourceCode.Shared.Assets)
+local WorldsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Worlds.WorldsController)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -131,24 +132,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 						ContentSize = Theme.TextSize["1.5"],
 
 						OnActivated = function(): ()
-							if next(States.Services.WorldsService) ~= nil then
-								States.Services.WorldsService
-									:TeleportToWorld(Peek(States.WorldPageMenu.PlaceId))
-									:andThen(function(Success: boolean, Message: string)
-										States.Menus.CurrentMenu:set(nil)
-
-										if not Success then
-											Prompts:PushPrompt({
-												Title = "Error",
-												Text = Message,
-												Buttons = {
-													{
-														Content = { "Dismiss" },
-													},
-												},
-											})
-										end
-									end)
+							if WorldsController then
+								WorldsController:TeleportToWorld(Peek(States.WorldPageMenu.PlaceId))
 							end
 						end,
 					},
