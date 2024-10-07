@@ -102,6 +102,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						RichText = false,
 						ClipsDescendants = false,
 						TextWrapped = false,
+						AutoLocalize = false,
 					},
 					Scope:Text {
 						Name = "Name",

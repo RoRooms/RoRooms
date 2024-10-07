@@ -150,6 +150,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						AutomaticSize = Enum.AutomaticSize.Y,
 						TextXAlignment = Enum.TextXAlignment.Center,
 						TextWrapped = false,
+						AutoLocalize = false,
 					},
 					Scope:Text {
 						Name = "Status",
@@ -162,6 +163,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 						AutomaticSize = Enum.AutomaticSize.Y,
 						TextXAlignment = Enum.TextXAlignment.Center,
 						TextWrapped = false,
+						AutoLocalize = Scope:Computed(function(Use)
+							return next((Use(PlaceInfo) or {})) ~= nil
+						end),
 					},
 				},
 			},
