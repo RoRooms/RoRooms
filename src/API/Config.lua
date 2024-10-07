@@ -32,6 +32,11 @@ export type Emote = {
 	CallbackRequirement: () -> ()?,
 }
 export type PlaceId = number
+export type Role = {
+	Name: string,
+	Color: Color3?,
+	CallbackRequirement: (() -> boolean)?,
+}
 export type Config = {
 	Systems: {
 		Profiles: {
@@ -39,6 +44,10 @@ export type Config = {
 			NicknameCharacterLimit: number?,
 			BioCharacterLimit: number?,
 			AvatarEditorCallback: () -> ()?,
+			Roles: {
+				[string]: Role,
+			}?,
+			DefaultRoleId: string?,
 		}?,
 		Items: {
 			Enabled: boolean?,
@@ -90,6 +99,13 @@ local CONFIG_TEMPLATE: Config = {
 			Enabled = true,
 			NicknameCharacterLimit = 20,
 			BioCharacterLimit = 30,
+			Roles = {
+				Testing = {
+					Name = "hi",
+					Color = Color3.fromRGB(255, 255, 255),
+				},
+			},
+			DefaultRoleId = "Testing",
 		},
 		Items = {
 			Enabled = true,

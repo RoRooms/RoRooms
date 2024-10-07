@@ -10,8 +10,15 @@ local ProfilesService = {
 	Client = {
 		Nickname = Knit.CreateProperty(""),
 		Status = Knit.CreateProperty(""),
+		Role = Knit.CreateProperty(),
 	},
 }
+
+function ProfilesService.Client:SetRole(Player: Player, RoleId: string): boolean
+	assert(t.tuple(t.instanceOf("Player")(Player), t.string(RoleId)))
+
+	return ProfilesService:SetRole(Player, RoleId)
+end
 
 function ProfilesService.Client:SetNickname(Player: Player, Nickname: string)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Nickname)))
@@ -25,6 +32,25 @@ function ProfilesService.Client:SetStatus(Player: Player, Status: string)
 	assert(utf8.len(Status) <= Config.Systems.Profiles.BioCharacterLimit, "Status exceeds character limit")
 
 	ProfilesService:SetStatus(Player, FilterString(Status, Player))
+end
+
+function ProfilesService:SetRole(Player: Player, RoleId: string): boolean
+	if (RoleId == nil) and (Config.Systems.Profiles.DefaultRoleId ~= nil) then
+		RoleId = Config.Systems.Profiles.DefaultRoleId
+	end
+
+	local Role = Config.Systems.Profiles.Roles[RoleId]
+	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
+
+	if Role and Profile then
+		Player:SetAttribute("RR_RoleId", RoleId)
+		Profile.Data.Profile.Role = RoleId
+		self.Client.Role:SetFor(Player, RoleId)
+
+		return true
+	end
+
+	return false
 end
 
 function ProfilesService:SetNickname(Player: Player, Nickname: string)
@@ -56,6 +82,18 @@ function ProfilesService:_UpdateFromDataStoreProfile(Player: Player)
 	if Profile then
 		self:SetNickname(Player, Profile.Data.Profile.Nickname)
 		self:SetStatus(Player, Profile.Data.Profile.Status)
+		self:SetRole(Player, Profile.Data.Profile.Role)
+	end
+end
+
+function ProfilesService:_CheckDefaultRole()
+	local DefaultRoleId = Config.Systems.Profiles.DefaultRoleId
+	local DefaultRole = Config.Systems.Profiles.Roles[DefaultRoleId]
+
+	if (DefaultRoleId ~= nil) and (DefaultRole == nil) then
+		assert(false, "DefaultRoleId is set to a nonexistent role.")
+	else
+		assert(DefaultRole.CallbackRequirement == nil, "The default role cannot have a CallbackRequirement.")
 	end
 end
 
@@ -66,6 +104,8 @@ function ProfilesService:KnitStart()
 	for _, Profile in pairs(PlayerDataStoreService:GetProfiles()) do
 		self:_UpdateFromDataStoreProfile(Profile.Player)
 	end
+
+	self:_CheckDefaultRole()
 end
 
 return ProfilesService
