@@ -35,14 +35,14 @@ function WorldRegistryService:UpdateRegistry()
 	end):After(function(Success, UpdateStamp)
 		if Success then
 			if UpdateStamp ~= self.WorldRegistryLastUpdated then
-				self:_FetchLatestRegistry():After(function(Success, Result)
-					if Success then
-						self.WorldRegistry = Result
+				self:_FetchLatestRegistry():After(function(Success2, Result2)
+					if Success2 then
+						self.WorldRegistry = Result2
 						self.WorldRegistryLastUpdated = UpdateStamp
 
-						self.RegistryUpdated:Fire(Result)
+						self.RegistryUpdated:Fire(Result2)
 					else
-						warn(Result)
+						warn(Result2)
 					end
 				end)
 			end
