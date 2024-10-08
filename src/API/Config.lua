@@ -72,6 +72,7 @@ export type Config = {
 			Enabled: boolean?,
 			DiscoveryEnabled: boolean?,
 			FeaturedWorlds: { [number]: PlaceId }?,
+			RegistryRepository: string?,
 		}?,
 		Friends: {
 			Enabled: boolean?,
@@ -126,6 +127,7 @@ local CONFIG_TEMPLATE: Config = {
 			Enabled = true,
 			DiscoveryEnabled = true,
 			FeaturedWorlds = {},
+			RegistryRepository = "RoRooms/Worlds",
 		},
 		Friends = {
 			Enabled = true,

@@ -5,6 +5,7 @@ local Future = require(RoRooms.Parent.Future)
 local Signal = require(RoRooms.Parent.Signal)
 local t = require(RoRooms.Parent.t)
 local Fetch = require(RoRooms.Parent.Fetch)
+local Config = require(RoRooms.Config).Config
 
 local REGISTRY_UPDATE_DELAY = 10 * 60
 
@@ -30,7 +31,8 @@ end
 
 function WorldRegistryService:UpdateRegistry()
 	Future.Try(function()
-		local Success, Response = Fetch("https://api.github.com/repos/RoRooms/Worlds/releases/latest"):Await()
+		local Success, Response =
+			Fetch(`https://api.github.com/repos/{Config.Systems.Worlds.RegistryRepository}/releases/latest`):Await()
 		if Success then
 			local Body = HttpService:JSONDecode(Response.Body)
 			if Body then
@@ -57,8 +59,9 @@ end
 
 function WorldRegistryService:_FetchLatestRegistry()
 	return Future.Try(function()
-		local Success, Response =
-			Fetch("https://github.com/RoRooms/Worlds/releases/latest/download/worlds.json"):Await()
+		local Success, Response = Fetch(
+			`https://github.com/{Config.Systems.Worlds.RegistryRepository}/releases/latest/download/worlds.json`
+		):Await()
 
 		if Success then
 			local Worlds = HttpService:JSONDecode(Response.Body)
