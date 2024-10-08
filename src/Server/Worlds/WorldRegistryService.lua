@@ -1,13 +1,12 @@
 local HttpService = game:GetService("HttpService")
-local MarketplaceService = game:GetService("MarketplaceService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Future = require(RoRooms.Parent.Future)
 local Signal = require(RoRooms.Parent.Signal)
 local t = require(RoRooms.Parent.t)
+local Fetch = require(RoRooms.Parent.Fetch)
 
 local REGISTRY_UPDATE_DELAY = 10 * 60
-local REGISTRY_ASSET_ID = 16007140043
 
 local WorldRegistryService = {
 	Name = "WorldRegistryService",
@@ -31,18 +30,24 @@ end
 
 function WorldRegistryService:UpdateRegistry()
 	Future.Try(function()
-		return MarketplaceService:GetProductInfo(REGISTRY_ASSET_ID).Updated
-	end):After(function(Success, UpdateStamp)
+		local Success, Response = Fetch("https://api.github.com/repos/RoRooms/Worlds/releases/latest"):Await()
 		if Success then
-			if UpdateStamp ~= self.WorldRegistryLastUpdated then
-				self:_FetchLatestRegistry():After(function(Success2, Result2)
+			local Body = HttpService:JSONDecode(Response.Body)
+			if Body then
+				return Body["published_at"]
+			end
+		end
+	end):After(function(Success, PublishedAt)
+		if Success and PublishedAt then
+			if PublishedAt ~= self.WorldRegistryLastUpdated then
+				self:_FetchLatestRegistry():After(function(Success2, Response2)
 					if Success2 then
-						self.WorldRegistry = Result2
-						self.WorldRegistryLastUpdated = UpdateStamp
+						self.WorldRegistry = Response2
+						self.WorldRegistryLastUpdated = PublishedAt
 
-						self.RegistryUpdated:Fire(Result2)
+						self.RegistryUpdated:Fire(Response2)
 					else
-						warn(Result2)
+						warn(Response2)
 					end
 				end)
 			end
@@ -52,11 +57,11 @@ end
 
 function WorldRegistryService:_FetchLatestRegistry()
 	return Future.Try(function()
-		local WorldsJson =
-			HttpService:GetAsync("https://github.com/RoRooms/Worlds/releases/latest/download/worlds.json")
+		local Success, Response =
+			Fetch("https://github.com/RoRooms/Worlds/releases/latest/download/worlds.json"):Await()
 
-		if typeof(WorldsJson) == "string" then
-			local Worlds = HttpService:JSONDecode(WorldsJson)
+		if Success then
+			local Worlds = HttpService:JSONDecode(Response.Body)
 
 			if typeof(Worlds) == "table" then
 				return Worlds
