@@ -2,6 +2,9 @@ name: Releases
 
 on: push
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     if: ${{ github.ref == 'refs/heads/main' }}
