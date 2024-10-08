@@ -3,13 +3,18 @@
 registry = "test"
 
 [[package]]
-name = "avafe/rbxtemplate"
-version = "0.1.0"
-dependencies = [["Component", "sleitnick/component@2.4.6"], ["Fusion", "elttob/fusion@0.2.0"], ["Knit", "sleitnick/knit@1.5.1"], ["Loader", "sleitnick/loader@2.0.0"], ["NeoHotbar", "imavafe/neohotbar@1.0.0"], ["RemoteComponent", "encodedvenom/remotecomponent@1.0.2"], ["Signal", "sleitnick/signal@1.5.0"], ["Trove", "sleitnick/trove@0.5.0"]]
+name = "csqrl/colour-utils"
+version = "1.4.1"
+dependencies = []
 
 [[package]]
 name = "elttob/fusion"
 version = "0.2.0"
+dependencies = []
+
+[[package]]
+name = "elttob/fusion"
+version = "0.3.0"
 dependencies = []
 
 [[package]]
@@ -23,14 +28,64 @@ version = "4.0.0"
 dependencies = []
 
 [[package]]
+name = "grilme99/profileservice"
+version = "1.0.0"
+dependencies = []
+
+[[package]]
 name = "hexcede/fusion-utils"
 version = "0.1.2"
 dependencies = [["Fusion", "elttob/fusion@0.2.0"]]
 
 [[package]]
 name = "imavafe/neohotbar"
-version = "1.0.0"
+version = "1.1.1"
 dependencies = [["Fusion", "elttob/fusion@0.2.0"], ["FusionUtils", "hexcede/fusion-utils@0.1.2"]]
+
+[[package]]
+name = "imavafe/onyx-ui"
+version = "0.4.3"
+dependencies = [["ColorUtils", "csqrl/colour-utils@1.4.1"], ["Fusion", "elttob/fusion@0.3.0"]]
+
+[[package]]
+name = "imavafe/rorooms"
+version = "0.0.0"
+dependencies = [["BloxstrapRPC", "pizzaboxer/bloxstrap-rpc-sdk@1.0.1"], ["ColorUtils", "csqrl/colour-utils@1.4.1"], ["Component", "sleitnick/component@2.4.6"], ["Fetch", "red-blox/fetch@2.0.0"], ["Fusion", "elttob/fusion@0.3.0"], ["Future", "red-blox/future@1.0.1"], ["Knit", "sleitnick/knit@1.5.1"], ["Loader", "sleitnick/loader@2.0.0"], ["NeoHotbar", "imavafe/neohotbar@1.1.1"], ["OnyxUI", "imavafe/onyx-ui@0.4.3"], ["RateLimit", "red-blox/ratelimit@1.0.1"], ["RemoteComponent", "encodedvenom/remotecomponent@1.0.2"], ["Signal", "sleitnick/signal@2.0.1"], ["Trove", "sleitnick/trove@1.2.0"], ["Zone", "imavafe/zoneplus-reupload@3.2.0"], ["t", "osyrisrblx/t@3.1.1"], ["ProfileService", "grilme99/profileservice@1.0.0"]]
+
+[[package]]
+name = "imavafe/zoneplus-reupload"
+version = "3.2.0"
+dependencies = []
+
+[[package]]
+name = "osyrisrblx/t"
+version = "3.1.1"
+dependencies = []
+
+[[package]]
+name = "pizzaboxer/bloxstrap-rpc-sdk"
+version = "1.0.1"
+dependencies = []
+
+[[package]]
+name = "red-blox/fetch"
+version = "2.0.0"
+dependencies = [["Future", "red-blox/future@1.0.1"]]
+
+[[package]]
+name = "red-blox/future"
+version = "1.0.1"
+dependencies = [["Spawn", "red-blox/spawn@1.1.0"]]
+
+[[package]]
+name = "red-blox/ratelimit"
+version = "1.0.1"
+dependencies = []
+
+[[package]]
+name = "red-blox/spawn"
+version = "1.1.0"
+dependencies = []
 
 [[package]]
 name = "sleitnick/comm"
@@ -68,6 +123,11 @@ version = "1.5.0"
 dependencies = []
 
 [[package]]
+name = "sleitnick/signal"
+version = "2.0.1"
+dependencies = []
+
+[[package]]
 name = "sleitnick/symbol"
 version = "2.0.1"
 dependencies = []
@@ -84,5 +144,5 @@ dependencies = []
 
 [[package]]
 name = "sleitnick/trove"
-version = "0.5.0"
+version = "1.2.0"
 dependencies = []

@@ -1,89 +1,89 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 
-local Shared = RoRooms.Shared
-local Client = RoRooms.Client
-
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
-local States = require(Client.UI.States)
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
+local States = require(RoRooms.SourceCode.Client.UI.States)
 
 local Children = Fusion.Children
-local New = Fusion.New
-local Spring = Fusion.Spring
-local Computed = Fusion.Computed
-local Value = Fusion.Value
+local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
-local BaseButton = require(NekaUI.Components.BaseButton)
-local Icon = require(NekaUI.Components.Icon)
+return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
 
-return function(Props)
-  Props.SizeMultiplier = EnsureProp(Props.SizeMultiplier, "number", 1)
-  Props.IconImage = EnsureProp(Props.IconImage, "string", "")
-  Props.MenuName = EnsureProp(Props.MenuName, "string", "")
+	local SizeMultiplier = Util.Fallback(Props.SizeMultiplier, 1)
+	local MenuName = Util.Fallback(Props.MenuName, "")
+	local Icon = Util.Fallback(Props.Icon, "")
+	local IconFilled = Util.Fallback(Props.IconFilled, "")
+	local IndicatorEnabled = Util.Fallback(Props.IndicatorEnabled, false)
+	local IndicatorColor = Util.Fallback(Props.IndicatorColor, Color3.fromRGB(255, 255, 255))
 
-  local IsHolding = Value(false)
+	local IsHovering = Scope:Value(false)
+	local MenuOpen = Scope:Computed(function(Use)
+		return Use(States.Menus.CurrentMenu) == Use(MenuName)
+	end)
 
-  return BaseButton {
-    Name = "TopbarButton",
-    BackgroundColor3 = Color3.fromRGB(26, 26, 26),
-    BackgroundTransparency = 0,
-    Size = Computed(function()
-      local BaseSize = UDim2.fromOffset(75, 75)
-      local SizeMultiplier = Props.SizeMultiplier:get()
-      return UDim2.fromOffset(BaseSize.X.Offset * SizeMultiplier, BaseSize.Y.Offset * SizeMultiplier)
-    end),
-    AutomaticSize = Enum.AutomaticSize.None,
+	return Scope:BaseButton {
+		Name = "TopbarButton",
+		BackgroundColor3 = Theme.Colors.BaseContent.Main,
+		BackgroundTransparency = Scope:Computed(function(Use)
+			if Use(IsHovering) or Use(MenuOpen) then
+				return 0.9
+			else
+				return 1
+			end
+		end),
+		Size = Scope:Computed(function(Use)
+			local BaseSize = UDim2.fromOffset(45, 45)
+			local SizeMultiplierValue = Use(SizeMultiplier)
+			return UDim2.fromOffset(BaseSize.X.Offset * SizeMultiplierValue, BaseSize.Y.Offset * SizeMultiplierValue)
+		end),
+		AutomaticSize = Enum.AutomaticSize.None,
+		LayoutOrder = Props.LayoutOrder,
+		CornerRadius = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.CornerRadius["Full"]))
+		end),
 
-    IsHolding = IsHolding,
-    OnActivated = function()
-      if States.CurrentMenu:get() == Props.MenuName:get() then
-        States.CurrentMenu:set()
-      else
-        States.CurrentMenu:set(Props.MenuName:get())
-        if States.ScreenSize:get().Y < 900 then
-          States.ItemsMenu.Open:set()
-        end
-      end
-    end,
+		IsHovering = IsHovering,
+		OnActivated = function()
+			if Peek(States.Menus.CurrentMenu) == Peek(MenuName) then
+				States.Menus.CurrentMenu:set()
+			else
+				States.Menus.CurrentMenu:set(Peek(MenuName))
+				if Peek(States.CoreGui.ScreenSize).Y < 900 then
+					States.Menus.ItemsMenu.Open:set()
+				end
+			end
+		end,
 
-    [Children] = {
-      New "UIListLayout" {
-        HorizontalAlignment = Enum.HorizontalAlignment.Center,
-        VerticalAlignment = Enum.VerticalAlignment.Center,  
-      },
-      New "UICorner" {
-        CornerRadius = UDim.new(0, 25)
-      },
-      New "UIStroke" {
-        ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-        Thickness = 3,
-        Color = Spring(Computed(function()
-          if States.CurrentMenu:get() == Props.MenuName:get() then
-            return Color3.fromRGB(207, 207, 207)
-          else
-            return Color3.fromRGB(56, 56, 56)
-          end
-        end), 32, 1),
-      },
-      New "UIPadding" {
-        PaddingLeft = UDim.new(0, 13),
-        PaddingBottom = UDim.new(0, 13),
-        PaddingTop = UDim.new(0, 13),
-        PaddingRight = UDim.new(0, 13),
-      },
-      Icon {
-        Image = Props.IconImage,
-        Size = Spring(Computed(function()
-          local BaseSize = 51
-          BaseSize = BaseSize * Props.SizeMultiplier:get()
-          if not IsHolding:get() then
-            return UDim2.fromOffset(BaseSize, BaseSize)
-          else
-            return UDim2.fromOffset(BaseSize * 0.9, BaseSize * 0.9)
-          end
-        end), 40, 1),
-      }
-    }
-  }
+		[Children] = {
+			Scope:Icon {
+				Name = "Icon",
+				Image = Scope:Computed(function(Use)
+					if Use(MenuOpen) then
+						return Use(IconFilled)
+					else
+						return Use(Icon)
+					end
+				end),
+				Size = UDim2.fromOffset(30, 30),
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Position = UDim2.fromScale(0.5, 0.5),
+			},
+			Scope:Base {
+				Name = "Indicator",
+				BackgroundTransparency = 0,
+				BackgroundColor3 = IndicatorColor,
+				Size = UDim2.fromOffset(12, 3),
+				AnchorPoint = Vector2.new(0.5, 1),
+				Position = UDim2.fromScale(0.5, 1),
+				CornerRadius = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.CornerRadius.Full))
+				end),
+				Visible = IndicatorEnabled,
+			},
+		},
+	}
 end

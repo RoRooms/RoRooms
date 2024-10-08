@@ -1,120 +1,210 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-local Client = RoRooms.Client
-local Config = RoRooms.Config
-
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local Fusion = require(NekaUI.Packages.Fusion)
-local States = require(Client.UI.States)
-local AutomaticSizer = require(NekaUI.Utils.AutomaticSizer)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
+local States = require(RoRooms.SourceCode.Client.UI.States)
+local Worlds = require(RoRooms.SourceCode.Client.UI.States.Worlds)
+local Config = require(RoRooms.Config).Config
+local Components = require(RoRooms.SourceCode.Client.UI.Components)
+local OnyxUITheme = require(RoRooms.SourceCode.Client.UI.OnyxUITheme)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
-local New = Fusion.New
-local Computed = Fusion.Computed
-local Spring = Fusion.Spring
-local Observer = Fusion.Observer
-local ForPairs = Fusion.ForPairs
+local Themer = OnyxUI.Themer
 
-local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
-local MenuFrame = require(NekaUI.Components.MenuFrame)
-local TitleBar = require(NekaUI.Components.TitleBar)
-local ScrollingFrame = require(NekaUI.Components.ScrollingFrame)
-local WorldButton = require(Client.UI.Components.WorldButton)
+local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { Assets.Icons.General.Download, "Load more" }
+local DEFAULT_REFRESH_BUTTON_CONTENTS = { Assets.Icons.General.Repeat, "Refresh" }
 
-return function(Props)
-  local MenuOpen = Computed(function()
-    return States.CurrentMenu:get() == script.Name
-  end)
-  
-  local WorldsMenu = New "ScreenGui" {
-    Name = "WorldsMenu",
-    Parent = Props.Parent,
-    Enabled = MenuOpen,
-    ResetOnSpawn = false,
+return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components)
+	local Theme = Themer.Theme:now()
 
-    [Children] = {
-      AutoScaleFrame {
-        AnchorPoint = Vector2.new(0.5, 0),
-        Position = Spring(Computed(function()
-          local YPos = States.TopbarBottomPos:get()
-          if not MenuOpen:get() then
-            YPos = YPos + 15
-          end
-          return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
-        end), 37, 1),
-        BaseResolution = Vector2.new(883, 893),
+	local MenuOpen = Scope:Computed(function(Use)
+		return Use(States.Menus.CurrentMenu) == script.Name
+	end)
+	local LoadMoreButtonContent = Scope:Value(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
+	local RefreshButtonContent = Scope:Value(DEFAULT_REFRESH_BUTTON_CONTENTS)
 
-        [Children] = {
-          New "UIListLayout" {},
-          MenuFrame {
-            Size = UDim2.fromOffset(353, 0),
-            GroupTransparency = Spring(Computed(function()
-              if MenuOpen:get() then
-                return 0
-              else
-                return 1
-              end
-            end), 40, 1),
+	local WorldsMenu = Scope:Menu {
+		Name = script.Name,
+		Open = MenuOpen,
+		Parent = Props.Parent,
+		AutomaticSize = Enum.AutomaticSize.Y,
+		Size = UDim2.fromOffset(390, 0),
+		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
-            [Children] = {
-              New "UIPadding" {
-                PaddingBottom = UDim.new(0, 11),
-                PaddingLeft = UDim.new(0, 11),
-                PaddingRight = UDim.new(0, 11),
-                PaddingTop = UDim.new(0, 9),
-              },
-              TitleBar {
-                Title = "Worlds",
-                CloseButtonDisabled = true,
-                TextSize = 24,
-              },
-              ScrollingFrame {
-                Name = "WorldsList",
-                Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 180)),
+		[Children] = {
+			Scope:Scroller {
+				Name = "WorldsList",
+				Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 205)),
+				ScrollBarThickness = Theme.StrokeThickness["1"],
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
+				end),
+				PaddingRight = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.75"]))
+				end),
+				ListEnabled = true,
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["1.5"]))
+				end),
+				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
-                [Children] = {
-                  New "UIPadding" {
-                    PaddingLeft = UDim.new(0, 2),
-                    PaddingBottom = UDim.new(0, 2),
-                    PaddingTop = UDim.new(0, 2),
-                    PaddingRight = UDim.new(0, 2)
-                  },
-                  New "UIGridLayout" {
-                    SortOrder = Enum.SortOrder.LayoutOrder,
-                    CellSize = UDim2.fromOffset(100, 125),
-                    CellPadding = UDim2.fromOffset(13, 15),
-                  },
-                  ForPairs(Config.WorldsSystem.Worlds, function(WorldId, World)
-                    return WorldId, WorldButton {
-                      WorldId = WorldId,
-                      World = World,
-                    }
-                  end, Fusion.cleanup)
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+				[Children] = {
+					Scope:WorldsCategory {
+						Name = "Featured",
+						Title = "From creator",
+						Icon = Assets.Icons.General.Star,
+						Visible = Scope:Computed(function(Use)
+							return #Config.Systems.Worlds.FeaturedWorlds >= 1
+						end),
 
-  local DisconnectOpen = Observer(MenuOpen):onChange(function()
-    local TextClasses = {"TextLabel", "TextButton", "TextBox"}
-    for _, Descendant in ipairs(WorldsMenu:GetDescendants()) do
-      if table.find(TextClasses, Descendant.ClassName) then
-        task.wait()
-        AutomaticSizer.ApplyLayout(Descendant)
-      end
-    end
-  end)
+						[Children] = {
+							Scope:Frame {
+								Name = "Worlds",
+								AutomaticSize = Enum.AutomaticSize.Y,
+								ListEnabled = true,
+								ListPadding = Scope:Computed(function(Use)
+									return UDim.new(0, Use(Theme.Spacing["0.75"]))
+								end),
+								ListFillDirection = Enum.FillDirection.Horizontal,
+								ListWraps = true,
 
-  WorldsMenu:GetPropertyChangedSignal("Parent"):Connect(function()
-    if WorldsMenu.Parent == nil then
-      DisconnectOpen()
-    end
-  end)
+								[Children] = {
+									Scope:ForValues(
+										Config.Systems.Worlds.FeaturedWorlds,
+										function(Use, Scope, PlaceId: number)
+											return Themer.Theme:is(OnyxUITheme):during(function()
+												return Scope:WorldButton {
+													PlaceId = PlaceId,
+												}
+											end)
+										end
+									),
+								},
+							},
+						},
+					},
+					Scope:WorldsCategory {
+						Name = "Popular",
+						Title = "Popular",
+						Icon = Assets.Icons.General.People,
 
-  return WorldsMenu
+						[Children] = {
+							Scope:Frame {
+								Name = "Worlds",
+								AutomaticSize = Enum.AutomaticSize.Y,
+								ListEnabled = true,
+								ListPadding = Scope:Computed(function(Use)
+									return UDim.new(0, Use(Theme.Spacing["0.75"]))
+								end),
+								ListFillDirection = Enum.FillDirection.Horizontal,
+								ListWraps = true,
+
+								[Children] = {
+									Scope:ForValues(States.Worlds.TopWorlds, function(Use, Scope, World)
+										return Themer.Theme:is(OnyxUITheme):during(function()
+											return Scope:WorldButton {
+												PlaceId = World.PlaceId,
+											}
+										end)
+									end),
+								},
+							},
+							Scope:Button {
+								Name = "LoadMoreButton",
+								Content = LoadMoreButtonContent,
+								Color = Theme.Colors.Primary.Main,
+								AutomaticSize = Enum.AutomaticSize.Y,
+
+								OnActivated = function()
+									LoadMoreButtonContent:set({
+										"Loading..",
+									})
+
+									Worlds:FetchTopWorlds():andThen(function(Result)
+										if typeof(Result) == "table" then
+											LoadMoreButtonContent:set({
+												Assets.Icons.General.Checkmark,
+												"Loaded",
+											})
+											task.wait(0.5)
+											LoadMoreButtonContent:set(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
+										else
+											LoadMoreButtonContent:set({
+												Assets.Icons.General.Warning,
+												"Error",
+											})
+											task.wait(0.5)
+											LoadMoreButtonContent:set(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
+										end
+									end)
+								end,
+							},
+						},
+					},
+					Scope:WorldsCategory {
+						Name = "Random",
+						Title = "Random",
+						Icon = Assets.Icons.General.Die,
+
+						[Children] = {
+							Scope:Frame {
+								Name = "Worlds",
+								AutomaticSize = Enum.AutomaticSize.Y,
+								ListEnabled = true,
+								ListPadding = Scope:Computed(function(Use)
+									return UDim.new(0, Use(Theme.Spacing["0.75"]))
+								end),
+								ListFillDirection = Enum.FillDirection.Horizontal,
+								ListWraps = true,
+
+								[Children] = {
+									Scope:ForValues(States.Worlds.RandomWorlds, function(Use, Scope, World)
+										return Themer.Theme:is(OnyxUITheme):during(function()
+											return Scope:WorldButton {
+												PlaceId = World.PlaceId,
+											}
+										end)
+									end),
+								},
+							},
+							Scope:Button {
+								Name = "RefreshButton",
+								Content = RefreshButtonContent,
+								Color = Theme.Colors.Primary.Main,
+								AutomaticSize = Enum.AutomaticSize.Y,
+
+								OnActivated = function()
+									RefreshButtonContent:set({
+										"Refreshing..",
+									})
+
+									Worlds:ClearRandomWorlds()
+									Worlds:FetchRandomWorlds(1, true):andThen(function(Result)
+										if typeof(Result) == "table" then
+											RefreshButtonContent:set({
+												Assets.Icons.General.Checkmark,
+												"Refreshed",
+											})
+											task.wait(0.5)
+											RefreshButtonContent:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
+										else
+											RefreshButtonContent:set({
+												Assets.Icons.General.Warning,
+												"Error",
+											})
+											task.wait(0.5)
+											RefreshButtonContent:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
+										end
+									end)
+								end,
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	return WorldsMenu
 end

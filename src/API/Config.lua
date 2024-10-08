@@ -1,100 +1,150 @@
-local CONFIG_TEMPLATE = {
-	ProfilesSystem = {
-		Enabled = true,
-		AvatarEditorCallback = nil,
-	},
-  ItemsSystem = {
-		Enabled = true,
-		MaxItemsEquippable = 5,
-		Categories = {
-			-- "General",
+export type CategoryName = string
+export type Category = {
+	DisplayName: string?,
+	Icon: string,
+	LayoutOrder: number?,
+	Color: Color3?,
+}
+export type Categories = {
+	[CategoryName]: Category,
+}
+export type Item = {
+	Enabled: boolean?,
+	Tool: Tool,
+	DisplayName: string?,
+	Category: string?,
+	Color: Color3?,
+	LayoutOrder: number?,
+	LabelIcon: string?,
+	LevelRequirement: number?,
+	CallbackRequirement: () -> ()?,
+}
+export type Emote = {
+	Enabled: boolean?,
+	Animation: Animation,
+	DisplayName: string?,
+	Category: string?,
+	Emoji: string?,
+	Color: Color3?,
+	LayoutOrder: number?,
+	LabelIcon: string?,
+	LevelRequirement: number?,
+	CallbackRequirement: () -> ()?,
+}
+export type PlaceId = number
+export type Role = {
+	Name: string,
+	Color: Color3?,
+	CallbackRequirement: (() -> boolean)?,
+}
+export type Config = {
+	Systems: {
+		Profiles: {
+			Enabled: boolean?,
+			NicknameCharacterLimit: number?,
+			BioCharacterLimit: number?,
+			AvatarEditorCallback: () -> ()?,
+			Roles: {
+				[string]: Role,
+			}?,
+			DefaultRoleId: string?,
+		}?,
+		Items: {
+			Enabled: boolean?,
+			MaxItemsEquippable: number?,
+			Categories: Categories?,
+			Items: {
+				[string]: Item?,
+			}?,
+		}?,
+		Emotes: {
+			Enabled: boolean?,
+			Categories: Categories?,
+			Emotes: {
+				[string]: Emote,
+			}?,
+		}?,
+		Music: {
+			Enabled: boolean?,
+			SoundGroup: SoundGroup?,
+		}?,
+		Worlds: {
+			Enabled: boolean?,
+			DiscoveryEnabled: boolean?,
+			FeaturedWorlds: { [number]: PlaceId }?,
+			RegistryRepository: string?,
+		}?,
+		Friends: {
+			Enabled: boolean?,
+		}?,
+		Settings: {
+			Enabled: boolean?,
+		}?,
+		VR: {
+			Enabled: boolean?,
+		}?,
+		UI: {
+			OnyxUITheme: { [string]: any }?,
+		}?,
+		Leveling: {
+			Enabled: boolean?,
+			XPPerMinute: number?,
+			BaseLevelUpXP: number?,
+		}?,
+	}?,
+}
+
+local CONFIG_TEMPLATE: Config = {
+	Systems = {
+		Profiles = {
+			Enabled = true,
+			NicknameCharacterLimit = 20,
+			BioCharacterLimit = 30,
+			Roles = {
+				Testing = {
+					Name = "hi",
+					Color = Color3.fromRGB(255, 255, 255),
+				},
+			},
+			DefaultRoleId = "Testing",
 		},
 		Items = {
-			-- ExampleItem = {
-			-- 	Name = "Example Item",
-			-- 	Categories = {"All"},
-			-- 	Tool = Instance.new("Tool"),
-			-- 	LevelRequirement = 100,
-			-- 	PriceInCoins = 10,
-			-- 	LabelIcon = "rbxassetid://5743022869",
-			-- 	TintColor = Color3.fromRGB(255, 255, 255),
-			-- 	LayoutOrder = 1,
-			-- 	RequirementCallback = function(Player, ItemId)
-					
-			-- 	end,
-			-- }
-		}
-  },
-	EmotesSystem = {
-		Enabled = true,
-		EmotesDirectory = nil,
-		Categories = {
-			-- "General",
+			Enabled = true,
+			MaxItemsEquippable = 5,
+			Categories = {},
+			Items = {},
 		},
 		Emotes = {
-			-- ExampleEmote = {
-			-- 	Name = "Example Emote",
-			-- 	Emoji = "😼",
-			-- 	Animation = Instance.new("Animation"),
-			-- 	LevelRequirement = 100,
-			-- 	PriceInCoins = 10,
-			-- 	LabelIcon = "rbxassetid://5743022869",
-			-- 	TintColor = Color3.fromRGB(255, 255, 255),
-			-- 	LayoutOrder = 1,
-			-- 	RequirementCallback = function(Player, WorldId)
-					
-			-- 	end,
-			-- }
-		}
-	},
-	MusicSystem = {
-		Enabled = true,
-		SoundGroup = nil,
-	},
-	WorldsSystem = {
-		Enabled = true,
-		VCServersEnabled = true,
-		SubWorlds = {
-			-- ExampleSubWorld = {
-			-- 	Name = "Example Sub-world",
-			-- 	LayoutOrder = 1,
-			-- 	PlaceId = 0,
-			-- 	RequirementCallback = function(Player, SubWorldId) end,
-			--	IconImage = 0,
-			-- }
+			Enabled = true,
+			Categories = {},
+			Emotes = {},
+		},
+		Music = {
+			Enabled = true,
+			SoundGroup = Instance.new("SoundGroup"),
 		},
 		Worlds = {
-			-- ExampleWorld = {
-			-- 	Name = "Example World",
-			-- 	LayoutOrder = 1,
-			-- 	PlaceId = 0,
-			-- 	RequirementCallback = function(Player, WorldId) end,
-			-- }
-		}
-	},
-	ProgressionSystem = {
-		FriendsXPMultiplier = {
 			Enabled = true,
-			MultiplierAddon = 0.5
-		}
+			DiscoveryEnabled = true,
+			FeaturedWorlds = {},
+			RegistryRepository = "RoRooms/Worlds",
+		},
+		Friends = {
+			Enabled = true,
+		},
+		Settings = {
+			Enabled = true,
+		},
+		VR = {
+			Enabled = true,
+		},
+		Leveling = {
+			Enabled = true,
+			XPPerMinute = 30,
+			BaseLevelUpXP = 35,
+		},
+		UI = {},
 	},
-	SettingsSystem = {
-		Enabled = true,
-	},
-	Interface = {
-		TopbarIcons = {
-			Coins = {
-				Enabled = true,
-				IconImage = 13197401306,
-				ActivationCallback = function()
-					
-				end
-			},
-			Multipliers = {
-				Enabled = true,
-			}
-		}
-	}
 }
 
 local function DeepCopyTable(Table)
@@ -111,24 +161,24 @@ end
 
 local function ReconcileTable(Target, Template)
 	for Key, Value in pairs(Template) do
-		if type(Key) == "string" then
-			if Target[Key] == nil then
-				if type(Value) == "table" then
-					Target[Key] = DeepCopyTable(Value)
-				else
-					Target[Key] = Value
-				end
-			elseif type(Target[Key]) == "table" and type(Value) == "table" then
-				ReconcileTable(Target[Key], Value)
+		if type(Target[Key]) == "table" and type(Value) == "table" then
+			ReconcileTable(Target[Key], Value)
+		else
+			if type(Value) == "table" then
+				Target[Key] = DeepCopyTable(Value)
+			else
+				Target[Key] = Value
 			end
 		end
 	end
 end
 
-local Config = table.clone(CONFIG_TEMPLATE)
+local Config = {
+	Config = table.clone(CONFIG_TEMPLATE),
+}
 
-function Config:Update(ConfigModifier)
-	ReconcileTable(Config, ConfigModifier)
+function Config:Update(ConfigModifier: Config)
+	ReconcileTable(Config.Config, ConfigModifier)
 end
 
 return Config

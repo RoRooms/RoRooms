@@ -1,154 +1,146 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
+local RunService = game:GetService("RunService")
 
-local Shared = RoRooms.Shared
-local Client = RoRooms.Client
-
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
-local States = require(Client.UI.States)
-local ColourUtils = require(NekaUI.Packages.ColourUtils)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
+local ColorUtils = require(RoRooms.Parent.ColorUtils)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
+local EmotesController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Emotes.EmotesController)
 
 local Children = Fusion.Children
-local New = Fusion.New
-local Spring = Fusion.Spring
-local Computed = Fusion.Computed
-local Value = Fusion.Value
+local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
-local BaseButton = require(NekaUI.Components.BaseButton)
-local Text = require(NekaUI.Components.Text)
-local Icon = require(NekaUI.Components.Icon)
-local Frame = require(NekaUI.Components.Frame)
+local CustomButton = require(script.Parent.CustomButton)
 
-return function(Props)
-  Props.EmoteId = EnsureProp(Props.EmoteId, "string", "EmoteId")
-  Props.Emote = EnsureProp(Props.Emote, "table", {})
-  Props.BaseColor3 = EnsureProp(Props.BaseColor3, "Color3", Color3.fromRGB(51, 51, 51))
+return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, {
+		CustomButton = CustomButton,
+	})
+	local Theme = Themer.Theme:now()
 
-  local IsHolding = Value(false)
+	local EmoteId = Util.Fallback(Props.EmoteId, "EmoteId")
+	local Emote = Util.Fallback(Props.Emote, {})
+	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
+	local LevelRequirement = Scope:Computed(function(Use)
+		local EmoteValue = Use(Emote)
+		if EmoteValue and EmoteValue.LevelRequirement then
+			return EmoteValue.LevelRequirement
+		else
+			return nil
+		end
+	end)
+	local LabelText = Scope:Computed(function(Use)
+		local EmoteValue = Use(Emote)
+		local LevelRequirementValue = Use(LevelRequirement)
+		if EmoteValue and EmoteValue.LabelText then
+			return EmoteValue.LabelText
+		elseif LevelRequirementValue then
+			return LevelRequirementValue
+		else
+			return ""
+		end
+	end)
+	local LabelIcon = Scope:Computed(function(Use)
+		local EmoteValue = Use(Emote)
+		local LevelRequirementValue = Use(LevelRequirement)
+		if EmoteValue and EmoteValue.LabelIcon then
+			return EmoteValue.LabelIcon
+		elseif LevelRequirementValue then
+			return Assets.Icons.Categories.Unlockable
+		else
+			return ""
+		end
+	end)
 
-  return BaseButton {
-    Name = "EmoteButton",
-    BackgroundColor3 = Spring(Computed(function()
-      local BaseColor = ColourUtils.Darken(Props.BaseColor3:get(), 0.18)
-      if IsHolding:get() then
-        return ColourUtils.Lighten(BaseColor, 0.1)
-      else
-        return BaseColor
-      end
-    end), 35, 1),
-    BackgroundTransparency = 0,
-    Size = UDim2.fromOffset(75, 75),
-    AutomaticSize = Enum.AutomaticSize.None,
-    ClipsDescendants = true,
-    LayoutOrder = Computed(function()
-      return Props.Emote:get().LayoutOrder or 0
-    end),
+	return Scope:CustomButton {
+		Name = "EmoteButton",
+		Color = Color,
+		LayoutOrder = Scope:Computed(function(Use)
+			return Use(Emote).LayoutOrder or 0
+		end),
+		ListEnabled = false,
 
-    OnActivated = function()
-      if Props.Callback then
-        Props.Callback()
-      end
-      if States.EmotesController then
-        States.EmotesController:PlayEmote(Props.EmoteId:get())
-      end
-    end,
-    IsHolding = IsHolding,
+		OnActivated = function()
+			if Props.Callback then
+				Props.Callback()
+			end
 
-    [Children] = {
-      New "UICorner" {
-        CornerRadius = UDim.new(0, 10)
-      },
-      New "UIPadding" {
-        PaddingLeft = UDim.new(0, 5),
-        PaddingBottom = UDim.new(0, 5),
-        PaddingTop = UDim.new(0, 5),
-        PaddingRight = UDim.new(0, 5)
-      },
-      New "UIStroke" {
-        ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-        Thickness = 2,
-        Color = Props.BaseColor3,
-      },
-      Text {
-        Name = "Emoji",
-        LayoutOrder = 1,
-        AnchorPoint = Vector2.new(0.5, 0.5),
-        Position = UDim2.fromScale(0.5, 0.45),
-        Text = Computed(function()
-          return Props.Emote:get().Emoji or "🪩"
-        end),
-        TextSize = 36,
-        ClipsDescendants = false,
-      },
-      Frame {
-        Name = "Label",
-        ZIndex = 2,
+			if EmotesController then
+				EmotesController:PlayEmote(Peek(EmoteId))
+			end
+		end,
 
-        [Children] = {
-          New "UIListLayout" {
-            Padding = UDim.new(0, 3),
-            FillDirection = Enum.FillDirection.Horizontal,
-            VerticalAlignment = Enum.VerticalAlignment.Center,
-          },
-          Icon {
-            Name = "LabelIcon",
-            AnchorPoint = Vector2.new(0, 0),
-            Position = UDim2.fromScale(0, 0),
-            Size = UDim2.fromOffset(13, 13),
-            Image = Computed(function()
-              local LabelIcon = Props.Emote:get().LabelIcon
-              local LevelRequirement = Props.Emote:get().LevelRequirement
-              if LabelIcon then
-                return LabelIcon
-              elseif LevelRequirement then
-                return "rbxassetid://5743022869"
-              else
-                return ""
-              end
-            end),
-            ImageColor3 = Computed(function()
-              return ColourUtils.Lighten(Props.BaseColor3:get(), 0.25)
-            end),
-          },
-          Text {
-            Name = "LabelText",
-            AnchorPoint = Vector2.new(0, 0),
-            Position = UDim2.fromScale(0, 0),
-            Text = Computed(function()
-              local LabelText = Props.Emote:get().LabelText
-              local LevelRequirement = Props.Emote:get().LevelRequirement
-              if LabelText then
-                return LabelText
-              elseif LevelRequirement then
-                return LevelRequirement
-              else
-                return ""
-              end
-            end),
-            TextSize = 13,
-            TextColor3 = Computed(function()
-              return ColourUtils.Lighten(Props.BaseColor3:get(), 0.5)
-            end),
-            ClipsDescendants = false,
-            AutoLocalize = false,
-          },
-        }
-      },
-      Text {
-        Name = "EmoteName",
-        LayoutOrder = 3,
-        AnchorPoint = Vector2.new(0.5, 1),
-        Position = UDim2.fromScale(0.5, 1),
-        Size = UDim2.fromScale(1, 0),
-        Text = Computed(function()
-          return Props.Emote:get().Name or Props.EmoteId:get()
-        end),
-        TextSize = 14,
-        TextTruncate = Enum.TextTruncate.AtEnd,
-        AutomaticSize = Enum.AutomaticSize.Y,
-        TextXAlignment = Enum.TextXAlignment.Center,
-      }
-    }
-  }
+		[Children] = {
+			Scope:Frame {
+				Name = "Details",
+				ListEnabled = true,
+				ListFillDirection = Enum.FillDirection.Vertical,
+				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.5"]))
+				end),
+				PaddingTop = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["1"]))
+				end),
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0"]))
+				end),
+
+				[Children] = {
+					Scope:Text {
+						Name = "Emoji",
+						Text = Scope:Computed(function(Use)
+							if Use(Props.Emote) and Use(Props.Emote).Emoji then
+								return Use(Props.Emote).Emoji
+							else
+								return "🪩"
+							end
+						end),
+						TextSize = Theme.TextSize["2.25"],
+						RichText = false,
+						ClipsDescendants = false,
+						TextWrapped = false,
+						AutoLocalize = false,
+					},
+					Scope:Text {
+						Name = "Name",
+						Text = Scope:Computed(function(Use)
+							return Use(Props.Emote).Name or Use(Props.EmoteId)
+						end),
+						TextSize = Theme.TextSize["0.875"],
+						TextTruncate = Enum.TextTruncate.AtEnd,
+						AutomaticSize = Enum.AutomaticSize.None,
+						TextXAlignment = Enum.TextXAlignment.Center,
+						Size = Scope:Computed(function(Use)
+							return UDim2.fromOffset(Use(Theme.Spacing["4"]) * 1.1, Use(Theme.TextSize["0.875"]) * 2)
+						end),
+					},
+				},
+			},
+			Scope:IconText {
+				Name = "Label",
+				Content = Scope:Computed(function(Use)
+					local LabelTextValue = Use(LabelText)
+					local LabelIconValue = Use(LabelIcon)
+					return { LabelIconValue, LabelTextValue }
+				end),
+				ContentSize = Theme.TextSize["0.875"],
+				ContentColor = Scope:Computed(function(Use)
+					return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Strong))
+				end),
+				ContentWrapped = false,
+				Visible = Scope:Computed(function(Use)
+					local LabelTextValue = Use(LabelText)
+					local LabelIconValue = Use(LabelIcon)
+					return (LabelTextValue ~= nil) or (LabelIconValue ~= nil)
+				end),
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.25"]))
+				end),
+				ListVerticalAlignment = Enum.VerticalAlignment.Center,
+			},
+		},
+	}
 end

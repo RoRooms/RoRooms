@@ -1,146 +1,94 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-local Client = RoRooms.Client
-
 local StarterGui = game:GetService("StarterGui")
 local Players = game:GetService("Players")
 
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local States = require(Client.UI.States)
-local AutomaticSizer = require(NekaUI.Utils.AutomaticSizer)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
+local States = require(RoRooms.SourceCode.Client.UI.States)
+local Version = require(RoRooms.Version)
+local Components = require(RoRooms.SourceCode.Client.UI.Components)
 
 local Children = Fusion.Children
-local New = Fusion.New
-local Computed = Fusion.Computed
-local Spring = Fusion.Spring
-local Observer = Fusion.Observer
+local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
-local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
-local MenuFrame = require(NekaUI.Components.MenuFrame)
-local TitleBar = require(NekaUI.Components.TitleBar)
-local SettingToggle = require(NekaUI.Extras.SettingToggle)
-local ScrollingFrame = require(NekaUI.Components.ScrollingFrame)
-local Text = require(NekaUI.Components.Text)
+local TOGGLEABLE_CORE_GUIS = { Enum.CoreGuiType.Chat, Enum.CoreGuiType.PlayerList }
 
-local TOGGLEABLE_CORE_GUIS = { Enum.CoreGuiType.Chat, Enum.CoreGuiType.PlayerList } 
+return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components)
+	local Theme = Themer.Theme:now()
 
-return function(Props)
-  local MenuOpen = Computed(function()
-    return States.CurrentMenu:get() == script.Name
-  end)
+	local MenuOpen = Scope:Computed(function(Use)
+		return Use(States.Menus.CurrentMenu) == script.Name
+	end)
 
-  Observer(States.UserSettings.HideUI):onChange(function()
-    for _, CoreGuiType in ipairs(TOGGLEABLE_CORE_GUIS) do
-      StarterGui:SetCoreGuiEnabled(CoreGuiType, not States.UserSettings.HideUI:get())
-    end
-    for _, TopbarIcon in ipairs({States.TopbarIcons.Coins}) do
-      TopbarIcon:setEnabled(not States.UserSettings.HideUI:get())
-    end
-    States.TopbarVisible:set(not States.UserSettings.HideUI:get())
-    if States.UserSettings.HideUI:get() then
-      States.CurrentMenu:set(nil)
-    end
-  end)
-  if Players.LocalPlayer then
-    Players.LocalPlayer.CharacterAdded:Connect(function()
-      States.UserSettings.HideUI:set(false)
-    end)
-  end
+	Scope:Observer(States.UserSettings.HideUI):onChange(function()
+		for _, CoreGuiType in ipairs(TOGGLEABLE_CORE_GUIS) do
+			StarterGui:SetCoreGuiEnabled(CoreGuiType, not Peek(States.UserSettings.HideUI))
+		end
+		States.Topbar.Visible:set(not Peek(States.UserSettings.HideUI))
+		if Peek(States.UserSettings.HideUI) then
+			States.Menus.CurrentMenu:set(nil)
+		end
+	end)
+	if Players.LocalPlayer then
+		Players.LocalPlayer.CharacterAdded:Connect(function()
+			States.UserSettings.HideUI:set(false)
+		end)
+	end
 
-  local SettingsMenu = New "ScreenGui" {
-    Name = "SettingsMenu",
-    Parent = Props.Parent,
-    Enabled = MenuOpen,
-    ResetOnSpawn = false,
+	local SettingsMenu = Scope:Menu {
+		Name = script.Name,
+		Parent = Props.Parent,
+		Size = UDim2.fromOffset(305, 0),
+		Open = MenuOpen,
+		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
-    [Children] = {
-      AutoScaleFrame {
-        AnchorPoint = Vector2.new(0.5, 0),
-        Position = Spring(Computed(function()
-          local YPos = States.TopbarBottomPos:get()
-          if not MenuOpen:get() then
-            YPos = YPos + 15
-          end
-          return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
-        end), 37, 1),
-        BaseResolution = Vector2.new(883, 893),
+		[Children] = {
+			Scope:Scroller {
+				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 135)),
+				AutomaticSize = Enum.AutomaticSize.None,
+				ScrollBarThickness = Theme.StrokeThickness["1"],
+				ListEnabled = true,
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
+				end),
+				PaddingRight = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["1"]))
+				end),
+				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
-        [Children] = {
-          New "UIListLayout" {},
-          MenuFrame {
-            Size = UDim2.fromOffset(305, 0),
-            GroupTransparency = Spring(Computed(function()
-              if MenuOpen:get() then
-                return 0
-              else
-                return 1
-              end
-            end), 40, 1),
+				[Children] = {
+					Scope:SettingToggle {
+						Label = "Mute music",
+						Switched = States.UserSettings.MuteMusic,
+					},
+					Scope:SettingToggle {
+						Label = "Hide UI",
+						Switched = States.UserSettings.HideUI,
+					},
 
-            [Children] = {
-              New "UIPadding" {
-                PaddingBottom = UDim.new(0, 13),
-                PaddingLeft = UDim.new(0, 13),
-                PaddingRight = UDim.new(0, 13),
-                PaddingTop = UDim.new(0, 9),
-              },
-              TitleBar {
-                Title = "Settings",
-                CloseButtonDisabled = true,
-                TextSize = 24,
-              },
-              ScrollingFrame {
-                Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 135)),
-                AutomaticSize = Enum.AutomaticSize.None,
-    
-                [Children] = {
-                  New "UIListLayout" {
-                    SortOrder = Enum.SortOrder.LayoutOrder,
-                    Padding = UDim.new(0, 10),
-                  },
-                  New "UIPadding" {
-                    PaddingTop = UDim.new(0, 2),
-                    PaddingBottom = UDim.new(0, 3),
-                    PaddingRight = UDim.new(0, 2),
-                  },
-                  SettingToggle {
-                    Label = "Mute music",
-                    SwitchedOn = States.UserSettings.MuteMusic,
-                  },
-                  SettingToggle {
-                    Label = "Hide UI",
-                    SwitchedOn = States.UserSettings.HideUI,
-                  },
-                  Text {
-                    Text = "[RoRooms v0.0.0]",
-                    TextColor3 = Color3.fromRGB(124, 124, 124)
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+					Scope:Text {
+						Text = Scope:Computed(function(Use)
+							local VersionStamp = `[RoRooms v{Version}]`
+							if not Use(States.RoRooms.UpToDate) then
+								return `{VersionStamp} - Out of date`
+							else
+								return VersionStamp
+							end
+						end),
+						TextColor3 = Scope:Computed(function(Use)
+							if not Use(States.RoRooms.UpToDate) then
+								return Use(Theme.Colors.Warning.Main)
+							else
+								return Use(Theme.Colors.NeutralContent.Dark)
+							end
+						end),
+					},
+				},
+			},
+		},
+	}
 
-  local DisconnectOpen = Observer(MenuOpen):onChange(function()
-    local TextClasses = {"TextLabel", "TextButton", "TextBox"}
-    for _, Descendant in ipairs(SettingsMenu:GetDescendants()) do
-      if table.find(TextClasses, Descendant.ClassName) then
-        task.wait()
-        AutomaticSizer.ApplyLayout(Descendant)
-      end
-    end
-  end)
-
-  SettingsMenu:GetPropertyChangedSignal("Parent"):Connect(function()
-    if SettingsMenu.Parent == nil then
-      DisconnectOpen()
-    end
-  end)
-
-  return SettingsMenu
+	return SettingsMenu
 end

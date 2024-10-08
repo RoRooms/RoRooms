@@ -1,40 +1,45 @@
-local ROROOMS_SOURCE = script.Parent.SourceCode
-local DEFAULT_SERVICES = {"PlayerDataService", "CharDefaultsService"}
+local SOURCE = script.Parent.SourceCode
+local PACKAGES = script.Parent.Parent
+local SERVER = SOURCE.Server
+local DEFAULT_SERVICES = { "PlayerDataStoreService", "CharacterDefaultsService", "ComponentsService", "UpdatesService" }
 
-local RoRoomsServer = {}
+local Config = require(script.Parent.Config)
+local Knit = require(PACKAGES.Knit)
+local Loader = require(PACKAGES.Loader)
+local FindFeatureFromModule = require(SOURCE.Shared.FindFeatureFromModule)
+
+local RoRoomsServer = {
+	Started = false,
+	Config = Config,
+}
 
 function RoRoomsServer:Start()
-  assert(not self.Started, "RoRooms already started.")
-  self.Started = true
+	assert(not self.Started, "RoRooms already started.")
+	self.Started = true
 
-  local Packages = script.Parent.Parent
-  local Config = require(script.Parent.Config)
+	Loader.LoadDescendants(SERVER, function(Descendant)
+		if Descendant:IsA("ModuleScript") and Descendant.Name:match("Service$") ~= nil then
+			local Feature = FindFeatureFromModule(Descendant)
+			if
+				table.find(DEFAULT_SERVICES, Descendant.Name)
+				or (Feature and Config.Config.Systems[Feature].Enabled == true)
+			then
+				return Knit.CreateService(require(Descendant))
+			else
+				return false
+			end
+		else
+			return false
+		end
+	end)
 
-  local Shared = ROROOMS_SOURCE.Shared
-  local Server = ROROOMS_SOURCE.Server
+	Knit.Start()
+end
 
-  local Knit = require(Packages.Knit)
-  local Loader = require(Packages.Loader)
-  local FindFeatureFromModule = require(Shared.SharedData.FindFeatureFromModule)
+function RoRoomsServer:Configure(Configuration: Config.Config)
+	assert(not self.Started, "You cannot configure RoRooms after starting it.")
 
-  self.Knit = Knit
-
-  Loader.LoadDescendants(Server.Services, function(Descendant)
-    if Descendant:IsA("ModuleScript") and Descendant.Name:match("Service$") ~= nil then
-      local Feature = FindFeatureFromModule(Descendant)
-      if table.find(DEFAULT_SERVICES, Descendant.Name) or (Feature and Config[Feature].Enabled == true) then
-        return Knit.CreateService(require(Descendant))
-      end
-    end
-  end)
-  
-  Knit.Start():andThen(function()
-    print('RoRooms server start!')
-
-    Loader.LoadDescendants(Server.Components, function(Descendant)
-      return Descendant:IsA("ModuleScript")
-    end)
-  end)
+	Config:Update(Configuration)
 end
 
 return RoRoomsServer

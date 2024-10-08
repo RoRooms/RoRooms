@@ -1,88 +1,110 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-local Config = RoRooms.Config
-local Client = RoRooms.Client
-
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
+local Config = require(RoRooms.Config).Config
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
-local New = Fusion.New
-local Computed = Fusion.Computed
+local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
-local Frame = require(NekaUI.Components.Frame)
-local Text = require(NekaUI.Components.Text)
-local ItemButton = require(Client.UI.Components.ItemButton)
+local ItemButton = require(RoRooms.SourceCode.Client.UI.Components.ItemButton)
 
-return function(Props: table)
-  Props.CategoryName = EnsureProp(Props.CategoryName, "string", "Category")
+return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, {
+		ItemButton = ItemButton,
+	})
+	local Theme = Themer.Theme:now()
 
-  local Category = Computed(function()
-    return Config.ItemsSystem.Categories[Props.CategoryName:get()]
-  end)
-  
-  local ItemButtons = Computed(function()
-    local List = {}
+	local Name = Util.Fallback(Props.Name, script.Name)
+	local CategoryName = Util.Fallback(Props.CategoryName, "Category")
 
-    for ItemId, Item in pairs(Config.ItemsSystem.Items) do
-      if Item.Category == nil then
-        Item.Category = "General"
-      end
-      if Item.Category == Props.CategoryName:get() then
-        table.insert(List, ItemButton {
-          ItemId = ItemId,
-          Item = Item,
-          BaseColor3 = Item.TintColor,
-          -- Callback = function()
-          --   if States.ScreenSize:get().Y <= 500 then
-          --     States.CurrentMenu:set()
-          --   end
-          -- end
-        })
-      end
-    end
+	local Category = Scope:Computed(function(Use)
+		return Config.Systems.Items.Categories[Use(CategoryName)]
+	end)
 
-    return List
-  end, Fusion.cleanup)
+	return Scope:Frame {
+		Name = Name,
+		LayoutOrder = Scope:Computed(function(Use)
+			if Use(Category) then
+				return Use(Category).LayoutOrder
+			else
+				return 0
+			end
+		end),
+		ListEnabled = true,
+		ListPadding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.75"]))
+		end),
+		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
-  return Frame {
-    Name = "ItemsCategory",
-    Size = UDim2.fromScale(1, 0),
-    AutomaticSize = Enum.AutomaticSize.Y,
-    LayoutOrder = Computed(function()
-      if Category:get() then
-        return Category:get().LayoutOrder
-      else
-        return 0
-      end
-    end),
+		[Children] = {
+			Scope:Frame {
+				Name = "Title",
+				ListEnabled = true,
+				ListFillDirection = Enum.FillDirection.Horizontal,
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.25"]))
+				end),
 
-    [Children] = {
-      New "UIListLayout" {
-        Padding = UDim.new(0, 8),
-        SortOrder = Enum.SortOrder.LayoutOrder,
-      },
-      Text {
-        Text = Props.CategoryName,
-        TextSize = 20,
-      },
-      Frame {
-        Name = "Items",
-        Size = UDim2.fromScale(1, 0),
-        AutomaticSize = Enum.AutomaticSize.Y,
+				[Children] = {
+					Scope:Icon {
+						Image = Scope:Computed(function(Use)
+							local CategoryValue = Use(Category)
+							local CategoryNameValue = Use(CategoryName)
+							local DefaultIcon = Assets.Icons.Categories[CategoryNameValue]
 
-        [Children] = {
-          New "UIGridLayout" {
-            SortOrder = Enum.SortOrder.LayoutOrder,
-            CellSize = UDim2.fromOffset(75, 75),
-            CellPadding = UDim2.fromOffset(11, 11),
-          },
-          ItemButtons,
-        }
-      }
-      
-    }
-  }
+							if CategoryValue and Use(Category).Icon then
+								return Use(Category).Icon
+							elseif DefaultIcon then
+								return DefaultIcon
+							else
+								return Assets.Icons.Categories.General
+							end
+						end),
+						Size = Scope:Computed(function(Use)
+							return UDim2.fromOffset(Use(Theme.TextSize["1"]), Use(Theme.TextSize["1"]))
+						end),
+					},
+					Scope:Text {
+						Text = CategoryName,
+						TextWrapped = false,
+					},
+				},
+			},
+			Scope:Frame {
+				Name = "Items",
+				ListEnabled = true,
+				ListWraps = true,
+				ListFillDirection = Enum.FillDirection.Horizontal,
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.75"]))
+				end),
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
+				end),
+
+				[Children] = {
+					Scope:ForPairs(Config.Systems.Items.Items, function(Use, Scope, ItemId, Item)
+						local ItemCategory = Item.Category
+						if ItemCategory == nil then
+							ItemCategory = "General"
+						end
+
+						if ItemCategory == Peek(CategoryName) then
+							return ItemId,
+								Scope:ItemButton {
+									ItemId = ItemId,
+									Item = Item,
+									Color = Item.TintColor,
+								}
+						else
+							return ItemId, nil
+						end
+					end),
+				},
+			},
+		},
+	}
 end

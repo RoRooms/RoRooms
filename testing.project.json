@@ -9,28 +9,31 @@
         "Packages": {
           "$path": "Packages",
           "RoRooms": {
-              "$path": "src/API",
-              "SourceCode": {
-                "$className": "Folder",
-                "Shared": {
-                  "$path": "src/Shared",
-                  "ExtPackages": {
-                    "$path": "ExtPackages"
-                  }
-                },
-                "Storage": {
-                  "$path": "src/Storage",
-                  "ExtPackages": {
-                    "$path": "ExtServerPackages"
-                  }
-                },
-                "Server": {
-                  "$path": "src/Server"
-                },
-                "Client": {
-                  "$path": "src/Client"
+            "$path": "src/API",
+            "SourceCode": {
+              "$className": "Folder",
+              "Shared": {
+                "$path": "src/Shared",
+                "ExtPackages": {
+                  "$path": "ExtPackages"
                 }
+              },
+              "Storage": {
+                "$path": "src/Storage",
+                "ExtPackages": {
+                  "$path": "ExtServerPackages"
+                },
+                "Packages": {
+                  "$path": "ServerPackages"
+                }
+              },
+              "Server": {
+                "$path": "src/Server"
+              },
+              "Client": {
+                "$path": "src/Client"
               }
+            }
           }
         }
       }

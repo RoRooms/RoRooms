@@ -1,147 +1,92 @@
-local RoRooms = require(script.Parent.Parent.Parent.Parent.Parent)
-
-local Shared = RoRooms.Shared
-local Client = RoRooms.Client
-local Config = RoRooms.Config
-
-local Fusion = require(Shared.ExtPackages.NekaUI.Packages.Fusion)
-local NekaUI = require(Shared.ExtPackages.NekaUI)
-local States = require(Client.UI.States)
-local SharedData = require(Shared.SharedData)
-local AutomaticSizer = require(NekaUI.Utils.AutomaticSizer)
+local RoRooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Fusion = require(RoRooms.Parent.Fusion)
+local States = require(RoRooms.SourceCode.Client.UI.States)
+local Config = require(RoRooms.Config).Config
+local Components = require(RoRooms.SourceCode.Client.UI.Components)
+local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
-local New = Fusion.New
-local Computed = Fusion.Computed
-local Spring = Fusion.Spring
-local Value = Fusion.Value
-local Observer = Fusion.Observer
+local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
-local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
-local MenuFrame = require(NekaUI.Components.MenuFrame)
-local TitleBar = require(NekaUI.Components.TitleBar)
-local TextInput = require(NekaUI.Components.TextInput)
-local Button = require(NekaUI.Components.Button)
+return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components)
+	local Theme = Themer.Theme:now()
 
-return function(Props)
-  local MenuOpen = Computed(function()
-    return States.CurrentMenu:get() == script.Name
-  end)
+	local MenuOpen = Scope:Computed(function(Use)
+		return Use(States.Menus.CurrentMenu) == script.Name
+	end)
 
-  local NicknameText = Value("")
-  local StatusText = Value("")
+	local NicknameText = Scope:Value("")
+	local StatusText = Scope:Value("")
 
-  if States.PlayerDataService then
-    States.PlayerDataService.UserProfile:Observe(function(UserProfile: table)
-      NicknameText:set(UserProfile.Nickname)
-      StatusText:set(UserProfile.Status)
-    end)
-  end
+	Scope:Observer(States.Profile.Nickname):onChange(function()
+		NicknameText:set(Peek(States.Profile.Nickname))
+	end)
+	Scope:Observer(States.Profile.Status):onChange(function()
+		StatusText:set(Peek(States.Profile.Status))
+	end)
 
-  local ProfileMenu = New "ScreenGui" {
-    Name = "ProfileMenu",
-    Parent = Props.Parent,
-    -- ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets,
-    Enabled = MenuOpen,
-    ResetOnSpawn = false,
+	local ProfileMenu = Scope:Menu {
+		Name = script.Name,
+		Open = MenuOpen,
+		Parent = Props.Parent,
+		AutomaticSize = Enum.AutomaticSize.Y,
+		Size = UDim2.fromOffset(280, 0),
+		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
-    [Children] = {
-      AutoScaleFrame {
-        AnchorPoint = Vector2.new(0.5, 0),
-        Position = Spring(Computed(function()
-          local YPos = States.TopbarBottomPos:get() 
-          if not MenuOpen:get() then
-            YPos = YPos + 15
-          end
-          return UDim2.new(UDim.new(0.5, 0), UDim.new(0, YPos))
-        end), 37, 1),
-        BaseResolution = Vector2.new(883, 893),
+		[Children] = {
+			Scope:Frame {
+				ListEnabled = true,
+				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
-        [Children] = {
-          New "UIListLayout" {},
-          MenuFrame {
-            Size = UDim2.fromOffset(305, 0),
-            GroupTransparency = Spring(Computed(function()
-              if MenuOpen:get() then
-                return 0
-              else
-                return 1
-              end
-            end), 40, 1),
+				[Children] = {
+					Scope:TextInput {
+						Name = "NicknameInput",
+						PlaceholderText = "Nickname",
+						CharacterLimit = Config.Systems.Profiles.NicknameCharacterLimit,
+						AutomaticSize = Enum.AutomaticSize.Y,
+						Text = NicknameText,
 
-            [Children] = {
-              New "UIPadding" {
-                PaddingBottom = UDim.new(0, 13),
-                PaddingLeft = UDim.new(0, 13),
-                PaddingRight = UDim.new(0, 13),
-                PaddingTop = UDim.new(0, 9),
-              },
-              TitleBar {
-                Title = "Profile",
-                CloseButtonDisabled = true,
-                TextSize = 24,
-              },
-              TextInput {
-                Name = "NicknameInput",
-                PlaceholderText = "Nickname",
-                CharacterLimit = SharedData.NicknameCharLimit,
-                Size = UDim2.fromScale(1, 0),
-                AutomaticSize = Enum.AutomaticSize.Y,
-                Text = NicknameText,
-                OnFocusLost = function()
-                  if States.UserProfileService then
-                    States.UserProfileService:SetNickname(NicknameText:get())
-                  end
-                end
-              },
-              TextInput {
-                Name = "StatusInput",
-                PlaceholderText = "Status",
-                CharacterLimit = SharedData.StatusCharLimit,
-                TextWrapped = true,
-                Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 55)),
-                AutomaticSize = Enum.AutomaticSize.None,
-                Text = StatusText,
-                OnFocusLost = function()
-                  if States.UserProfileService then
-                    States.UserProfileService:SetStatus(StatusText:get())
-                  end
-                end
-              },
-              Button {
-                Name = "EditAvatarButton",
-                Contents = {"rbxassetid://13285615740", "Edit Avatar"},
-                BackgroundColor3 = Color3.fromRGB(82, 82, 82),
-                ContentColor3 = Color3.fromRGB(240, 240, 240),
-                Size = UDim2.fromScale(1, 0),
-                AutomaticSize = Enum.AutomaticSize.Y,
-                OnActivated = function()
-                  States.CurrentMenu:set()
-                  Config.ProfilesSystem.AvatarEditorCallback()
-                end
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+						OnFocusLost = function()
+							States.Profile.Nickname:set(Peek(NicknameText))
+						end,
+					},
+					Scope:TextInput {
+						Name = "StatusInput",
+						PlaceholderText = "Status",
+						Text = StatusText,
+						CharacterLimit = Config.Systems.Profiles.BioCharacterLimit,
+						TextWrapped = true,
+						Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 60)),
+						AutomaticSize = Enum.AutomaticSize.Y,
 
-  local DisconnectOpen = Observer(MenuOpen):onChange(function()
-    local TextClasses = {"TextLabel", "TextButton", "TextBox"}
-    for _, Descendant in ipairs(ProfileMenu:GetDescendants()) do
-      if table.find(TextClasses, Descendant.ClassName) then
-        task.wait()
-        AutomaticSizer.ApplyLayout(Descendant)
-      end
-    end
-  end)
+						OnFocusLost = function()
+							States.Profile.Status:set(Peek(StatusText))
+						end,
+					},
+				},
+			},
+			Scope:Button {
+				Name = "EditAvatarButton",
+				Content = { Assets.Icons.General.EditPerson, "Edit Avatar" },
+				Color = Theme.Colors.Primary.Main,
+				AutomaticSize = Enum.AutomaticSize.Y,
+				Visible = Scope:Computed(function(Use)
+					return Config.Systems.Profiles.AvatarEditorCallback ~= nil
+				end),
 
-  ProfileMenu:GetPropertyChangedSignal("Parent"):Connect(function()
-    if ProfileMenu.Parent == nil then
-      DisconnectOpen()
-    end
-  end)
+				OnActivated = function()
+					States.Menus.CurrentMenu:set()
 
-  return ProfileMenu
+					if Config.Systems.Profiles.AvatarEditorCallback then
+						Config.Systems.Profiles.AvatarEditorCallback()
+					end
+				end,
+			},
+		},
+	}
+
+	return ProfileMenu
 end
