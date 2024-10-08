@@ -2,4 +2,4 @@
 
 ## Reporting a Vulnerability
 
-Reach out to me on Discord @avafe to report a security vulnerability within RoRooms.
+Email `contact@rorooms.com` or DM `@avafe` on Discord to report a security vulnerability.
