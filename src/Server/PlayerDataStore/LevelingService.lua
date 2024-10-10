@@ -94,7 +94,7 @@ function LevelingService:KnitStart()
 	end)
 
 	task.spawn(function()
-		while task.wait(1) do
+		while task.wait(1 * 60) do
 			for _, Profile in pairs(PlayerDataStoreService:GetProfiles()) do
 				local function CalculateTotal(BaseNum: number, MultiplierAddons: { [any]: any })
 					local Total = BaseNum
