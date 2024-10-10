@@ -50,7 +50,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		[Children] = {
 			Scope:MenuFrame {
 				AnchorPoint = AnchorPoint,
-				Position = Position,
+				Position = Scope:Spring(Position, Theme.SpringSpeed["1"], Theme.SpringDampening["1.5"]),
 				Size = Size,
 				AutomaticSize = AutomaticSize,
 				GroupTransparency = Scope:Spring(
@@ -62,7 +62,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						end
 					end),
 					Theme.SpringSpeed["1"],
-					Theme.SpringDampening["1"]
+					Theme.SpringDampening["1.5"]
 				),
 				BackgroundTransparency = States.CoreGui.PreferredTransparency,
 				ListEnabled = true,
