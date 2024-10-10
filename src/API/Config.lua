@@ -140,8 +140,8 @@ local CONFIG_TEMPLATE: Config = {
 		},
 		Leveling = {
 			Enabled = true,
-			XPPerMinute = 30,
-			BaseLevelUpXP = 35,
+			XPPerMinute = 10,
+			BaseLevelUpXP = 10,
 		},
 		UI = {},
 	},
