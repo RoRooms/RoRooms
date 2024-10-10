@@ -53,7 +53,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 							return UDim.new(0, Use(Theme.Spacing["0"]))
 						end),
 						PaddingBottom = Scope:Computed(function(Use)
-							if (not Use(States.Topbar.Visible)) or UserInputService.TouchEnabled then
+							if
+								(Use(States.Menus.CurrentMenu) ~= nil)
+								or (not Use(States.Topbar.Visible))
+								or UserInputService.TouchEnabled
+							then
 								return UDim.new(0, Use(Theme.Spacing["3"]))
 							else
 								return UDim.new(0, Use(Theme.Spacing["1"]))
@@ -175,11 +179,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 			[OnEvent "DragEnd"] = function(Position: Vector2)
 				EndY = Position.Y
 
-				States.Topbar.Visible:set((StartY - EndY) < 0)
-				States.Menus.CurrentMenu:set(nil)
-				States.Menus.ItemsMenu.Open:set(false)
+				local DifferenceY = StartY - EndY
+				if math.abs(DifferenceY) >= 10 then
+					States.Topbar.Visible:set(DifferenceY < 0)
+					States.Menus.CurrentMenu:set(nil)
+					States.Menus.ItemsMenu.Open:set(false)
 
-				TopbarInstance.Topbar.Dragger.Position = UDim2.new()
+					TopbarInstance.Topbar.Dragger.Position = UDim2.new()
+				end
 			end,
 		}
 	end
