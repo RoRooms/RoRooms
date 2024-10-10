@@ -4,7 +4,6 @@ description = "Roblox's premiere social framework"
 version = "0.1.1"
 license = "MIT"
 authors = ["Avafe"]
-private = true
 
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
