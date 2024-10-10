@@ -96,20 +96,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 									return not (typeof(Use(States.Menus.CurrentMenu)) == "string")
 								end),
 								TextSize = 0,
+								Size = Scope:Computed(function(Use)
+									return UDim2.fromOffset(Use(Theme.Spacing["8"]), 6)
+								end),
 								CornerRadius = Scope:Computed(function(Use)
 									return UDim.new(0, Use(Theme.CornerRadius.Full))
-								end),
-								PaddingTop = Scope:Computed(function(Use)
-									return UDim.new(0, Use(Theme.Spacing["0.5"]))
-								end),
-								PaddingLeft = Scope:Computed(function(Use)
-									return UDim.new(0, Use(Theme.Spacing["0.75"]))
-								end),
-								PaddingRight = Scope:Computed(function(Use)
-									return UDim.new(0, Use(Theme.Spacing["0.75"]))
-								end),
-								PaddingBottom = Scope:Computed(function(Use)
-									return UDim.new(0, Use(Theme.Spacing["0.5"]))
 								end),
 								StrokeColor = Theme.Colors.Neutral.Main,
 
@@ -117,17 +108,6 @@ return function(Scope: Fusion.Scope<any>, Props)
 									States.Topbar.Visible:set(not Peek(States.Topbar.Visible))
 									States.Menus.CurrentMenu:set(nil)
 								end,
-
-								[Children] = {
-									Scope:Frame {
-										Size = Scope:Computed(function(Use)
-											return UDim2.fromOffset(100, Use(Theme.StrokeThickness["1"]))
-										end),
-										AutomaticSize = Enum.AutomaticSize.None,
-										BackgroundTransparency = 0,
-										BackgroundColor3 = Theme.Colors.BaseContent.Main,
-									},
-								},
 							},
 						},
 					},
