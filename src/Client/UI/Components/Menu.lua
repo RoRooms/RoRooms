@@ -48,40 +48,32 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ResetOnSpawn = false,
 
 		[Children] = {
-			Scope:AutoScaleFrame {
+			Scope:MenuFrame {
 				AnchorPoint = AnchorPoint,
-				Position = Scope:Spring(Position, Theme.SpringSpeed["1"], Theme.SpringDampening["1.5"]),
-				BaseResolution = Vector2.new(739, 789),
-				MinScale = 1,
-				MaxScale = 1,
+				Position = Position,
+				Size = Size,
+				AutomaticSize = AutomaticSize,
+				GroupTransparency = Scope:Spring(
+					Scope:Computed(function(Use)
+						if Use(Open) then
+							return 0
+						else
+							return 1
+						end
+					end),
+					Theme.SpringSpeed["1"],
+					Theme.SpringDampening["1"]
+				),
+				BackgroundTransparency = States.CoreGui.PreferredTransparency,
+				ListEnabled = true,
+				ListFillDirection = ListFillDirection,
+				ListHorizontalFlex = ListHorizontalFlex,
+				ListVerticalFlex = ListVerticalFlex,
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["1.5"]))
+				end),
 
-				[Children] = {
-					Scope:MenuFrame {
-						Size = Size,
-						AutomaticSize = AutomaticSize,
-						GroupTransparency = Scope:Spring(
-							Scope:Computed(function(Use)
-								if Use(Open) then
-									return 0
-								else
-									return 1
-								end
-							end),
-							Theme.SpringSpeed["1"],
-							Theme.SpringDampening["1"]
-						),
-						BackgroundTransparency = States.CoreGui.PreferredTransparency,
-						ListEnabled = true,
-						ListFillDirection = ListFillDirection,
-						ListHorizontalFlex = ListHorizontalFlex,
-						ListVerticalFlex = ListVerticalFlex,
-						Padding = Scope:Computed(function(Use)
-							return UDim.new(0, Use(Theme.Spacing["1.5"]))
-						end),
-
-						[Children] = Props[Children],
-					},
-				},
+				[Children] = Props[Children],
 			},
 		},
 	}

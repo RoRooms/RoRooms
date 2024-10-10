@@ -77,7 +77,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end
 	end)
 
-	local ItemsList = ItemsMenu.AutoScaleFrame.MenuFrame.Items
+	local ItemsList = ItemsMenu.MenuFrame.Items
 	Scope:Observer(States.Menus.ItemsMenu.FocusedCategory):onChange(function()
 		local Category = ItemsList:FindFirstChild(`{Peek(States.Menus.ItemsMenu.FocusedCategory)}`)
 		if Category then

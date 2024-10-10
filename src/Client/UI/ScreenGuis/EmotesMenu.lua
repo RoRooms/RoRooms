@@ -75,7 +75,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		},
 	}
 
-	local EmotesList = EmotesMenu.AutoScaleFrame.MenuFrame.Frame.EmotesList
+	local EmotesList = EmotesMenu.MenuFrame.Frame.EmotesList
 	Scope:Observer(States.Menus.EmotesMenu.FocusedCategory):onChange(function()
 		local Category = EmotesList:FindFirstChild(`{Peek(States.Menus.EmotesMenu.FocusedCategory)}`)
 		if Category then
