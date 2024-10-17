@@ -13,9 +13,11 @@ local AnimatedItemComponent = Component.new {
 function AnimatedItemComponent:SetAnimation(AnimationNumber: number?)
 	if AnimationNumber ~= nil then
 		local Animation = self.Animations[AnimationNumber]
-		if Animation then
+		if Animation and Animation.AnimationId then
 			self:StopAnimations()
 			self:PlayAnimation(Animation.AnimationId)
+		else
+			self:StopAnimations()
 		end
 	else
 		self:StopAnimations()
