@@ -20,7 +20,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	return Scope:Button(Util.CombineProps(Props, {
 		Color = Color,
 		StrokeColor = Scope:Computed(function(Use)
-			return ColorUtils.Emphasise(Use(Color), Use(Theme.Emphasis.Regular))
+			return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Regular))
 		end),
 		CornerRadius = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.CornerRadius["1.5"]))
