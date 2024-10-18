@@ -48,8 +48,13 @@ function PlayerCharacterComponent:_UpdateNametag()
 	end
 
 	OnyxUI.Themer.Theme:is(NAMETAGGER_THEME):during(function()
+		local DisplayName = self.Player:GetAttribute("RR_Nickname") or ""
+		if string.len(DisplayName) == 0 then
+			DisplayName = self.Player.DisplayName
+		end
+
 		Nametagger:TagCharacter(self.Instance, {
-			DisplayName = self.Player:GetAttribute("RR_Nickname"),
+			DisplayName = DisplayName,
 			Properties = {
 				{ Value = self.Player:GetAttribute("RR_Level"), Image = Assets.Icons.UserBadges.Level },
 			},
