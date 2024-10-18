@@ -8,28 +8,34 @@ local ItemsService = {
 	Client = {},
 }
 
-function ItemsService.Client:ToggleEquipItem(Player: Player, ItemId: string)
+function ItemsService.Client:ToggleEquipItem(Player: Player, ItemId: string, Hold: boolean?)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.string(ItemId)))
 
-	return self.Server:ToggleEquipItemForPlayer(Player, ItemId)
+	return self.Server:ToggleEquipItemForPlayer(Player, ItemId, Hold)
 end
 
-function ItemsService:ToggleEquipItemForPlayer(Player: Player, ItemId: string)
+function ItemsService:ToggleEquipItemForPlayer(Player: Player, ItemId: string, Hold: boolean?)
 	if self:_PlayerHasItem(Player, ItemId) then
 		return self:TakeItemFromPlayer(Player, ItemId)
 	else
 		if #self:_FindItemsInPlayer(Player) < Config.Systems.Items.MaxItemsEquippable then
-			return self:GiveItemToPlayer(Player, ItemId)
+			return self:GiveItemToPlayer(Player, ItemId, false, Hold)
 		end
 	end
 
 	return false
 end
 
-function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassRequirement: boolean | nil)
-	if not Player.Backpack then
+function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassRequirement: boolean?, Hold: boolean?)
+	local Backpack = Player:FindFirstChild("Backpack")
+	local Character = Player.Character
+	if not Backpack then
 		return
 	end
+	if not Character then
+		return
+	end
+
 	local Item = Config.Systems.Items.Items[ItemId]
 	if Item and Item.Tool then
 		local AbleToEquip = false
@@ -64,7 +70,14 @@ function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassReq
 		end
 		if AbleToEquip then
 			local ItemTool = Item.Tool:Clone()
-			ItemTool.Parent = Player.Backpack
+			ItemTool.Parent = Backpack
+
+			if Hold then
+				local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+				if Humanoid then
+					Humanoid:EquipTool(ItemTool)
+				end
+			end
 		end
 		return AbleToEquip, FailureReason, ResponseCode
 	end

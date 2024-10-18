@@ -17,7 +17,7 @@ local ItemGiverComponent = Component.new {
 
 function ItemGiverComponent:GiveItem(Player: Player)
 	if Player == Players.LocalPlayer then
-		ItemsController:ToggleEquipItem(Peek(self.ItemId))
+		ItemsController:ToggleEquipItem(Peek(self.ItemId), true)
 	end
 end
 

@@ -22,8 +22,8 @@ local ItemsController = {
 	EquippedItemsUpdated = Signal.new(),
 }
 
-function ItemsController:ToggleEquipItem(ItemId: string)
-	ItemsService:ToggleEquipItem(ItemId):andThen(function(Equipped: boolean, FailureReason: string)
+function ItemsController:ToggleEquipItem(ItemId: string, Hold: boolean?)
+	ItemsService:ToggleEquipItem(ItemId, Hold):andThen(function(Equipped: boolean, FailureReason: string)
 		if not Equipped and FailureReason then
 			Prompts:PushPrompt({
 				Title = "Failure",
