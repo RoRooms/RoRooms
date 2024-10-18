@@ -53,11 +53,20 @@ function PlayerCharacterComponent:_UpdateNametag()
 			DisplayName = self.Player.DisplayName
 		end
 
+		local Properties = {
+			{ Value = self.Player:GetAttribute("RR_Level"), Image = Assets.Icons.UserBadges.Level },
+		}
+
+		if utf8.len(self.Player:GetAttribute("RR_Status") or "") > 0 then
+			table.insert(
+				Properties,
+				{ Value = self.Player:GetAttribute("RR_Status") or "", Image = Assets.Icons.General.EditPerson }
+			)
+		end
+
 		Nametagger:TagCharacter(self.Instance, {
 			DisplayName = DisplayName,
-			Properties = {
-				{ Value = self.Player:GetAttribute("RR_Level"), Image = Assets.Icons.UserBadges.Level },
-			},
+			Properties = Properties,
 		})
 	end)
 end
@@ -67,6 +76,9 @@ function PlayerCharacterComponent:_StartNametag()
 		self:_UpdateNametag()
 	end)
 	self.Player:GetAttributeChangedSignal("RR_Level"):Connect(function()
+		self:_UpdateNametag()
+	end)
+	self.Player:GetAttributeChangedSignal("RR_Status"):Connect(function()
 		self:_UpdateNametag()
 	end)
 
