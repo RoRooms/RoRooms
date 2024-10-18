@@ -99,26 +99,28 @@ return function(Scope: Fusion.Scope<any>, Props)
 						local Theme = Themer.Theme:now()
 
 						return Scope:ForValues(Buttons, function(Use, Scope, PromptButton)
-							return Scope:Button {
-								Content = PromptButton.Content,
-								Style = PromptButton.Style,
-								Color = Scope:Computed(function(Use)
-									if PromptButton.Color == nil then
-										return Use(Theme.Colors.Primary.Main)
-									else
-										return PromptButton.Color
-									end
-								end),
-								Disabled = PromptButton.Disabled,
+							return Themer.Theme:is(OnyxUITheme):during(function()
+								return Scope:Button {
+									Content = PromptButton.Content,
+									Style = PromptButton.Style,
+									Color = Scope:Computed(function(Use)
+										if PromptButton.Color == nil then
+											return Use(Theme.Colors.Primary.Main)
+										else
+											return PromptButton.Color
+										end
+									end),
+									Disabled = PromptButton.Disabled,
 
-								OnActivated = function()
-									Prompts:RemovePrompt(Peek(CurrentPrompt))
+									OnActivated = function()
+										Prompts:RemovePrompt(Peek(CurrentPrompt))
 
-									if PromptButton.Callback then
-										PromptButton.Callback()
-									end
-								end,
-							}
+										if PromptButton.Callback then
+											PromptButton.Callback()
+										end
+									end,
+								}
+							end)
 						end)
 					end),
 				},

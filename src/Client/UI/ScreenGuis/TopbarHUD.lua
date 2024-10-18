@@ -5,6 +5,7 @@ local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
+local OnyxUITheme = require(RoRooms.SourceCode.Client.UI.OnyxUITheme)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -84,7 +85,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 								[Children] = {
 									Scope:ForValues(States.Topbar.Buttons, function(Use, Scope, Button)
-										return Scope:TopbarButton(table.clone(Button))
+										return Themer.Theme:is(OnyxUITheme):during(function()
+											return Scope:TopbarButton(table.clone(Button))
+										end)
 									end),
 								},
 							},
