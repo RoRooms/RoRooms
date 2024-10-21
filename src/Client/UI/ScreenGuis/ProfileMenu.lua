@@ -1,4 +1,5 @@
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 local UserService = game:GetService("UserService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
@@ -9,7 +10,6 @@ local States = require(RoRooms.SourceCode.Client.UI.States)
 local Config = require(RoRooms.Config).Config
 local Assets = require(RoRooms.SourceCode.Shared.Assets)
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
-local GetUsernameColor = require(RoRooms.SourceCode.Shared.ExtPackages.GetUsernameColor)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -29,6 +29,22 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local Nickname = Scope:Value()
 	local Bio = Scope:Value()
 	local UserInfo = Scope:Value()
+
+	local ShownName = Scope:Computed(function(Use)
+		local DisplayNameValue = Use(DisplayName)
+		local NicknameValue = Use(Nickname)
+
+		if NicknameValue then
+			return NicknameValue
+		elseif DisplayNameValue then
+			return DisplayNameValue
+		end
+
+		return "Name"
+	end)
+
+	local NicknameInput = Scope:Value("")
+	local BioInput = Scope:Value("")
 
 	local function UpdateUserInfo()
 		local UserId = Peek(States.Menus.ProfileMenu.UserId) or 1
@@ -59,19 +75,38 @@ return function(Scope: Fusion.Scope<any>, Props)
 		UpdateUserInfo()
 		UpdatePlayer()
 	end)
-	Scope:Observer(States.Menus.ProfileMenu.UserId):onChange(function(Use)
+
+	Scope:Observer(States.Menus.ProfileMenu.UserId):onChange(function()
+		States.Menus.ProfileMenu.EditMode:set(false)
+
 		UpdatePlayer()
 		UpdateUserInfo()
+
+		local UserId = Peek(States.Menus.ProfileMenu.UserId)
+		if UserId ~= nil then
+			local PlayerInstance = Players:GetPlayerByUserId(UserId)
+
+			if PlayerInstance then
+				PlayerInstance:GetAttributeChangedSignal("RR_Nickname"):Connect(function()
+					UpdatePlayer()
+				end)
+				PlayerInstance:GetAttributeChangedSignal("RR_Status"):Connect(function()
+					UpdatePlayer()
+				end)
+			end
+		end
+	end)
+	Scope:Observer(States.Menus.CurrentMenu):onChange(function()
+		States.Menus.ProfileMenu.EditMode:set(false)
+	end)
+	Scope:Observer(States.Menus.ProfileMenu.EditMode):onChange(function()
+		NicknameInput:set(Peek(ShownName) or "")
+		BioInput:set(Peek(Bio) or "")
 	end)
 
-	local ChatColor = Scope:Computed(function(Use)
-		return GetUsernameColor(Use(Username) or "Username")
-	end)
-
-	task.delay(0.5, function()
-		States.Menus.CurrentMenu:set("ProfileMenu")
-		States.Menus.ProfileMenu.UserId:set(144146784)
-	end)
+	if not RunService:IsRunning() then
+		States.Menus.ProfileMenu.UserId:set(Players.LocalPlayer.UserId)
+	end
 
 	local ProfileMenu = Scope:Menu {
 		Name = script.Name,
@@ -93,14 +128,25 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 				[Children] = {
-					Scope:Frame {
+					Scope:Image {
 						Name = "Banner",
 						AutomaticSize = Enum.AutomaticSize.None,
 						Size = Scope:Computed(function(Use)
 							return UDim2.new(UDim.new(1, 0), UDim.new(0, Use(Theme.Spacing["4"]) * 1.5))
 						end),
 						BackgroundTransparency = 0,
-						BackgroundColor3 = ChatColor,
+						BackgroundColor3 = Theme.Colors.Neutral.Main,
+
+						Image = Scope:Computed(function(Use)
+							local UserIdValue = Use(States.Menus.ProfileMenu.UserId) or 1
+							if UserIdValue <= 0 then
+								UserIdValue = 1
+							end
+
+							return `rbxthumb://type=Avatar&id={UserIdValue}&w=420&h=420`
+						end),
+						ScaleType = Enum.ScaleType.Crop,
+						ImageRectSize = Vector2.new(420, 200),
 
 						[Children] = {
 							Scope:Avatar {
@@ -177,62 +223,128 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 						[Children] = {
 							Scope:Frame {
-								Name = "Name",
+								Name = "Details",
 								ListEnabled = true,
-								ListPadding = Scope:Computed(function(Use)
-									return UDim.new(0, Use(Theme.Spacing["0"]))
-								end),
-								LayoutOrder = 1,
+								ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 								[Children] = {
-									Scope:Text {
-										Name = "Name",
-										Text = Scope:Computed(function(Use)
-											local DisplayNameValue = Use(DisplayName)
-											local NicknameValue = Use(Nickname)
-
-											if NicknameValue then
-												return NicknameValue
-											elseif DisplayNameValue then
-												return DisplayNameValue
-											end
-
-											return "Name"
+									Scope:Frame {
+										Name = "Display",
+										ListEnabled = true,
+										ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+										ListPadding = Scope:Computed(function(Use)
+											return UDim.new(0, Use(Theme.Spacing["0.75"]))
 										end),
-										TextSize = Theme.TextSize["1.5"],
-										FontFace = Scope:Computed(function(Use)
-											return Font.new(Use(Theme.Font.Heading), Use(Theme.FontWeight.Heading))
+										Visible = Scope:Computed(function(Use)
+											return not Use(States.Menus.ProfileMenu.EditMode)
 										end),
+
+										[Children] = {
+											Scope:Frame {
+												Name = "Name",
+												ListEnabled = true,
+												ListPadding = Scope:Computed(function(Use)
+													return UDim.new(0, Use(Theme.Spacing["0"]))
+												end),
+												ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+												LayoutOrder = 1,
+
+												[Children] = {
+													Scope:Text {
+														Name = "Name",
+														Text = ShownName,
+														TextSize = Theme.TextSize["1.5"],
+														FontFace = Scope:Computed(function(Use)
+															return Font.new(
+																Use(Theme.Font.Heading),
+																Use(Theme.FontWeight.Heading)
+															)
+														end),
+													},
+													Scope:Text {
+														Name = "Username",
+														Text = Scope:Computed(function(Use)
+															return `@{Use(Username)}`
+														end),
+														TextColor3 = Theme.Colors.NeutralContent.Dark,
+													},
+												},
+											},
+											Scope:Text {
+												Name = "Bio",
+												Text = Scope:Computed(function(Use)
+													return Use(Bio) or ""
+												end),
+												TextWrapped = true,
+												Visible = Scope:Computed(function(Use)
+													return utf8.len(Use(Bio) or "") > 0
+												end),
+												LayoutOrder = 2,
+											},
+										},
 									},
-									Scope:Text {
-										Name = "Username",
-										Text = Scope:Computed(function(Use)
-											return `@{Use(Username)}`
+									Scope:Frame {
+										Name = "Editor",
+										ListEnabled = true,
+										ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+										ListPadding = Scope:Computed(function(Use)
+											return UDim.new(0, Use(Theme.Spacing["0.75"]))
 										end),
-										TextColor3 = Theme.Colors.NeutralContent.Dark,
+										Visible = States.Menus.ProfileMenu.EditMode,
+
+										[Children] = {
+											Scope:TextInput {
+												Name = "Nickname",
+												Text = NicknameInput,
+												CharacterLimit = Config.Systems.Profiles.NicknameCharacterLimit,
+												PlaceholderText = "Nickname",
+											},
+											Scope:TextArea {
+												Name = "Bio",
+												Text = BioInput,
+												CharacterLimit = Config.Systems.Profiles.BioCharacterLimit,
+												PlaceholderText = "Bio",
+												AutomaticSize = Enum.AutomaticSize.Y,
+												Size = Scope:Computed(function(Use)
+													return UDim2.fromOffset(0, Use(Theme.TextSize["1"]) * 3)
+												end),
+											},
+										},
 									},
 								},
 							},
-							Scope:Computed(function(Use)
-								if Use(Bio) ~= nil then
-									return Scope:Text {
-										Name = "Bio",
-										Text = Bio,
-										LayoutOrder = 2,
-									}
-								end
-
-								return nil
-							end),
 							Scope:Frame {
+								Name = "Buttons",
 								ListEnabled = true,
 								ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 								LayoutOrder = 3,
 
 								[Children] = {
 									Scope:Button {
-										Content = { Assets.Icons.General.EditPerson, "Edit" },
+										Name = "EditButton",
+										Content = Scope:Computed(function(Use)
+											local EditModeValue = Use(States.Menus.ProfileMenu.EditMode)
+											if EditModeValue then
+												return { Assets.Icons.General.Checkmark, "Save" }
+											else
+												return { Assets.Icons.General.EditPerson, "Edit" }
+											end
+										end),
 										Color = Theme.Colors.Primary.Main,
+										Visible = Scope:Computed(function(Use)
+											return Use(States.Menus.ProfileMenu.UserId) == Players.LocalPlayer.UserId
+										end),
+
+										OnActivated = function()
+											local EditModeValue = Peek(States.Menus.ProfileMenu.EditMode)
+
+											if EditModeValue == true then
+												States.Profile.Nickname:set(Peek(NicknameInput))
+												States.Profile.Status:set(Peek(BioInput))
+											end
+
+											States.Menus.ProfileMenu.EditMode:set(not EditModeValue)
+										end,
 									},
 								},
 							},
