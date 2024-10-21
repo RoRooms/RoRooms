@@ -19,6 +19,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local IconFilled = Util.Fallback(Props.IconFilled, "")
 	local IndicatorEnabled = Util.Fallback(Props.IndicatorEnabled, false)
 	local IndicatorColor = Util.Fallback(Props.IndicatorColor, Color3.fromRGB(255, 255, 255))
+	local Callback = Util.Fallback(Props.Callback, function() end)
 
 	local IsHovering = Scope:Value(false)
 	local MenuOpen = Scope:Computed(function(Use)
@@ -52,6 +53,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 				States.Menus.CurrentMenu:set()
 			else
 				States.Menus.CurrentMenu:set(Peek(MenuName))
+				Callback()
+
 				if Peek(States.CoreGui.ScreenSize).Y < 900 then
 					States.Menus.ItemsMenu.Open:set()
 				end

@@ -35,6 +35,10 @@ local States = {
 		EmotesMenu = {
 			FocusedCategory = Scope:Value(nil),
 		},
+		ProfileMenu = {
+			UserId = Scope:Value(nil),
+			EditMode = Scope:Value(false),
+		},
 	},
 	Topbar = {
 		YPosition = Scope:Value(0),
