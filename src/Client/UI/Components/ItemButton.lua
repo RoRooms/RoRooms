@@ -60,7 +60,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		return table.find(Use(States.Items.Equipped), Use(ItemId)) ~= nil
 	end)
 
-	return Scope:CustomButton {
+	return Scope:CustomButton(Util.CombineProps(Props, {
 		Name = "ItemButton",
 		Color = Color,
 		Size = UDim2.fromOffset(70, 70),
@@ -157,5 +157,5 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListVerticalAlignment = Enum.VerticalAlignment.Center,
 			},
 		},
-	}
+	}))
 end
