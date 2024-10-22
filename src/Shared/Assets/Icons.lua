@@ -5,7 +5,7 @@ type Icons = {
 
 local Icons: Icons = {
 	UserBadges = {
-		Level = "rbxassetid://122517370340800",
+		Level = "rbxassetid://113726942412490",
 		RoRooms = "rbxassetid://74362866882865",
 		RoRoomsPlus = "rbxassetid://98919849651582",
 		ServerOwner = "rbxassetid://81805631752548",

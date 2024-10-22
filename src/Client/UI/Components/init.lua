@@ -18,6 +18,8 @@ local Components = {
 	Menu = require(script.Menu),
 	EditableText = require(script.EditableText),
 	EditableAvatar = require(script.EditableAvatar),
+	ProfileBadges = require(script.ProfileBadges),
+	LevelBadge = require(script.LevelBadge),
 }
 
 for _, Child in ipairs(script:GetChildren()) do

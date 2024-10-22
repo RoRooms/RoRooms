@@ -186,7 +186,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 						[Children] = {
 							Scope:Frame {
-								Name = "Badges",
+								Name = "Container",
 								AnchorPoint = Vector2.new(1, 0),
 								Position = UDim2.fromScale(1, 0),
 								ListEnabled = true,
@@ -194,21 +194,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ListPadding = Scope:Computed(function(Use)
 									return UDim.new(0, Use(Theme.Spacing["0.5"]))
 								end),
-								ListVerticalAlignment = Enum.VerticalAlignment.Center,
 
 								[Children] = {
-									Scope:IconText {
-										Content = { Assets.Icons.UserBadges.Level, "100" },
-										ContentSize = Theme.TextSize["1.25"],
-										ListVerticalAlignment = Enum.VerticalAlignment.Center,
+									Scope:LevelBadge {
+										Level = 0,
 									},
-									Scope:IconText {
-										Content = {
-											Assets.Icons.UserBadges.RoRoomsPlus,
-											Assets.Icons.UserBadges.ServerOwner,
-										},
-										ContentSize = Theme.TextSize["1.5"],
-										ListVerticalAlignment = Enum.VerticalAlignment.Center,
+									Scope:ProfileBadges {
+										UserId = States.Menus.ProfileMenu.UserId,
 									},
 								},
 							},
