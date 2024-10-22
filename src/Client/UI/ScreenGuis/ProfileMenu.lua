@@ -1,5 +1,6 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
+local SocialService = game:GetService("SocialService")
 local UserService = game:GetService("UserService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
@@ -10,6 +11,7 @@ local States = require(RoRooms.SourceCode.Client.UI.States)
 local Config = require(RoRooms.Config).Config
 local Assets = require(RoRooms.SourceCode.Shared.Assets)
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
+local WorldsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Worlds.WorldsController)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -317,6 +319,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 								Name = "Buttons",
 								ListEnabled = true,
 								ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+								ListFillDirection = Enum.FillDirection.Horizontal,
+								ListPadding = Scope:Computed(function(Use)
+									return UDim.new(0, Use(Theme.Spacing["0.5"]))
+								end),
 								LayoutOrder = 3,
 
 								[Children] = {
@@ -344,6 +350,55 @@ return function(Scope: Fusion.Scope<any>, Props)
 											end
 
 											States.Menus.ProfileMenu.EditMode:set(not EditModeValue)
+										end,
+									},
+									Scope:Button {
+										Name = "JoinButton",
+										Content = { Assets.Icons.General.Play, "Join" },
+										Color = Theme.Colors.Primary.Main,
+										Visible = Scope:Computed(function(Use)
+											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
+											local InRoRoomsValue = Use(States.Menus.ProfileMenu.FriendData.InRoRooms)
+											local JobIdValue = Use(States.Menus.ProfileMenu.FriendData.JobId)
+
+											return (UserIdValue ~= Players.LocalPlayer.UserId)
+												and (InRoRoomsValue and JobIdValue)
+										end),
+
+										OnActivated = function()
+											local JobIdValue = Peek(States.Menus.ProfileMenu.FriendData.JobId)
+											local PlaceIdValue = Peek(States.Menus.ProfileMenu.FriendData.PlaceId)
+
+											if JobIdValue and PlaceIdValue then
+												if WorldsController then
+													WorldsController:TeleportToWorld(PlaceIdValue, Peek(JobIdValue))
+												end
+											end
+										end,
+									},
+									Scope:Button {
+										Name = "InviteButton",
+										Content = { Assets.Icons.General.Mail, "Invite" },
+										Color = Scope:Computed(function(Use)
+											local InRoRoomsValue = Use(States.Menus.ProfileMenu.FriendData.InRoRooms)
+
+											if InRoRoomsValue then
+												return Use(Theme.Colors.Neutral.Main)
+											else
+												return Use(Theme.Colors.Primary.Main)
+											end
+										end),
+										Visible = Scope:Computed(function(Use)
+											return Use(States.Menus.ProfileMenu.UserId) ~= Players.LocalPlayer.UserId
+										end),
+
+										OnActivated = function()
+											SocialService:PromptGameInvite(
+												Players.LocalPlayer,
+												Scope:New "ExperienceInviteOptions" {
+													InviteUser = Peek(States.Menus.ProfileMenu.UserId),
+												}
+											)
 										end,
 									},
 								},

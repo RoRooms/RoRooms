@@ -1,7 +1,4 @@
 local MarketplaceService = game:GetService("MarketplaceService")
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local SocialService = game:GetService("SocialService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Future)
@@ -9,7 +6,6 @@ local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local ColorUtils = require(RoRooms.Parent.ColorUtils)
 local States = require(RoRooms.SourceCode.Client.UI.States)
-local WorldsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Worlds.WorldsController)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -73,22 +69,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end),
 
 		OnActivated = function()
-			States.Menus.CurrentMenu:set(nil)
-
-			if Peek(InRoRooms) then
-				if Peek(JobId) ~= nil then
-					if WorldsController then
-						WorldsController:TeleportToWorld(Peek(PlaceId), Peek(JobId))
-					end
-				end
-			else
-				SocialService:PromptGameInvite(
-					Players.LocalPlayer,
-					Scope:New "ExperienceInviteOptions" {
-						InviteUser = Peek(UserId),
-					}
-				)
-			end
+			States.Menus.ProfileMenu.UserId:set(Peek(UserId))
+			States.Menus.ProfileMenu.FriendData.InRoRooms:set(Peek(InRoRooms))
+			States.Menus.ProfileMenu.FriendData.JobId:set(Peek(JobId))
+			States.Menus.ProfileMenu.FriendData.PlaceId:set(Peek(PlaceId))
+			States.Menus.CurrentMenu:set("ProfileMenu")
 		end,
 
 		[Children] = {

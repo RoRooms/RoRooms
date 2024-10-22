@@ -50,6 +50,7 @@ local Icons: Icons = {
 		Person = "rbxassetid://95694895434247",
 		EditPerson = "rbxassetid://108466250207627",
 		Toolbox = "rbxassetid://129909469212402",
+		Mail = "rbxassetid://72239383814067",
 	},
 }
 

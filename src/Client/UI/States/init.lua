@@ -38,6 +38,11 @@ local States = {
 		ProfileMenu = {
 			UserId = Scope:Value(nil),
 			EditMode = Scope:Value(false),
+			FriendData = {
+				InRoRooms = Scope:Value(false),
+				PlaceId = Scope:Value(nil),
+				JobId = Scope:Value(nil),
+			},
 		},
 	},
 	Topbar = {
