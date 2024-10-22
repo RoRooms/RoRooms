@@ -57,7 +57,7 @@ function PlayerCharacterComponent:_UpdateNametag()
 			{ Value = self.Player:GetAttribute("RR_Level"), Image = Assets.Icons.UserBadges.Level },
 		}
 
-		if utf8.len(self.Player:GetAttribute("RR_Status") or "") > 0 then
+		if utf8.len(self.Player:GetAttribute("RR_Bio") or "") > 0 then
 			table.insert(Properties, { Value = "", Image = Assets.Icons.General.EditPerson })
 		end
 
@@ -75,7 +75,7 @@ function PlayerCharacterComponent:_StartNametag()
 	self.Player:GetAttributeChangedSignal("RR_Level"):Connect(function()
 		self:_UpdateNametag()
 	end)
-	self.Player:GetAttributeChangedSignal("RR_Status"):Connect(function()
+	self.Player:GetAttributeChangedSignal("RR_Bio"):Connect(function()
 		self:_UpdateNametag()
 	end)
 

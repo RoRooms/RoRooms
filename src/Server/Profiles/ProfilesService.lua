@@ -9,7 +9,7 @@ local ProfilesService = {
 	Name = "ProfilesService",
 	Client = {
 		Nickname = Knit.CreateProperty(""),
-		Status = Knit.CreateProperty(""),
+		Bio = Knit.CreateProperty(""),
 		Role = Knit.CreateProperty(),
 	},
 }
@@ -27,11 +27,11 @@ function ProfilesService.Client:SetNickname(Player: Player, Nickname: string)
 	ProfilesService:SetNickname(Player, FilterString(Nickname, Player))
 end
 
-function ProfilesService.Client:SetStatus(Player: Player, Status: string)
-	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Status)))
-	assert(utf8.len(Status) <= Config.Systems.Profiles.BioCharacterLimit, "Status exceeds character limit")
+function ProfilesService.Client:SetBio(Player: Player, Bio: string)
+	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Bio)))
+	assert(utf8.len(Bio) <= Config.Systems.Profiles.BioCharacterLimit, "Bio exceeds character limit")
 
-	ProfilesService:SetStatus(Player, FilterString(Status, Player))
+	ProfilesService:SetBio(Player, FilterString(Bio, Player))
 end
 
 function ProfilesService:SetRole(Player: Player, RoleId: string): boolean
@@ -63,13 +63,13 @@ function ProfilesService:SetNickname(Player: Player, Nickname: string)
 	end
 end
 
-function ProfilesService:SetStatus(Player: Player, Status: string)
-	Player:SetAttribute("RR_Status", Status)
+function ProfilesService:SetBio(Player: Player, Bio: string)
+	Player:SetAttribute("RR_Bio", Bio)
 
 	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 	if Profile then
-		Profile.Data.Profile.Status = Status
-		self.Client.Status:SetFor(Player, Status)
+		Profile.Data.Profile.Bio = Bio
+		self.Client.Bio:SetFor(Player, Bio)
 	end
 end
 
@@ -81,7 +81,7 @@ function ProfilesService:_UpdateFromDataStoreProfile(Player: Player)
 	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 	if Profile then
 		self:SetNickname(Player, Profile.Data.Profile.Nickname)
-		self:SetStatus(Player, Profile.Data.Profile.Status)
+		self:SetBio(Player, Profile.Data.Profile.Bio)
 		self:SetRole(Player, Profile.Data.Profile.Role)
 	end
 end

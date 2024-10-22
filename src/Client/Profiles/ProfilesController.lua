@@ -24,11 +24,11 @@ function ProfilesController:_WatchProfile()
 			States.Services.ProfilesService:SetNickname(NicknameValue)
 		end
 	end)
-	self.Scope:Observer(States.Profile.Status):onChange(function()
-		local StatusValue = Peek(States.Profile.Status)
+	self.Scope:Observer(States.Profile.Bio):onChange(function()
+		local BioValue = Peek(States.Profile.Bio)
 
 		if next(States.Services.WorldsService) ~= nil then
-			States.Services.ProfilesService:SetStatus(StatusValue)
+			States.Services.ProfilesService:SetBio(BioValue)
 		end
 	end)
 
@@ -37,8 +37,8 @@ function ProfilesController:_WatchProfile()
 	ProfilesService.Nickname:Observe(function(Nickname: string)
 		States.Profile.Nickname:set(Nickname)
 	end)
-	ProfilesService.Status:Observe(function(Status: string)
-		States.Profile.Status:set(Status)
+	ProfilesService.Bio:Observe(function(Bio: string)
+		States.Profile.Bio:set(Bio)
 	end)
 end
 

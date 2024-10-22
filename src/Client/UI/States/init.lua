@@ -50,7 +50,7 @@ local States = {
 	},
 	Profile = {
 		Nickname = Scope:Value(""),
-		Status = Scope:Value(""),
+		Bio = Scope:Value(""),
 	},
 	WorldPageMenu = {
 		PlaceId = Scope:Value(),

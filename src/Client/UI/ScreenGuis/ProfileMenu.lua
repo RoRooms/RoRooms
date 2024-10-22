@@ -67,7 +67,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				Username:set(PlayerInstance.Name)
 				DisplayName:set(PlayerInstance.DisplayName)
 				Nickname:set(PlayerInstance:GetAttribute("RR_Nickname"))
-				Bio:set(PlayerInstance:GetAttribute("RR_Status"))
+				Bio:set(PlayerInstance:GetAttribute("RR_Bio"))
 			end
 		end
 	end
@@ -90,7 +90,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				PlayerInstance:GetAttributeChangedSignal("RR_Nickname"):Connect(function()
 					UpdatePlayer()
 				end)
-				PlayerInstance:GetAttributeChangedSignal("RR_Status"):Connect(function()
+				PlayerInstance:GetAttributeChangedSignal("RR_Bio"):Connect(function()
 					UpdatePlayer()
 				end)
 			end
@@ -340,7 +340,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 											if EditModeValue == true then
 												States.Profile.Nickname:set(Peek(NicknameInput))
-												States.Profile.Status:set(Peek(BioInput))
+												States.Profile.Bio:set(Peek(BioInput))
 											end
 
 											States.Menus.ProfileMenu.EditMode:set(not EditModeValue)

@@ -4,7 +4,7 @@ export type PlayerData = {
 	MinutesSpent: number,
 	Profile: {
 		Nickname: string,
-		Status: string,
+		Bio: string,
 		Role: string?,
 	},
 }
@@ -15,7 +15,7 @@ local Template: PlayerData = {
 	MinutesSpent = 0,
 	Profile = {
 		Nickname = "",
-		Status = "",
+		Bio = "",
 		Role = nil,
 	},
 }
