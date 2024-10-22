@@ -151,7 +151,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						ImageRectSize = Vector2.new(420, 200),
 
 						[Children] = {
-							Scope:Avatar {
+							Scope:EditableAvatar {
 								Name = "Avatar",
 								AnchorPoint = Vector2.new(0, 1),
 								Position = Scope:Computed(function(Use)
@@ -165,17 +165,16 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 									return `rbxthumb://type=AvatarHeadShot&id={UserIdValue}&w=100&h=100`
 								end),
-								Size = Scope:Computed(function(Use)
-									local Offset = Use(Theme.TextSize["4.5"])
-									return UDim2.fromOffset(Offset, Offset)
+								Disabled = Scope:Computed(function(Use)
+									local EditModeValue = Use(States.Menus.ProfileMenu.EditMode)
+									return (not EditModeValue) or (Config.Systems.Profiles.AvatarEditorCallback == nil)
 								end),
-								AspectRatio = 1,
-								CornerRadius = Scope:Computed(function(Use)
-									return UDim.new(0, Use(Theme.CornerRadius.Full))
-								end),
-								RingEnabled = true,
-								RingColor = Theme.Colors.Base.Main,
-								RingThickness = Theme.StrokeThickness["4"],
+
+								OnActivated = function()
+									if Config.Systems.Profiles.AvatarEditorCallback then
+										Config.Systems.Profiles.AvatarEditorCallback()
+									end
+								end,
 							},
 						},
 					},

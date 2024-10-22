@@ -17,6 +17,7 @@ local Components = {
 	WorldsCategory = require(script.WorldsCategory),
 	Menu = require(script.Menu),
 	EditableText = require(script.EditableText),
+	EditableAvatar = require(script.EditableAvatar),
 }
 
 for _, Child in ipairs(script:GetChildren()) do
