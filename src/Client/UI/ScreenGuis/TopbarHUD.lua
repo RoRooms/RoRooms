@@ -33,7 +33,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				Position = Scope:Spring(
 					Scope:Computed(function(Use)
 						if Use(States.Topbar.Visible) then
-							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, 14))
+							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, 8))
 						else
 							return UDim2.new(UDim.new(0.5, 0), UDim.new(0, (-Use(TopbarButtonsHeight)) - 2))
 						end
