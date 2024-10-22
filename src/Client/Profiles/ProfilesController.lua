@@ -6,15 +6,33 @@ local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Knit = require(RoRooms.Parent.Knit)
 local AvatarSelector = require(script.Parent.AvatarSelector)
+local Future = require(RoRooms.Parent.Future)
 
 local Scoped = Fusion.scoped
 local Peek = Fusion.peek
+
+local ProfilesService
 
 local ProfilesController = {
 	Name = "ProfilesController",
 
 	Scope = Scoped(Fusion),
 }
+
+function ProfilesController:GetProfile(UserId: number)
+	if UserId <= 0 then
+		UserId = 1
+	end
+
+	local Success, Result = Future.Try(function()
+		return ProfilesService:GetProfile(UserId):await()
+	end):Await()
+	if Success then
+		return Result
+	end
+
+	return {}
+end
 
 function ProfilesController:_WatchProfile()
 	self.Scope:Observer(States.Profile.Nickname):onChange(function()
@@ -74,6 +92,8 @@ function ProfilesController:KnitStart()
 			States.Menus.CurrentMenu:set(nil)
 		end
 	end)
+
+	ProfilesService = Knit.GetService("ProfilesService")
 end
 
 return ProfilesController

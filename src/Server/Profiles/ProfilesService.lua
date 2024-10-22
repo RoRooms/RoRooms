@@ -1,9 +1,12 @@
+local Players = game:GetService("Players")
+local UserService = game:GetService("UserService")
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Knit = require(RoRooms.Parent.Knit)
 local FilterString = require(RoRooms.SourceCode.Storage.ExtPackages.FilterString)
 local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
 local t = require(RoRooms.Parent.t)
 local Config = require(RoRooms.Config).Config
+local Future = require(RoRooms.Parent.Future)
 
 local ProfilesService = {
 	Name = "ProfilesService",
@@ -11,6 +14,7 @@ local ProfilesService = {
 		Nickname = Knit.CreateProperty(""),
 		Bio = Knit.CreateProperty(""),
 		Role = Knit.CreateProperty(),
+		ProfileUpdated = Knit.CreateSignal(),
 	},
 }
 
@@ -34,6 +38,35 @@ function ProfilesService.Client:SetBio(Player: Player, Bio: string)
 	ProfilesService:SetBio(Player, FilterString(Bio, Player))
 end
 
+function ProfilesService:GetProfile(UserId: number)
+	local Profile = PlayerDataStoreService:GetProfile(UserId)
+	local Player = Players:GetPlayerByUserId(UserId)
+	local GivenProfile: {
+		Nickname: string,
+		Bio: string?,
+		Role: string?,
+		Level: number?,
+	} = {
+		Nickname = "Name",
+	}
+
+	if Player and Profile then
+		GivenProfile.Nickname = Profile.Data.Profile.Nickname
+		GivenProfile.Bio = Profile.Data.Profile.Bio
+		GivenProfile.Role = Profile.Data.Profile.Role
+		GivenProfile.Level = Profile.Data.Level
+	else
+		local Success, Result = Future.Try(function()
+			return UserService:GetUserInfosByUserIdsAsync({ UserId })[1]
+		end):Await()
+		if Success then
+			GivenProfile.Nickname = Result.DisplayName
+		end
+	end
+
+	return GivenProfile
+end
+
 function ProfilesService:SetRole(Player: Player, RoleId: string): boolean
 	if (RoleId == nil) and (Config.Systems.Profiles.DefaultRoleId ~= nil) then
 		RoleId = Config.Systems.Profiles.DefaultRoleId
@@ -51,6 +84,7 @@ function ProfilesService:SetRole(Player: Player, RoleId: string): boolean
 		Player:SetAttribute("RR_RoleId", RoleToSet)
 		Profile.Data.Profile.Role = RoleToSet
 		self.Client.Role:SetFor(Player, RoleToSet)
+		self.Client.ProfileUpdated:FireAll(Player.UserId)
 
 		return true
 	end
@@ -65,6 +99,7 @@ function ProfilesService:SetNickname(Player: Player, Nickname: string)
 	if Profile then
 		Profile.Data.Profile.Nickname = Nickname
 		self.Client.Nickname:SetFor(Player, Nickname)
+		self.Client.ProfileUpdated:FireAll(Player.UserId)
 	end
 end
 
@@ -75,6 +110,7 @@ function ProfilesService:SetBio(Player: Player, Bio: string)
 	if Profile then
 		Profile.Data.Profile.Bio = Bio
 		self.Client.Bio:SetFor(Player, Bio)
+		self.Client.ProfileUpdated:FireAll(Player.UserId)
 	end
 end
 
