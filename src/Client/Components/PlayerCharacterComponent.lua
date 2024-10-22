@@ -58,10 +58,7 @@ function PlayerCharacterComponent:_UpdateNametag()
 		}
 
 		if utf8.len(self.Player:GetAttribute("RR_Status") or "") > 0 then
-			table.insert(
-				Properties,
-				{ Value = self.Player:GetAttribute("RR_Status") or "", Image = Assets.Icons.General.EditPerson }
-			)
+			table.insert(Properties, { Value = "", Image = Assets.Icons.General.EditPerson })
 		end
 
 		Nametagger:TagCharacter(self.Instance, {
