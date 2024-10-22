@@ -39,13 +39,18 @@ function ProfilesService:SetRole(Player: Player, RoleId: string): boolean
 		RoleId = Config.Systems.Profiles.DefaultRoleId
 	end
 
+	local RoleToSet = nil
 	local Role = Config.Systems.Profiles.Roles[RoleId]
 	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 
-	if Role and Profile then
-		Player:SetAttribute("RR_RoleId", RoleId)
-		Profile.Data.Profile.Role = RoleId
-		self.Client.Role:SetFor(Player, RoleId)
+	if Role ~= nil then
+		RoleToSet = RoleId
+	end
+
+	if Profile then
+		Player:SetAttribute("RR_RoleId", RoleToSet)
+		Profile.Data.Profile.Role = RoleToSet
+		self.Client.Role:SetFor(Player, RoleToSet)
 
 		return true
 	end
