@@ -80,44 +80,47 @@ function ProfilesService:SetRole(Player: Player, RoleId: string): boolean
 
 	local RoleToSet = nil
 	local Role = Config.Systems.Profiles.Roles[RoleId]
-	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 
 	if Role ~= nil then
 		RoleToSet = RoleId
 	end
 
-	if Profile then
+	local Success = PlayerDataStoreService:UpdateData(Player, function(Data)
+		Data.Profile.Role = RoleToSet
+		return Data
+	end)
+	if Success then
 		Player:SetAttribute("RR_RoleId", RoleToSet)
-		Profile.Data.Profile.Role = RoleToSet
 		self.Client.Role:SetFor(Player, RoleToSet)
-		self.Client.ProfileUpdated:FireAll(Player.UserId)
-
-		return true
 	end
 
-	return false
+	return Success
 end
 
 function ProfilesService:SetNickname(Player: Player, Nickname: string)
-	Player:SetAttribute("RR_Nickname", Nickname)
-
-	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
-	if Profile then
-		Profile.Data.Profile.Nickname = Nickname
+	local Success = PlayerDataStoreService:UpdateData(Player, function(Data)
+		Data.Profile.Nickname = Nickname
+		return Data
+	end)
+	if Success then
+		Player:SetAttribute("RR_Nickname", Nickname)
 		self.Client.Nickname:SetFor(Player, Nickname)
-		self.Client.ProfileUpdated:FireAll(Player.UserId)
 	end
+
+	return Success
 end
 
 function ProfilesService:SetBio(Player: Player, Bio: string)
-	Player:SetAttribute("RR_Bio", Bio)
-
-	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
-	if Profile then
-		Profile.Data.Profile.Bio = Bio
+	local Success = PlayerDataStoreService:UpdateData(Player, function(Data)
+		Data.Profile.Bio = Bio
+		return Data
+	end)
+	if Success then
+		Player:SetAttribute("RR_Bio", Bio)
 		self.Client.Bio:SetFor(Player, Bio)
-		self.Client.ProfileUpdated:FireAll(Player.UserId)
 	end
+
+	return Success
 end
 
 function ProfilesService:_UpdateFromDataStoreProfile(Player: Player)
@@ -153,6 +156,18 @@ function ProfilesService:KnitStart()
 	end
 
 	self:_CheckDefaultRole()
+
+	PlayerDataStoreService.DataUpdated:Connect(
+		function(
+			Player: Player,
+			OldData: PlayerDataStoreService.ProfileData,
+			NewData: PlayerDataStoreService.ProfileData
+		)
+			if OldData.Profile ~= NewData.Profile then
+				self.Client.ProfileUpdated:FireAll(Player.UserId)
+			end
+		end
+	)
 end
 
 return ProfilesService

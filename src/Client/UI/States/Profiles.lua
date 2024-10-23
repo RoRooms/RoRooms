@@ -103,12 +103,6 @@ end
 
 function Profiles:Start()
 	ProfilesService = Knit.GetService("ProfilesService")
-
-	ProfilesService.ProfileUpdated:Connect(function(UserId: number)
-		if Fusion.peek(States.Menus.ProfileMenu.UserId) == UserId then
-			self:FetchProfile(UserId)
-		end
-	end)
 end
 
 return Profiles
