@@ -49,19 +49,25 @@ function ProfilesService:GetProfile(UserId: number): Types.Profile
 	local Profile = {}
 	local DataProfile = PlayerDataStoreService:GetProfile(UserId)
 	local Player = Players:GetPlayerByUserId(UserId)
-	local Success, Result = Future.Try(function()
-		return UserService:GetUserInfosByUserIdsAsync({ UserId })[1]
-	end):Await()
 
-	if Player and DataProfile then
+	if DataProfile then
 		Profile.Nickname = DataProfile.Data.Profile.Nickname
 		Profile.Bio = DataProfile.Data.Profile.Bio
 		Profile.Role = DataProfile.Data.Profile.Role
 		Profile.Level = DataProfile.Data.Level
 	end
-	if Success and Result then
-		Profile.DisplayName = Result.DisplayName
-		Profile.Username = Result.Username
+
+	if Player then
+		Profile.DisplayName = Player.DisplayName
+		Profile.Username = Player.Name
+	else
+		local Success, Result = Future.Try(function()
+			return UserService:GetUserInfosByUserIdsAsync({ UserId })[1]
+		end):Await()
+		if Success and Result then
+			Profile.DisplayName = Result.DisplayName
+			Profile.Username = Result.Username
+		end
 	end
 
 	return Profile
