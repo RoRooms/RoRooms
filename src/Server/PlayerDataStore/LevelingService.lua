@@ -16,12 +16,12 @@ local LevelingService = {
 }
 
 function LevelingService:_SetLevel(Player: Player, Level: number)
-	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
-	if Profile then
-		Profile.Data.Level = Level
-
+	local Success = PlayerDataStoreService:UpdateData(Player, function(Data)
+		Data.Level = Level
+		return Data
+	end)
+	if Success then
 		Player:SetAttribute("RR_Level", Level)
-		self.Client.Level:SetFor(Player, Level)
 	end
 end
 
@@ -40,20 +40,25 @@ function LevelingService:ChangeXP(Player: Player, Amount: number): (boolean, num
 			return false, MaxAllowedXP
 		end
 
-		local RequiredXPToLevel = XPToLevelUp(Profile.Data.Level)
-		if (Profile.Data.XP + Amount) > RequiredXPToLevel then
-			local RemainingXP = (Profile.Data.XP + Amount) - RequiredXPToLevel
-			Profile.Data.Level += 1
-			Profile.Data.XP = 0
-			self:ChangeXP(Player, RemainingXP)
-		elseif (Profile.Data.XP + Amount) == RequiredXPToLevel then
-			Profile.Data.Level += 1
-			Profile.Data.XP = 0
-		else
-			Profile.Data.XP += Amount
-		end
+		local Success = PlayerDataStoreService:UpdateData(Player, function(Data)
+			local RequiredXPToLevel = XPToLevelUp(Data.Level)
+			if (Data.XP + Amount) > RequiredXPToLevel then
+				local RemainingXP = (Data.XP + Amount) - RequiredXPToLevel
+				Data.Level += 1
+				Data.XP = 0
+				self:ChangeXP(Player, RemainingXP)
+			elseif (Data.XP + Amount) == RequiredXPToLevel then
+				Data.Level += 1
+				Data.XP = 0
+			else
+				Data.XP += Amount
+			end
 
-		self:_SetLevel(Player, Profile.Data.Level)
+			return Data
+		end)
+		if Success then
+			self:_SetLevel(Player, Profile.Data.Level)
+		end
 
 		return true
 	end
@@ -89,8 +94,6 @@ end
 function LevelingService:KnitStart()
 	PlayerDataStoreService.ProfileLoaded:Connect(function(Profile: PlayerDataStoreService.Profile)
 		self:_UpdateAllFriendMultipliers()
-
-		self:_SetLevel(Profile.Player, Profile.Data.Level)
 	end)
 
 	task.spawn(function()
@@ -110,6 +113,12 @@ function LevelingService:KnitStart()
 				local XPTotal = CalculateTotal(Config.Systems.Leveling.XPPerMinute, SessionProfile.Data.XPMultipliers)
 				self:ChangeXP(Profile.Player, XPTotal)
 			end
+		end
+	end)
+
+	PlayerDataStoreService.DataUpdated:Connect(function(Player, OldData, NewData)
+		if OldData.Level ~= NewData.Level then
+			self.Client.Level:SetFor(Player, NewData.Level)
 		end
 	end)
 end
