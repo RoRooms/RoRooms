@@ -37,12 +37,16 @@ function Profiles.ProfileValue(
 	local function UpdateProfile()
 		task.spawn(function()
 			local UserIdValue = Fusion.peek(UserId) or 0
+
 			if UserIdValue > 0 then
 				local RetrievedProfile = Profiles:GetProfile(UserIdValue)
 				if RetrievedProfile then
 					ProfileValue:set(RetrievedProfile)
+					return
 				end
 			end
+
+			ProfileValue:set(nil)
 		end)
 	end
 

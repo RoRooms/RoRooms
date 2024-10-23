@@ -44,6 +44,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 	end)
 	Scope:Observer(States.Menus.CurrentMenu):onChange(function()
 		States.Menus.ProfileMenu.EditMode:set(false)
+
+		if Fusion.peek(States.Menus.CurrentMenu) ~= script.Name then
+			States.Menus.ProfileMenu.UserId:set(nil)
+		end
 	end)
 	Scope:Observer(States.Menus.ProfileMenu.EditMode):onChange(function()
 		NicknameInput:set(Peek(ShownName) or "")
