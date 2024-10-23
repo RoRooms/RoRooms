@@ -17,15 +17,11 @@ function WorldsService.Client:TeleportToWorld(Player: Player, PlaceId: number)
 end
 
 function WorldsService:TeleportPlayerToWorld(Player: Player, PlaceId: number)
-	if WorldRegistryService:IsWorldRegistered(PlaceId) then
-		if RunService:IsStudio() == false then
-			TeleportService:Teleport(PlaceId, Player)
-		end
-
-		return true
-	else
-		return false, `World {PlaceId} not registered with RoRooms.`
+	if RunService:IsStudio() == false then
+		TeleportService:Teleport(PlaceId, Player)
 	end
+
+	return true
 end
 
 return WorldsService

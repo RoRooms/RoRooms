@@ -26,7 +26,7 @@ function WorldRegistryService.Client:IsWorldRegistered(Player: Player, PlaceId: 
 end
 
 function WorldRegistryService:IsWorldRegistered(PlaceId: number)
-	return self.WorldRegistry[PlaceId] ~= nil
+	return self.WorldRegistry[tostring(PlaceId)] ~= nil
 end
 
 function WorldRegistryService:UpdateRegistry()
