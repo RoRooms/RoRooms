@@ -1,9 +1,4 @@
-type Entry = string | { [string]: Entry }
-type Icons = {
-	[string]: Entry,
-}
-
-local Icons: Icons = {
+local Icons = {
 	UserBadges = {
 		Level = "rbxassetid://113726942412490",
 		RoRooms = "rbxassetid://74362866882865",
