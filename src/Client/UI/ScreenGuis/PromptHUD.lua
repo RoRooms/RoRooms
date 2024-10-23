@@ -39,6 +39,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+		DisplayOrder = 10,
 
 		[Children] = {
 			Scope:Frame {

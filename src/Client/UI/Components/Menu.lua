@@ -14,6 +14,7 @@ export type Props = {
 	AutomaticSize: Fusion.UsedAs<Enum.AutomaticSize>?,
 	ListFillDirection: Fusion.UsedAs<Enum.FillDirection>?,
 	ListHorizontalFlex: Fusion.UsedAs<Enum.UIFlexAlignment>?,
+	DisplayOrder: Fusion.UsedAs<number>?,
 
 	[typeof(Children)]: { any },
 }
@@ -46,12 +47,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 			return UDim.new(0, Use(Theme.Spacing["1.5"]))
 		end)
 	)
+	local DisplayOrder = Util.Fallback(Props.DisplayOrder, 0)
 
 	return Scope:New "ScreenGui" {
 		Name = Name,
 		Parent = Props.Parent,
 		Enabled = Open,
 		ResetOnSpawn = false,
+		DisplayOrder = DisplayOrder,
 
 		[Children] = {
 			Scope:MenuFrame {

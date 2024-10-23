@@ -133,6 +133,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 						OnActivated = function(): ()
 							if WorldsController then
+								States.Menus.CurrentMenu:set(nil)
 								WorldsController:TeleportToWorld(Peek(States.WorldPageMenu.PlaceId))
 							end
 						end,
