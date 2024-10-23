@@ -331,7 +331,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 									Scope:Button {
 										Name = "JoinButton",
 										Content = { Assets.Icons.General.Play, "Join" },
-										Color = OnyxUI.Util.Colors.Green["400"],
+										Color = OnyxUI.Util.Colors.Green["500"],
 										Visible = Scope:Computed(function(Use)
 											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
 											local InRoRoomsValue = Use(States.Menus.ProfileMenu.FriendData.InRoRooms)

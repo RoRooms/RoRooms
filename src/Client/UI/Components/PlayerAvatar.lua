@@ -27,7 +27,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local StatusColor = Scope:Computed(function(Use)
 		local StatusValue = Use(Status)
 		if StatusValue == "RoRooms" then
-			return OnyxUI.Util.Colors.Green["400"]
+			return OnyxUI.Util.Colors.Green["500"]
 		elseif StatusValue == "Online" then
 			return OnyxUI.Util.Colors.Sky["500"]
 		else

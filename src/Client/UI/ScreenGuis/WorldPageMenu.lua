@@ -126,7 +126,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					},
 					Scope:Button {
 						Name = "PlayButton",
-						Color = Theme.Colors.Primary.Main,
+						Color = OnyxUI.Util.Colors.Green["500"],
 						AutomaticSize = Enum.AutomaticSize.Y,
 						Content = { Assets.Icons.General.Play },
 						ContentSize = Theme.TextSize["1.5"],
