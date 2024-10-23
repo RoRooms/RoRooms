@@ -1,11 +1,8 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local States = require(script.Parent)
 local Future = require(RoRooms.Parent.Future)
-local Knit = require(RoRooms.Parent.Knit)
 local Fusion = require(RoRooms.Parent.Fusion)
 local Types = require(RoRooms.SourceCode.Shared.Types)
-
-local ProfilesService
 
 local Profiles = {}
 
@@ -52,8 +49,8 @@ function Profiles.ProfileValue(
 	Scope:Observer(UserId):onChange(function()
 		UpdateProfile()
 	end)
-	if next(ProfilesService) ~= nil then
-		ProfilesService.ProfileUpdated:Connect(function(UpdatedUserId: number)
+	if next(States.Services.ProfilesService) ~= nil then
+		States.Services.ProfilesService.ProfileUpdated:Connect(function(UpdatedUserId: number)
 			if UpdatedUserId == Fusion.peek(UserId) then
 				Profiles:FetchProfile(UpdatedUserId)
 				UpdateProfile()
@@ -85,9 +82,11 @@ function Profiles:FetchProfile(UserId: number): Types.Profile?
 	local LoadedProfiles = Fusion.peek(States.Profiles.Loaded)
 
 	local Success, Result = Future.Try(function()
-		local Success2, Result2 = ProfilesService:GetProfile(UserId):await()
-		if Success2 and Result2 then
-			return Result2
+		if next(States.Services.ProfilesService) ~= nil then
+			local Success2, Result2 = States.Services.ProfilesService:GetProfile(UserId):await()
+			if Success2 and Result2 then
+				return Result2
+			end
 		end
 		return nil
 	end):Await()
@@ -99,10 +98,6 @@ function Profiles:FetchProfile(UserId: number): Types.Profile?
 	States.Profiles.Loaded:set(LoadedProfiles)
 
 	return Profile
-end
-
-function Profiles:Start()
-	ProfilesService = Knit.GetService("ProfilesService")
 end
 
 return Profiles
