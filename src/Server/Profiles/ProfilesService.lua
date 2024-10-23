@@ -7,6 +7,7 @@ local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerDataStore
 local t = require(RoRooms.Parent.t)
 local Config = require(RoRooms.Config).Config
 local Future = require(RoRooms.Parent.Future)
+local Types = require(RoRooms.SourceCode.Shared.Types)
 
 local ProfilesService = {
 	Name = "ProfilesService",
@@ -17,6 +18,12 @@ local ProfilesService = {
 		ProfileUpdated = Knit.CreateSignal(),
 	},
 }
+
+function ProfilesService.Client:GetProfile(Player: Player, UserId: number)
+	assert(t.tuple(t.instanceOf("Player")(Player), t.number(UserId)))
+
+	return ProfilesService:GetProfile(UserId)
+end
 
 function ProfilesService.Client:SetRole(Player: Player, RoleId: string): boolean
 	assert(t.tuple(t.instanceOf("Player")(Player), t.string(RoleId)))
@@ -38,33 +45,26 @@ function ProfilesService.Client:SetBio(Player: Player, Bio: string)
 	ProfilesService:SetBio(Player, FilterString(Bio, Player))
 end
 
-function ProfilesService:GetProfile(UserId: number)
-	local Profile = PlayerDataStoreService:GetProfile(UserId)
+function ProfilesService:GetProfile(UserId: number): Types.Profile
+	local Profile = {}
+	local DataProfile = PlayerDataStoreService:GetProfile(UserId)
 	local Player = Players:GetPlayerByUserId(UserId)
-	local GivenProfile: {
-		Nickname: string,
-		Bio: string?,
-		Role: string?,
-		Level: number?,
-	} = {
-		Nickname = "Name",
-	}
+	local Success, Result = Future.Try(function()
+		return UserService:GetUserInfosByUserIdsAsync({ UserId })[1]
+	end):Await()
 
-	if Player and Profile then
-		GivenProfile.Nickname = Profile.Data.Profile.Nickname
-		GivenProfile.Bio = Profile.Data.Profile.Bio
-		GivenProfile.Role = Profile.Data.Profile.Role
-		GivenProfile.Level = Profile.Data.Level
-	else
-		local Success, Result = Future.Try(function()
-			return UserService:GetUserInfosByUserIdsAsync({ UserId })[1]
-		end):Await()
-		if Success then
-			GivenProfile.Nickname = Result.DisplayName
-		end
+	if Player and DataProfile then
+		Profile.Nickname = DataProfile.Data.Profile.Nickname
+		Profile.Bio = DataProfile.Data.Profile.Bio
+		Profile.Role = DataProfile.Data.Profile.Role
+		Profile.Level = DataProfile.Data.Level
+	end
+	if Success and Result then
+		Profile.DisplayName = Result.DisplayName
+		Profile.Username = Result.Username
 	end
 
-	return GivenProfile
+	return Profile
 end
 
 function ProfilesService:SetRole(Player: Player, RoleId: string): boolean

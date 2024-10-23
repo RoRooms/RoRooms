@@ -57,6 +57,9 @@ local States = {
 		Nickname = Scope:Value(""),
 		Bio = Scope:Value(""),
 	},
+	Profiles = {
+		Loaded = Scope:Value({}),
+	},
 	WorldPageMenu = {
 		PlaceId = Scope:Value(),
 	},

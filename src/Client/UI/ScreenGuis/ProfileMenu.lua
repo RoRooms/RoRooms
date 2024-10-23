@@ -1,10 +1,8 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local SocialService = game:GetService("SocialService")
-local UserService = game:GetService("UserService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local Future = require(RoRooms.Parent.Future)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
@@ -12,98 +10,44 @@ local Config = require(RoRooms.Config).Config
 local Assets = require(RoRooms.SourceCode.Shared.Assets)
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
 local WorldsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Worlds.WorldsController)
+local Profiles = require(RoRooms.SourceCode.Client.UI.States.Profiles)
+local Types = require(RoRooms.SourceCode.Shared.Types)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
 local Peek = Fusion.peek
 
 return function(Scope: Fusion.Scope<any>, Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components, {
+		Profile = Profiles.ProfileValue,
+		SafeProfile = Profiles.SafeProfileValue,
+	})
 	local Theme = Themer.Theme:now()
 
 	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.Menus.CurrentMenu) == script.Name
 	end)
 
-	local Player = Scope:Value()
-	local Username = Scope:Value()
-	local DisplayName = Scope:Value()
-	local Nickname = Scope:Value()
-	local Bio = Scope:Value()
-	local UserInfo = Scope:Value()
+	local Profile = Scope:Profile(States.Menus.ProfileMenu.UserId)
+	local SafeProfile = Scope:SafeProfile(Profile)
 
 	local ShownName = Scope:Computed(function(Use)
-		local DisplayNameValue = Use(DisplayName)
-		local NicknameValue = Use(Nickname)
-
-		if NicknameValue then
-			return NicknameValue
-		elseif DisplayNameValue then
-			return DisplayNameValue
-		end
-
-		return "Name"
+		local SafeProfileValue: Types.Profile = Use(SafeProfile)
+		return SafeProfileValue.Nickname or SafeProfileValue.DisplayName
 	end)
 
 	local NicknameInput = Scope:Value("")
 	local BioInput = Scope:Value("")
 
-	local function UpdateUserInfo()
-		local UserId = Peek(States.Menus.ProfileMenu.UserId) or 1
-		Future.Try(function()
-			return UserService:GetUserInfosByUserIdsAsync({ UserId })[1]
-		end):After(function(Success, Response)
-			if Success and Response then
-				UserInfo:set(Response)
-			end
-		end)
-	end
-	local function UpdatePlayer()
-		local UserId = Peek(States.Menus.ProfileMenu.UserId)
-		if UserId ~= nil then
-			local PlayerInstance = Players:GetPlayerByUserId(UserId)
-
-			Player:set(PlayerInstance)
-
-			if PlayerInstance then
-				Username:set(PlayerInstance.Name)
-				DisplayName:set(PlayerInstance.DisplayName)
-				Nickname:set(PlayerInstance:GetAttribute("RR_Nickname"))
-				Bio:set(PlayerInstance:GetAttribute("RR_Bio"))
-			end
-		end
-	end
-	task.spawn(function()
-		UpdateUserInfo()
-		UpdatePlayer()
-	end)
-
 	Scope:Observer(States.Menus.ProfileMenu.UserId):onChange(function()
 		States.Menus.ProfileMenu.EditMode:set(false)
-
-		UpdatePlayer()
-		UpdateUserInfo()
-
-		local UserId = Peek(States.Menus.ProfileMenu.UserId)
-		if UserId ~= nil then
-			local PlayerInstance = Players:GetPlayerByUserId(UserId)
-
-			if PlayerInstance then
-				PlayerInstance:GetAttributeChangedSignal("RR_Nickname"):Connect(function()
-					UpdatePlayer()
-				end)
-				PlayerInstance:GetAttributeChangedSignal("RR_Bio"):Connect(function()
-					UpdatePlayer()
-				end)
-			end
-		end
 	end)
 	Scope:Observer(States.Menus.CurrentMenu):onChange(function()
 		States.Menus.ProfileMenu.EditMode:set(false)
 	end)
 	Scope:Observer(States.Menus.ProfileMenu.EditMode):onChange(function()
 		NicknameInput:set(Peek(ShownName) or "")
-		BioInput:set(Peek(Bio) or "")
+		-- BioInput:set(Peek(Bio) or "")
 	end)
 
 	if not RunService:IsRunning() then
@@ -257,7 +201,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 													Scope:Text {
 														Name = "Username",
 														Text = Scope:Computed(function(Use)
-															return `@{Use(Username)}`
+															local SafeProfileValue: Types.Profile = Use(SafeProfile)
+															return `@{Use(SafeProfileValue.Username)}`
 														end),
 														TextColor3 = Theme.Colors.NeutralContent.Dark,
 													},
@@ -266,11 +211,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 											Scope:Text {
 												Name = "Bio",
 												Text = Scope:Computed(function(Use)
-													return Use(Bio) or ""
+													local SafeProfileValue: Types.Profile = Use(SafeProfile)
+													return SafeProfileValue.Bio or ""
 												end),
 												TextWrapped = true,
 												Visible = Scope:Computed(function(Use)
-													return utf8.len(Use(Bio) or "") > 0
+													local SafeProfileValue: Types.Profile = Use(SafeProfile)
+													return utf8.len(SafeProfileValue.Bio or "") > 0
 												end),
 												LayoutOrder = 2,
 											},
