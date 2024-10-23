@@ -54,8 +54,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end
 	end)
 	Scope:Observer(States.Menus.ProfileMenu.EditMode):onChange(function()
-		NicknameInput:set(Peek(ShownName) or "")
-		-- BioInput:set(Peek(Bio) or "")
+		local ProfileValue = Peek(Profile)
+
+		if Peek(States.Menus.ProfileMenu.EditMode) then
+			NicknameInput:set(ProfileValue.Nickname or "")
+			BioInput:set(ProfileValue.Bio or "")
+		end
 	end)
 
 	if not RunService:IsRunning() then
