@@ -34,38 +34,10 @@ function ProfilesController:GetProfile(UserId: number)
 	return {}
 end
 
-function ProfilesController:_WatchProfile()
-	self.Scope:Observer(States.Profile.Nickname):onChange(function()
-		local NicknameValue = Peek(States.Profile.Nickname)
-
-		if next(States.Services.WorldsService) ~= nil then
-			States.Services.ProfilesService:SetNickname(NicknameValue)
-		end
-	end)
-	self.Scope:Observer(States.Profile.Bio):onChange(function()
-		local BioValue = Peek(States.Profile.Bio)
-
-		if next(States.Services.WorldsService) ~= nil then
-			States.Services.ProfilesService:SetBio(BioValue)
-		end
-	end)
-
-	local ProfilesService = Knit.GetService("ProfilesService")
-
-	ProfilesService.Nickname:Observe(function(Nickname: string)
-		States.Profile.Nickname:set(Nickname)
-	end)
-	ProfilesService.Bio:Observe(function(Bio: string)
-		States.Profile.Bio:set(Bio)
-	end)
-end
-
 function ProfilesController:KnitStart()
 	UIController:MountUI(require(RoRooms.SourceCode.Client.UI.ScreenGuis.ProfileMenu))
 
 	Topbar:AddTopbarButton("Profile", Topbar.NativeButtons.Profile)
-
-	self:_WatchProfile()
 
 	AvatarSelector:Start()
 

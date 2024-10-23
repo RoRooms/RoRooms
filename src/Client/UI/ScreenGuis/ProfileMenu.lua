@@ -325,8 +325,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 											local EditModeValue = Peek(States.Menus.ProfileMenu.EditMode)
 
 											if EditModeValue == true then
-												States.Profile.Nickname:set(Peek(NicknameInput))
-												States.Profile.Bio:set(Peek(BioInput))
+												if next(States.Services.ProfilesService) ~= nil then
+													States.Services.ProfilesService:SetNickname(Peek(NicknameInput))
+													States.Services.ProfilesService:SetBio(Peek(BioInput))
+												end
 											end
 
 											States.Menus.ProfileMenu.EditMode:set(not EditModeValue)

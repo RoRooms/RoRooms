@@ -54,10 +54,6 @@ local States = {
 	Items = {
 		Equipped = Scope:Value({}),
 	},
-	Profile = {
-		Nickname = Scope:Value(""),
-		Bio = Scope:Value(""),
-	},
 	Profiles = {
 		Loaded = Scope:Value({}),
 	},

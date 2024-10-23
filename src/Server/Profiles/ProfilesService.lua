@@ -12,9 +12,6 @@ local Types = require(RoRooms.SourceCode.Shared.Types)
 local ProfilesService = {
 	Name = "ProfilesService",
 	Client = {
-		Nickname = Knit.CreateProperty(""),
-		Bio = Knit.CreateProperty(""),
-		Role = Knit.CreateProperty(),
 		ProfileUpdated = Knit.CreateSignal(),
 	},
 }
@@ -91,23 +88,16 @@ function ProfilesService:SetRole(Player: Player, RoleId: string): boolean
 	end)
 	if Success then
 		Player:SetAttribute("RR_RoleId", RoleToSet)
-		self.Client.Role:SetFor(Player, RoleToSet)
 	end
 
 	return Success
 end
 
 function ProfilesService:SetNickname(Player: Player, Nickname: string)
-	local Success = PlayerDataStoreService:UpdateData(Player, function(Data)
+	return PlayerDataStoreService:UpdateData(Player, function(Data)
 		Data.Profile.Nickname = Nickname
 		return Data
 	end)
-	if Success then
-		Player:SetAttribute("RR_Nickname", Nickname)
-		self.Client.Nickname:SetFor(Player, Nickname)
-	end
-
-	return Success
 end
 
 function ProfilesService:SetBio(Player: Player, Bio: string)
@@ -117,7 +107,6 @@ function ProfilesService:SetBio(Player: Player, Bio: string)
 	end)
 	if Success then
 		Player:SetAttribute("RR_Bio", Bio)
-		self.Client.Bio:SetFor(Player, Bio)
 	end
 
 	return Success
@@ -150,6 +139,8 @@ end
 function ProfilesService:KnitStart()
 	PlayerDataStoreService.ProfileLoaded:Connect(function(Profile: PlayerDataStoreService.Profile)
 		self:_UpdateFromDataStoreProfile(Profile.Player)
+
+		Profile.Player:SetAttribute("RR_Nickname", Profile.Data.Profile.Nickname)
 	end)
 	for _, Profile in pairs(PlayerDataStoreService:GetProfiles()) do
 		self:_UpdateFromDataStoreProfile(Profile.Player)
