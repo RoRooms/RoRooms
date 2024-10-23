@@ -62,6 +62,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 							return Scope:FriendButton {
 								UserId = Friend.VisitorId,
 								DisplayName = Friend.DisplayName,
+								Online = Friend.IsOnline,
 								PlaceId = Friend.PlaceId,
 								JobId = Friend.GameId,
 								InRoRooms = false,

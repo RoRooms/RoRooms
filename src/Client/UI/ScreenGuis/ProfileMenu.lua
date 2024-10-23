@@ -47,6 +47,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 		if Fusion.peek(States.Menus.CurrentMenu) ~= script.Name then
 			States.Menus.ProfileMenu.UserId:set(nil)
+			States.Menus.ProfileMenu.FriendData.Online:set(false)
+			States.Menus.ProfileMenu.FriendData.InRoRooms:set(false)
+			States.Menus.ProfileMenu.FriendData.PlaceId:set(nil)
+			States.Menus.ProfileMenu.FriendData.JobId:set(nil)
 		end
 	end)
 	Scope:Observer(States.Menus.ProfileMenu.EditMode):onChange(function()
@@ -99,7 +103,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 						ImageRectSize = Vector2.new(420, 200),
 
 						[Children] = {
-							Scope:EditableAvatar {
+							Scope:PlayerAvatar {
 								Name = "Avatar",
 								AnchorPoint = Vector2.new(0, 1),
 								Position = Scope:Computed(function(Use)
@@ -113,9 +117,28 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 									return `rbxthumb://type=AvatarHeadShot&id={UserIdValue}&w=100&h=100`
 								end),
-								Disabled = Scope:Computed(function(Use)
+								Editable = Scope:Computed(function(Use)
 									local EditModeValue = Use(States.Menus.ProfileMenu.EditMode)
-									return (not EditModeValue) or (Config.Systems.Profiles.AvatarEditorCallback == nil)
+									return EditModeValue and (Config.Systems.Profiles.AvatarEditorCallback ~= nil)
+								end),
+								RingThickness = Scope:Computed(function(Use)
+									return Use(Theme.StrokeThickness["3"])
+								end),
+								Status = Scope:Computed(function(Use)
+									if Use(States.Menus.ProfileMenu.EditMode) then
+										return "Offline"
+									end
+									if Use(States.Menus.ProfileMenu.UserId) == Players.LocalPlayer.UserId then
+										return "RoRooms"
+									end
+
+									if Use(States.Menus.ProfileMenu.FriendData.InRoRooms) then
+										return "RoRooms"
+									elseif Use(States.Menus.ProfileMenu.FriendData.Online) then
+										return "Online"
+									else
+										return "Offline"
+									end
 								end),
 
 								OnActivated = function()
@@ -308,7 +331,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 									Scope:Button {
 										Name = "JoinButton",
 										Content = { Assets.Icons.General.Play, "Join" },
-										Color = Theme.Colors.Primary.Main,
+										Color = OnyxUI.Util.Colors.Green["400"],
 										Visible = Scope:Computed(function(Use)
 											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
 											local InRoRoomsValue = Use(States.Menus.ProfileMenu.FriendData.InRoRooms)

@@ -17,7 +17,7 @@ local Components = {
 	WorldsCategory = require(script.WorldsCategory),
 	Menu = require(script.Menu),
 	EditableText = require(script.EditableText),
-	EditableAvatar = require(script.EditableAvatar),
+	PlayerAvatar = require(script.PlayerAvatar),
 	ProfileBadges = require(script.ProfileBadges),
 	LevelBadge = require(script.LevelBadge),
 }

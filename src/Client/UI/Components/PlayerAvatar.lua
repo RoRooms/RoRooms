@@ -9,23 +9,42 @@ local OnyxUIFolder = RoRooms.Parent._Index["imavafe_onyx-ui@0.4.3"]["onyx-ui"]
 local Avatar = require(OnyxUIFolder.Components.Avatar)
 
 export type Props = Avatar.Props & {
-	Disabled: Fusion.UsedAs<boolean>?,
+	Editable: Fusion.UsedAs<boolean>?,
 	Image: Fusion.UsedAs<string>?,
+	Status: Fusion.UsedAs<string>?,
+	RingThickness: Fusion.UsedAs<number>?,
 }
 
 return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Components, OnyxUI.Util)
 	local Theme = OnyxUI.Themer.Theme:now()
 
-	local Disabled = OnyxUI.Util.Fallback(Props.Disabled, false)
+	local Editable = OnyxUI.Util.Fallback(Props.Editable, false)
 	local Image = OnyxUI.Util.Fallback(Props.Image, "")
+	local Status = OnyxUI.Util.Fallback(Props.Status, false)
+	local RingThickness = OnyxUI.Util.Fallback(Props.RingThickness, Theme.StrokeThickness["3"])
+
+	local StatusColor = Scope:Computed(function(Use)
+		local StatusValue = Use(Status)
+		if StatusValue == "RoRooms" then
+			return OnyxUI.Util.Colors.Green["400"]
+		elseif StatusValue == "Online" then
+			return OnyxUI.Util.Colors.Sky["500"]
+		else
+			return Use(Theme.Colors.Base.Main)
+		end
+	end)
 
 	local IsHovering = Scope:Value(false)
 	local IsHolding = Scope:Value(false)
 
 	return Scope:BaseButton(OnyxUI.Util.CombineProps(Props, {
-		Name = "EditableAvatar",
-		Disabled = Disabled,
+		Name = script.Name,
+		Disabled = Scope:Computed(function(Use)
+			return not Use(Editable)
+		end),
+		Active = Editable,
+		Interactable = Editable,
 		CornerRadius = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.CornerRadius.Full))
 		end),
@@ -38,7 +57,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 				Image = Image,
 				ImageTransparency = Scope:Spring(
 					Scope:Computed(function(Use)
-						if Use(Disabled) then
+						if not Use(Editable) then
 							return 0
 						elseif Use(IsHolding) then
 							return Use(Theme.Emphasis.Strong) * 1.25
@@ -59,8 +78,12 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 					return UDim.new(0, Use(Theme.CornerRadius.Full))
 				end),
 				RingEnabled = true,
-				RingColor = Theme.Colors.Base.Main,
-				RingThickness = Theme.StrokeThickness["4"],
+				RingColor = StatusColor,
+				RingThickness = RingThickness,
+				IndicatorEnabled = Scope:Computed(function(Use)
+					return Use(Status) == "RoRooms"
+				end),
+				IndicatorColor = StatusColor,
 
 				[Children] = {
 					Scope:Icon {
@@ -73,7 +96,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 						end),
 						ImageTransparency = Scope:Spring(
 							Scope:Computed(function(Use)
-								if Use(Disabled) then
+								if not Use(Editable) then
 									return 1
 								elseif Use(IsHolding) then
 									return Use(Theme.Emphasis.Regular)
