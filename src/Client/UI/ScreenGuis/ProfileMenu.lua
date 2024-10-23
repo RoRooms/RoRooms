@@ -125,7 +125,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					Scope:Frame {
 						Name = "Badges",
 						Padding = Scope:Computed(function(Use)
-							return UDim.new(0, Use(Theme.Spacing["0.75"]))
+							return UDim.new(0, Use(Theme.Spacing["0.5"]))
 						end),
 
 						[Children] = {
@@ -140,8 +140,19 @@ return function(Scope: Fusion.Scope<any>, Props)
 								end),
 
 								[Children] = {
+									Scope:IconText {
+										Content = { " " },
+										ContentSize = Theme.TextSize["1.5"],
+									},
 									Scope:LevelBadge {
-										Level = 0,
+										Visible = Scope:Computed(function(Use)
+											local ProfileValue = Use(Profile)
+											return (ProfileValue ~= nil) and ProfileValue.Level
+										end),
+										Level = Scope:Computed(function(Use)
+											local SafeProfileValue = Use(SafeProfile)
+											return SafeProfileValue.Level
+										end),
 									},
 									Scope:ProfileBadges {
 										UserId = States.Menus.ProfileMenu.UserId,
