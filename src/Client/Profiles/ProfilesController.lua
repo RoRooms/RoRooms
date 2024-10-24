@@ -49,6 +49,10 @@ function ProfilesController:KnitStart()
 				or (Peek(States.Menus.CurrentMenu) ~= "ProfileMenu")
 			then
 				States.Menus.ProfileMenu.UserId:set(Player.UserId)
+				States.Menus.ProfileMenu.Location.Online:set(true)
+				States.Menus.ProfileMenu.Location.InRoRooms:set(true)
+				States.Menus.ProfileMenu.Location.PlaceId:set(game.PlaceId)
+				States.Menus.ProfileMenu.Location.JobId:set(game.JobId)
 				States.Menus.CurrentMenu:set("ProfileMenu")
 			else
 				States.Menus.ProfileMenu.UserId:set(nil)

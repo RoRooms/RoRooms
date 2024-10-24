@@ -47,10 +47,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 		if Fusion.peek(States.Menus.CurrentMenu) ~= script.Name then
 			States.Menus.ProfileMenu.UserId:set(nil)
-			States.Menus.ProfileMenu.FriendData.Online:set(false)
-			States.Menus.ProfileMenu.FriendData.InRoRooms:set(false)
-			States.Menus.ProfileMenu.FriendData.PlaceId:set(nil)
-			States.Menus.ProfileMenu.FriendData.JobId:set(nil)
+			States.Menus.ProfileMenu.Location.Online:set(false)
+			States.Menus.ProfileMenu.Location.InRoRooms:set(false)
+			States.Menus.ProfileMenu.Location.PlaceId:set(nil)
+			States.Menus.ProfileMenu.Location.JobId:set(nil)
 		end
 	end)
 	Scope:Observer(States.Menus.ProfileMenu.EditMode):onChange(function()
@@ -136,9 +136,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 										return "RoRooms"
 									end
 
-									if Use(States.Menus.ProfileMenu.FriendData.InRoRooms) then
+									if Use(States.Menus.ProfileMenu.Location.InRoRooms) then
 										return "RoRooms"
-									elseif Use(States.Menus.ProfileMenu.FriendData.Online) then
+									elseif Use(States.Menus.ProfileMenu.Location.Online) then
 										return "Online"
 									else
 										return "Offline"
@@ -340,16 +340,16 @@ return function(Scope: Fusion.Scope<any>, Props)
 										Color = OnyxUI.Util.Colors.Green["500"],
 										Visible = Scope:Computed(function(Use)
 											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
-											local InRoRoomsValue = Use(States.Menus.ProfileMenu.FriendData.InRoRooms)
-											local JobIdValue = Use(States.Menus.ProfileMenu.FriendData.JobId)
+											local InRoRoomsValue = Use(States.Menus.ProfileMenu.Location.InRoRooms)
+											local JobIdValue = Use(States.Menus.ProfileMenu.Location.JobId)
 
 											return (UserIdValue ~= Players.LocalPlayer.UserId)
 												and (InRoRoomsValue and JobIdValue)
 										end),
 
 										OnActivated = function()
-											local JobIdValue = Peek(States.Menus.ProfileMenu.FriendData.JobId)
-											local PlaceIdValue = Peek(States.Menus.ProfileMenu.FriendData.PlaceId)
+											local JobIdValue = Peek(States.Menus.ProfileMenu.Location.JobId)
+											local PlaceIdValue = Peek(States.Menus.ProfileMenu.Location.PlaceId)
 
 											if JobIdValue and PlaceIdValue then
 												if WorldsController then
@@ -362,7 +362,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										Name = "InviteButton",
 										Content = { Assets.Icons.General.Mail, "Invite" },
 										Color = Scope:Computed(function(Use)
-											local InRoRoomsValue = Use(States.Menus.ProfileMenu.FriendData.InRoRooms)
+											local InRoRoomsValue = Use(States.Menus.ProfileMenu.Location.InRoRooms)
 
 											if InRoRoomsValue then
 												return Use(Theme.Colors.Neutral.Main)
