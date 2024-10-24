@@ -1,56 +1,43 @@
-local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent
 local AttributeBind = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
-local Future = require(RoRooms.Parent.Future)
 local Component = require(RoRooms.Parent.Component)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Fusion = require(RoRooms.Parent.Fusion)
 local Trove = require(RoRooms.Parent.Trove)
-local WorldsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Worlds.WorldsController)
 
 local Peek = Fusion.peek
+
+local DEBOUNCE_DURATION = 1
 
 local WorldTeleporterComponent = Component.new {
 	Tag = "RR_WorldTeleporter",
 }
 
 function WorldTeleporterComponent:_PromptTeleport()
-	local PlaceId = Peek(self.PlaceId)
-	local PlaceInfo = Peek(self.PlaceInfo)
+	if (os.time() - self.DebounceTimestamp) >= DEBOUNCE_DURATION then
+		self.DebounceTimestamp = os.time()
+	else
+		return
+	end
 
-	if PlaceId and PlaceInfo then
-		if WorldsController ~= nil then
-			WorldsController:TeleportToWorld(PlaceId)
-		end
+	local PlaceId = Peek(self.PlaceId)
+
+	if PlaceId then
+		States.WorldPageMenu.PlaceId:set(PlaceId)
+		States.Menus.CurrentMenu:set("WorldPageMenu")
 	end
 end
 
-function WorldTeleporterComponent:_UpdatePlaceInfo(PlaceId: number)
-	Future.Try(function(_PlaceId)
-		return MarketplaceService:GetProductInfo(_PlaceId)
-	end, PlaceId):After(function(Success, PlaceInfo)
-		if Success == true then
-			self.PlaceInfo:set(PlaceInfo)
-		end
-	end)
-end
-
 function WorldTeleporterComponent:Start()
-	self.Scope:Observer(self.PlaceId):onChange(function()
-		self:_UpdatePlaceInfo(Peek(self.PlaceId))
-	end)
-	self:_UpdatePlaceInfo(Peek(self.PlaceId))
-
 	self.Instance.Touched:Connect(function(TouchedPart: BasePart)
 		local Character = TouchedPart:FindFirstAncestorOfClass("Model")
 		if Character then
 			local Player = Players:GetPlayerFromCharacter(Character)
 			if Player == Players.LocalPlayer then
 				if #Peek(States.Prompts) == 0 then
-					self:_PromptTeleport(Peek(self.PlaceId), Peek(self.PlaceInfo))
+					self:_PromptTeleport(Peek(self.PlaceId))
 				end
 			end
 		end
@@ -66,7 +53,7 @@ function WorldTeleporterComponent:Construct()
 		self.PlaceId:set(Value)
 	end)
 
-	self.PlaceInfo = self.Scope:Value({})
+	self.DebounceTimestamp = 0
 
 	if not self.Instance:IsA("BasePart") then
 		warn("WorldTeleporter must be a BasePart object", self.Instance)
