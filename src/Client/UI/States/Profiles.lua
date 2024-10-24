@@ -53,16 +53,14 @@ function Profiles.ProfileValue(
 	Scope:Observer(UserId):onChange(function()
 		UpdateProfile()
 	end)
-	task.delay(5, function()
-		if next(States.Services.ProfilesService) ~= nil then
-			States.Services.ProfilesService.ProfileUpdated:Connect(function(UpdatedUserId: number)
-				if UpdatedUserId == Fusion.peek(UserId) then
-					Profiles:FetchProfile(UpdatedUserId)
-					UpdateProfile()
-				end
-			end)
-		end
-	end)
+	if next(States.Services.ProfilesService) ~= nil then
+		States.Services.ProfilesService.ProfileUpdated:Connect(function(UpdatedUserId: number)
+			if UpdatedUserId == Fusion.peek(UserId) then
+				Profiles:FetchProfile(UpdatedUserId)
+				UpdateProfile()
+			end
+		end)
+	end
 	UpdateProfile()
 
 	return ProfileValue

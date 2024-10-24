@@ -82,18 +82,17 @@ function ProfilesService:SetRole(Player: Player, RoleId: string): boolean
 		RoleToSet = RoleId
 	end
 
-	local Success = PlayerDataStoreService:UpdateData(Player, function(Data)
+	Player:SetAttribute("RR_Role", RoleToSet)
+
+	return PlayerDataStoreService:UpdateData(Player, function(Data)
 		Data.Profile.Role = RoleToSet
 		return Data
 	end)
-	if Success then
-		Player:SetAttribute("RR_RoleId", RoleToSet)
-	end
-
-	return Success
 end
 
 function ProfilesService:SetNickname(Player: Player, Nickname: string)
+	Player:SetAttribute("RR_Nickname", Nickname)
+
 	return PlayerDataStoreService:UpdateData(Player, function(Data)
 		Data.Profile.Nickname = Nickname
 		return Data
@@ -101,15 +100,12 @@ function ProfilesService:SetNickname(Player: Player, Nickname: string)
 end
 
 function ProfilesService:SetBio(Player: Player, Bio: string)
-	local Success = PlayerDataStoreService:UpdateData(Player, function(Data)
+	Player:SetAttribute("RR_Bio", Bio)
+
+	return PlayerDataStoreService:UpdateData(Player, function(Data)
 		Data.Profile.Bio = Bio
 		return Data
 	end)
-	if Success then
-		Player:SetAttribute("RR_Bio", Bio)
-	end
-
-	return Success
 end
 
 function ProfilesService:_UpdateFromDataStoreProfile(Player: Player)
@@ -139,8 +135,6 @@ end
 function ProfilesService:KnitStart()
 	PlayerDataStoreService.ProfileLoaded:Connect(function(Profile: PlayerDataStoreService.Profile)
 		self:_UpdateFromDataStoreProfile(Profile.Player)
-
-		Profile.Player:SetAttribute("RR_Nickname", Profile.Data.Profile.Nickname)
 	end)
 	for _, Profile in pairs(PlayerDataStoreService:GetProfiles()) do
 		self:_UpdateFromDataStoreProfile(Profile.Player)
@@ -159,6 +153,10 @@ function ProfilesService:KnitStart()
 			end
 		end
 	)
+
+	PlayerDataStoreService.ProfileLoaded:Connect(function(Profile: PlayerDataStoreService.Profile)
+		self.Client.ProfileUpdated:FireAll(Profile.Player.UserId)
+	end)
 end
 
 return ProfilesService
