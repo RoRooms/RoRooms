@@ -33,7 +33,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Parent = Props.Parent,
 		Open = PromptOpen,
 		AnchorPoint = Vector2.new(0.5, 0.5),
-		Position = UDim2.fromScale(0.5, 0.5),
+		Position = Scope:Computed(function(Use)
+			local YPos = Use(States.Topbar.YPosition)
+			if not Use(PromptOpen) then
+				YPos = YPos + 15
+			end
+			return UDim2.new(UDim.new(0.5, 0), UDim.new(0.5, YPos))
+		end),
 		Size = Scope:Computed(function(Use)
 			return UDim2.fromOffset(Use(Theme.Spacing["16"]) * 1.25, 0)
 		end),
