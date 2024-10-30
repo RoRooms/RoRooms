@@ -6,7 +6,7 @@ local Knit = require(RoRooms.Parent.Knit)
 local Peek = Fusion.peek
 
 local PAGE_SIZE = 3
-local RANDOM_WORLD_BASIS = 9
+local RANDOM_WORLD_BASIS = PAGE_SIZE * 3
 
 local TopWorldsService
 local RandomWorldsService
@@ -28,14 +28,16 @@ function Worlds:LoadAssortedWorlds(PageCount: number?)
 		PageCount = 10
 	end
 
-	local TOTAL_WORLDS = PageCount * PAGE_SIZE
 	local AssortedWorldsValue = Peek(States.Worlds.AssortedWorlds)
 	local TopWorldsValue = Peek(States.Worlds.TopWorlds)
+	local TotalWorlds = PageCount * PAGE_SIZE
+	local StartIndex = #AssortedWorldsValue
+	local EndIndex = StartIndex + TotalWorlds
 
-	for Index = 1, #TopWorldsValue do
+	for Index = StartIndex, EndIndex do
 		local World = TopWorldsValue[Index]
 		if World then
-			if (Index % RANDOM_WORLD_BASIS) == 0 then
+			if math.random(1, RANDOM_WORLD_BASIS) == RANDOM_WORLD_BASIS then
 				local RandomWorld = self:GetUnusedRandomWorld(AssortedWorldsValue)
 				if RandomWorld ~= nil then
 					table.insert(AssortedWorldsValue, RandomWorld)
@@ -48,7 +50,7 @@ function Worlds:LoadAssortedWorlds(PageCount: number?)
 		end
 	end
 
-	for Count = 1, TOTAL_WORLDS do
+	for Count = 1, TotalWorlds - #AssortedWorldsValue do
 		if AssortedWorldsValue[Count] == nil then
 			local RandomWorld = self:GetUnusedRandomWorld(AssortedWorldsValue)
 			if RandomWorld ~= nil then
