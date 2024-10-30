@@ -155,12 +155,6 @@ function Worlds:_AddRandomWorlds(RandomWorlds: WorldPages)
 		end
 	end
 
-	for _ = 1, 10000 do
-		table.insert(NewRandomWorlds, {
-			PlaceId = math.random(1, 100000000),
-		})
-	end
-
 	States.Worlds.RandomWorlds:set(NewRandomWorlds)
 end
 
