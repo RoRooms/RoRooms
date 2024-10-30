@@ -50,8 +50,11 @@ function Worlds:LoadAssortedWorlds(PageCount: number?)
 		end
 	end
 
-	for Count = 1, TotalWorlds - #AssortedWorldsValue do
-		if AssortedWorldsValue[Count] == nil then
+	local FillerStartIndex = #AssortedWorldsValue
+	local FillerEndIndex = FillerStartIndex + (EndIndex - FillerStartIndex)
+
+	if FillerEndIndex > FillerStartIndex then
+		for _ = FillerStartIndex, FillerEndIndex do
 			local RandomWorld = self:GetUnusedRandomWorld(AssortedWorldsValue)
 			if RandomWorld ~= nil then
 				table.insert(AssortedWorldsValue, RandomWorld)
@@ -150,6 +153,12 @@ function Worlds:_AddRandomWorlds(RandomWorlds: WorldPages)
 				table.insert(NewRandomWorlds, World)
 			end
 		end
+	end
+
+	for _ = 1, 10000 do
+		table.insert(NewRandomWorlds, {
+			PlaceId = math.random(1, 100000000),
+		})
 	end
 
 	States.Worlds.RandomWorlds:set(NewRandomWorlds)
