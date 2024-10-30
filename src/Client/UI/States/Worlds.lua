@@ -69,6 +69,10 @@ end
 function Worlds:GetUnusedRandomWorld(UsedWorlds: WorldPage)
 	local RandomWorldsValue = Peek(States.Worlds.RandomWorlds)
 
+	if #RandomWorldsValue == 0 then
+		return nil
+	end
+
 	local ChosenWorld = RandomWorldsValue[math.random(1, #RandomWorldsValue)]
 	local ExistingIndex = self:_FindPlaceIdInWorldsArray(UsedWorlds, ChosenWorld.PlaceId)
 
@@ -161,8 +165,8 @@ function Worlds:_FindPlaceIdInWorldsArray(WorldsArray: { [number]: World }, Plac
 	return nil
 end
 
-function Worlds:ClearTopWorlds()
-	States.Worlds.TopWorlds:set({})
+function Worlds:ClearWorlds(WorldsObject: Fusion.Value<Fusion.Scope<any>, WorldPage>)
+	WorldsObject:set({})
 end
 
 function Worlds:ClearRandomWorlds()
@@ -175,19 +179,28 @@ function Worlds:Start()
 
 	if TopWorldsService then
 		TopWorldsService.TopWorldsInitialized:Connect(function(TopWorlds: WorldPages)
-			self:ClearTopWorlds()
+			self:ClearWorlds(States.Worlds.TopWorlds)
 			self:_AddTopWorlds(TopWorlds)
+
+			self:ClearWorlds(States.Worlds.AssortedWorlds)
+			self:LoadAssortedWorlds()
 		end)
 	end
 	if RandomWorldsService then
 		RandomWorldsService.RandomWorldsInitialized:Connect(function(RandomWorlds: WorldPages)
-			self:ClearRandomWorlds()
+			self:ClearWorlds(States.Worlds.RandomWorlds)
 			self:_AddRandomWorlds(RandomWorlds)
+
+			self:ClearWorlds(States.Worlds.AssortedWorlds)
+			self:LoadAssortedWorlds()
 		end)
 	end
 
 	if #Peek(States.Worlds.TopWorlds) == 0 then
-		self:FetchTopWorlds(nil, true)
+		self:FetchTopWorlds(nil, true):andThen(function()
+			self:ClearWorlds(States.Worlds.AssortedWorlds)
+			self:LoadAssortedWorlds()
+		end)
 	end
 	if #Peek(States.Worlds.RandomWorlds) == 0 then
 		self:FetchRandomWorlds(nil, true)
