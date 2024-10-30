@@ -79,6 +79,7 @@ local States = {
 		ScreenSize = Scope:Value(Vector2.new()),
 	},
 	Worlds = {
+		AssortedWorlds = Scope:Value({}),
 		TopWorlds = Scope:Value({}),
 		RandomWorlds = Scope:Value({}),
 	},

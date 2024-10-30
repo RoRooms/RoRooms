@@ -46,6 +46,7 @@ local Icons = {
 		EditPerson = "rbxassetid://108466250207627",
 		Toolbox = "rbxassetid://129909469212402",
 		Mail = "rbxassetid://72239383814067",
+		Globe = "rbxassetid://85205640937837",
 	},
 }
 

@@ -85,9 +85,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 						},
 					},
 					Scope:WorldsCategory {
-						Name = "Popular",
-						Title = "Popular",
-						Icon = Assets.Icons.General.People,
+						Name = "Global",
+						Title = "Global",
+						Icon = Assets.Icons.General.Globe,
 
 						[Children] = {
 							Scope:Frame {
@@ -101,7 +101,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ListWraps = true,
 
 								[Children] = {
-									Scope:ForValues(States.Worlds.TopWorlds, function(Use, Scope, World)
+									Scope:ForValues(States.Worlds.AssortedWorlds, function(Use, Scope, World)
 										return Themer.Theme:is(OnyxUITheme):during(function()
 											return Scope:WorldButton {
 												PlaceId = World.PlaceId,
@@ -121,82 +121,22 @@ return function(Scope: Fusion.Scope<any>, Props)
 										"Loading..",
 									})
 
-									Worlds:FetchTopWorlds():andThen(function(Result)
-										if typeof(Result) == "table" then
-											LoadMoreButtonContent:set({
-												Assets.Icons.General.Checkmark,
-												"Loaded",
-											})
-											task.wait(0.5)
-											LoadMoreButtonContent:set(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
-										else
-											LoadMoreButtonContent:set({
-												Assets.Icons.General.Warning,
-												"Error",
-											})
-											task.wait(0.5)
-											LoadMoreButtonContent:set(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
-										end
-									end)
-								end,
-							},
-						},
-					},
-					Scope:WorldsCategory {
-						Name = "Random",
-						Title = "Random",
-						Icon = Assets.Icons.General.Die,
-
-						[Children] = {
-							Scope:Frame {
-								Name = "Worlds",
-								AutomaticSize = Enum.AutomaticSize.Y,
-								ListEnabled = true,
-								ListPadding = Scope:Computed(function(Use)
-									return UDim.new(0, Use(Theme.Spacing["0.75"]))
-								end),
-								ListFillDirection = Enum.FillDirection.Horizontal,
-								ListWraps = true,
-
-								[Children] = {
-									Scope:ForValues(States.Worlds.RandomWorlds, function(Use, Scope, World)
-										return Themer.Theme:is(OnyxUITheme):during(function()
-											return Scope:WorldButton {
-												PlaceId = World.PlaceId,
-											}
-										end)
-									end),
-								},
-							},
-							Scope:Button {
-								Name = "RefreshButton",
-								Content = RefreshButtonContent,
-								Color = Theme.Colors.Primary.Main,
-								AutomaticSize = Enum.AutomaticSize.Y,
-
-								OnActivated = function()
-									RefreshButtonContent:set({
-										"Refreshing..",
-									})
-
-									Worlds:ClearRandomWorlds()
-									Worlds:FetchRandomWorlds(1, true):andThen(function(Result)
-										if typeof(Result) == "table" then
-											RefreshButtonContent:set({
-												Assets.Icons.General.Checkmark,
-												"Refreshed",
-											})
-											task.wait(0.5)
-											RefreshButtonContent:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
-										else
-											RefreshButtonContent:set({
-												Assets.Icons.General.Warning,
-												"Error",
-											})
-											task.wait(0.5)
-											RefreshButtonContent:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
-										end
-									end)
+									local AssortedWorlds = Worlds:LoadAssortedWorlds()
+									if typeof(AssortedWorlds) == "table" then
+										LoadMoreButtonContent:set({
+											Assets.Icons.General.Checkmark,
+											"Loaded",
+										})
+										task.wait(0.5)
+										LoadMoreButtonContent:set(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
+									else
+										LoadMoreButtonContent:set({
+											Assets.Icons.General.Warning,
+											"Error",
+										})
+										task.wait(0.5)
+										LoadMoreButtonContent:set(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
+									end
 								end,
 							},
 						},

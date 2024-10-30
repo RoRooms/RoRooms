@@ -58,7 +58,7 @@ function RandomWorldsService:_UpdateRandomWorlds(WorldRegistry: { [number]: Worl
 
 	for PlaceId, _ in pairs(WorldRegistry) do
 		table.insert(RandomWorlds, {
-			PlaceId = PlaceId,
+			PlaceId = tonumber(PlaceId),
 		})
 	end
 

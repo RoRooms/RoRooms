@@ -6,6 +6,7 @@ local Knit = require(RoRooms.Parent.Knit)
 local Peek = Fusion.peek
 
 local PAGE_SIZE = 3
+local RANDOM_WORLD_BASIS = 9
 
 local TopWorldsService
 local RandomWorldsService
@@ -21,6 +22,62 @@ type WorldPages = {
 }
 
 local Worlds = {}
+
+function Worlds:LoadAssortedWorlds(PageCount: number?)
+	if PageCount == nil then
+		PageCount = 10
+	end
+
+	local TOTAL_WORLDS = PageCount * PAGE_SIZE
+	local AssortedWorldsValue = Peek(States.Worlds.AssortedWorlds)
+	local TopWorldsValue = Peek(States.Worlds.TopWorlds)
+
+	for Index = 1, #TopWorldsValue do
+		local World = TopWorldsValue[Index]
+		if World then
+			if (Index % RANDOM_WORLD_BASIS) == 0 then
+				local RandomWorld = self:GetUnusedRandomWorld(AssortedWorldsValue)
+				if RandomWorld ~= nil then
+					table.insert(AssortedWorldsValue, RandomWorld)
+				end
+			else
+				if self:_FindPlaceIdInWorldsArray(AssortedWorldsValue, World.PlaceId) == nil then
+					table.insert(AssortedWorldsValue, World)
+				end
+			end
+		end
+	end
+
+	for Count = 1, TOTAL_WORLDS do
+		if AssortedWorldsValue[Count] == nil then
+			local RandomWorld = self:GetUnusedRandomWorld(AssortedWorldsValue)
+			if RandomWorld ~= nil then
+				table.insert(AssortedWorldsValue, RandomWorld)
+			else
+				break
+			end
+		end
+	end
+
+	States.Worlds.AssortedWorlds:set(AssortedWorldsValue)
+
+	return AssortedWorldsValue
+end
+
+function Worlds:GetUnusedRandomWorld(UsedWorlds: WorldPage)
+	local RandomWorldsValue = Peek(States.Worlds.RandomWorlds)
+
+	local ChosenWorld = RandomWorldsValue[math.random(1, #RandomWorldsValue)]
+	local ExistingIndex = self:_FindPlaceIdInWorldsArray(UsedWorlds, ChosenWorld.PlaceId)
+
+	if #UsedWorlds >= #RandomWorldsValue then
+		return nil
+	elseif ExistingIndex == nil then
+		return ChosenWorld
+	else
+		return self:GetUnusedRandomWorld(UsedWorlds)
+	end
+end
 
 function Worlds:FetchTopWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 	if PageCount == nil then
@@ -93,9 +150,9 @@ function Worlds:_AddRandomWorlds(RandomWorlds: WorldPages)
 end
 
 function Worlds:_FindPlaceIdInWorldsArray(WorldsArray: { [number]: World }, PlaceId: number)
-	for _, World in ipairs(WorldsArray) do
+	for Index, World in ipairs(WorldsArray) do
 		if World.PlaceId == PlaceId then
-			return World
+			return Index, World
 		end
 	end
 
