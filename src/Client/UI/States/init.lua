@@ -18,6 +18,7 @@ local States = {
 		RandomWorldsService = UnloadedService(),
 		UpdatesService = UnloadedService(),
 		LevelingService = UnloadedService(),
+		WorldRegistryService = UnloadedService(),
 	},
 	Controllers = {
 		UIController = nil,
