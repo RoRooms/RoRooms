@@ -21,25 +21,29 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.Menus.CurrentMenu) == script.Name
 	end)
-	local PlaceInfo = Scope:Value({})
+	local ProductInfo = Scope:Value({})
 
 	local function UpdatePlaceInfo()
 		if Peek(States.WorldPageMenu.PlaceId) == nil then
 			return
 		end
 
-		Future.Try(function()
-			return MarketplaceService:GetProductInfo(Peek(States.WorldPageMenu.PlaceId))
-		end):After(function(Success, Result)
-			if Success then
-				PlaceInfo:set(Result)
-			else
-				warn(Result)
-			end
+		task.spawn(function()
+			Future.Try(function()
+				return MarketplaceService:GetProductInfo(Peek(States.WorldPageMenu.PlaceId))
+			end):After(function(Success, Result)
+				if Success then
+					ProductInfo:set(Result)
+				else
+					warn(Result)
+				end
+			end)
 		end)
 	end
 
-	Scope:Observer(States.WorldPageMenu.PlaceId):onChange(UpdatePlaceInfo)
+	Scope:Observer(States.WorldPageMenu.PlaceId):onChange(function()
+		UpdatePlaceInfo()
+	end)
 	UpdatePlaceInfo()
 
 	local WorldPageMenu = Scope:Menu {
@@ -64,8 +68,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 					Scope:Image {
 						Name = "Thumbnail",
 						Image = Scope:Computed(function(Use)
-							if Use(PlaceInfo) and Use(PlaceInfo).IconImageAssetId then
-								return `rbxassetid://{Use(PlaceInfo).IconImageAssetId}`
+							local PlaceIdValue = Use(States.WorldPageMenu.PlaceId)
+							if PlaceIdValue then
+								return `rbxthumb://type=GameThumbnail&id={PlaceIdValue}&w=480&h=270`
 							else
 								return "rbxasset://textures/ui/GuiImagePlaceholder.png"
 							end
@@ -90,8 +95,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 								Name = "Name",
 								AutomaticSize = Enum.AutomaticSize.Y,
 								Text = Scope:Computed(function(Use)
-									if Use(PlaceInfo) and Use(PlaceInfo).Name then
-										return Use(PlaceInfo).Name
+									if Use(ProductInfo) and Use(ProductInfo).Name then
+										return Use(ProductInfo).Name
 									else
 										return "Name"
 									end
@@ -107,8 +112,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 							Scope:Text {
 								Name = "Description",
 								Text = Scope:Computed(function(Use)
-									if Use(PlaceInfo) and Use(PlaceInfo).Description then
-										return Use(PlaceInfo).Description
+									if Use(ProductInfo) and Use(ProductInfo).Description then
+										return Use(ProductInfo).Description
 									else
 										return "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 									end
