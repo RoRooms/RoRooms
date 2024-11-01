@@ -16,7 +16,7 @@ function ConfigUtils:IfNumber(Value: any): number?
 	end
 end
 
-function ConfigUtils:GetTintColor(Instance: Instance)
+function ConfigUtils:GetColor(Instance: Instance)
 	local LevelRequirement = Instance:GetAttribute("LevelRequirement")
 	return (LevelRequirement and Color3.fromRGB(68, 55, 68))
 end
@@ -42,8 +42,7 @@ function ConfigUtils:AnimationToEmote(Animation: Animation)
 		LevelRequirement = self:IfNumber(Animation:GetAttribute("LevelRequirement")),
 		LabelIcon = self:IfString(Animation:GetAttribute("LabelIcon")),
 		LabelText = self:IfString(Animation:GetAttribute("LabelText")),
-		LayoutOrder = self:IfNumber(Animation:GetAttribute("LayoutOrder")),
-		Color = self:GetTintColor(Animation),
+		Color = self:GetColor(Animation),
 		Category = self:GetCategory(Animation),
 	}
 end
@@ -55,9 +54,7 @@ function ConfigUtils:ToolToItem(Tool: Tool)
 		LevelRequirement = Tool:GetAttribute("LevelRequirement"),
 		LabelIcon = Tool:GetAttribute("LabelIcon"),
 		LabelText = Tool:GetAttribute("LabelText"),
-		LayoutOrder = Tool:GetAttribute("LayoutOrder"),
-		Unlisted = Tool:GetAttribute("Unlisted"),
-		TintColor = self:GetTintColor(Tool),
+		Color = self:GetColor(Tool),
 		Category = self:GetCategory(Tool),
 	}
 end
