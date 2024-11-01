@@ -36,6 +36,10 @@
             }
           }
         }
+      },
+      "RoRoomsLoader": {
+        "$path": "EasyLoader",
+        "$ignoreUnknownInstances": true
       }
     }
   }
