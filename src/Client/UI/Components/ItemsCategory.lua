@@ -98,6 +98,17 @@ return function(Scope: Fusion.Scope<any>, Props)
 									ItemId = ItemId,
 									Item = Item,
 									Color = Item.TintColor,
+									LayoutOrder = Scope:Computed(function(Use)
+										if Item then
+											if Item.LevelRequirement then
+												return Item.LevelRequirement
+											elseif Item.Name then
+												return string.byte(Item.Name)
+											end
+										end
+
+										return 0
+									end),
 								}
 						else
 							return ItemId, nil

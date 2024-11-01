@@ -1,3 +1,5 @@
+local Players = game:GetService("Players")
+
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local States = require(script.Parent)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
@@ -41,6 +43,9 @@ Topbar.NativeButtons = {
 		Icon = Assets.Icons.Topbar.Profile.Outlined,
 		IconFilled = Assets.Icons.Topbar.Profile.Filled,
 		LayoutOrder = 1,
+		Callback = function()
+			States.Menus.ProfileMenu.UserId:set(Players.LocalPlayer.UserId)
+		end,
 	},
 	Worlds = {
 		MenuName = "WorldsMenu",

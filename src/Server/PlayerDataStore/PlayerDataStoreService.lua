@@ -4,6 +4,8 @@ local RoRooms = script.Parent.Parent.Parent.Parent
 local ProfileService = require(RoRooms.SourceCode.Storage.Packages.ProfileService)
 local Signal = require(RoRooms.Parent.Signal)
 local DataTemplate = require(script.Parent.DataTemplate)
+local DeepCopy = require(RoRooms.SourceCode.Shared.ExtPackages.DeepCopy)
+local DeepEquals = require(RoRooms.SourceCode.Shared.ExtPackages.DeepEquals)
 
 local KICK_MESSAGE = "Data failure. Please rejoin."
 
@@ -17,8 +19,26 @@ local PlayerDataStoreService = {
 
 	ProfileStore = ProfileService.GetProfileStore("RoRoomsPlayerData", DataTemplate),
 	ProfileLoaded = Signal.new(),
+	DataUpdated = Signal.new(),
 	Profiles = {},
 }
+
+function PlayerDataStoreService:UpdateData(Player: Player, Callback: (ProfileData) -> ProfileData)
+	local Profile = self:GetProfile(Player.UserId)
+	if Profile then
+		local OldData = Profile.Data
+		local NewData = Callback(DeepCopy(OldData))
+
+		if (NewData ~= nil) and (not DeepEquals(OldData, NewData)) then
+			Profile.Data = NewData
+
+			self.DataUpdated:Fire(Player, OldData, NewData)
+			return true
+		end
+	end
+
+	return false
+end
 
 function PlayerDataStoreService:GetProfiles(): { [number]: Profile }
 	return self.Profiles

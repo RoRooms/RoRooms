@@ -14,6 +14,7 @@ export type Props = {
 	AutomaticSize: Fusion.UsedAs<Enum.AutomaticSize>?,
 	ListFillDirection: Fusion.UsedAs<Enum.FillDirection>?,
 	ListHorizontalFlex: Fusion.UsedAs<Enum.UIFlexAlignment>?,
+	DisplayOrder: Fusion.UsedAs<number>?,
 
 	[typeof(Children)]: { any },
 }
@@ -40,12 +41,20 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local ListFillDirection = Util.Fallback(Props.ListFillDirection, Enum.FillDirection.Vertical)
 	local ListHorizontalFlex = Util.Fallback(Props.ListHorizontalFlex, Enum.UIFlexAlignment.None)
 	local ListVerticalFlex = Util.Fallback(Props.ListVerticalFlex, Enum.UIFlexAlignment.None)
+	local Padding = Util.Fallback(
+		Props.Padding,
+		Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["1.5"]))
+		end)
+	)
+	local DisplayOrder = Util.Fallback(Props.DisplayOrder, 0)
 
 	return Scope:New "ScreenGui" {
 		Name = Name,
 		Parent = Props.Parent,
 		Enabled = Open,
 		ResetOnSpawn = false,
+		DisplayOrder = DisplayOrder,
 
 		[Children] = {
 			Scope:MenuFrame {
@@ -69,9 +78,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListFillDirection = ListFillDirection,
 				ListHorizontalFlex = ListHorizontalFlex,
 				ListVerticalFlex = ListVerticalFlex,
-				Padding = Scope:Computed(function(Use)
-					return UDim.new(0, Use(Theme.Spacing["1.5"]))
-				end),
+				Padding = Padding,
 
 				[Children] = Props[Children],
 			},

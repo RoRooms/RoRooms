@@ -1,11 +1,6 @@
-type Entry = string | { [string]: Entry }
-type Icons = {
-	[string]: Entry,
-}
-
-local Icons: Icons = {
+local Icons = {
 	UserBadges = {
-		Level = "rbxassetid://122517370340800",
+		Level = "rbxassetid://113726942412490",
 		RoRooms = "rbxassetid://74362866882865",
 		RoRoomsPlus = "rbxassetid://98919849651582",
 		ServerOwner = "rbxassetid://81805631752548",
@@ -50,6 +45,8 @@ local Icons: Icons = {
 		Person = "rbxassetid://95694895434247",
 		EditPerson = "rbxassetid://108466250207627",
 		Toolbox = "rbxassetid://129909469212402",
+		Mail = "rbxassetid://72239383814067",
+		Globe = "rbxassetid://85205640937837",
 	},
 }
 

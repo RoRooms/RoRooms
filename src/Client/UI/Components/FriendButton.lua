@@ -1,15 +1,10 @@
 local MarketplaceService = game:GetService("MarketplaceService")
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local SocialService = game:GetService("SocialService")
 
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Future)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
-local ColorUtils = require(RoRooms.Parent.ColorUtils)
 local States = require(RoRooms.SourceCode.Client.UI.States)
-local WorldsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Worlds.WorldsController)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -27,9 +22,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local PlaceId = Scope:EnsureValue(Util.Fallback(Props.PlaceId, nil))
 	local UserId = Util.Fallback(Props.UserId, 1)
 	local DisplayName = Util.Fallback(Props.DisplayName, "DisplayName")
+	local Online = Util.Fallback(Props.Online, false)
 	local JobId = Util.Fallback(Props.JobId, nil)
 	local InRoRooms = Util.Fallback(Props.InRoRooms, false)
-	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
 
 	local PlaceInfo = Scope:Value({})
 
@@ -52,11 +47,23 @@ return function(Scope: Fusion.Scope<any>, Props)
 	Scope:Observer(PlaceId):onChange(UpdatePlaceInfo)
 	UpdatePlaceInfo()
 
-	local StatusColor = Scope:Computed(function(Use)
+	local Status = Scope:Computed(function(Use)
 		if Use(InRoRooms) then
-			return Color3.fromRGB(2, 183, 87)
+			return "RoRooms"
+		elseif Use(Online) then
+			return "Online"
 		else
-			return Color3.fromRGB(0, 162, 255)
+			return "Offline"
+		end
+	end)
+	local StatusColor = Scope:Computed(function(Use)
+		local StatusValue = Use(Status)
+		if StatusValue == "RoRooms" then
+			return OnyxUI.Util.Colors.Green["500"]
+		elseif StatusValue == "Online" then
+			return OnyxUI.Util.Colors.Sky["500"]
+		else
+			return Use(Theme.Colors.Base.Main)
 		end
 	end)
 
@@ -69,46 +76,24 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListFillDirection = Enum.FillDirection.Vertical,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 		ListPadding = Scope:Computed(function(Use)
-			return UDim.new(0, Use(Theme.Spacing["0.5"]))
+			return UDim.new(0, Use(Theme.Spacing["0.75"]))
 		end),
 
 		OnActivated = function()
-			States.Menus.CurrentMenu:set(nil)
-
-			if Peek(InRoRooms) then
-				if Peek(JobId) ~= nil then
-					if WorldsController then
-						WorldsController:TeleportToWorld(Peek(PlaceId), Peek(JobId))
-					end
-				end
-			else
-				SocialService:PromptGameInvite(
-					Players.LocalPlayer,
-					Scope:New "ExperienceInviteOptions" {
-						InviteUser = Peek(UserId),
-					}
-				)
-			end
+			States.Menus.ProfileMenu.UserId:set(Peek(UserId))
+			States.Menus.ProfileMenu.Location.Online:set(Peek(Online))
+			States.Menus.ProfileMenu.Location.InRoRooms:set(Peek(InRoRooms))
+			States.Menus.ProfileMenu.Location.JobId:set(Peek(JobId))
+			States.Menus.ProfileMenu.Location.PlaceId:set(Peek(PlaceId))
+			States.Menus.CurrentMenu:set("ProfileMenu")
 		end,
 
 		[Children] = {
-			Scope:Avatar {
-				Size = UDim2.fromOffset(80, 80),
-				BackgroundColor3 = Scope:Computed(function(Use)
-					return ColorUtils.Lighten(Use(Color), Use(Theme.Emphasis.Light))
-				end),
+			Scope:PlayerAvatar {
+				Status = Status,
 				Image = Scope:Computed(function(Use)
 					return `rbxthumb://type=AvatarHeadShot&id={Use(UserId)}&w=150&h=150`
 				end),
-				CornerRadius = Scope:Computed(function(Use)
-					return UDim.new(0, Use(Theme.CornerRadius.Full))
-				end),
-				RingEnabled = InRoRooms,
-				RingColor = Util.Colors.Green["500"],
-				IndicatorEnabled = Scope:Computed(function(Use)
-					return not Use(InRoRooms)
-				end),
-				IndicatorColor = StatusColor,
 			},
 			Scope:Frame {
 				Name = "Details",

@@ -1,18 +1,26 @@
+local Players = game:GetService("Players")
+local UserService = game:GetService("UserService")
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Knit = require(RoRooms.Parent.Knit)
 local FilterString = require(RoRooms.SourceCode.Storage.ExtPackages.FilterString)
 local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
 local t = require(RoRooms.Parent.t)
 local Config = require(RoRooms.Config).Config
+local Future = require(RoRooms.Parent.Future)
+local Types = require(RoRooms.SourceCode.Shared.Types)
 
 local ProfilesService = {
 	Name = "ProfilesService",
 	Client = {
-		Nickname = Knit.CreateProperty(""),
-		Status = Knit.CreateProperty(""),
-		Role = Knit.CreateProperty(),
+		ProfileUpdated = Knit.CreateSignal(),
 	},
 }
+
+function ProfilesService.Client:GetProfile(Player: Player, UserId: number)
+	assert(t.tuple(t.instanceOf("Player")(Player), t.number(UserId)))
+
+	return ProfilesService:GetProfile(UserId)
+end
 
 function ProfilesService.Client:SetRole(Player: Player, RoleId: string): boolean
 	assert(t.tuple(t.instanceOf("Player")(Player), t.string(RoleId)))
@@ -27,11 +35,39 @@ function ProfilesService.Client:SetNickname(Player: Player, Nickname: string)
 	ProfilesService:SetNickname(Player, FilterString(Nickname, Player))
 end
 
-function ProfilesService.Client:SetStatus(Player: Player, Status: string)
-	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Status)))
-	assert(utf8.len(Status) <= Config.Systems.Profiles.BioCharacterLimit, "Status exceeds character limit")
+function ProfilesService.Client:SetBio(Player: Player, Bio: string)
+	assert(t.tuple(t.instanceOf("Player")(Player), t.string(Bio)))
+	assert(utf8.len(Bio) <= Config.Systems.Profiles.BioCharacterLimit, "Bio exceeds character limit")
 
-	ProfilesService:SetStatus(Player, FilterString(Status, Player))
+	ProfilesService:SetBio(Player, FilterString(Bio, Player))
+end
+
+function ProfilesService:GetProfile(UserId: number): Types.Profile
+	local Profile = {}
+	local DataProfile = PlayerDataStoreService:GetProfile(UserId)
+	local Player = Players:GetPlayerByUserId(UserId)
+
+	if DataProfile then
+		Profile.Nickname = DataProfile.Data.Profile.Nickname
+		Profile.Bio = DataProfile.Data.Profile.Bio
+		Profile.Role = DataProfile.Data.Profile.Role
+		Profile.Level = DataProfile.Data.Level
+	end
+
+	if Player then
+		Profile.DisplayName = Player.DisplayName
+		Profile.Username = Player.Name
+	else
+		local Success, Result = Future.Try(function()
+			return UserService:GetUserInfosByUserIdsAsync({ UserId })[1]
+		end):Await()
+		if Success and Result then
+			Profile.DisplayName = Result.DisplayName
+			Profile.Username = Result.Username
+		end
+	end
+
+	return Profile
 end
 
 function ProfilesService:SetRole(Player: Player, RoleId: string): boolean
@@ -39,38 +75,37 @@ function ProfilesService:SetRole(Player: Player, RoleId: string): boolean
 		RoleId = Config.Systems.Profiles.DefaultRoleId
 	end
 
+	local RoleToSet = nil
 	local Role = Config.Systems.Profiles.Roles[RoleId]
-	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 
-	if Role and Profile then
-		Player:SetAttribute("RR_RoleId", RoleId)
-		Profile.Data.Profile.Role = RoleId
-		self.Client.Role:SetFor(Player, RoleId)
-
-		return true
+	if Role ~= nil then
+		RoleToSet = RoleId
 	end
 
-	return false
+	Player:SetAttribute("RR_Role", RoleToSet)
+
+	return PlayerDataStoreService:UpdateData(Player, function(Data)
+		Data.Profile.Role = RoleToSet
+		return Data
+	end)
 end
 
 function ProfilesService:SetNickname(Player: Player, Nickname: string)
 	Player:SetAttribute("RR_Nickname", Nickname)
 
-	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
-	if Profile then
-		Profile.Data.Profile.Nickname = Nickname
-		self.Client.Nickname:SetFor(Player, Nickname)
-	end
+	return PlayerDataStoreService:UpdateData(Player, function(Data)
+		Data.Profile.Nickname = Nickname
+		return Data
+	end)
 end
 
-function ProfilesService:SetStatus(Player: Player, Status: string)
-	Player:SetAttribute("RR_Status", Status)
+function ProfilesService:SetBio(Player: Player, Bio: string)
+	Player:SetAttribute("RR_Bio", Bio)
 
-	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
-	if Profile then
-		Profile.Data.Profile.Status = Status
-		self.Client.Status:SetFor(Player, Status)
-	end
+	return PlayerDataStoreService:UpdateData(Player, function(Data)
+		Data.Profile.Bio = Bio
+		return Data
+	end)
 end
 
 function ProfilesService:_UpdateFromDataStoreProfile(Player: Player)
@@ -81,7 +116,7 @@ function ProfilesService:_UpdateFromDataStoreProfile(Player: Player)
 	local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 	if Profile then
 		self:SetNickname(Player, Profile.Data.Profile.Nickname)
-		self:SetStatus(Player, Profile.Data.Profile.Status)
+		self:SetBio(Player, Profile.Data.Profile.Bio)
 		self:SetRole(Player, Profile.Data.Profile.Role)
 	end
 end
@@ -106,6 +141,22 @@ function ProfilesService:KnitStart()
 	end
 
 	self:_CheckDefaultRole()
+
+	PlayerDataStoreService.DataUpdated:Connect(
+		function(
+			Player: Player,
+			OldData: PlayerDataStoreService.ProfileData,
+			NewData: PlayerDataStoreService.ProfileData
+		)
+			if OldData.Profile ~= NewData.Profile then
+				self.Client.ProfileUpdated:FireAll(Player.UserId)
+			end
+		end
+	)
+
+	PlayerDataStoreService.ProfileLoaded:Connect(function(Profile: PlayerDataStoreService.Profile)
+		self.Client.ProfileUpdated:FireAll(Profile.Player.UserId)
+	end)
 end
 
 return ProfilesService

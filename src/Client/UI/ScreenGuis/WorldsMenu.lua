@@ -10,9 +10,8 @@ local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
-
-local DEFAULT_LOAD_MORE_BUTTON_CONTENTS = { Assets.Icons.General.Download, "Load more" }
-local DEFAULT_REFRESH_BUTTON_CONTENTS = { Assets.Icons.General.Repeat, "Refresh" }
+local OnChange = Fusion.OnChange
+local Out = Fusion.Out
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components)
@@ -21,8 +20,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local MenuOpen = Scope:Computed(function(Use)
 		return Use(States.Menus.CurrentMenu) == script.Name
 	end)
-	local LoadMoreButtonContent = Scope:Value(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
-	local RefreshButtonContent = Scope:Value(DEFAULT_REFRESH_BUTTON_CONTENTS)
+
+	local AbsoluteCanvasSize = Scope:Value(Vector2.new())
+	local AbsoluteWindowSize = Scope:Value(Vector2.new())
 
 	local WorldsMenu = Scope:Menu {
 		Name = script.Name,
@@ -33,9 +33,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
-			Scope:Scroller {
+			Scope:Hydrate(Scope:Scroller {
 				Name = "WorldsList",
 				Size = UDim2.new(UDim.new(0, 0), UDim.new(0, 205)),
+				CanvasSize = UDim2.fromOffset(0, 0),
 				ScrollBarThickness = Theme.StrokeThickness["1"],
 				Padding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
@@ -85,9 +86,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 						},
 					},
 					Scope:WorldsCategory {
-						Name = "Popular",
-						Title = "Popular",
-						Icon = Assets.Icons.General.People,
+						Name = "Global",
+						Title = "Global",
+						Icon = Assets.Icons.General.Globe,
 
 						[Children] = {
 							Scope:Frame {
@@ -101,7 +102,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								ListWraps = true,
 
 								[Children] = {
-									Scope:ForValues(States.Worlds.TopWorlds, function(Use, Scope, World)
+									Scope:ForValues(States.Worlds.AssortedWorlds, function(Use, Scope, World)
 										return Themer.Theme:is(OnyxUITheme):during(function()
 											return Scope:WorldButton {
 												PlaceId = World.PlaceId,
@@ -109,99 +110,20 @@ return function(Scope: Fusion.Scope<any>, Props)
 										end)
 									end),
 								},
-							},
-							Scope:Button {
-								Name = "LoadMoreButton",
-								Content = LoadMoreButtonContent,
-								Color = Theme.Colors.Primary.Main,
-								AutomaticSize = Enum.AutomaticSize.Y,
-
-								OnActivated = function()
-									LoadMoreButtonContent:set({
-										"Loading..",
-									})
-
-									Worlds:FetchTopWorlds():andThen(function(Result)
-										if typeof(Result) == "table" then
-											LoadMoreButtonContent:set({
-												Assets.Icons.General.Checkmark,
-												"Loaded",
-											})
-											task.wait(0.5)
-											LoadMoreButtonContent:set(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
-										else
-											LoadMoreButtonContent:set({
-												Assets.Icons.General.Warning,
-												"Error",
-											})
-											task.wait(0.5)
-											LoadMoreButtonContent:set(DEFAULT_LOAD_MORE_BUTTON_CONTENTS)
-										end
-									end)
-								end,
-							},
-						},
-					},
-					Scope:WorldsCategory {
-						Name = "Random",
-						Title = "Random",
-						Icon = Assets.Icons.General.Die,
-
-						[Children] = {
-							Scope:Frame {
-								Name = "Worlds",
-								AutomaticSize = Enum.AutomaticSize.Y,
-								ListEnabled = true,
-								ListPadding = Scope:Computed(function(Use)
-									return UDim.new(0, Use(Theme.Spacing["0.75"]))
-								end),
-								ListFillDirection = Enum.FillDirection.Horizontal,
-								ListWraps = true,
-
-								[Children] = {
-									Scope:ForValues(States.Worlds.RandomWorlds, function(Use, Scope, World)
-										return Themer.Theme:is(OnyxUITheme):during(function()
-											return Scope:WorldButton {
-												PlaceId = World.PlaceId,
-											}
-										end)
-									end),
-								},
-							},
-							Scope:Button {
-								Name = "RefreshButton",
-								Content = RefreshButtonContent,
-								Color = Theme.Colors.Primary.Main,
-								AutomaticSize = Enum.AutomaticSize.Y,
-
-								OnActivated = function()
-									RefreshButtonContent:set({
-										"Refreshing..",
-									})
-
-									Worlds:ClearRandomWorlds()
-									Worlds:FetchRandomWorlds(1, true):andThen(function(Result)
-										if typeof(Result) == "table" then
-											RefreshButtonContent:set({
-												Assets.Icons.General.Checkmark,
-												"Refreshed",
-											})
-											task.wait(0.5)
-											RefreshButtonContent:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
-										else
-											RefreshButtonContent:set({
-												Assets.Icons.General.Warning,
-												"Error",
-											})
-											task.wait(0.5)
-											RefreshButtonContent:set(DEFAULT_REFRESH_BUTTON_CONTENTS)
-										end
-									end)
-								end,
 							},
 						},
 					},
 				},
+			}) {
+				[OnChange "CanvasPosition"] = function(CanvasPosition)
+					local CanvasHeight = Fusion.peek(AbsoluteCanvasSize).Y - Fusion.peek(AbsoluteWindowSize).Y
+
+					if CanvasPosition.Y >= CanvasHeight then
+						Worlds:LoadAssortedWorlds()
+					end
+				end,
+				[Out "AbsoluteCanvasSize"] = AbsoluteCanvasSize,
+				[Out "AbsoluteWindowSize"] = AbsoluteWindowSize,
 			},
 		},
 	}

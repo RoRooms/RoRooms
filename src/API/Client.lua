@@ -2,8 +2,14 @@ local SOURCE = script.Parent.SourceCode
 local PACKAGES = script.Parent.Parent
 local SHARED = SOURCE.Shared
 local CLIENT = SOURCE.Client
-local DEFAULT_CONTROLLERS =
-	{ "UIController", "BloxstrapController", "ComponentsController", "DefaultsController", "UpdatesController" }
+local DEFAULT_CONTROLLERS = {
+	"UIController",
+	"BloxstrapController",
+	"ComponentsController",
+	"DefaultsController",
+	"UpdatesController",
+	"PreloadingController",
+}
 
 local Config = require(script.Parent.Config)
 local Knit = require(PACKAGES.Knit)

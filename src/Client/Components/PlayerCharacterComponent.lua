@@ -7,6 +7,7 @@ local Nametagger = require(RoRooms.SourceCode.Shared.ExtPackages.Nametagger)
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local Assets = require(RoRooms.SourceCode.Shared.Assets)
+local Profiles = require(RoRooms.SourceCode.Client.UI.States.Profiles)
 
 local NAMETAGGER_THEME = Fusion.scoped(OnyxUI.Themer):NewTheme({
 	Font = {
@@ -43,25 +44,29 @@ function PlayerCharacterComponent:_PlayEmote(EmoteId: string, Emote: { [any]: an
 end
 
 function PlayerCharacterComponent:_UpdateNametag()
+	local SafeProfileValue = Fusion.peek(self.SafeProfile)
 	if self.Humanoid then
 		self.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
 	end
 
 	OnyxUI.Themer.Theme:is(NAMETAGGER_THEME):during(function()
+		local Properties = {
+			{ Value = SafeProfileValue.Level, Image = Assets.Icons.UserBadges.Level },
+		}
+
+		if utf8.len(SafeProfileValue.Bio or "") > 0 then
+			table.insert(Properties, { Value = "", Image = Assets.Icons.General.EditPerson })
+		end
+
 		Nametagger:TagCharacter(self.Instance, {
-			DisplayName = self.Player:GetAttribute("RR_Nickname"),
-			Properties = {
-				{ Value = self.Player:GetAttribute("RR_Level"), Image = Assets.Icons.UserBadges.Level },
-			},
+			DisplayName = SafeProfileValue.Nickname or SafeProfileValue.DisplayName,
+			Properties = Properties,
 		})
 	end)
 end
 
 function PlayerCharacterComponent:_StartNametag()
-	self.Player:GetAttributeChangedSignal("RR_Nickname"):Connect(function()
-		self:_UpdateNametag()
-	end)
-	self.Player:GetAttributeChangedSignal("RR_Level"):Connect(function()
+	self.Scope:Observer(self.SafeProfile):onChange(function()
 		self:_UpdateNametag()
 	end)
 
@@ -77,8 +82,14 @@ function PlayerCharacterComponent:Start()
 end
 
 function PlayerCharacterComponent:Construct()
+	self.Scope = Fusion.scoped(Fusion)
 	self.Player = Players:GetPlayerFromCharacter(self.Instance)
 	self.Humanoid = self.Instance:WaitForChild("Humanoid")
+
+	if self.Player then
+		self.Profile = Profiles.ProfileValue(self.Scope, self.Player.UserId)
+		self.SafeProfile = Profiles.SafeProfileValue(self.Scope, self.Profile)
+	end
 end
 
 return PlayerCharacterComponent

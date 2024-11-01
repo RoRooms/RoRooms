@@ -1,0 +1,54 @@
+
+
+[docusaurus]
+url = "https://docs.rorooms.com"
+baseUrl = "/"
+favicon = "svg/LogoWhite.svg"
+tagline = "Elevate your worlds."
+
+[home]
+enabled = true
+
+[[home.features]]
+title = "Social toolkit 🙋"
+description = "With profiles, items, emotes and more, your world has everything it needs to engage players."
+image = "img/Toolbox.png"
+
+[[home.features]]
+title = "Open network 🌐"
+description = "A universal network, interconnecting all worlds, and allowing for more reach than possible alone."
+image = "img/Globe.png"
+
+[[home.features]]
+title = "Happy players 🙌"
+description = "A seamless social experience, hopping between worlds with friends, and enjoying more time in-game."
+image = "img/People.png"
+
+[[footer.links]]
+title = "RoRooms"
+
+[[footer.links.items]]
+label = "Landing"
+href = "https://rorooms.com/"
+
+[[footer.links.items]]
+label = "Publish"
+href = "https://rorooms.com/publish"
+
+[[footer.links]]
+title = "Community"
+
+[[footer.links.items]]
+label = "Discord"
+href = "https://rorooms.com/discord"
+
+[[footer.links.items]]
+label = "X"
+href = "https://rorooms.com/x"
+
+[[footer.links]]
+title = "More"
+
+[[footer.links.items]]
+label = "GitHub"
+href = "https://github.com/RoRooms"

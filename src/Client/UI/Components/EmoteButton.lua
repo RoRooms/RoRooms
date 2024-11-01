@@ -54,7 +54,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end
 	end)
 
-	return Scope:CustomButton {
+	return Scope:CustomButton(Util.CombineProps(Props, {
 		Name = "EmoteButton",
 		Color = Color,
 		LayoutOrder = Scope:Computed(function(Use)
@@ -142,5 +142,5 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListVerticalAlignment = Enum.VerticalAlignment.Center,
 			},
 		},
-	}
+	}))
 end

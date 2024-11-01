@@ -6,6 +6,7 @@ local Signal = require(RoRooms.Parent.Signal)
 local t = require(RoRooms.Parent.t)
 local Fetch = require(RoRooms.Parent.Fetch)
 local Config = require(RoRooms.Config).Config
+local DeepCopy = require(RoRooms.SourceCode.Shared.ExtPackages.DeepCopy)
 
 local REGISTRY_UPDATE_DELAY = 10 * 60
 
@@ -22,11 +23,27 @@ local WorldRegistryService = {
 function WorldRegistryService.Client:IsWorldRegistered(Player: Player, PlaceId: number)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.number(PlaceId)))
 
-	return self.Server:IsWorldRegistered(PlaceId)
+	return WorldRegistryService:IsWorldRegistered(PlaceId)
+end
+
+function WorldRegistryService.Client:GetWorldDetails(Player: Player, PlaceId: number)
+	assert(t.tuple(t.instanceOf("Player")(Player), t.number(PlaceId)))
+
+	return WorldRegistryService:GetWorldDetails(PlaceId)
 end
 
 function WorldRegistryService:IsWorldRegistered(PlaceId: number)
-	return self.WorldRegistry[PlaceId] ~= nil
+	return self:GetWorldDetails(PlaceId) ~= nil
+end
+
+function WorldRegistryService:GetWorldDetails(PlaceId: number)
+	local WorldEntry = self.WorldRegistry[tostring(PlaceId)]
+
+	if WorldEntry ~= nil then
+		return DeepCopy(WorldEntry)
+	else
+		return nil
+	end
 end
 
 function WorldRegistryService:UpdateRegistry()

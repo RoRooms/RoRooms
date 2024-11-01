@@ -1,3 +1,5 @@
+local Players = game:GetService("Players")
+
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Knit = require(RoRooms.Parent.Knit)
 local Fusion = require(RoRooms.Parent.Fusion)
@@ -20,8 +22,8 @@ local ItemsController = {
 	EquippedItemsUpdated = Signal.new(),
 }
 
-function ItemsController:ToggleEquipItem(ItemId: string)
-	ItemsService:ToggleEquipItem(ItemId):andThen(function(Equipped: boolean, FailureReason: string)
+function ItemsController:ToggleEquipItem(ItemId: string, Hold: boolean?)
+	ItemsService:ToggleEquipItem(ItemId, Hold):andThen(function(Equipped: boolean, FailureReason: string)
 		if not Equipped and FailureReason then
 			Prompts:PushPrompt({
 				Title = "Failure",
@@ -36,9 +38,8 @@ function ItemsController:ToggleEquipItem(ItemId: string)
 	end)
 end
 
-function ItemsController:UpdateEquippedItems()
-	local Char = Knit.Player.Character
-	local Backpack = Knit.Player:FindFirstChild("Backpack")
+function ItemsController:_UpdateEquippedItems()
+	local Backpack = Players.LocalPlayer:FindFirstChild("Backpack")
 	local function ScanDirectory(Directory: Instance)
 		if not Directory then
 			return
@@ -51,7 +52,7 @@ function ItemsController:UpdateEquippedItems()
 		end
 	end
 	self.EquippedItems = {}
-	ScanDirectory(Char)
+	ScanDirectory(Players.LocalPlayer.Character)
 	ScanDirectory(Backpack)
 	self.EquippedItemsUpdated:Fire(self.EquippedItems)
 end
@@ -70,28 +71,36 @@ function ItemsController:_AddNeoHotbarButton()
 	end)
 end
 
+function ItemsController:_HandleCharacter(Character: Model)
+	self:_UpdateEquippedItems()
+
+	Character.ChildAdded:Connect(function()
+		self:_UpdateEquippedItems()
+	end)
+	Character.ChildRemoved:Connect(function()
+		self:_UpdateEquippedItems()
+	end)
+
+	local Backpack = Players.LocalPlayer:WaitForChild("Backpack")
+	Backpack.ChildAdded:Connect(function()
+		self:_UpdateEquippedItems()
+	end)
+	Backpack.ChildRemoved:Connect(function()
+		self:_UpdateEquippedItems()
+	end)
+end
+
 function ItemsController:KnitStart()
 	ItemsService = Knit.GetService("ItemsService")
 	UIController = Knit.GetController("UIController")
 
-	Knit.Player.CharacterAdded:Connect(function(Char)
-		self:UpdateEquippedItems()
-
-		Char.ChildAdded:Connect(function()
-			self:UpdateEquippedItems()
-		end)
-		Char.ChildRemoved:Connect(function()
-			self:UpdateEquippedItems()
-		end)
-
-		local Backpack = Knit.Player:WaitForChild("Backpack")
-		Backpack.ChildAdded:Connect(function()
-			self:UpdateEquippedItems()
-		end)
-		Backpack.ChildRemoved:Connect(function()
-			self:UpdateEquippedItems()
-		end)
+	Players.LocalPlayer.CharacterAdded:Connect(function(Character)
+		self:_HandleCharacter(Character)
 	end)
+	local ExistingCharacter = Players.LocalPlayer.Character
+	if ExistingCharacter ~= nil then
+		self:_HandleCharacter(ExistingCharacter)
+	end
 
 	UIController:MountUI(require(RoRooms.SourceCode.Client.UI.ScreenGuis.ItemsMenu))
 

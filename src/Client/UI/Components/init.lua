@@ -16,6 +16,10 @@ local Components = {
 	WorldButton = require(script.WorldButton),
 	WorldsCategory = require(script.WorldsCategory),
 	Menu = require(script.Menu),
+	EditableText = require(script.EditableText),
+	PlayerAvatar = require(script.PlayerAvatar),
+	ProfileBadges = require(script.ProfileBadges),
+	LevelBadge = require(script.LevelBadge),
 }
 
 for _, Child in ipairs(script:GetChildren()) do

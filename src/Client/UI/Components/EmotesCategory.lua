@@ -88,6 +88,17 @@ return function(Scope: Fusion.Scope<any>, Props)
 									EmoteId = EmoteId,
 									Emote = Emote,
 									Color = Emote.TintColor,
+									LayoutOrder = Scope:Computed(function(Use)
+										if Emote then
+											if Emote.LevelRequirement then
+												return Emote.LevelRequirement
+											elseif Emote.Name then
+												return string.byte(Emote.Name)
+											end
+										end
+
+										return 0
+									end),
 
 									Callback = function()
 										if Use(States.CoreGui.ScreenSize).Y <= 500 then

@@ -18,6 +18,7 @@ local States = {
 		RandomWorldsService = UnloadedService(),
 		UpdatesService = UnloadedService(),
 		LevelingService = UnloadedService(),
+		WorldRegistryService = UnloadedService(),
 	},
 	Controllers = {
 		UIController = nil,
@@ -35,6 +36,16 @@ local States = {
 		EmotesMenu = {
 			FocusedCategory = Scope:Value(nil),
 		},
+		ProfileMenu = {
+			UserId = Scope:Value(nil),
+			EditMode = Scope:Value(false),
+			Location = {
+				Online = Scope:Value(false),
+				InRoRooms = Scope:Value(false),
+				PlaceId = Scope:Value(nil),
+				JobId = Scope:Value(nil),
+			},
+		},
 	},
 	Topbar = {
 		YPosition = Scope:Value(0),
@@ -44,9 +55,8 @@ local States = {
 	Items = {
 		Equipped = Scope:Value({}),
 	},
-	Profile = {
-		Nickname = Scope:Value(""),
-		Status = Scope:Value(""),
+	Profiles = {
+		Loaded = Scope:Value({}),
 	},
 	WorldPageMenu = {
 		PlaceId = Scope:Value(),
@@ -70,6 +80,7 @@ local States = {
 		ScreenSize = Scope:Value(Vector2.new()),
 	},
 	Worlds = {
+		AssortedWorlds = Scope:Value({}),
 		TopWorlds = Scope:Value({}),
 		RandomWorlds = Scope:Value({}),
 	},
