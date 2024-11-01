@@ -2,7 +2,8 @@
 
 [docusaurus]
 url = "https://docs.rorooms.com"
-favicon = "gh-assets/LogoWhite.svg"
+baseUrl = "/"
+favicon = "svg/LogoWhite.svg"
 tagline = "Elevate your worlds."
 
 [home]
