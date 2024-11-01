@@ -1,5 +1,4 @@
 local Players = game:GetService("Players")
-local Players = game:GetService("Players")
 
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local States = require(script.Parent)
