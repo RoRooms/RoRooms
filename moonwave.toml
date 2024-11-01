@@ -27,9 +27,27 @@ image = "img/People.png"
 title = "RoRooms"
 
 [[footer.links.items]]
-label = "RoRooms"
+label = "Landing"
 href = "https://rorooms.com/"
 
 [[footer.links.items]]
 label = "Publish"
 href = "https://rorooms.com/publish"
+
+[[footer.links]]
+title = "Community"
+
+[[footer.links.items]]
+label = "Discord"
+href = "https://rorooms.com/discord"
+
+[[footer.links.items]]
+label = "X"
+href = "https://rorooms.com/x"
+
+[[footer.links]]
+title = "More"
+
+[[footer.links.items]]
+label = "GitHub"
+href = "https://github.com/RoRooms"
