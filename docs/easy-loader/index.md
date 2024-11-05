@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Easy Loader
 
 Easily load and configure RoRooms without ever touching a line of code! Instead, use Roblox instances and attributes.
