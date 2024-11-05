@@ -24,6 +24,8 @@
 
 ---
 
-## [Installation 📦](https://docs.rorooms.com/intro#installation)
+## [Installation 📦](https://rorooms.com/install/)
 
 ## [Documentation 📄](https://rorooms.com/docs/)
+
+## [Demo Place 🎮](https://rorooms.com/demo/)
