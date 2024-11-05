@@ -18,12 +18,14 @@
 </p>
 
 <p align="center">
-  <a href="https://x.com/UseRoRooms"><img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" /></a>
+  <a href="https://rorooms.com/x"><img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" /></a>
   <a href="https://rorooms.com/discord"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white"></img></a>
 </p>
 
 ---
 
-## [Installation 📦](https://docs.rorooms.com/intro#installation)
+## [Installation 📦](https://rorooms.com/install/)
 
 ## [Documentation 📄](https://rorooms.com/docs/)
+
+## [Demo Place 🎮](https://rorooms.com/demo/)
