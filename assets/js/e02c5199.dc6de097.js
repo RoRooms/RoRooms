@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[570],{63891:s=>{s.exports=JSON.parse('{"sourceUrl":"https://github.com/RoRooms/RoRooms/blob/main","baseUrl":"/","classOrder":[],"apiCategories":[]}')}}]);
