@@ -21,3 +21,5 @@ You've just made a great world with RoRooms, and now you want to benefit from th
 ### 4. Publish! 🎉
 
 ![alt text](Publish.png)
+
+# [Disabling the worlds system](/docs/easy-loader/#disabling-discovery)
