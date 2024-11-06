@@ -4,6 +4,8 @@ sidebar_position: 4
 
 # What is RoRooms?
 
+RoRooms is an all-in-one framework and network for social experiences, providing both social features, and a universal network of worlds.
+
 # Goals 🎯
 
 - Streamline the creation of social worlds ⚡
