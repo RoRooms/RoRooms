@@ -44,3 +44,19 @@ Emotes are `Animation` objects, and go under `Config.Emotes`.
 Simply drop `Sound` instances into your `Config.Music` folder!
 
 ![alt text](image-1.png)
+
+# Worlds 🌐
+
+## Disabling discovery
+
+You may not want to participate in RoRooms' worlds network, and that choice is supported. Understand that by doing this, your world will not receive support from any other worlds.
+
+1. Open the Config module
+
+![alt text](image-2.png)
+
+2. Type this in:
+
+![alt text](image-4.png)
+
+3. Additionally, you can set `Enabled = false` to disable the worlds menu entirely. Otherwise, you can still promote your own worlds by pasting their PlaceIds into `FeaturedWorlds`.

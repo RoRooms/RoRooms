@@ -7,12 +7,15 @@ local t = require(RoRooms.Parent.t)
 local Fetch = require(RoRooms.Parent.Fetch)
 local Config = require(RoRooms.Config).Config
 local DeepCopy = require(RoRooms.SourceCode.Shared.ExtPackages.DeepCopy)
+local Knit = require(RoRooms.Parent.Knit)
 
 local REGISTRY_UPDATE_DELAY = 10 * 60
 
 local WorldRegistryService = {
 	Name = "WorldRegistryService",
-	Client = {},
+	Client = {
+		Registered = Knit.CreateProperty(false),
+	},
 
 	WorldRegistry = {},
 	WorldRegistryLastUpdated = 0,
@@ -107,6 +110,12 @@ function WorldRegistryService:_SpawnRegistryUpdateLoop()
 end
 
 function WorldRegistryService:KnitStart()
+	self.RegistryUpdated:Connect(function(Worlds)
+		local World = Worlds[tostring(game.PlaceId)]
+
+		self.Client.Registered:Set(World ~= nil)
+	end)
+
 	self:_SpawnRegistryUpdateLoop()
 end
 

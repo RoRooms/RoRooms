@@ -34,6 +34,8 @@ function Worlds:LoadAssortedWorlds(PageCount: number?)
 	local StartIndex = #AssortedWorldsValue
 	local EndIndex = StartIndex + TotalWorlds
 
+	self:_RemovePlaceIdFromArray(TopWorldsValue, game.PlaceId)
+
 	for Index = StartIndex, EndIndex do
 		local World = TopWorldsValue[Index]
 		if World then
@@ -71,6 +73,8 @@ end
 
 function Worlds:GetUnusedRandomWorld(UsedWorlds: WorldPage)
 	local RandomWorldsValue = Peek(States.Worlds.RandomWorlds)
+
+	self:_RemovePlaceIdFromArray(RandomWorldsValue, game.PlaceId)
 
 	if #RandomWorldsValue == 0 then
 		return nil
@@ -156,6 +160,13 @@ function Worlds:_AddRandomWorlds(RandomWorlds: WorldPages)
 	end
 
 	States.Worlds.RandomWorlds:set(NewRandomWorlds)
+end
+
+function Worlds:_RemovePlaceIdFromArray(WorldsArray: { [number]: World }, PlaceId: number)
+	local EntryIndex = self:_FindPlaceIdInWorldsArray(WorldsArray, PlaceId)
+	if EntryIndex ~= nil then
+		table.remove(WorldsArray, EntryIndex)
+	end
 end
 
 function Worlds:_FindPlaceIdInWorldsArray(WorldsArray: { [number]: World }, PlaceId: number)

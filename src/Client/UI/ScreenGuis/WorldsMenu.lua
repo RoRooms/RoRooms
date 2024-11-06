@@ -1,3 +1,4 @@
+local RunService = game:GetService("RunService")
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
@@ -51,12 +52,44 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 				[Children] = {
+					Scope:Card {
+						ListEnabled = true,
+						ListPadding = Scope:Computed(function(Use)
+							return UDim.new(0, Use(Theme.Spacing["0.5"]))
+						end),
+						ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+						CornerRadius = Scope:Computed(function(Use)
+							return UDim.new(0, Use(Theme.CornerRadius["2"]))
+						end),
+						Visible = Scope:Computed(function(Use)
+							return (not Use(States.Worlds.Registered))
+								and (RunService:IsStudio())
+								and (Config.Systems.Worlds.DiscoveryEnabled == true)
+						end),
+
+						[Children] = {
+							Scope:Heading {
+								Text = "Not registered ⚠️",
+								HeadingSize = 1.25,
+							},
+							Scope:Text {
+								Text = "This world will not receive support from the network. If this is intentional, you may disable the worlds system.",
+							},
+							Scope:TextInput {
+								Text = "docs.rorooms.com/docs/publishing",
+								Disabled = true,
+								TextTransparency = 0,
+								StrokeTransparency = 0,
+							},
+						},
+					},
 					Scope:WorldsCategory {
 						Name = "Featured",
 						Title = "From creator",
 						Icon = Assets.Icons.General.Star,
 						Visible = Scope:Computed(function(Use)
-							return #Config.Systems.Worlds.FeaturedWorlds >= 1
+							return (#Config.Systems.Worlds.FeaturedWorlds >= 1)
+								and Config.Systems.Worlds.DiscoveryEnabled
 						end),
 
 						[Children] = {
@@ -89,6 +122,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 						Name = "Global",
 						Title = "Global",
 						Icon = Assets.Icons.General.Globe,
+						Visible = Scope:Computed(function(Use)
+							return Config.Systems.Worlds.DiscoveryEnabled
+						end),
 
 						[Children] = {
 							Scope:Frame {
