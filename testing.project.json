@@ -6,8 +6,11 @@
       "$className": "ReplicatedStorage",
       "RoRooms": {
         "$className": "Folder",
+        "ThumbnailCamera": {
+          "$path": "Include/ThumbnailCamera.rbxm"
+        },
         "EasyLoader": {
-          "$path": "EasyLoader",
+          "$path": "Include/EasyLoader",
           "$ignoreUnknownInstances": true
         },
         "RoRooms": {
