@@ -6,7 +6,7 @@
       "$className": "ReplicatedStorage",
       "RoRooms": {
         "$className": "Folder",
-        "RoRoomsLoader": {
+        "EasyLoader": {
           "$path": "EasyLoader",
           "$ignoreUnknownInstances": true
         },
