@@ -83,6 +83,7 @@ local States = {
 		AssortedWorlds = Scope:Value({}),
 		TopWorlds = Scope:Value({}),
 		RandomWorlds = Scope:Value({}),
+		Registered = Scope:Value(false),
 	},
 	RoRooms = {
 		UpToDate = Scope:Value(),

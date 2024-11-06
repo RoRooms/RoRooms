@@ -8,6 +8,8 @@ local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 local States = require(RoRooms.SourceCode.Client.UI.States)
 local Future = require(RoRooms.Parent.Future)
 
+local WorldRegistryService
+
 local WorldsController = {
 	Name = "WorldsController",
 }
@@ -82,11 +84,16 @@ end
 
 function WorldsController:KnitStart()
 	UIController = Knit.GetController("UIController")
+	WorldRegistryService = Knit.GetService("WorldRegistryService")
 
 	UIController:MountUI(require(RoRooms.SourceCode.Client.UI.ScreenGuis.WorldsMenu))
 	UIController:MountUI(require(RoRooms.SourceCode.Client.UI.ScreenGuis.WorldPageMenu))
 
 	Topbar:AddTopbarButton("Worlds", Topbar.NativeButtons.Worlds)
+
+	WorldRegistryService.Registered:Observe(function(Registered: boolean)
+		States.Worlds.Registered:set(Registered)
+	end)
 end
 
 return WorldsController
