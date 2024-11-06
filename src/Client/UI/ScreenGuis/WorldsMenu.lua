@@ -62,7 +62,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 							return UDim.new(0, Use(Theme.CornerRadius["2"]))
 						end),
 						Visible = Scope:Computed(function(Use)
-							return (Use(States.Worlds.Registered)) and RunService:IsStudio()
+							return (not Use(States.Worlds.Registered))
+								and (RunService:IsStudio())
+								and (Config.Systems.Worlds.DiscoveryEnabled == true)
 						end),
 
 						[Children] = {
@@ -86,7 +88,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 						Title = "From creator",
 						Icon = Assets.Icons.General.Star,
 						Visible = Scope:Computed(function(Use)
-							return #Config.Systems.Worlds.FeaturedWorlds >= 1
+							return (#Config.Systems.Worlds.FeaturedWorlds >= 1)
+								and Config.Systems.Worlds.DiscoveryEnabled
 						end),
 
 						[Children] = {
@@ -119,6 +122,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 						Name = "Global",
 						Title = "Global",
 						Icon = Assets.Icons.General.Globe,
+						Visible = Scope:Computed(function(Use)
+							return Config.Systems.Worlds.DiscoveryEnabled
+						end),
 
 						[Children] = {
 							Scope:Frame {
