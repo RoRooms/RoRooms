@@ -42,8 +42,6 @@ function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassReq
 	if Item and Item.Tool then
 		local AbleToEquip, FailureReason = self:CanPlayerAccessItem(Player, ItemId, BypassRequirement)
 
-		print(AbleToEquip, FailureReason)
-
 		if AbleToEquip then
 			local ItemTool = Item.Tool:Clone()
 			ItemTool.Parent = Backpack
@@ -111,8 +109,6 @@ function ItemsService:CanPlayerAccessItem(Player: Player, ItemId: string, Bypass
 			end
 		end
 	end
-
-	print("success")
 
 	return true
 end

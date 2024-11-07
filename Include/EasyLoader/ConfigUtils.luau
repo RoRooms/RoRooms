@@ -23,12 +23,15 @@ end
 
 function ConfigUtils:GetCategory(Instance: Instance): string?
 	local LevelRequirement = Instance:GetAttribute("LevelRequirement")
+	local GamepassRequirement = Instance:GetAttribute("GamepassRequirement")
 	local Category = self:IfString(Instance:GetAttribute("Category"))
 
 	if Category then
 		return Category
 	elseif LevelRequirement then
 		return "Unlockable"
+	elseif GamepassRequirement then
+		return "Robux"
 	else
 		return nil
 	end
