@@ -33,7 +33,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 	local ShownName = Scope:Computed(function(Use)
 		local SafeProfileValue: Types.Profile = Use(SafeProfile)
-		return SafeProfileValue.Nickname or SafeProfileValue.DisplayName
+
+		if string.len(SafeProfileValue.Nickname or "") > 0 then
+			return SafeProfileValue.Nickname
+		else
+			return SafeProfileValue.DisplayName
+		end
 	end)
 
 	local NicknameInput = Scope:Value("")

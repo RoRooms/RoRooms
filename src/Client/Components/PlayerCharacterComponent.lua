@@ -50,16 +50,23 @@ function PlayerCharacterComponent:_UpdateNametag()
 	end
 
 	OnyxUI.Themer.Theme:is(NAMETAGGER_THEME):during(function()
+		local ShownName = SafeProfileValue.Nickname
 		local Properties = {
 			{ Value = SafeProfileValue.Level, Image = Assets.Icons.UserBadges.Level },
 		}
+
+		if string.len(SafeProfileValue.Nickname or "") > 0 then
+			ShownName = SafeProfileValue.Nickname
+		else
+			ShownName = SafeProfileValue.DisplayName
+		end
 
 		if utf8.len(SafeProfileValue.Bio or "") > 0 then
 			table.insert(Properties, { Value = "", Image = Assets.Icons.General.EditPerson })
 		end
 
 		Nametagger:TagCharacter(self.Instance, {
-			DisplayName = SafeProfileValue.Nickname or SafeProfileValue.DisplayName,
+			DisplayName = ShownName,
 			Properties = Properties,
 		})
 	end)
