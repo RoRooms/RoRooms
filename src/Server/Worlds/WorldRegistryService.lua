@@ -67,6 +67,8 @@ function WorldRegistryService:UpdateRegistry()
 						self.WorldRegistry = Response2
 						self.WorldRegistryLastUpdated = PublishedAt
 
+						self:_RemoveDelistedWorlds()
+
 						self.RegistryUpdated:Fire(Response2)
 					else
 						warn(Response2)
@@ -97,6 +99,14 @@ function WorldRegistryService:_FetchLatestRegistry()
 			return {}
 		end
 	end)
+end
+
+function WorldRegistryService:_RemoveDelistedWorlds()
+	for PlaceId, World in pairs(self.WorldRegistry) do
+		if World.delisted or World.forceDelisted then
+			self.WorldRegistry[PlaceId] = nil
+		end
+	end
 end
 
 function WorldRegistryService:_SpawnRegistryUpdateLoop()

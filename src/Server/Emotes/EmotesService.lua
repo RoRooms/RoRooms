@@ -1,8 +1,11 @@
+local MarketplaceService = game:GetService("MarketplaceService")
 local RoRooms = script.Parent.Parent.Parent.Parent
 local PlayerCharacterComponent = require(RoRooms.SourceCode.Server.Components.PlayerCharacterComponent)
 local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
 local t = require(RoRooms.Parent.t)
 local Config = require(RoRooms.Config).Config
+local GamepassesHandler = require(RoRooms.SourceCode.Shared.ExtPackages.GamepassesHandler)
+local Future = require(RoRooms.Parent.Future)
 
 local EmotesService = {
 	Name = "EmotesService",
@@ -38,29 +41,45 @@ function EmotesService:PlayEmote(Player: Player, EmoteId: string)
 	return false, "Error occurred."
 end
 
-function EmotesService:CanPlayerUseEmote(Player: Player, EmoteId: string, Emote)
-	local CanUse = true
-	local FailureReason = nil
-
-	if Emote.LevelRequirement then
-		local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
-		if Profile then
-			CanUse = Profile.Data.Level >= Emote.LevelRequirement
-		else
-			CanUse = false
-			FailureReason = `Emote requires level {Emote.LevelRequirement}.`
-		end
-	end
-
-	if Emote.RequirementCallback then
-		CanUse, FailureReason = Emote.RequirementCallback(Player, EmoteId, Emote)
+function EmotesService:CanPlayerUseEmote(Player: Player, EmoteId: string, Emote): (boolean, string?)
+	if Emote.RequirementCallback ~= nil then
+		local CanUse, FailureReason = Emote.RequirementCallback(Player, EmoteId, Emote)
 
 		if (not CanUse) and (FailureReason == nil) then
 			FailureReason = `Insuffient requirements to use {Emote.Name} emote.`
 		end
+
+		if not CanUse then
+			return false, FailureReason
+		end
 	end
 
-	return CanUse, FailureReason
+	if Emote.LevelRequirement ~= nil then
+		local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
+		if Profile ~= nil then
+			if Profile.Data.Level < Emote.LevelRequirement then
+				return false, `Emote requires level {Emote.LevelRequirement}.`
+			end
+		else
+			return false, "Data error."
+		end
+	end
+
+	if Emote.GamepassRequirement ~= nil then
+		local OwnsGamepass = GamepassesHandler:PlayerOwnsGamepass(Player, Emote.GamepassRequirement)
+
+		if OwnsGamepass then
+			return true
+		else
+			Future.Try(function()
+				MarketplaceService:PromptGamePassPurchase(Player, Emote.GamepassRequirement)
+			end)
+
+			return false
+		end
+	end
+
+	return true
 end
 
 return EmotesService

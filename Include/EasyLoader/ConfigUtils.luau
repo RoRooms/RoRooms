@@ -23,12 +23,15 @@ end
 
 function ConfigUtils:GetCategory(Instance: Instance): string?
 	local LevelRequirement = Instance:GetAttribute("LevelRequirement")
+	local GamepassRequirement = Instance:GetAttribute("GamepassRequirement")
 	local Category = self:IfString(Instance:GetAttribute("Category"))
 
 	if Category then
 		return Category
 	elseif LevelRequirement then
 		return "Unlockable"
+	elseif GamepassRequirement then
+		return "Robux"
 	else
 		return nil
 	end
@@ -40,6 +43,7 @@ function ConfigUtils:AnimationToEmote(Animation: Animation)
 		Animation = Animation,
 		Emoji = self:IfString(Animation:GetAttribute("Emoji")),
 		LevelRequirement = self:IfNumber(Animation:GetAttribute("LevelRequirement")),
+		GamepassRequirement = Animation:GetAttribute("GamepassRequirement"),
 		LabelIcon = self:IfString(Animation:GetAttribute("LabelIcon")),
 		LabelText = self:IfString(Animation:GetAttribute("LabelText")),
 		Color = self:GetColor(Animation),
@@ -52,6 +56,7 @@ function ConfigUtils:ToolToItem(Tool: Tool)
 		DisplayName = Tool.Name,
 		Tool = Tool,
 		LevelRequirement = Tool:GetAttribute("LevelRequirement"),
+		GamepassRequirement = Tool:GetAttribute("GamepassRequirement"),
 		LabelIcon = Tool:GetAttribute("LabelIcon"),
 		LabelText = Tool:GetAttribute("LabelText"),
 		Color = self:GetColor(Tool),

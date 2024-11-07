@@ -49,8 +49,13 @@ function ItemGiverComponent:GetProximityPrompt()
 			end
 		end),
 		ObjectText = self.Scope:Computed(function(Use)
-			if Use(self.Item) then
-				return Use(self.Item).Name
+			local ItemValue = Use(self.Item)
+			local ItemIdValue = Use(self.ItemId)
+
+			if ItemValue and ItemValue.Name then
+				return ItemValue.Name
+			elseif ItemIdValue then
+				return ItemIdValue
 			else
 				return "Invalid item"
 			end

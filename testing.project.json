@@ -5,41 +5,47 @@
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
       "RoRooms": {
-        "$path": "Include/Linking.lua",
-        "Packages": {
-          "$path": "Packages",
-          "RoRooms": {
-            "$path": "src/API",
-            "SourceCode": {
-              "$className": "Folder",
-              "Shared": {
-                "$path": "src/Shared",
-                "ExtPackages": {
-                  "$path": "ExtPackages"
-                }
-              },
-              "Storage": {
-                "$path": "src/Storage",
-                "ExtPackages": {
-                  "$path": "ExtServerPackages"
+        "$className": "Folder",
+        "ThumbnailCamera": {
+          "$path": "Include/ThumbnailCamera.rbxm"
+        },
+        "EasyLoader": {
+          "$path": "Include/EasyLoader",
+          "$ignoreUnknownInstances": true
+        },
+        "RoRooms": {
+          "$path": "Include/Linking.lua",
+          "Packages": {
+            "$path": "Packages",
+            "RoRooms": {
+              "$path": "src/API",
+              "SourceCode": {
+                "$className": "Folder",
+                "Shared": {
+                  "$path": "src/Shared",
+                  "ExtPackages": {
+                    "$path": "ExtPackages"
+                  }
                 },
-                "Packages": {
-                  "$path": "ServerPackages"
+                "Storage": {
+                  "$path": "src/Storage",
+                  "ExtPackages": {
+                    "$path": "ExtServerPackages"
+                  },
+                  "Packages": {
+                    "$path": "ServerPackages"
+                  }
+                },
+                "Server": {
+                  "$path": "src/Server"
+                },
+                "Client": {
+                  "$path": "src/Client"
                 }
-              },
-              "Server": {
-                "$path": "src/Server"
-              },
-              "Client": {
-                "$path": "src/Client"
               }
             }
           }
         }
-      },
-      "RoRoomsLoader": {
-        "$path": "EasyLoader",
-        "$ignoreUnknownInstances": true
       }
     }
   }

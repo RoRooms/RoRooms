@@ -7,6 +7,7 @@ local States = require(RoRooms.SourceCode.Client.UI.States)
 local Knit = require(RoRooms.Parent.Knit)
 local AvatarSelector = require(script.Parent.AvatarSelector)
 local Future = require(RoRooms.Parent.Future)
+local Signal = require(RoRooms.Parent.Signal)
 
 local Scoped = Fusion.scoped
 local Peek = Fusion.peek
@@ -17,6 +18,8 @@ local ProfilesController = {
 	Name = "ProfilesController",
 
 	Scope = Scoped(Fusion),
+
+	ProfileUpdated = Signal.new(),
 }
 
 function ProfilesController:GetProfile(UserId: number)
@@ -70,6 +73,10 @@ function ProfilesController:KnitStart()
 	end)
 
 	ProfilesService = Knit.GetService("ProfilesService")
+
+	ProfilesService.ProfileUpdated:Connect(function(UpdatedUserId: number)
+		self.ProfileUpdated:Fire(UpdatedUserId)
+	end)
 end
 
 return ProfilesController

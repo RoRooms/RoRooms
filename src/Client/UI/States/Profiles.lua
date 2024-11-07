@@ -1,8 +1,11 @@
+local RunService = game:GetService("RunService")
+
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local States = require(script.Parent)
 local Future = require(RoRooms.Parent.Future)
 local Fusion = require(RoRooms.Parent.Fusion)
 local Types = require(RoRooms.SourceCode.Shared.Types)
+local ProfilesController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Profiles.ProfilesController)
 
 local Profiles = {}
 
@@ -53,14 +56,12 @@ function Profiles.ProfileValue(
 	Scope:Observer(UserId):onChange(function()
 		UpdateProfile()
 	end)
-	if next(States.Services.ProfilesService) ~= nil then
-		States.Services.ProfilesService.ProfileUpdated:Connect(function(UpdatedUserId: number)
-			if UpdatedUserId == Fusion.peek(UserId) then
-				Profiles:FetchProfile(UpdatedUserId)
-				UpdateProfile()
-			end
-		end)
-	end
+	ProfilesController.ProfileUpdated:Connect(function(UpdatedUserId: number)
+		if UpdatedUserId == Fusion.peek(UserId) then
+			Profiles:FetchProfile(UpdatedUserId)
+			UpdateProfile()
+		end
+	end)
 	UpdateProfile()
 
 	return ProfileValue

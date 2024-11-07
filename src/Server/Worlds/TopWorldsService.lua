@@ -131,10 +131,13 @@ function TopWorldsService:_LoadPage(Page: Page)
 		if ExistingEntry then
 			ExistingEntry.Teleports += Teleports
 		else
-			table.insert(self.TopWorlds, {
-				PlaceId = PlaceId,
-				Teleports = Teleports,
-			})
+			local World = WorldRegistryService:GetWorldDetails(PlaceId)
+			if (World ~= nil) and not (World.delisted or World.forceDelisted) then
+				table.insert(self.TopWorlds, {
+					PlaceId = PlaceId,
+					Teleports = Teleports,
+				})
+			end
 		end
 	end
 end
@@ -174,8 +177,6 @@ function TopWorldsService:_LogIncomingTeleport(PlaceId: number)
 end
 
 function TopWorldsService:KnitStart()
-	self._InitializationLoop = self:_SpawnInitializationLoop()
-
 	Players.PlayerAdded:Connect(function(Player)
 		local JoinData = Player:GetJoinData()
 		if JoinData and JoinData.SourcePlaceId then
@@ -183,5 +184,9 @@ function TopWorldsService:KnitStart()
 		end
 	end)
 end
+
+WorldRegistryService.RegistryUpdated:Once(function()
+	TopWorldsService._InitializationLoop = TopWorldsService:_SpawnInitializationLoop()
+end)
 
 return TopWorldsService

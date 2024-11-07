@@ -33,9 +33,19 @@ return function(Scope: Fusion.Scope<any>, Props)
 			return nil
 		end
 	end)
+	local GamepassRequirement = Scope:Computed(function(Use)
+		local ItemValue = Use(Item)
+
+		if ItemValue and ItemValue.GamepassRequirement then
+			return ItemValue.GamepassRequirement
+		else
+			return nil
+		end
+	end)
 	local LabelText = Scope:Computed(function(Use)
 		local ItemValue = Use(Item)
 		local LevelRequirementValue = Use(LevelRequirement)
+
 		if ItemValue and ItemValue.LabelText then
 			return ItemValue.LabelText
 		elseif LevelRequirementValue then
@@ -47,10 +57,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local LabelIcon = Scope:Computed(function(Use)
 		local ItemValue = Use(Item)
 		local LevelRequirementValue = Use(LevelRequirement)
+		local GamepassRequirementValue = Use(GamepassRequirement)
+
 		if ItemValue and ItemValue.LabelIcon then
 			return ItemValue.LabelIcon
 		elseif LevelRequirementValue then
 			return Assets.Icons.Categories.Unlockable
+		elseif GamepassRequirementValue then
+			return Assets.Icons.Categories.Robux
 		else
 			return ""
 		end

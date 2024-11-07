@@ -17,6 +17,7 @@ export type Item = {
 	LayoutOrder: number?,
 	LabelIcon: string?,
 	LevelRequirement: number?,
+	GamepassRequirement: number?,
 	CallbackRequirement: () -> ()?,
 }
 export type Emote = {
@@ -29,6 +30,7 @@ export type Emote = {
 	LayoutOrder: number?,
 	LabelIcon: string?,
 	LevelRequirement: number?,
+	GamepassRequirement: number?,
 	CallbackRequirement: () -> ()?,
 }
 export type PlaceId = number
