@@ -4,6 +4,7 @@ local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerDataStore
 local t = require(RoRooms.Parent.t)
 local Config = require(RoRooms.Config).Config
 local Future = require(RoRooms.Parent.Future)
+local GamepassesHandler = require(RoRooms.SourceCode.Shared.ExtPackages.GamepassesHandler)
 
 local ItemsService = {
 	Name = "ItemsService",
@@ -77,26 +78,16 @@ function ItemsService:CanPlayerAccessItem(Player: Player, ItemId: string, Bypass
 		end
 
 		if Item.GamepassRequirement ~= nil then
-			local Success, OwnsGamepass = Future.Try(function()
-				local Owned = MarketplaceService:UserOwnsGamePassAsync(Player.UserId, Item.GamepassRequirement)
+			local OwnsGamepass = GamepassesHandler:PlayerOwnsGamepass(Player, Item.GamepassRequirement)
 
-				if not Owned then
-					task.spawn(function()
-						MarketplaceService:PromptGamePassPurchase(Player, Item.GamepassRequirement)
-					end)
-				end
-
-				return Owned
-			end):Await()
-
-			if Success then
-				if OwnsGamepass then
-					return true
-				else
-					return false
-				end
+			if OwnsGamepass then
+				return true
 			else
-				return false, "Unknown error."
+				Future.Try(function()
+					MarketplaceService:PromptGamePassPurchase(Player, Item.GamepassRequirement)
+				end)
+
+				return false
 			end
 		end
 
