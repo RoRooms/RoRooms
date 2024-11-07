@@ -1,7 +1,9 @@
+local MarketplaceService = game:GetService("MarketplaceService")
 local RoRooms = script.Parent.Parent.Parent.Parent
 local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
 local t = require(RoRooms.Parent.t)
 local Config = require(RoRooms.Config).Config
+local Future = require(RoRooms.Parent.Future)
 
 local ItemsService = {
 	Name = "ItemsService",
@@ -38,36 +40,10 @@ function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassReq
 
 	local Item = Config.Systems.Items.Items[ItemId]
 	if Item and Item.Tool then
-		local AbleToEquip = false
-		local FailureReason
-		local ResponseCode
-		if not BypassRequirement then
-			if Item.RequirementCallback then
-				AbleToEquip, FailureReason = Item.RequirementCallback(Player, ItemId, Item)
-				if not AbleToEquip then
-					ResponseCode = false
-					if not FailureReason then
-						FailureReason = "Insuffient requirements to equip " .. Item.Name .. " item."
-					end
-				end
-			else
-				AbleToEquip = true
-			end
-			if AbleToEquip then
-				local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
-				if Profile then
-					if Item.LevelRequirement then
-						AbleToEquip = Profile.Data.Level >= Item.LevelRequirement
-						if not AbleToEquip then
-							FailureReason = Item.Name .. " item requires level " .. Item.LevelRequirement .. "."
-							ResponseCode = false
-						end
-					end
-				end
-			end
-		else
-			AbleToEquip = true
-		end
+		local AbleToEquip, FailureReason = self:CanPlayerAccessItem(Player, ItemId, BypassRequirement)
+
+		print(AbleToEquip, FailureReason)
+
 		if AbleToEquip then
 			local ItemTool = Item.Tool:Clone()
 			ItemTool.Parent = Backpack
@@ -79,10 +55,66 @@ function ItemsService:GiveItemToPlayer(Player: Player, ItemId: string, BypassReq
 				end
 			end
 		end
-		return AbleToEquip, FailureReason, ResponseCode
+		return AbleToEquip, FailureReason
 	end
 
 	return false
+end
+
+function ItemsService:CanPlayerAccessItem(Player: Player, ItemId: string, Bypass: boolean?)
+	if Bypass then
+		return true
+	end
+
+	local Item = Config.Systems.Items.Items[ItemId]
+	if Item ~= nil then
+		if Item.RequirementCallback then
+			local AbleToEquip, FailureReason = Item.RequirementCallback(Player, ItemId, Item)
+
+			if (not AbleToEquip) and (FailureReason == nil) then
+				FailureReason = "Insuffient requirements to equip " .. Item.Name .. "."
+			end
+
+			return AbleToEquip, FailureReason
+		end
+
+		if Item.GamepassRequirement ~= nil then
+			local Success, OwnsGamepass = Future.Try(function()
+				local Owned = MarketplaceService:UserOwnsGamePassAsync(Player.UserId, Item.GamepassRequirement)
+
+				if not Owned then
+					task.spawn(function()
+						MarketplaceService:PromptGamePassPurchase(Player, Item.GamepassRequirement)
+					end)
+				end
+
+				return Owned
+			end):Await()
+
+			if Success then
+				if OwnsGamepass then
+					return true
+				else
+					return false
+				end
+			else
+				return false, "Unknown error."
+			end
+		end
+
+		if Item.LevelRequirement ~= nil then
+			local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
+			if Profile then
+				if Profile.Data.Level < Item.LevelRequirement then
+					return false, Item.Name .. " item requires level " .. Item.LevelRequirement .. "."
+				end
+			end
+		end
+	end
+
+	print("success")
+
+	return true
 end
 
 function ItemsService:TakeItemFromPlayer(Player: Player, ItemId: string)
