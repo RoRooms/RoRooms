@@ -31,9 +31,19 @@ return function(Scope: Fusion.Scope<any>, Props)
 			return nil
 		end
 	end)
+	local GamepassRequirement = Scope:Computed(function(Use)
+		local EmoteValue = Use(Emote)
+
+		if EmoteValue and EmoteValue.GamepassRequirement then
+			return EmoteValue.GamepassRequirement
+		else
+			return nil
+		end
+	end)
 	local LabelText = Scope:Computed(function(Use)
 		local EmoteValue = Use(Emote)
 		local LevelRequirementValue = Use(LevelRequirement)
+
 		if EmoteValue and EmoteValue.LabelText then
 			return EmoteValue.LabelText
 		elseif LevelRequirementValue then
@@ -45,10 +55,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local LabelIcon = Scope:Computed(function(Use)
 		local EmoteValue = Use(Emote)
 		local LevelRequirementValue = Use(LevelRequirement)
+		local GamepassRequirementValue = Use(GamepassRequirement)
+
 		if EmoteValue and EmoteValue.LabelIcon then
 			return EmoteValue.LabelIcon
 		elseif LevelRequirementValue then
 			return Assets.Icons.Categories.Unlockable
+		elseif GamepassRequirementValue then
+			return Assets.Icons.Categories.Robux
 		else
 			return ""
 		end
