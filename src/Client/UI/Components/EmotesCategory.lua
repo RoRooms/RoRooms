@@ -92,8 +92,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 										if Emote then
 											if Emote.LevelRequirement then
 												return Emote.LevelRequirement
-											elseif Emote.Name then
-												return string.byte(Emote.Name)
+											elseif Emote.DisplayName then
+												return string.byte(Emote.DisplayName)
 											end
 										end
 

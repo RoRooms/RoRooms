@@ -121,7 +121,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 					Scope:Text {
 						Name = "Name",
 						Text = Scope:Computed(function(Use)
-							return Use(Props.Emote).Name or Use(Props.EmoteId)
+							local EmoteValue = Use(Emote)
+							local EmoteIdValue = Use(EmoteId)
+
+							if EmoteValue and EmoteValue.DisplayName then
+								return EmoteValue.DisplayName
+							else
+								return EmoteIdValue
+							end
 						end),
 						TextSize = Theme.TextSize["0.875"],
 						TextTruncate = Enum.TextTruncate.AtEnd,

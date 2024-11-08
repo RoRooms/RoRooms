@@ -102,8 +102,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 										if Item then
 											if Item.LevelRequirement then
 												return Item.LevelRequirement
-											elseif Item.Name then
-												return string.byte(Item.Name)
+											elseif Item.DisplayName then
+												return string.byte(Item.DisplayName)
 											end
 										end
 

@@ -46,7 +46,7 @@ function EmotesService:CanPlayerUseEmote(Player: Player, EmoteId: string, Emote)
 		local CanUse, FailureReason = Emote.RequirementCallback(Player, EmoteId, Emote)
 
 		if (not CanUse) and (FailureReason == nil) then
-			FailureReason = `Insuffient requirements to use {Emote.Name} emote.`
+			FailureReason = `Insuffient requirements to use {Emote.DisplayName} emote.`
 		end
 
 		if not CanUse then

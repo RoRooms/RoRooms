@@ -129,10 +129,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 					return Scope:Text {
 						Name = "ItemName",
 						Text = Scope:Computed(function(Use)
-							if Use(Item) and Use(Item).Name then
-								return Use(Item).Name
+							local ItemValue = Use(Item)
+							local ItemIdValue = Use(ItemId)
+
+							if ItemValue and ItemValue.DisplayName then
+								return ItemValue.DisplayName
 							else
-								return Use(ItemId)
+								return ItemIdValue
 							end
 						end),
 						TextSize = Theme.TextSize["1"],
