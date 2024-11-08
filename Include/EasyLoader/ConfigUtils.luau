@@ -48,6 +48,7 @@ function ConfigUtils:AnimationToEmote(Animation: Animation)
 		LabelText = self:IfString(Animation:GetAttribute("LabelText")),
 		Color = self:GetColor(Animation),
 		Category = self:GetCategory(Animation),
+		AllowMovement = Animation:GetAttribute("AllowMovement"),
 	}
 end
 

@@ -27,7 +27,7 @@ function EmotesService:PlayEmote(Player: Player, EmoteId: string)
 			if Character then
 				local CharacterClass = PlayerCharacterComponent:FromInstance(Character)
 				if CharacterClass then
-					CharacterClass:PlayEmote(EmoteId, Emote)
+					CharacterClass:PlayEmote(EmoteId)
 					return true
 				end
 			end
