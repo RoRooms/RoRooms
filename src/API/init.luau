@@ -25,7 +25,7 @@ end
 
 	Reconciles RoRooms' config to your liking.
 
-	[`Config` type available here](https://github.com/RoRooms/RoRooms/blob/main/src/API/Config.lua)
+	[`Config` type available here](https://github.com/RoRooms/RoRooms/blob/main/src/API/Config.luau)
 ]=]
 
 --[=[
@@ -37,5 +37,5 @@ end
 
 	Prompts the client, with support for callback buttons.
 
-	[`Prompt` type available here](https://github.com/RoRooms/RoRooms/blob/main/src/Client/UI/States/Prompts.lua)
+	[`Prompt` type available here](https://github.com/RoRooms/RoRooms/blob/main/src/Client/UI/States/Prompts.luau)
 ]=]
