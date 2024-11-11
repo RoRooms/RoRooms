@@ -32,6 +32,7 @@ export type Emote = {
 	LevelRequirement: number?,
 	GamepassRequirement: number?,
 	CallbackRequirement: () -> ()?,
+	AllowMovement: boolean?,
 }
 export type PlaceId = number
 export type Role = {

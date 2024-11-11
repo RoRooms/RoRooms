@@ -71,7 +71,7 @@ function ItemsService:CanPlayerAccessItem(Player: Player, ItemId: string, Bypass
 			local AbleToEquip, FailureReason = Item.RequirementCallback(Player, ItemId, Item)
 
 			if (not AbleToEquip) and (FailureReason == nil) then
-				FailureReason = "Insuffient requirements to equip " .. Item.Name .. "."
+				FailureReason = "Insuffient requirements to equip " .. Item.DisplayName .. "."
 			end
 
 			return AbleToEquip, FailureReason
@@ -95,7 +95,7 @@ function ItemsService:CanPlayerAccessItem(Player: Player, ItemId: string, Bypass
 			local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
 			if Profile then
 				if Profile.Data.Level < Item.LevelRequirement then
-					return false, Item.Name .. " item requires level " .. Item.LevelRequirement .. "."
+					return false, Item.DisplayName .. " item requires level " .. Item.LevelRequirement .. "."
 				end
 			end
 		end

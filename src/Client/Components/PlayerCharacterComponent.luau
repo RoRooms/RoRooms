@@ -8,6 +8,8 @@ local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local Assets = require(RoRooms.SourceCode.Shared.Assets)
 local Profiles = require(RoRooms.SourceCode.Client.UI.States.Profiles)
+local Config = require(RoRooms.Config).Config
+local AnimatedComponent = require(RoRooms.SourceCode.Shared.ExtPackages.AnimatedComponent)
 
 local NAMETAGGER_THEME = Fusion.scoped(OnyxUI.Themer):NewTheme({
 	Font = {
@@ -24,23 +26,55 @@ local NAMETAGGER_THEME = Fusion.scoped(OnyxUI.Themer):NewTheme({
 
 local PlayerCharacterComponent = Component.new {
 	Tag = "RR_PlayerCharacter",
-	Extensions = { RemoteComponent },
+	Extensions = { RemoteComponent, AnimatedComponent },
+
+	PlayingEmote = nil,
 }
 PlayerCharacterComponent.RemoteNamespace = PlayerCharacterComponent.Tag
 
-function PlayerCharacterComponent:_PlayEmote(EmoteId: string, Emote: { [any]: any })
+function PlayerCharacterComponent:ToggleEmote(EmoteId: string)
+	local Emote = Config.Systems.Emotes.Emotes[EmoteId]
+	local PlayingEmote = self.PlayingEmote
+
+	if Emote then
+		if Emote == PlayingEmote then
+			self:StopEmote()
+		else
+			self:PlayEmote(EmoteId)
+		end
+	end
+end
+
+function PlayerCharacterComponent:PlayEmote(EmoteId: string)
 	if self.Player ~= Players.LocalPlayer then
 		return
 	end
 	if not self.Humanoid then
 		return
 	end
-
-	local HumanoidDescription = self.Humanoid.HumanoidDescription
-	if not HumanoidDescription:GetEmotes()[EmoteId] then
-		HumanoidDescription:AddEmote(EmoteId, string.gsub(Emote.Animation.AnimationId, "%D+", ""))
+	if self.Humanoid.SeatPart ~= nil then
+		return
 	end
-	self.Humanoid:PlayEmote(EmoteId)
+
+	local Emote = Config.Systems.Emotes.Emotes[EmoteId]
+	if Emote then
+		local Animator: Animator? = self.Humanoid:FindFirstChildOfClass("Animator")
+
+		if Animator ~= nil then
+			self:StopEmote()
+			self.PlayingEmote = Emote
+
+			self:PlayAnimation(Emote.Animation.AnimationId)
+		end
+	end
+end
+
+function PlayerCharacterComponent:StopEmote()
+	local PlayingEmote = self.PlayingEmote
+	if PlayingEmote then
+		self:StopAnimation(PlayingEmote.Animation.AnimationId)
+		self.PlayingEmote = nil
+	end
 end
 
 function PlayerCharacterComponent:_UpdateNametag()
@@ -81,11 +115,34 @@ function PlayerCharacterComponent:_StartNametag()
 end
 
 function PlayerCharacterComponent:Start()
-	self.Server.PlayEmote:Connect(function(EmoteId: string, Emote: { [any]: any })
-		self:_PlayEmote(EmoteId, Emote)
+	self.Server.PlayEmote:Connect(function(EmoteId: string)
+		self:ToggleEmote(EmoteId)
 	end)
 
 	self:_StartNametag()
+
+	local Animator: Animator? = self.Humanoid:FindFirstChildOfClass("Animator")
+	if Animator then
+		self:SetAnimator(Animator)
+	end
+
+	self.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
+		local PlayingEmote: Config.Emote? = self.PlayingEmote
+		if (PlayingEmote ~= nil) and not PlayingEmote.AllowMovement then
+			if self.Humanoid.MoveDirection.Magnitude > 0 then
+				self:StopEmote()
+			end
+		end
+	end)
+
+	self.Humanoid.Jumping:Connect(function(IsJumping: boolean)
+		local PlayingEmote: Config.Emote? = self.PlayingEmote
+		if (PlayingEmote ~= nil) and not PlayingEmote.AllowMovement then
+			if IsJumping then
+				self:StopEmote()
+			end
+		end
+	end)
 end
 
 function PlayerCharacterComponent:Construct()

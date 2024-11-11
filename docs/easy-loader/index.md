@@ -33,6 +33,7 @@ Emotes are `Animation` objects, and go under `Config.Emotes`.
 | `ItemId`              | `string`    | ❌        |
 | `Animation`           | `Animation` | ❌        |
 | `Emoji`               | `string`    | ✅        |
+| `AllowMovement`       | `boolean`   | ✅        |
 | `DisplayName`         | `string`    | ✅        |
 | `LevelRequirement`    | `number`    | ✅        |
 | `GamepassRequirement` | `number`    | ✅        |

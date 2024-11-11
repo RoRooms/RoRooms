@@ -3,9 +3,10 @@ local RunService = game:GetService("RunService")
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
+local States = require(RoRooms.SourceCode.Client.UI.States)
 local ColorUtils = require(RoRooms.Parent.ColorUtils)
+local ItemsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Items.ItemsController)
 local Assets = require(RoRooms.SourceCode.Shared.Assets)
-local EmotesController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Emotes.EmotesController)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
@@ -20,32 +21,33 @@ return function(Scope: Fusion.Scope<any>, Props)
 	})
 	local Theme = Themer.Theme:now()
 
-	local EmoteId = Util.Fallback(Props.EmoteId, "EmoteId")
-	local Emote = Util.Fallback(Props.Emote, {})
+	local ItemId = Util.Fallback(Props.ItemId, "ItemId")
+	local Item = Util.Fallback(Props.Item, {})
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
+	local Callback = Util.Fallback(Props.Callback, function() end)
 	local LevelRequirement = Scope:Computed(function(Use)
-		local EmoteValue = Use(Emote)
-		if EmoteValue and EmoteValue.LevelRequirement then
-			return EmoteValue.LevelRequirement
+		local ItemValue = Use(Item)
+		if ItemValue and ItemValue.LevelRequirement then
+			return ItemValue.LevelRequirement
 		else
 			return nil
 		end
 	end)
 	local GamepassRequirement = Scope:Computed(function(Use)
-		local EmoteValue = Use(Emote)
+		local ItemValue = Use(Item)
 
-		if EmoteValue and EmoteValue.GamepassRequirement then
-			return EmoteValue.GamepassRequirement
+		if ItemValue and ItemValue.GamepassRequirement then
+			return ItemValue.GamepassRequirement
 		else
 			return nil
 		end
 	end)
 	local LabelText = Scope:Computed(function(Use)
-		local EmoteValue = Use(Emote)
+		local ItemValue = Use(Item)
 		local LevelRequirementValue = Use(LevelRequirement)
 
-		if EmoteValue and EmoteValue.LabelText then
-			return EmoteValue.LabelText
+		if ItemValue and ItemValue.LabelText then
+			return ItemValue.LabelText
 		elseif LevelRequirementValue then
 			return LevelRequirementValue
 		else
@@ -53,12 +55,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end
 	end)
 	local LabelIcon = Scope:Computed(function(Use)
-		local EmoteValue = Use(Emote)
+		local ItemValue = Use(Item)
 		local LevelRequirementValue = Use(LevelRequirement)
 		local GamepassRequirementValue = Use(GamepassRequirement)
 
-		if EmoteValue and EmoteValue.LabelIcon then
-			return EmoteValue.LabelIcon
+		if ItemValue and ItemValue.LabelIcon then
+			return ItemValue.LabelIcon
 		elseif LevelRequirementValue then
 			return Assets.Icons.Categories.Unlockable
 		elseif GamepassRequirementValue then
@@ -68,71 +70,87 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end
 	end)
 
+	local IsEquipped = Scope:Computed(function(Use)
+		return table.find(Use(States.Items.Equipped), Use(ItemId)) ~= nil
+	end)
+
 	return Scope:CustomButton(Util.CombineProps(Props, {
-		Name = "EmoteButton",
+		Name = "ItemButton",
 		Color = Color,
+		Size = UDim2.fromOffset(70, 70),
+		AutomaticSize = Enum.AutomaticSize.None,
 		LayoutOrder = Scope:Computed(function(Use)
-			return Use(Emote).LayoutOrder or 0
+			return Use(Item).LayoutOrder or 0
 		end),
+		StrokeColor = Scope:Spring(
+			Scope:Computed(function(Use)
+				if Use(IsEquipped) then
+					return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Strong))
+				else
+					return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Regular))
+				end
+			end),
+			Theme.SpringSpeed["1"],
+			Theme.SpringDampening["1"]
+		),
 		ListEnabled = false,
 
 		OnActivated = function()
-			if Props.Callback then
-				Props.Callback()
+			if Callback then
+				Callback()
 			end
 
-			if EmotesController then
-				EmotesController:PlayEmote(Peek(EmoteId))
+			if ItemsController then
+				ItemsController:ToggleEquipItem(Peek(ItemId))
 			end
 		end,
 
 		[Children] = {
-			Scope:Frame {
-				Name = "Details",
-				ListEnabled = true,
-				ListFillDirection = Enum.FillDirection.Vertical,
-				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
-				ListPadding = Scope:Computed(function(Use)
-					return UDim.new(0, Use(Theme.Spacing["0.5"]))
-				end),
-				PaddingTop = Scope:Computed(function(Use)
-					return UDim.new(0, Use(Theme.Spacing["1"]))
-				end),
-				Padding = Scope:Computed(function(Use)
-					return UDim.new(0, Use(Theme.Spacing["0"]))
-				end),
+			Scope:Computed(function(Use)
+				local Tool = Use(Item).Tool
+				if not Tool then
+					return
+				end
 
-				[Children] = {
-					Scope:Text {
-						Name = "Emoji",
+				local Size = UDim2.fromOffset(60, 60)
+				local AnchorPoint = Vector2.new(0.5, 0.5)
+				local Position = UDim2.fromScale(0.5, 0.5)
+
+				if string.len(Tool.TextureId) >= 1 then
+					return Scope:Image {
+						Name = "Icon",
+						Image = Tool.TextureId,
+						BackgroundTransparency = 1,
+						AnchorPoint = AnchorPoint,
+						Position = Position,
+						Size = Size,
+					}
+				else
+					return Scope:Text {
+						Name = "ItemName",
 						Text = Scope:Computed(function(Use)
-							if Use(Props.Emote) and Use(Props.Emote).Emoji then
-								return Use(Props.Emote).Emoji
+							local ItemValue = Use(Item)
+							local ItemIdValue = Use(ItemId)
+
+							if ItemValue and ItemValue.DisplayName then
+								return ItemValue.DisplayName
 							else
-								return "🪩"
+								return ItemIdValue
 							end
 						end),
-						TextSize = Theme.TextSize["2.25"],
-						RichText = false,
-						ClipsDescendants = false,
-						TextWrapped = false,
-						AutoLocalize = false,
-					},
-					Scope:Text {
-						Name = "Name",
-						Text = Scope:Computed(function(Use)
-							return Use(Props.Emote).Name or Use(Props.EmoteId)
-						end),
-						TextSize = Theme.TextSize["0.875"],
+						TextSize = Theme.TextSize["1"],
+						AnchorPoint = AnchorPoint,
+						Position = Position,
+						Size = Size,
 						TextTruncate = Enum.TextTruncate.AtEnd,
 						AutomaticSize = Enum.AutomaticSize.None,
 						TextXAlignment = Enum.TextXAlignment.Center,
-						Size = Scope:Computed(function(Use)
-							return UDim2.fromOffset(Use(Theme.Spacing["4"]) * 1.1, Use(Theme.TextSize["0.875"]) * 2)
-						end),
-					},
-				},
-			},
+						TextYAlignment = Enum.TextYAlignment.Center,
+						AutoLocalize = false,
+						TextWrapped = true,
+					}
+				end
+			end),
 			Scope:IconText {
 				Name = "Label",
 				Content = Scope:Computed(function(Use)

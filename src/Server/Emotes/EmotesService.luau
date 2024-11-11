@@ -27,7 +27,7 @@ function EmotesService:PlayEmote(Player: Player, EmoteId: string)
 			if Character then
 				local CharacterClass = PlayerCharacterComponent:FromInstance(Character)
 				if CharacterClass then
-					CharacterClass:PlayEmote(EmoteId, Emote)
+					CharacterClass:PlayEmote(EmoteId)
 					return true
 				end
 			end
@@ -46,7 +46,7 @@ function EmotesService:CanPlayerUseEmote(Player: Player, EmoteId: string, Emote)
 		local CanUse, FailureReason = Emote.RequirementCallback(Player, EmoteId, Emote)
 
 		if (not CanUse) and (FailureReason == nil) then
-			FailureReason = `Insuffient requirements to use {Emote.Name} emote.`
+			FailureReason = `Insuffient requirements to use {Emote.DisplayName} emote.`
 		end
 
 		if not CanUse then

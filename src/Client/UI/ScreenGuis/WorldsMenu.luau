@@ -76,7 +76,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								Text = "This world will not receive support from the network. If this is intentional, you may disable the worlds system.",
 							},
 							Scope:TextInput {
-								Text = "docs.rorooms.com/docs/publishing",
+								Text = "devforum.roblox.com/t/3248014/18",
 								Disabled = true,
 								TextTransparency = 0,
 								StrokeTransparency = 0,

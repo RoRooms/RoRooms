@@ -14,7 +14,7 @@
           "$ignoreUnknownInstances": true
         },
         "RoRooms": {
-          "$path": "Include/Linking.lua",
+          "$path": "Include/Linking.luau",
           "Packages": {
             "$path": "Packages",
             "RoRooms": {

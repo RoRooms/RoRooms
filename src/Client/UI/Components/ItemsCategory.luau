@@ -1,34 +1,42 @@
 local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
 local Config = require(RoRooms.Config).Config
 local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
+local Peek = Fusion.peek
 
-local EmoteButton = require(RoRooms.SourceCode.Client.UI.Components.EmoteButton)
+local ItemButton = require(RoRooms.SourceCode.Client.UI.Components.ItemButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, {
-		EmoteButton = EmoteButton,
+		ItemButton = ItemButton,
 	})
 	local Theme = Themer.Theme:now()
 
-	local CategoryName = Util.Fallback(Props.CategoryName, "General")
 	local Name = Util.Fallback(Props.Name, script.Name)
-	local LayoutOrder = Util.Fallback(Props.LayoutOrder, 0)
+	local CategoryName = Util.Fallback(Props.CategoryName, "Category")
 
 	local Category = Scope:Computed(function(Use)
-		return Config.Systems.Emotes.Categories[Use(CategoryName)]
+		return Config.Systems.Items.Categories[Use(CategoryName)]
 	end)
 
 	return Scope:Frame {
 		Name = Name,
-		LayoutOrder = LayoutOrder,
+		LayoutOrder = Scope:Computed(function(Use)
+			if Use(Category) then
+				return Use(Category).LayoutOrder
+			else
+				return 0
+			end
+		end),
 		ListEnabled = true,
+		ListPadding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.75"]))
+		end),
 		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 		[Children] = {
@@ -66,48 +74,44 @@ return function(Scope: Fusion.Scope<any>, Props)
 				},
 			},
 			Scope:Frame {
-				Name = "Emotes",
-				AutomaticSize = Enum.AutomaticSize.Y,
+				Name = "Items",
 				ListEnabled = true,
+				ListWraps = true,
+				ListFillDirection = Enum.FillDirection.Horizontal,
 				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.Spacing["0.75"]))
 				end),
-				ListFillDirection = Enum.FillDirection.Horizontal,
-				ListWraps = true,
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
+				end),
 
 				[Children] = {
-					Scope:ForPairs(Config.Systems.Emotes.Emotes, function(Use, Scope, EmoteId, Emote)
-						local EmoteCategory = Emote.Category
-						if EmoteCategory == nil then
-							EmoteCategory = "General"
+					Scope:ForPairs(Config.Systems.Items.Items, function(Use, Scope, ItemId, Item)
+						local ItemCategory = Item.Category
+						if ItemCategory == nil then
+							ItemCategory = "General"
 						end
 
-						if EmoteCategory == Use(CategoryName) then
-							return EmoteId,
-								Scope:EmoteButton {
-									EmoteId = EmoteId,
-									Emote = Emote,
-									Color = Emote.TintColor,
+						if ItemCategory == Peek(CategoryName) then
+							return ItemId,
+								Scope:ItemButton {
+									ItemId = ItemId,
+									Item = Item,
+									Color = Item.TintColor,
 									LayoutOrder = Scope:Computed(function(Use)
-										if Emote then
-											if Emote.LevelRequirement then
-												return Emote.LevelRequirement
-											elseif Emote.Name then
-												return string.byte(Emote.Name)
+										if Item then
+											if Item.LevelRequirement then
+												return Item.LevelRequirement
+											elseif Item.DisplayName then
+												return string.byte(Item.DisplayName)
 											end
 										end
 
 										return 0
 									end),
-
-									Callback = function()
-										if Use(States.CoreGui.ScreenSize).Y <= 500 then
-											States.Menus.CurrentMenu:set()
-										end
-									end,
 								}
 						else
-							return EmoteId, nil
+							return ItemId, nil
 						end
 					end),
 				},

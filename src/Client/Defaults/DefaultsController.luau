@@ -1,6 +1,5 @@
 local RoRooms = script.Parent.Parent.Parent.Parent
 local CoreThemer = require(RoRooms.SourceCode.Shared.ExtPackages.CoreThemer)
-local Footstepper = require(RoRooms.SourceCode.Shared.ExtPackages.Footstepper)
 local NeoHotbar = require(RoRooms.Parent.NeoHotbar)
 
 local DefaultsController = {
@@ -9,7 +8,6 @@ local DefaultsController = {
 
 function DefaultsController:KnitStart()
 	CoreThemer:SetDefaults()
-	Footstepper:Start()
 end
 
 NeoHotbar:Start()
