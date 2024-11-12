@@ -6,7 +6,7 @@ local ColorUtils = require(RoRooms.Parent.ColorUtils)
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 
-local OnyxUIFolder = RoRooms.Parent.OnyxUI.Parent._Index["imavafe_onyx-ui@0.4.3"]["onyx-ui"]
+local OnyxUIFolder = RoRooms.Parent.OnyxUI.Parent._Index["imavafe_onyx-ui@0.5.0"]["onyx-ui"]
 local Button = require(OnyxUIFolder.Components.Button)
 
 export type Props = Button.Props & {}

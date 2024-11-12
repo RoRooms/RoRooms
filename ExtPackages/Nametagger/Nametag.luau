@@ -18,6 +18,7 @@ export type Props = {
 	Player: Fusion.UsedAs<Player>?,
 	Properties: { { Value: any, Icon: string? } }?,
 	DisplayName: string?,
+	Color: Color3?,
 }
 
 return function(Scope: Fusion.Scope<any>, Props: Props)
@@ -43,6 +44,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			end
 		end)
 	)
+	local Color = Util.Fallback(Props.Color, Theme.Colors.BaseContent.Main)
 	local AbsoluteSize = Scope:Value(Vector2.new())
 
 	local Contents = Scope:Frame {
@@ -58,6 +60,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			Scope:TagText {
 				Name = "DisplayName",
 				Text = DisplayName,
+				TextColor3 = Color,
 				FontFace = Scope:Computed(function(Use)
 					return Font.new(Use(Theme.Font.Body), Use(Theme.FontWeight.Bold))
 				end),

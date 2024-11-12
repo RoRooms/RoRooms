@@ -65,30 +65,65 @@ function ConfigUtils:ToolToItem(Tool: Tool)
 	}
 end
 
-function ConfigUtils:CompileEmotes(EmotesFolder: Folder)
+function ConfigUtils:ConfigurationToRole(Configuration: Configuration)
+	return {
+		Name = Configuration.Name,
+		Color = Configuration:GetAttribute("Color"),
+		LayoutOrder = Configuration:GetAttribute("LayoutOrder"),
+		LevelRequirement = Configuration:GetAttribute("LevelRequirement"),
+		GamepassRequirement = Configuration:GetAttribute("GamepassRequirement"),
+	}
+end
+
+function ConfigUtils:CompileEmotes(Folder: Folder)
 	local Emotes = {}
 
-	for _, EmoteAnimation in ipairs(EmotesFolder:GetChildren()) do
+	for _, EmoteAnimation in ipairs(Folder:GetChildren()) do
 		local EmoteId = EmoteAnimation:GetAttribute("EmoteId")
-		if EmoteId then
+		if typeof(EmoteId) == "string" then
+			assert(Emotes[EmoteId] == nil, `Duplicate EmoteId {EmoteId} detected. Please use unique Ids.`)
+
 			Emotes[EmoteId] = self:AnimationToEmote(EmoteAnimation)
+		else
+			assert(false, "EmoteIds must be of type string.")
 		end
 	end
 
 	return Emotes
 end
 
-function ConfigUtils:CompileItems(EmotesFolder: Folder)
+function ConfigUtils:CompileItems(Folder: Folder)
 	local Items = {}
 
-	for _, ItemTool in ipairs(EmotesFolder:GetChildren()) do
+	for _, ItemTool in ipairs(Folder:GetChildren()) do
 		local ItemId = ItemTool:GetAttribute("ItemId")
-		if ItemId then
+		if typeof(ItemId) == "string" then
+			assert(Items[ItemId] == nil, `Duplicate ItemId {ItemId} detected. Please use unique Ids.`)
+
 			Items[ItemId] = self:ToolToItem(ItemTool)
+		else
+			assert(false, "ItemIds must be of type string.")
 		end
 	end
 
 	return Items
+end
+
+function ConfigUtils:CompileRoles(Folder: Folder)
+	local Roles = {}
+
+	for _, RoleConfiguration in ipairs(Folder:GetChildren()) do
+		local RoleId = RoleConfiguration:GetAttribute("RoleId")
+		if typeof(RoleId) == "string" then
+			assert(Roles[RoleId] == nil, `Duplicate RoleId {RoleId} detected. Please use unique Ids.`)
+
+			Roles[RoleId] = self:ConfigurationToRole(RoleConfiguration)
+		else
+			assert(false, "RoleId must be of type string.")
+		end
+	end
+
+	return Roles
 end
 
 function ConfigUtils:EnsureSoundGroup(SoundGroup: Instance?): SoundGroup

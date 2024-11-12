@@ -6,12 +6,14 @@ local RoRooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(RoRooms.Parent.OnyxUI)
 local Fusion = require(RoRooms.Parent.Fusion)
 local States = require(RoRooms.SourceCode.Client.UI.States)
-local Config = require(RoRooms.Config).Config
+local Config = require(RoRooms.Config)
 local Assets = require(RoRooms.SourceCode.Shared.Assets)
 local Components = require(RoRooms.SourceCode.Client.UI.Components)
 local WorldsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Worlds.WorldsController)
 local Profiles = require(RoRooms.SourceCode.Client.UI.States.Profiles)
 local Types = require(RoRooms.SourceCode.Shared.Types)
+local DeepCopy = require(RoRooms.SourceCode.Shared.ExtPackages.DeepCopy)
+local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -40,9 +42,52 @@ return function(Scope: Fusion.Scope<any>, Props)
 			return SafeProfileValue.DisplayName
 		end
 	end)
+	local Role = Scope:Computed(function(Use)
+		local ProfileValue = Use(Profile)
+
+		if ProfileValue then
+			return Config.Config.Systems.Profiles.Roles[ProfileValue.Role]
+		end
+
+		return nil
+	end)
+	local OrderedRoles = Scope:Computed(function(Use)
+		local Roles = {}
+
+		for RoleId, RoleEntry in pairs(Config.Config.Systems.Profiles.Roles) do
+			local FullRole = DeepCopy(RoleEntry)
+
+			FullRole.RoleId = RoleId
+
+			table.insert(Roles, FullRole)
+		end
+
+		table.sort(Roles, function(RoleA, RoleB)
+			return (RoleA.LayoutOrder or string.byte(RoleA.Name)) < (RoleB.LayoutOrder or string.byte(RoleB.Name))
+		end)
+
+		return Roles
+	end)
+	local RoleOptions = Scope:Computed(function(Use)
+		local OrderedRolesValue = Use(OrderedRoles)
+		local Options = {}
+
+		for _, RoleEntry in ipairs(OrderedRolesValue) do
+			table.insert(Options, RoleEntry.RoleId)
+		end
+
+		return Options
+	end)
 
 	local NicknameInput = Scope:Value("")
 	local BioInput = Scope:Value("")
+	local RoleInput = Scope:Value(1)
+	local SelectedRoleId = Scope:Computed(function(Use)
+		local RoleInputValue = Use(RoleInput)
+		local OrderedRolesValue = Use(OrderedRoles)
+
+		return OrderedRolesValue[RoleInputValue].RoleId
+	end)
 
 	Scope:Observer(States.Menus.ProfileMenu.UserId):onChange(function()
 		States.Menus.ProfileMenu.EditMode:set(false)
@@ -60,10 +105,22 @@ return function(Scope: Fusion.Scope<any>, Props)
 	end)
 	Scope:Observer(States.Menus.ProfileMenu.EditMode):onChange(function()
 		local ProfileValue = Peek(Profile)
+		local OrderedRolesValue = Peek(OrderedRoles)
 
-		if Peek(States.Menus.ProfileMenu.EditMode) then
+		local OrderedRoleIndex = 1
+		do
+			for RoleIndex, RoleEntry in ipairs(OrderedRolesValue) do
+				if RoleEntry.RoleId == ProfileValue.Role then
+					OrderedRoleIndex = RoleIndex
+					break
+				end
+			end
+		end
+
+		if ProfileValue and Peek(States.Menus.ProfileMenu.EditMode) then
 			NicknameInput:set(ProfileValue.Nickname or "")
 			BioInput:set(ProfileValue.Bio or "")
+			RoleInput:set(OrderedRoleIndex)
 		end
 	end)
 
@@ -128,7 +185,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 								end),
 								Editable = Scope:Computed(function(Use)
 									local EditModeValue = Use(States.Menus.ProfileMenu.EditMode)
-									return EditModeValue and (Config.Systems.Profiles.AvatarEditorCallback ~= nil)
+									return EditModeValue
+										and (Config.Config.Systems.Profiles.AvatarEditorCallback ~= nil)
 								end),
 								RingThickness = Scope:Computed(function(Use)
 									return Use(Theme.StrokeThickness["3"])
@@ -151,8 +209,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 								end),
 
 								OnActivated = function()
-									if Config.Systems.Profiles.AvatarEditorCallback then
-										Config.Systems.Profiles.AvatarEditorCallback()
+									if Config.Config.Systems.Profiles.AvatarEditorCallback then
+										Config.Config.Systems.Profiles.AvatarEditorCallback()
 									end
 								end,
 							},
@@ -227,11 +285,10 @@ return function(Scope: Fusion.Scope<any>, Props)
 											Scope:Frame {
 												Name = "Name",
 												ListEnabled = true,
+												ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 												ListPadding = Scope:Computed(function(Use)
 													return UDim.new(0, Use(Theme.Spacing["0"]))
 												end),
-												ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-												LayoutOrder = 1,
 
 												[Children] = {
 													Scope:Text {
@@ -266,7 +323,37 @@ return function(Scope: Fusion.Scope<any>, Props)
 													local SafeProfileValue: Types.Profile = Use(SafeProfile)
 													return utf8.len(SafeProfileValue.Bio or "") > 0
 												end),
-												LayoutOrder = 2,
+											},
+											Scope:Frame {
+												Name = "Role",
+
+												[Children] = {
+													Scope:Badge {
+														Name = "Role",
+														Content = Scope:Computed(function(Use)
+															local RoleValue: Config.Role = Use(Role)
+
+															if RoleValue then
+																return { RoleValue.Name }
+															else
+																return { "Role" }
+															end
+														end),
+														Color = Scope:Computed(function(Use)
+															local RoleValue: Config.Role = Use(Role)
+
+															if RoleValue then
+																return RoleValue.Color
+															else
+																return Use(Theme.Colors.Neutral.Main)
+															end
+														end),
+														Visible = Scope:Computed(function(Use)
+															local RoleValue: Config.Role = Use(Role)
+															return RoleValue ~= nil
+														end),
+													},
+												},
 											},
 										},
 									},
@@ -283,18 +370,34 @@ return function(Scope: Fusion.Scope<any>, Props)
 											Scope:TextInput {
 												Name = "Nickname",
 												Text = NicknameInput,
-												CharacterLimit = Config.Systems.Profiles.NicknameCharacterLimit,
+												CharacterLimit = Config.Config.Systems.Profiles.NicknameCharacterLimit,
 												PlaceholderText = "Nickname",
 											},
 											Scope:TextArea {
 												Name = "Bio",
 												Text = BioInput,
-												CharacterLimit = Config.Systems.Profiles.BioCharacterLimit,
+												CharacterLimit = Config.Config.Systems.Profiles.BioCharacterLimit,
 												PlaceholderText = "Bio",
 												AutomaticSize = Enum.AutomaticSize.Y,
 												Size = Scope:Computed(function(Use)
 													return UDim2.fromOffset(0, Use(Theme.TextSize["1"]) * 3)
 												end),
+											},
+											Scope:SwapInput {
+												Options = RoleOptions,
+												Color = Scope:Computed(function(Use)
+													local SelectedRoleIdValue: Config.Role = Use(SelectedRoleId)
+													local SelectedRole =
+														Config.Config.Systems.Profiles.Roles[SelectedRoleIdValue]
+
+													if SelectedRole then
+														return SelectedRole.Color
+													else
+														return Use(Theme.Colors.BaseContent.Main)
+													end
+												end),
+												Selection = RoleInput,
+												StrokeColor = Theme.Colors.BaseContent.Main,
 											},
 										},
 									},
@@ -333,6 +436,21 @@ return function(Scope: Fusion.Scope<any>, Props)
 												if next(States.Services.ProfilesService) ~= nil then
 													States.Services.ProfilesService:SetNickname(Peek(NicknameInput))
 													States.Services.ProfilesService:SetBio(Peek(BioInput))
+													States.Services.ProfilesService
+														:SetRole(Peek(SelectedRoleId))
+														:andThen(function(Success: boolean, FailureReason: string?)
+															if (not Success) and (FailureReason ~= nil) then
+																Prompts:PushPrompt({
+																	Title = "Failure",
+																	Text = FailureReason,
+																	Buttons = {
+																		{
+																			Content = { "Close" },
+																		},
+																	},
+																})
+															end
+														end)
 												end
 											end
 

@@ -3,6 +3,8 @@ local ConfigUtils = require(script.Parent.ConfigUtils)
 local Config = {
 	Systems = {
 		Profiles = {
+			Roles = ConfigUtils:CompileRoles(script.Roles),
+			DefaultRoleId = script.Roles:GetAttribute("DefaultRoleId"),
 			AvatarEditorCallback = ConfigUtils:GetAvatarEditorCallback(script),
 		},
 		Music = {

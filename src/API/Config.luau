@@ -38,7 +38,10 @@ export type PlaceId = number
 export type Role = {
 	Name: string,
 	Color: Color3?,
-	CallbackRequirement: (() -> boolean)?,
+	LayoutOrder: number?,
+	CallbackRequirement: ((Player, string, Role) -> boolean)?,
+	LevelRequirement: number?,
+	GamepassRequirement: number?,
 }
 export type Config = {
 	Systems: {
@@ -102,14 +105,8 @@ local CONFIG_TEMPLATE: Config = {
 		Profiles = {
 			Enabled = true,
 			NicknameCharacterLimit = 20,
-			BioCharacterLimit = 30,
-			Roles = {
-				Testing = {
-					Name = "hi",
-					Color = Color3.fromRGB(255, 255, 255),
-				},
-			},
-			DefaultRoleId = "Testing",
+			BioCharacterLimit = 80,
+			Roles = {},
 		},
 		Items = {
 			Enabled = true,

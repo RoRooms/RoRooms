@@ -12,6 +12,7 @@ export type Properties = { Property? }
 export type Config = {
 	DisplayName: string?,
 	Properties: Properties?,
+	Color: Color3?,
 }
 
 local Nametagger = {
@@ -72,6 +73,7 @@ function Nametagger:TagCharacter(Character: Model, Config: Config?)
 		Player = Player,
 		Properties = SafeConfig.Properties,
 		DisplayName = SafeConfig.DisplayName,
+		Color = SafeConfig.Color,
 	}
 end
 

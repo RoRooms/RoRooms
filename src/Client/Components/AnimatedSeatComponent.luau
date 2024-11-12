@@ -65,7 +65,7 @@ function AnimatedSeatComponent:GetProximityPrompt()
 
 	self.Scope:Hydrate(ProximityPrompt) {
 		Enabled = self.Scope:Computed(function(Use)
-			return Peek(self.Occupant) == nil
+			return Use(self.Occupant) == nil
 		end),
 	}
 
