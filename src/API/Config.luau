@@ -38,6 +38,7 @@ export type PlaceId = number
 export type Role = {
 	Name: string,
 	Color: Color3?,
+	LayoutOrder: number?,
 	CallbackRequirement: (() -> boolean)?,
 }
 export type Config = {
