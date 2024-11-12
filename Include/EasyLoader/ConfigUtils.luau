@@ -80,10 +80,12 @@ function ConfigUtils:CompileEmotes(Folder: Folder)
 
 	for _, EmoteAnimation in ipairs(Folder:GetChildren()) do
 		local EmoteId = EmoteAnimation:GetAttribute("EmoteId")
-		if EmoteId then
+		if typeof(EmoteId) == "string" then
 			assert(Emotes[EmoteId] == nil, `Duplicate EmoteId {EmoteId} detected. Please use unique Ids.`)
 
 			Emotes[EmoteId] = self:AnimationToEmote(EmoteAnimation)
+		else
+			assert(false, "EmoteIds must be of type string.")
 		end
 	end
 
@@ -95,10 +97,12 @@ function ConfigUtils:CompileItems(Folder: Folder)
 
 	for _, ItemTool in ipairs(Folder:GetChildren()) do
 		local ItemId = ItemTool:GetAttribute("ItemId")
-		if ItemId then
+		if typeof(ItemId) == "string" then
 			assert(Items[ItemId] == nil, `Duplicate ItemId {ItemId} detected. Please use unique Ids.`)
 
 			Items[ItemId] = self:ToolToItem(ItemTool)
+		else
+			assert(false, "ItemIds must be of type string.")
 		end
 	end
 
@@ -110,10 +114,12 @@ function ConfigUtils:CompileRoles(Folder: Folder)
 
 	for _, RoleConfiguration in ipairs(Folder:GetChildren()) do
 		local RoleId = RoleConfiguration:GetAttribute("RoleId")
-		if RoleId then
+		if typeof(RoleId) == "string" then
 			assert(Roles[RoleId] == nil, `Duplicate RoleId {RoleId} detected. Please use unique Ids.`)
 
 			Roles[RoleId] = self:ConfigurationToRole(RoleConfiguration)
+		else
+			assert(false, "RoleId must be of type string.")
 		end
 	end
 
