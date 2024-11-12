@@ -20,7 +20,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		ClipsDescendants = false,
 		StrokeThickness = 1,
 		StrokeColor = Util.Colors.Black,
-		StrokeTransparency = 0.5,
+		StrokeTransparency = 0.7,
 		StrokeApplyStrokeMode = Enum.ApplyStrokeMode.Contextual,
 	}))
 end

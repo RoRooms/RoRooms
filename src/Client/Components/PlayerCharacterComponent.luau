@@ -79,11 +79,14 @@ end
 
 function PlayerCharacterComponent:_UpdateNametag()
 	local SafeProfileValue = Fusion.peek(self.SafeProfile)
+
 	if self.Humanoid then
 		self.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
 	end
 
 	OnyxUI.Themer.Theme:is(NAMETAGGER_THEME):during(function()
+		local Theme = OnyxUI.Themer.Theme:now()
+
 		local ShownName = SafeProfileValue.Nickname
 		local Properties = {
 			{ Value = SafeProfileValue.Level, Image = Assets.Icons.UserBadges.Level },
@@ -99,8 +102,11 @@ function PlayerCharacterComponent:_UpdateNametag()
 			table.insert(Properties, { Value = "", Image = Assets.Icons.General.EditPerson })
 		end
 
+		local Role = Config.Systems.Profiles.Roles[SafeProfileValue.Role]
+
 		Nametagger:TagCharacter(self.Instance, {
 			DisplayName = ShownName,
+			Color = (Role and Role.Color) or Fusion.peek(Theme.Colors.BaseContent.Main),
 			Properties = Properties,
 		})
 	end)
