@@ -102,7 +102,7 @@ local CONFIG_TEMPLATE: Config = {
 		Profiles = {
 			Enabled = true,
 			NicknameCharacterLimit = 20,
-			BioCharacterLimit = 30,
+			BioCharacterLimit = 80,
 			Roles = {},
 		},
 		Items = {
