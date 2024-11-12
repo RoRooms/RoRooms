@@ -178,10 +178,12 @@ function ProfilesService:_CheckDefaultRole()
 	local DefaultRoleId = Config.Systems.Profiles.DefaultRoleId
 	local DefaultRole = Config.Systems.Profiles.Roles[DefaultRoleId]
 
-	if (DefaultRoleId ~= nil) and (DefaultRole == nil) then
-		assert(false, "DefaultRoleId is set to a nonexistent role.")
-	else
-		assert(DefaultRole.CallbackRequirement == nil, "The default role cannot have a CallbackRequirement.")
+	if DefaultRoleId ~= nil then
+		if DefaultRole == nil then
+			assert(false, "DefaultRoleId is set to a nonexistent role.")
+		else
+			assert(DefaultRole.CallbackRequirement == nil, "The default role cannot have a CallbackRequirement.")
+		end
 	end
 end
 

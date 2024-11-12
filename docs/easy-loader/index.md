@@ -54,6 +54,8 @@ Roles are `Configuration` objects, and go under `Config.Roles`.
 | `LevelRequirement`    | `number` | ✅        |
 | `GamepassRequirement` | `number` | ✅        |
 
+Additionally, you can set a `DefaultRoleId` attribute onto `Config.Roles` itself to give a role to everyone by default.
+
 ## Physical 🌍
 
 ### Locked Zones ⭕🔒

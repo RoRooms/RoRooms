@@ -85,8 +85,6 @@ function PlayerCharacterComponent:_UpdateNametag()
 	end
 
 	OnyxUI.Themer.Theme:is(NAMETAGGER_THEME):during(function()
-		local Theme = OnyxUI.Themer.Theme:now()
-
 		local ShownName = SafeProfileValue.Nickname
 		local Properties = {
 			{ Value = SafeProfileValue.Level, Image = Assets.Icons.UserBadges.Level },
@@ -106,7 +104,7 @@ function PlayerCharacterComponent:_UpdateNametag()
 
 		Nametagger:TagCharacter(self.Instance, {
 			DisplayName = ShownName,
-			Color = (Role and Role.Color) or Fusion.peek(Theme.Colors.BaseContent.Main),
+			Color = (Role and Role.Color) or OnyxUI.Util.Colors.White,
 			Properties = Properties,
 		})
 	end)
@@ -121,9 +119,11 @@ function PlayerCharacterComponent:_StartNametag()
 end
 
 function PlayerCharacterComponent:Start()
-	self.Server.PlayEmote:Connect(function(EmoteId: string)
-		self:ToggleEmote(EmoteId)
-	end)
+	if self.Server then
+		self.Server.PlayEmote:Connect(function(EmoteId: string)
+			self:ToggleEmote(EmoteId)
+		end)
+	end
 
 	self:_StartNametag()
 
