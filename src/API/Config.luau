@@ -103,13 +103,7 @@ local CONFIG_TEMPLATE: Config = {
 			Enabled = true,
 			NicknameCharacterLimit = 20,
 			BioCharacterLimit = 30,
-			Roles = {
-				Testing = {
-					Name = "hi",
-					Color = Color3.fromRGB(255, 255, 255),
-				},
-			},
-			DefaultRoleId = "Testing",
+			Roles = {},
 		},
 		Items = {
 			Enabled = true,
