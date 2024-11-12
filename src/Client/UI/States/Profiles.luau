@@ -56,12 +56,15 @@ function Profiles.ProfileValue(
 	Scope:Observer(UserId):onChange(function()
 		UpdateProfile()
 	end)
-	ProfilesController.ProfileUpdated:Connect(function(UpdatedUserId: number)
-		if UpdatedUserId == Fusion.peek(UserId) then
-			Profiles:FetchProfile(UpdatedUserId)
-			UpdateProfile()
-		end
-	end)
+	if ProfilesController then
+		ProfilesController.ProfileUpdated:Connect(function(UpdatedUserId: number)
+			if UpdatedUserId == Fusion.peek(UserId) then
+				Profiles:FetchProfile(UpdatedUserId)
+				UpdateProfile()
+			end
+		end)
+	end
+
 	UpdateProfile()
 
 	return ProfileValue
