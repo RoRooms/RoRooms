@@ -65,10 +65,17 @@ function ConfigUtils:ToolToItem(Tool: Tool)
 	}
 end
 
-function ConfigUtils:CompileEmotes(EmotesFolder: Folder)
+function ConfigUtils:ConfigurationToRole(Configuration: Configuration)
+	return {
+		Name = Configuration.Name,
+		Color = Configuration:GetAttribute("Color"),
+	}
+end
+
+function ConfigUtils:CompileEmotes(Folder: Folder)
 	local Emotes = {}
 
-	for _, EmoteAnimation in ipairs(EmotesFolder:GetChildren()) do
+	for _, EmoteAnimation in ipairs(Folder:GetChildren()) do
 		local EmoteId = EmoteAnimation:GetAttribute("EmoteId")
 		if EmoteId then
 			Emotes[EmoteId] = self:AnimationToEmote(EmoteAnimation)
@@ -78,10 +85,10 @@ function ConfigUtils:CompileEmotes(EmotesFolder: Folder)
 	return Emotes
 end
 
-function ConfigUtils:CompileItems(EmotesFolder: Folder)
+function ConfigUtils:CompileItems(Folder: Folder)
 	local Items = {}
 
-	for _, ItemTool in ipairs(EmotesFolder:GetChildren()) do
+	for _, ItemTool in ipairs(Folder:GetChildren()) do
 		local ItemId = ItemTool:GetAttribute("ItemId")
 		if ItemId then
 			Items[ItemId] = self:ToolToItem(ItemTool)
@@ -89,6 +96,19 @@ function ConfigUtils:CompileItems(EmotesFolder: Folder)
 	end
 
 	return Items
+end
+
+function ConfigUtils:CompileRoles(Folder: Folder)
+	local Roles = {}
+
+	for _, RoleConfiguration in ipairs(Folder:GetChildren()) do
+		local RoleId = RoleConfiguration:GetAttribute("RoleId")
+		if RoleId then
+			Roles[RoleId] = self:ConfigurationToRole(RoleConfiguration)
+		end
+	end
+
+	return Roles
 end
 
 function ConfigUtils:EnsureSoundGroup(SoundGroup: Instance?): SoundGroup
