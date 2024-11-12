@@ -67,8 +67,8 @@ function ItemsService:CanPlayerAccessItem(Player: Player, ItemId: string, Bypass
 
 	local Item = Config.Systems.Items.Items[ItemId]
 	if Item ~= nil then
-		if Item.RequirementCallback then
-			local AbleToEquip, FailureReason = Item.RequirementCallback(Player, ItemId, Item)
+		if Item.CallbackRequirement then
+			local AbleToEquip, FailureReason = Item.CallbackRequirement(Player, ItemId, Item)
 
 			if (not AbleToEquip) and (FailureReason == nil) then
 				FailureReason = "Insuffient requirements to equip " .. Item.DisplayName .. "."
