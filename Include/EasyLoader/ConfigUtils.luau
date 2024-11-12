@@ -81,6 +81,8 @@ function ConfigUtils:CompileEmotes(Folder: Folder)
 	for _, EmoteAnimation in ipairs(Folder:GetChildren()) do
 		local EmoteId = EmoteAnimation:GetAttribute("EmoteId")
 		if EmoteId then
+			assert(Emotes[EmoteId] == nil, `Duplicate EmoteId {EmoteId} detected. Please use unique Ids.`)
+
 			Emotes[EmoteId] = self:AnimationToEmote(EmoteAnimation)
 		end
 	end
@@ -94,6 +96,8 @@ function ConfigUtils:CompileItems(Folder: Folder)
 	for _, ItemTool in ipairs(Folder:GetChildren()) do
 		local ItemId = ItemTool:GetAttribute("ItemId")
 		if ItemId then
+			assert(Items[ItemId] == nil, `Duplicate ItemId {ItemId} detected. Please use unique Ids.`)
+
 			Items[ItemId] = self:ToolToItem(ItemTool)
 		end
 	end
@@ -107,6 +111,8 @@ function ConfigUtils:CompileRoles(Folder: Folder)
 	for _, RoleConfiguration in ipairs(Folder:GetChildren()) do
 		local RoleId = RoleConfiguration:GetAttribute("RoleId")
 		if RoleId then
+			assert(Roles[RoleId] == nil, `Duplicate RoleId {RoleId} detected. Please use unique Ids.`)
+
 			Roles[RoleId] = self:ConfigurationToRole(RoleConfiguration)
 		end
 	end
