@@ -28,19 +28,31 @@ Items are `Tool` objects, and go under `Config.Items`.
 
 Emotes are `Animation` objects, and go under `Config.Emotes`.
 
-| Attribute             | Type        | Optional |
-| --------------------- | ----------- | -------- |
-| `ItemId`              | `string`    | ❌        |
-| `Animation`           | `Animation` | ❌        |
-| `Emoji`               | `string`    | ✅        |
-| `AllowMovement`       | `boolean`   | ✅        |
-| `DisplayName`         | `string`    | ✅        |
-| `LevelRequirement`    | `number`    | ✅        |
-| `GamepassRequirement` | `number`    | ✅        |
-| `Category`            | `string`    | ✅        |
-| `Color`               | `Color3`    | ✅        |
-| `LabelText`           | `string`    | ✅        |
-| `LabelIcon`           | `string`    | ✅        |
+| Attribute             | Type      | Optional |
+| --------------------- | --------- | -------- |
+| `ItemId`              | `string`  | ❌        |
+| `Emoji`               | `string`  | ✅        |
+| `AllowMovement`       | `boolean` | ✅        |
+| `DisplayName`         | `string`  | ✅        |
+| `LevelRequirement`    | `number`  | ✅        |
+| `GamepassRequirement` | `number`  | ✅        |
+| `Category`            | `string`  | ✅        |
+| `Color`               | `Color3`  | ✅        |
+| `LabelText`           | `string`  | ✅        |
+| `LabelIcon`           | `string`  | ✅        |
+
+## Roles 🔳
+
+Roles are `Configuration` objects, and go under `Config.Roles`.
+
+| Attribute             | Type     | Optional |
+| --------------------- | -------- | -------- |
+| `RoleId`              | `string` | ❌        |
+| `Name`                | `string` | ❌        |
+| `Color`               | `Color3` | ✅        |
+| `LayoutOrder`         | `number` | ✅        |
+| `LevelRequirement`    | `number` | ✅        |
+| `GamepassRequirement` | `number` | ✅        |
 
 ## Physical 🌍
 
