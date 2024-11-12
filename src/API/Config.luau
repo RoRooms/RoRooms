@@ -39,7 +39,9 @@ export type Role = {
 	Name: string,
 	Color: Color3?,
 	LayoutOrder: number?,
-	CallbackRequirement: (() -> boolean)?,
+	CallbackRequirement: ((Player, string, Role) -> boolean)?,
+	LevelRequirement: number?,
+	GamepassRequirement: number?,
 }
 export type Config = {
 	Systems: {

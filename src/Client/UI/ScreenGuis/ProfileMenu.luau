@@ -13,6 +13,7 @@ local WorldsController = RunService:IsRunning() and require(RoRooms.SourceCode.C
 local Profiles = require(RoRooms.SourceCode.Client.UI.States.Profiles)
 local Types = require(RoRooms.SourceCode.Shared.Types)
 local DeepCopy = require(RoRooms.SourceCode.Shared.ExtPackages.DeepCopy)
+local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -435,7 +436,21 @@ return function(Scope: Fusion.Scope<any>, Props)
 												if next(States.Services.ProfilesService) ~= nil then
 													States.Services.ProfilesService:SetNickname(Peek(NicknameInput))
 													States.Services.ProfilesService:SetBio(Peek(BioInput))
-													States.Services.ProfilesService:SetRole(Peek(SelectedRoleId))
+													States.Services.ProfilesService
+														:SetRole(Peek(SelectedRoleId))
+														:andThen(function(Success: boolean, FailureReason: string?)
+															if (not Success) and (FailureReason ~= nil) then
+																Prompts:PushPrompt({
+																	Title = "Failure",
+																	Text = FailureReason,
+																	Buttons = {
+																		{
+																			Content = { "Close" },
+																		},
+																	},
+																})
+															end
+														end)
 												end
 											end
 

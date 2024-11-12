@@ -1,5 +1,7 @@
+local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local UserService = game:GetService("UserService")
+
 local RoRooms = script.Parent.Parent.Parent.Parent
 local Knit = require(RoRooms.Parent.Knit)
 local FilterString = require(RoRooms.SourceCode.Storage.ExtPackages.FilterString)
@@ -8,6 +10,7 @@ local t = require(RoRooms.Parent.t)
 local Config = require(RoRooms.Config).Config
 local Future = require(RoRooms.Parent.Future)
 local Types = require(RoRooms.SourceCode.Shared.Types)
+local GamepassesHandler = require(RoRooms.SourceCode.Shared.ExtPackages.GamepassesHandler)
 
 local ProfilesService = {
 	Name = "ProfilesService",
@@ -70,7 +73,7 @@ function ProfilesService:GetProfile(UserId: number): Types.Profile
 	return Profile
 end
 
-function ProfilesService:SetRole(Player: Player, RoleId: string): boolean
+function ProfilesService:SetRole(Player: Player, RoleId: string): (boolean, string?)
 	if (RoleId == nil) and (Config.Systems.Profiles.DefaultRoleId ~= nil) then
 		RoleId = Config.Systems.Profiles.DefaultRoleId
 	end
@@ -82,12 +85,17 @@ function ProfilesService:SetRole(Player: Player, RoleId: string): boolean
 		RoleToSet = RoleId
 	end
 
-	Player:SetAttribute("RR_Role", RoleToSet)
+	local AbleToUse, FailureReason = self:_CanPlayerAccessRole(Player, RoleId)
+	if AbleToUse then
+		Player:SetAttribute("RR_Role", RoleToSet)
 
-	return PlayerDataStoreService:UpdateData(Player, function(Data)
-		Data.Profile.Role = RoleToSet
-		return Data
-	end)
+		return PlayerDataStoreService:UpdateData(Player, function(Data)
+			Data.Profile.Role = RoleToSet
+			return Data
+		end)
+	else
+		return false, FailureReason
+	end
 end
 
 function ProfilesService:SetNickname(Player: Player, Nickname: string)
@@ -106,6 +114,51 @@ function ProfilesService:SetBio(Player: Player, Bio: string)
 		Data.Profile.Bio = Bio
 		return Data
 	end)
+end
+
+function ProfilesService:_CanPlayerAccessRole(Player: Player, RoleId: string, Bypass: boolean?)
+	local Role: Config.Role? = Config.Systems.Profiles.Roles[RoleId]
+
+	if Bypass == true then
+		return true
+	end
+
+	if Role ~= nil then
+		if Role.CallbackRequirement then
+			local AbleToUse, FailureReason = Role.CallbackRequirement(Player, RoleId, Role)
+
+			if (not AbleToUse) and (FailureReason == nil) then
+				FailureReason = "Insuffient requirements to set " .. Role.Name .. "."
+			end
+
+			return AbleToUse, FailureReason
+		end
+
+		if Role.GamepassRequirement ~= nil then
+			local OwnsGamepass = GamepassesHandler:PlayerOwnsGamepass(Player, Role.GamepassRequirement)
+
+			if OwnsGamepass then
+				return true
+			else
+				Future.Try(function()
+					MarketplaceService:PromptGamePassPurchase(Player, Role.GamepassRequirement)
+				end)
+
+				return false
+			end
+		end
+
+		if Role.LevelRequirement ~= nil then
+			local Profile = PlayerDataStoreService:GetProfile(Player.UserId)
+			if Profile then
+				if Profile.Data.Level < Role.LevelRequirement then
+					return false, Role.Name .. " role requires level " .. Role.LevelRequirement .. "."
+				end
+			end
+		end
+	end
+
+	return true
 end
 
 function ProfilesService:_UpdateFromDataStoreProfile(Player: Player)

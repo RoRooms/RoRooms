@@ -69,6 +69,8 @@ function ConfigUtils:ConfigurationToRole(Configuration: Configuration)
 	return {
 		Name = Configuration.Name,
 		Color = Configuration:GetAttribute("Color"),
+		LevelRequirement = Configuration:GetAttribute("LevelRequirement"),
+		GamepassRequirement = Configuration:GetAttribute("GamepassRequirement"),
 	}
 end
 
