@@ -86,7 +86,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 		local RoleInputValue = Use(RoleInput)
 		local OrderedRolesValue = Use(OrderedRoles)
 
-		return OrderedRolesValue[RoleInputValue].RoleId
+		local RoleEntry = OrderedRolesValue[RoleInputValue]
+		if RoleEntry ~= nil then
+			return RoleEntry.RoleId
+		else
+			return nil
+		end
 	end)
 
 	Scope:Observer(States.Menus.ProfileMenu.UserId):onChange(function()
@@ -431,26 +436,32 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 										OnActivated = function()
 											local EditModeValue = Peek(States.Menus.ProfileMenu.EditMode)
+											local SelectedRoleIdValue = Peek(SelectedRoleId)
+											local NicknameInputValue = Peek(NicknameInput)
+											local BioInputValue = Peek(BioInput)
 
 											if EditModeValue == true then
 												if next(States.Services.ProfilesService) ~= nil then
-													States.Services.ProfilesService:SetNickname(Peek(NicknameInput))
-													States.Services.ProfilesService:SetBio(Peek(BioInput))
-													States.Services.ProfilesService
-														:SetRole(Peek(SelectedRoleId))
-														:andThen(function(Success: boolean, FailureReason: string?)
-															if (not Success) and (FailureReason ~= nil) then
-																Prompts:PushPrompt({
-																	Title = "Failure",
-																	Text = FailureReason,
-																	Buttons = {
-																		{
-																			Content = { "Close" },
+													States.Services.ProfilesService:SetNickname(NicknameInputValue)
+													States.Services.ProfilesService:SetBio(BioInputValue)
+
+													if SelectedRoleIdValue ~= nil then
+														States.Services.ProfilesService
+															:SetRole(Peek(SelectedRoleId))
+															:andThen(function(Success: boolean, FailureReason: string?)
+																if (not Success) and (FailureReason ~= nil) then
+																	Prompts:PushPrompt({
+																		Title = "Failure",
+																		Text = FailureReason,
+																		Buttons = {
+																			{
+																				Content = { "Close" },
+																			},
 																		},
-																	},
-																})
-															end
-														end)
+																	})
+																end
+															end)
+													end
 												end
 											end
 

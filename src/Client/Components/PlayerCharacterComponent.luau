@@ -121,9 +121,11 @@ function PlayerCharacterComponent:_StartNametag()
 end
 
 function PlayerCharacterComponent:Start()
-	self.Server.PlayEmote:Connect(function(EmoteId: string)
-		self:ToggleEmote(EmoteId)
-	end)
+	if self.Server then
+		self.Server.PlayEmote:Connect(function(EmoteId: string)
+			self:ToggleEmote(EmoteId)
+		end)
+	end
 
 	self:_StartNametag()
 
