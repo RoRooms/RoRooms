@@ -85,8 +85,6 @@ function PlayerCharacterComponent:_UpdateNametag()
 	end
 
 	OnyxUI.Themer.Theme:is(NAMETAGGER_THEME):during(function()
-		local Theme = OnyxUI.Themer.Theme:now()
-
 		local ShownName = SafeProfileValue.Nickname
 		local Properties = {
 			{ Value = SafeProfileValue.Level, Image = Assets.Icons.UserBadges.Level },
