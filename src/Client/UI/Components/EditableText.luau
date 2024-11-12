@@ -5,7 +5,7 @@ local Fusion = require(RoRooms.Parent.Fusion)
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 
-local OnyxUIFolder = RoRooms.Parent._Index["imavafe_onyx-ui@0.4.3"]["onyx-ui"]
+local OnyxUIFolder = RoRooms.Parent._Index["imavafe_onyx-ui@0.5.0"]["onyx-ui"]
 local TextInput = require(OnyxUIFolder.Components.TextInput)
 
 export type Props = TextInput.Props & {}

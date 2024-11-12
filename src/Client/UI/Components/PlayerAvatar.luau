@@ -5,7 +5,7 @@ local Assets = require(RoRooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 
-local OnyxUIFolder = RoRooms.Parent._Index["imavafe_onyx-ui@0.4.3"]["onyx-ui"]
+local OnyxUIFolder = RoRooms.Parent._Index["imavafe_onyx-ui@0.5.0"]["onyx-ui"]
 local Avatar = require(OnyxUIFolder.Components.Avatar)
 
 export type Props = Avatar.Props & {

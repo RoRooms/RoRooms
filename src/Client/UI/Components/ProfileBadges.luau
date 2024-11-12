@@ -4,7 +4,7 @@ local Fusion = require(RoRooms.Parent.Fusion)
 local Assets = require(RoRooms.SourceCode.Shared.Assets)
 local Profiles = require(RoRooms.SourceCode.Client.UI.States.Profiles)
 
-local OnyxUIFolder = RoRooms.Parent._Index["imavafe_onyx-ui@0.4.3"]["onyx-ui"]
+local OnyxUIFolder = RoRooms.Parent._Index["imavafe_onyx-ui@0.5.0"]["onyx-ui"]
 local Frame = require(OnyxUIFolder.Components.Frame)
 
 export type Props = Frame.Props & {
