@@ -106,7 +106,7 @@ function PlayerCharacterComponent:_UpdateNametag()
 
 		Nametagger:TagCharacter(self.Instance, {
 			DisplayName = ShownName,
-			Color = (Role and Role.Color) or Fusion.peek(Theme.Colors.BaseContent.Main),
+			Color = (Role and Role.Color) or OnyxUI.Util.Colors.White,
 			Properties = Properties,
 		})
 	end)
