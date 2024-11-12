@@ -404,7 +404,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												Selection = RoleInput,
 												StrokeColor = Theme.Colors.BaseContent.Main,
 												Visible = Scope:Computed(function(Use)
-													return #Config.Config.Systems.Profiles.Roles > 0
+													return next(Config.Config.Systems.Profiles.Roles) ~= nil
 												end),
 											},
 										},
