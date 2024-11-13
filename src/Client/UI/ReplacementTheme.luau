@@ -1,5 +1,5 @@
-local RoRooms = script.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
 
 local Util = OnyxUI.Util
 

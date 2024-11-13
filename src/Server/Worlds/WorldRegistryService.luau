@@ -1,13 +1,13 @@
 local HttpService = game:GetService("HttpService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Future = require(RoRooms.Parent.Future)
-local Signal = require(RoRooms.Parent.Signal)
-local t = require(RoRooms.Parent.t)
-local Fetch = require(RoRooms.Parent.Fetch)
-local Config = require(RoRooms.Config).Config
-local DeepCopy = require(RoRooms.SourceCode.Shared.ExtPackages.DeepCopy)
-local Knit = require(RoRooms.Parent.Knit)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Future = require(Rorooms.Parent.Future)
+local Signal = require(Rorooms.Parent.Signal)
+local t = require(Rorooms.Parent.t)
+local Fetch = require(Rorooms.Parent.Fetch)
+local Config = require(Rorooms.Config).Config
+local DeepCopy = require(Rorooms.SourceCode.Shared.ExtPackages.DeepCopy)
+local Knit = require(Rorooms.Parent.Knit)
 
 local REGISTRY_UPDATE_DELAY = 10 * 60
 

@@ -1,10 +1,10 @@
 local Players = game:GetService("Players")
 
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
 local States = require(script.Parent)
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local Assets = require(RoRooms.SourceCode.Shared.Assets)
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local Assets = require(Rorooms.SourceCode.Shared.Assets)
 
 local Peek = Fusion.peek
 local Themer = OnyxUI.Themer
@@ -23,7 +23,7 @@ Topbar.NativeButtons = {
 		LayoutOrder = 5,
 		IndicatorColor = Theme.Colors.Warning.Main,
 		IndicatorEnabled = Topbar.Scope:Computed(function(Use)
-			return Use(States.RoRooms.UpToDate) == false
+			return Use(States.Rorooms.UpToDate) == false
 		end),
 	},
 	Emotes = {

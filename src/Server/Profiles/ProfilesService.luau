@@ -2,15 +2,15 @@ local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local UserService = game:GetService("UserService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Parent.Knit)
-local FilterString = require(RoRooms.SourceCode.Storage.ExtPackages.FilterString)
-local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
-local t = require(RoRooms.Parent.t)
-local Config = require(RoRooms.Config).Config
-local Future = require(RoRooms.Parent.Future)
-local Types = require(RoRooms.SourceCode.Shared.Types)
-local GamepassesHandler = require(RoRooms.SourceCode.Shared.ExtPackages.GamepassesHandler)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Knit = require(Rorooms.Parent.Knit)
+local FilterString = require(Rorooms.SourceCode.Storage.ExtPackages.FilterString)
+local PlayerDataStoreService = require(Rorooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
+local t = require(Rorooms.Parent.t)
+local Config = require(Rorooms.Config).Config
+local Future = require(Rorooms.Parent.Future)
+local Types = require(Rorooms.SourceCode.Shared.Types)
+local GamepassesHandler = require(Rorooms.SourceCode.Shared.ExtPackages.GamepassesHandler)
 
 local ProfilesService = {
 	Name = "ProfilesService",

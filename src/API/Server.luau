@@ -8,13 +8,13 @@ local Knit = require(PACKAGES.Knit)
 local Loader = require(PACKAGES.Loader)
 local FindFeatureFromModule = require(SOURCE.Shared.FindFeatureFromModule)
 
-local RoRoomsServer = {
+local RoroomsServer = {
 	Started = false,
 	Config = Config,
 }
 
-function RoRoomsServer:Start()
-	assert(not self.Started, "RoRooms already started.")
+function RoroomsServer:Start()
+	assert(not self.Started, "Rorooms already started.")
 	self.Started = true
 
 	Loader.LoadDescendants(SERVER, function(Descendant)
@@ -36,10 +36,10 @@ function RoRoomsServer:Start()
 	Knit.Start()
 end
 
-function RoRoomsServer:Configure(Configuration: Config.Config)
-	assert(not self.Started, "You cannot configure RoRooms after starting it.")
+function RoroomsServer:Configure(Configuration: Config.Config)
+	assert(not self.Started, "You cannot configure Rorooms after starting it.")
 
 	Config:Update(Configuration)
 end
 
-return RoRoomsServer
+return RoroomsServer

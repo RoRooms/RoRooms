@@ -1,7 +1,7 @@
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local Fusion = require(RoRooms.Parent.Fusion)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local Fusion = require(Rorooms.Parent.Fusion)
 local States = require(script.Parent)
-local Knit = require(RoRooms.Parent.Knit)
+local Knit = require(Rorooms.Parent.Knit)
 
 local Peek = Fusion.peek
 

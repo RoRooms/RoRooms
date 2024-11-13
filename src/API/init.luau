@@ -7,35 +7,35 @@ else
 end
 
 --[=[
-	@class RoRooms
+	@class Rorooms
 ]=]
 
 --[=[
 	@method Start
-	@within RoRooms
+	@within Rorooms
 
-	Starts RoRooms.
+	Starts Rorooms.
 ]=]
 
 --[=[
 	@method Configure
-	@within RoRooms
+	@within Rorooms
 
 	@param Config Config
 
-	Reconciles RoRooms' config to your liking.
+	Reconciles Rorooms' config to your liking.
 
-	[`Config` type available here](https://github.com/RoRooms/RoRooms/blob/main/src/API/Config.luau)
+	[`Config` type available here](https://github.com/Rorooms/Rorooms/blob/main/src/API/Config.luau)
 ]=]
 
 --[=[
 	@method Prompt
-	@within RoRooms
+	@within Rorooms
 	@client
 
 	@param Prompt Prompt
 
 	Prompts the client, with support for callback buttons.
 
-	[`Prompt` type available here](https://github.com/RoRooms/RoRooms/blob/main/src/Client/UI/States/Prompts.luau)
+	[`Prompt` type available here](https://github.com/Rorooms/Rorooms/blob/main/src/Client/UI/States/Prompts.luau)
 ]=]

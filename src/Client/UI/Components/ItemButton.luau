@@ -1,12 +1,12 @@
 local RunService = game:GetService("RunService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local ColorUtils = require(RoRooms.Parent.ColorUtils)
-local ItemsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Items.ItemsController)
-local Assets = require(RoRooms.SourceCode.Shared.Assets)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local ColorUtils = require(Rorooms.Parent.ColorUtils)
+local ItemsController = RunService:IsRunning() and require(Rorooms.SourceCode.Client.Items.ItemsController)
+local Assets = require(Rorooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util

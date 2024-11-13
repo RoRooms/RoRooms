@@ -1,11 +1,11 @@
 local Players = game:GetService("Players")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
-local AttributeBind = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
-local Component = require(RoRooms.Parent.Component)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local Fusion = require(RoRooms.Parent.Fusion)
-local Trove = require(RoRooms.Parent.Trove)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local AttributeBind = require(Rorooms.SourceCode.Shared.ExtPackages.AttributeBind)
+local Component = require(Rorooms.Parent.Component)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local Fusion = require(Rorooms.Parent.Fusion)
+local Trove = require(Rorooms.Parent.Trove)
 
 local Peek = Fusion.peek
 

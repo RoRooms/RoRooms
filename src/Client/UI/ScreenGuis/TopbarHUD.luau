@@ -1,11 +1,11 @@
 local UserInputService = game:GetService("UserInputService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local Components = require(RoRooms.SourceCode.Client.UI.Components)
-local OnyxUITheme = require(RoRooms.SourceCode.Client.UI.OnyxUITheme)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local Components = require(Rorooms.SourceCode.Client.UI.Components)
+local OnyxUITheme = require(Rorooms.SourceCode.Client.UI.OnyxUITheme)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer

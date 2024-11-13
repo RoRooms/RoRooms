@@ -32,13 +32,13 @@ jobs:
         run: selene src
 
       - name: Build package rbxm
-        run: rojo build -o RoRooms.rbxm pack.project.json
+        run: rojo build -o Rorooms.rbxm pack.project.json
 
       - name: Upload package rbxm as build artifact
         uses: actions/upload-artifact@v3
         with:
-          name: RoRooms
-          path: RoRooms.rbxm
+          name: Rorooms
+          path: Rorooms.rbxm
 
       - name: Get Release from wally.toml
         uses: SebRollen/toml-action@v1.0.0
@@ -60,7 +60,7 @@ jobs:
         with:
           name: ${{ steps.read_toml.outputs.value }}
           tag_name: ${{ steps.read_toml.outputs.value }}
-          files: RoRooms.rbxm
+          files: Rorooms.rbxm
           generate_release_notes: true
           draft: true
 
@@ -95,5 +95,5 @@ jobs:
       - name: Upload test-pack.rbxm as build artifact
         uses: actions/upload-artifact@v3
         with:
-          name: RoRooms
+          name: Rorooms
           path: test-pack.rbxm

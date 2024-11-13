@@ -1,10 +1,10 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Future)
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local States = require(Rorooms.SourceCode.Client.UI.States)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util

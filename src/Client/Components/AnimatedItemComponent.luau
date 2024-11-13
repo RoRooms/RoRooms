@@ -1,7 +1,7 @@
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Component = require(RoRooms.Parent.Component)
-local ToolComponent = require(RoRooms.SourceCode.Shared.ExtPackages.ToolComponent)
-local AnimatedComponent = require(RoRooms.SourceCode.Shared.ExtPackages.AnimatedComponent)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Component = require(Rorooms.Parent.Component)
+local ToolComponent = require(Rorooms.SourceCode.Shared.ExtPackages.ToolComponent)
+local AnimatedComponent = require(Rorooms.SourceCode.Shared.ExtPackages.AnimatedComponent)
 
 local AnimatedItemComponent = Component.new {
 	Tag = `RR_{string.gsub(script.Name, "Component$", "")}`,

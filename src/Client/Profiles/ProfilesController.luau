@@ -1,13 +1,13 @@
 local Players = game:GetService("Players")
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
-local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
-local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local Knit = require(RoRooms.Parent.Knit)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Topbar = require(Rorooms.SourceCode.Client.UI.States.Topbar)
+local UIController = require(Rorooms.SourceCode.Client.UI.UIController)
+local Fusion = require(Rorooms.Parent.Fusion)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local Knit = require(Rorooms.Parent.Knit)
 local AvatarSelector = require(script.Parent.AvatarSelector)
-local Future = require(RoRooms.Parent.Future)
-local Signal = require(RoRooms.Parent.Signal)
+local Future = require(Rorooms.Parent.Future)
+local Signal = require(Rorooms.Parent.Signal)
 
 local Scoped = Fusion.scoped
 local Peek = Fusion.peek
@@ -38,7 +38,7 @@ function ProfilesController:GetProfile(UserId: number)
 end
 
 function ProfilesController:KnitStart()
-	UIController:MountUI(require(RoRooms.SourceCode.Client.UI.ScreenGuis.ProfileMenu))
+	UIController:MountUI(require(Rorooms.SourceCode.Client.UI.ScreenGuis.ProfileMenu))
 
 	Topbar:AddTopbarButton("Profile", Topbar.NativeButtons.Profile)
 
@@ -53,7 +53,7 @@ function ProfilesController:KnitStart()
 			then
 				States.Menus.ProfileMenu.UserId:set(Player.UserId)
 				States.Menus.ProfileMenu.Location.Online:set(true)
-				States.Menus.ProfileMenu.Location.InRoRooms:set(true)
+				States.Menus.ProfileMenu.Location.InRorooms:set(true)
 				States.Menus.ProfileMenu.Location.PlaceId:set(game.PlaceId)
 				States.Menus.ProfileMenu.Location.JobId:set(game.JobId)
 				States.Menus.CurrentMenu:set("ProfileMenu")

@@ -1,14 +1,14 @@
 {
-  "name": "RoRooms",
+  "name": "Rorooms",
   "tree": {
     "$path": "Include/Linking.luau",
     "Packages": {
       "$path": "Packages",
-      "RoRooms": {
+      "Rorooms": {
         "$path": "Include/Linking.luau",
         "Packages": {
           "$path": "Packages",
-          "RoRooms": {
+          "Rorooms": {
             "$path": "src/API",
             "SourceCode": {
               "$className": "Folder",

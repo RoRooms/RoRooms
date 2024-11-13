@@ -1,6 +1,6 @@
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Fusion = require(RoRooms.Parent.Fusion)
-local Loader = require(RoRooms.Parent.Loader)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Fusion = require(Rorooms.Parent.Fusion)
+local Loader = require(Rorooms.Parent.Loader)
 
 local function UnloadedService(): { [any]: any }
 	return {}
@@ -41,7 +41,7 @@ local States = {
 			EditMode = Scope:Value(false),
 			Location = {
 				Online = Scope:Value(false),
-				InRoRooms = Scope:Value(false),
+				InRorooms = Scope:Value(false),
 				PlaceId = Scope:Value(nil),
 				JobId = Scope:Value(nil),
 			},
@@ -70,8 +70,8 @@ local States = {
 	},
 	Friends = {
 		Online = Scope:Value({}),
-		InRoRooms = Scope:Value({}),
-		NotInRoRooms = Scope:Value({}),
+		InRorooms = Scope:Value({}),
+		NotInRorooms = Scope:Value({}),
 	},
 	CoreGui = {
 		TopbarInset = Scope:Value(Rect.new(Vector2.new(), Vector2.new())),
@@ -85,7 +85,7 @@ local States = {
 		RandomWorlds = Scope:Value({}),
 		Registered = Scope:Value(false),
 	},
-	RoRooms = {
+	Rorooms = {
 		UpToDate = Scope:Value(),
 	},
 }

@@ -2,9 +2,9 @@
 sidebar_position: 2
 ---
 
-# What is RoRooms?
+# What is Rorooms?
 
-RoRooms is an all-in-one framework and network for social experiences, providing both social features, and a universal network of worlds.
+Rorooms is an all-in-one framework and network for social experiences, providing both social features, and a universal network of worlds.
 
 ## Goals 🎯
 
@@ -23,7 +23,7 @@ RoRooms is an all-in-one framework and network for social experiences, providing
 
 ## Worlds Network 🌐
 
-RoRooms provides its own network of worlds, secured via peer-to-peer ranking based on received teleports. At scale, this creates a network effect, where worlds promote similar worlds, and the network is uplifted as a whole.
+Rorooms provides its own network of worlds, secured via peer-to-peer ranking based on received teleports. At scale, this creates a network effect, where worlds promote similar worlds, and the network is uplifted as a whole.
 
 ## The Players 🙌
 

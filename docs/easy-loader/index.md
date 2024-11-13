@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Easy Loader
 
-Easily load and configure RoRooms without ever touching a line of code! Instead, use Roblox instances and attributes.
+Easily load and configure Rorooms without ever touching a line of code! Instead, use Roblox instances and attributes.
 
 ![alt text](image.png)
 
@@ -86,7 +86,7 @@ Simply drop `Sound` instances into your `Config.Music` folder!
 
 ### Disabling discovery
 
-You may not want to participate in RoRooms' worlds network, and that choice is supported. Understand that by doing this, your world will not receive support from any other worlds.
+You may not want to participate in Rorooms' worlds network, and that choice is supported. Understand that by doing this, your world will not receive support from any other worlds.
 
 1. Open the Config module
 

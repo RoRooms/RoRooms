@@ -1,10 +1,10 @@
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local Assets = require(RoRooms.SourceCode.Shared.Assets)
-local Profiles = require(RoRooms.SourceCode.Client.UI.States.Profiles)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local Assets = require(Rorooms.SourceCode.Shared.Assets)
+local Profiles = require(Rorooms.SourceCode.Client.UI.States.Profiles)
 
-local OnyxUIFolder = RoRooms.Parent._Index["imavafe_onyx-ui@0.5.0"]["onyx-ui"]
+local OnyxUIFolder = Rorooms.Parent._Index["imavafe_onyx-ui@0.5.0"]["onyx-ui"]
 local Frame = require(OnyxUIFolder.Components.Frame)
 
 export type Props = Frame.Props & {
@@ -23,8 +23,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		local ReturnBadges = {}
 		local SafeProfileValue = Use(SafeProfile)
 
-		if SafeProfileValue.Membership == "RoRoomsPlus" then
-			table.insert(ReturnBadges, "RoRoomsPlus")
+		if SafeProfileValue.Membership == "RoroomsPlus" then
+			table.insert(ReturnBadges, "RoroomsPlus")
 		end
 		if SafeProfileValue.ServerOwner then
 			table.insert(ReturnBadges, "ServerOwner")

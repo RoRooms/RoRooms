@@ -1,6 +1,6 @@
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local Components = require(RoRooms.SourceCode.Client.UI.Components)
-local Fusion = require(RoRooms.Parent.Fusion)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local Components = require(Rorooms.SourceCode.Client.UI.Components)
+local Fusion = require(Rorooms.Parent.Fusion)
 
 return {
 	story = function(Parent: GuiObject, _Props: { [string]: any })

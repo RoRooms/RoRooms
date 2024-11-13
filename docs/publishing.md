@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Publishing
 
-You've just made a great world with RoRooms, and now you want to benefit from the RoRooms network. Thankfully, it's very simple!
+You've just made a great world with Rorooms, and now you want to benefit from the Rorooms network. Thankfully, it's very simple!
 
 ### 1. Visit [rorooms.com/publish](https://rorooms.com/publish)
 

@@ -1,11 +1,11 @@
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Component = require(RoRooms.Parent.Component)
-local Zone = require(RoRooms.Parent.Zone)
-local Fusion = require(RoRooms.Parent.Fusion)
-local AttributeBind = require(RoRooms.SourceCode.Shared.ExtPackages.AttributeBind)
-local Trove = require(RoRooms.Parent.Trove)
-local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
-local GamepassesHandler = require(RoRooms.SourceCode.Shared.ExtPackages.GamepassesHandler)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Component = require(Rorooms.Parent.Component)
+local Zone = require(Rorooms.Parent.Zone)
+local Fusion = require(Rorooms.Parent.Fusion)
+local AttributeBind = require(Rorooms.SourceCode.Shared.ExtPackages.AttributeBind)
+local Trove = require(Rorooms.Parent.Trove)
+local PlayerDataStoreService = require(Rorooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
+local GamepassesHandler = require(Rorooms.SourceCode.Shared.ExtPackages.GamepassesHandler)
 
 local Peek = Fusion.peek
 

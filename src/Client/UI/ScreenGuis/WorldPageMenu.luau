@@ -1,14 +1,14 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 local RunService = game:GetService("RunService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Future)
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local Components = require(RoRooms.SourceCode.Client.UI.Components)
-local Assets = require(RoRooms.SourceCode.Shared.Assets)
-local WorldsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Worlds.WorldsController)
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local Components = require(Rorooms.SourceCode.Client.UI.Components)
+local Assets = require(Rorooms.SourceCode.Shared.Assets)
+local WorldsController = RunService:IsRunning() and require(Rorooms.SourceCode.Client.Worlds.WorldsController)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer

@@ -1,5 +1,5 @@
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Parent.Knit)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local Knit = require(Rorooms.Parent.Knit)
 local States = require(script.Parent)
 
 type KnitService = typeof(Knit.GetService)

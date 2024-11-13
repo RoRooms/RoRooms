@@ -1,6 +1,6 @@
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
 
 local Themer = OnyxUI.Themer
 local Children = Fusion.Children
@@ -8,7 +8,7 @@ local Util = OnyxUI.Util
 
 local DISABLED_TRANSPARENCY = 0.5
 
-local OnyxUIFolder = RoRooms.Parent.OnyxUI.Parent._Index["imavafe_onyx-ui@0.5.0"]["onyx-ui"]
+local OnyxUIFolder = Rorooms.Parent.OnyxUI.Parent._Index["imavafe_onyx-ui@0.5.0"]["onyx-ui"]
 local SwitchGroup = require(OnyxUIFolder.Components.SwitchGroup)
 
 export type Props = SwitchGroup.Props & {

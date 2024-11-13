@@ -1,10 +1,10 @@
 {
-  "name": "RoRooms Testing",
+  "name": "Rorooms Testing",
   "tree": {
     "$className": "DataModel",
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
-      "RoRooms": {
+      "Rorooms": {
         "$className": "Folder",
         "ThumbnailCamera": {
           "$path": "Include/ThumbnailCamera.rbxm"
@@ -13,11 +13,11 @@
           "$path": "Include/EasyLoader",
           "$ignoreUnknownInstances": true
         },
-        "RoRooms": {
+        "Rorooms": {
           "$path": "Include/Linking.luau",
           "Packages": {
             "$path": "Packages",
-            "RoRooms": {
+            "Rorooms": {
               "$path": "src/API",
               "SourceCode": {
                 "$className": "Folder",

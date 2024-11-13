@@ -1,11 +1,11 @@
 local MarketplaceService = game:GetService("MarketplaceService")
-local RoRooms = script.Parent.Parent.Parent.Parent
-local PlayerCharacterComponent = require(RoRooms.SourceCode.Server.Components.PlayerCharacterComponent)
-local PlayerDataStoreService = require(RoRooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
-local t = require(RoRooms.Parent.t)
-local Config = require(RoRooms.Config).Config
-local GamepassesHandler = require(RoRooms.SourceCode.Shared.ExtPackages.GamepassesHandler)
-local Future = require(RoRooms.Parent.Future)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local PlayerCharacterComponent = require(Rorooms.SourceCode.Server.Components.PlayerCharacterComponent)
+local PlayerDataStoreService = require(Rorooms.SourceCode.Server.PlayerDataStore.PlayerDataStoreService)
+local t = require(Rorooms.Parent.t)
+local Config = require(Rorooms.Config).Config
+local GamepassesHandler = require(Rorooms.SourceCode.Shared.ExtPackages.GamepassesHandler)
+local Future = require(Rorooms.Parent.Future)
 
 local EmotesService = {
 	Name = "EmotesService",

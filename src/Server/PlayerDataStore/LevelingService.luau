@@ -1,11 +1,11 @@
 local Players = game:GetService("Players")
-local RoRooms = script.Parent.Parent.Parent.Parent
+local Rorooms = script.Parent.Parent.Parent.Parent
 local PlayerDataStoreService = require(script.Parent.PlayerDataStoreService)
-local XPToLevelUp = require(RoRooms.SourceCode.Shared.XPToLevelUp)
-local Knit = require(RoRooms.Parent.Knit)
-local DataTemplate = require(RoRooms.SourceCode.Server.PlayerDataStore.DataTemplate)
-local Config = require(RoRooms.Config).Config
-local SessionStore = require(RoRooms.SourceCode.Shared.ExtPackages.SessionStore)
+local XPToLevelUp = require(Rorooms.SourceCode.Shared.XPToLevelUp)
+local Knit = require(Rorooms.Parent.Knit)
+local DataTemplate = require(Rorooms.SourceCode.Server.PlayerDataStore.DataTemplate)
+local Config = require(Rorooms.Config).Config
+local SessionStore = require(Rorooms.SourceCode.Shared.ExtPackages.SessionStore)
 
 local LevelingService = {
 	Name = script.Name,

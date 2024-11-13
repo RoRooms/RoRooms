@@ -1,9 +1,9 @@
 local Players = game:GetService("Players")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Fusion = require(Rorooms.Parent.Fusion)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
 local OnyxUITheme = require(script.Parent.OnyxUITheme)
 
 local Themer = OnyxUI.Themer
@@ -20,7 +20,7 @@ local UIController = {
 function UIController:MountUI(Component)
 	Themer.Theme:is(OnyxUITheme):during(function()
 		Component(self.Scope, {
-			Parent = self.RoRoomsUI,
+			Parent = self.RoroomsUI,
 		})
 	end)
 end
@@ -29,7 +29,7 @@ function UIController:KnitStart()
 	States:Start()
 
 	for _, GuiName in ipairs(DEFAULT_UIS) do
-		local GuiModule = RoRooms.SourceCode.Client.UI.ScreenGuis:FindFirstChild(GuiName)
+		local GuiModule = Rorooms.SourceCode.Client.UI.ScreenGuis:FindFirstChild(GuiName)
 		if GuiModule then
 			local Gui = require(GuiModule)
 			self:MountUI(Gui)
@@ -37,8 +37,8 @@ function UIController:KnitStart()
 	end
 end
 
-UIController.RoRoomsUI = UIController.Scope:New "ScreenGui" {
-	Name = "RoRoomsUI",
+UIController.RoroomsUI = UIController.Scope:New "ScreenGui" {
+	Name = "RoroomsUI",
 	Parent = Players.LocalPlayer:WaitForChild("PlayerGui"),
 	ResetOnSpawn = false,
 }
