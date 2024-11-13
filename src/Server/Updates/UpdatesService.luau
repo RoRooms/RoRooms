@@ -1,10 +1,10 @@
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Version = require(RoRooms.Version)
-local Fetch = require(RoRooms.Parent.Fetch)
-local Future = require(RoRooms.Parent.Future)
-local Knit = require(RoRooms.Parent.Knit)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Version = require(Rorooms.Version)
+local Fetch = require(Rorooms.Parent.Fetch)
+local Future = require(Rorooms.Parent.Future)
+local Knit = require(Rorooms.Parent.Knit)
 
-local LATEST_RELEASE_URL = "https://api.github.com/repos/RoRooms/RoRooms/releases/latest"
+local LATEST_RELEASE_URL = "https://api.github.com/repos/Rorooms/Rorooms/releases/latest"
 
 local UpdatesService = {
 	Name = script.Name,

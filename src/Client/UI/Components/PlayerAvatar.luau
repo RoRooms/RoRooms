@@ -1,11 +1,11 @@
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local Assets = require(RoRooms.SourceCode.Shared.Assets)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local Assets = require(Rorooms.SourceCode.Shared.Assets)
 
 local Children = Fusion.Children
 
-local OnyxUIFolder = RoRooms.Parent._Index["imavafe_onyx-ui@0.5.0"]["onyx-ui"]
+local OnyxUIFolder = Rorooms.Parent._Index["imavafe_onyx-ui@0.5.0"]["onyx-ui"]
 local Avatar = require(OnyxUIFolder.Components.Avatar)
 
 export type Props = Avatar.Props & {
@@ -26,7 +26,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 	local StatusColor = Scope:Computed(function(Use)
 		local StatusValue = Use(Status)
-		if StatusValue == "RoRooms" then
+		if StatusValue == "Rorooms" then
 			return OnyxUI.Util.Colors.Green["500"]
 		elseif StatusValue == "Online" then
 			return OnyxUI.Util.Colors.Sky["500"]
@@ -81,7 +81,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 				RingColor = StatusColor,
 				RingThickness = RingThickness,
 				IndicatorEnabled = Scope:Computed(function(Use)
-					return Use(Status) == "RoRooms"
+					return Use(Status) == "Rorooms"
 				end),
 				IndicatorColor = StatusColor,
 

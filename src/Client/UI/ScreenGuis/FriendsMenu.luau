@@ -1,12 +1,12 @@
 local RunService = game:GetService("RunService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local Components = require(RoRooms.SourceCode.Client.UI.Components)
-local OnyxUITheme = require(RoRooms.SourceCode.Client.UI.OnyxUITheme)
-local FriendsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Friends.FriendsController)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local Components = require(Rorooms.SourceCode.Client.UI.Components)
+local OnyxUITheme = require(Rorooms.SourceCode.Client.UI.OnyxUITheme)
+local FriendsController = RunService:IsRunning() and require(Rorooms.SourceCode.Client.Friends.FriendsController)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -46,18 +46,18 @@ return function(Scope: Fusion.Scope<any>, Props)
 				ListWraps = true,
 
 				[Children] = {
-					Scope:ForValues(States.Friends.InRoRooms, function(Use, Scope, Friend)
+					Scope:ForValues(States.Friends.InRorooms, function(Use, Scope, Friend)
 						return Themer.Theme:is(OnyxUITheme):during(function()
 							return Scope:FriendButton {
 								UserId = Friend.VisitorId,
 								DisplayName = Friend.DisplayName,
 								PlaceId = Friend.PlaceId,
 								JobId = Friend.GameId,
-								InRoRooms = true,
+								InRorooms = true,
 							}
 						end)
 					end),
-					Scope:ForValues(States.Friends.NotInRoRooms, function(Use, Scope, Friend)
+					Scope:ForValues(States.Friends.NotInRorooms, function(Use, Scope, Friend)
 						return Themer.Theme:is(OnyxUITheme):during(function()
 							return Scope:FriendButton {
 								UserId = Friend.VisitorId,
@@ -65,7 +65,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 								Online = Friend.IsOnline,
 								PlaceId = Friend.PlaceId,
 								JobId = Friend.GameId,
-								InRoRooms = false,
+								InRorooms = false,
 							}
 						end)
 					end),

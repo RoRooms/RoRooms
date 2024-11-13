@@ -1,7 +1,7 @@
 local ContentProvider = game:GetService("ContentProvider")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Assets = require(RoRooms.SourceCode.Shared.Assets)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Assets = require(Rorooms.SourceCode.Shared.Assets)
 
 export type ContentIds = { string }
 export type ContentIdTree = string | { [string]: ContentIdTree }

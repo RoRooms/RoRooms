@@ -1,15 +1,15 @@
 local Players = game:GetService("Players")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Component = require(RoRooms.Parent.Component)
-local RemoteComponent = require(RoRooms.Parent.RemoteComponent)
-local Nametagger = require(RoRooms.SourceCode.Shared.ExtPackages.Nametagger)
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local Assets = require(RoRooms.SourceCode.Shared.Assets)
-local Profiles = require(RoRooms.SourceCode.Client.UI.States.Profiles)
-local Config = require(RoRooms.Config).Config
-local AnimatedComponent = require(RoRooms.SourceCode.Shared.ExtPackages.AnimatedComponent)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Component = require(Rorooms.Parent.Component)
+local RemoteComponent = require(Rorooms.Parent.RemoteComponent)
+local Nametagger = require(Rorooms.SourceCode.Shared.ExtPackages.Nametagger)
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local Assets = require(Rorooms.SourceCode.Shared.Assets)
+local Profiles = require(Rorooms.SourceCode.Client.UI.States.Profiles)
+local Config = require(Rorooms.Config).Config
+local AnimatedComponent = require(Rorooms.SourceCode.Shared.ExtPackages.AnimatedComponent)
 
 local NAMETAGGER_THEME = Fusion.scoped(OnyxUI.Themer):NewTheme({
 	Font = {

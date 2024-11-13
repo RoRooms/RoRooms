@@ -1,5 +1,5 @@
 return {
-	name = "RoRooms",
+	name = "Rorooms",
 	storyRoots = {
 		script.Parent,
 	},

@@ -1,11 +1,11 @@
 local Players = game:GetService("Players")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
-local ProfileService = require(RoRooms.SourceCode.Storage.Packages.ProfileService)
-local Signal = require(RoRooms.Parent.Signal)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local ProfileService = require(Rorooms.SourceCode.Storage.Packages.ProfileService)
+local Signal = require(Rorooms.Parent.Signal)
 local DataTemplate = require(script.Parent.DataTemplate)
-local DeepCopy = require(RoRooms.SourceCode.Shared.ExtPackages.DeepCopy)
-local DeepEquals = require(RoRooms.SourceCode.Shared.ExtPackages.DeepEquals)
+local DeepCopy = require(Rorooms.SourceCode.Shared.ExtPackages.DeepCopy)
+local DeepEquals = require(Rorooms.SourceCode.Shared.ExtPackages.DeepEquals)
 
 local KICK_MESSAGE = "Data failure. Please rejoin."
 

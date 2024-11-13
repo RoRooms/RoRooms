@@ -1,9 +1,9 @@
-local RoRooms = script.Parent.Parent.Parent.Parent
+local Rorooms = script.Parent.Parent.Parent.Parent
 local WorldRegistryService = require(script.Parent.WorldRegistryService)
-local ShuffleArray = require(RoRooms.SourceCode.Shared.ExtPackages.ShuffleArray)
-local Knit = require(RoRooms.Parent.Knit)
-local t = require(RoRooms.Parent.t)
-local GetPagesFromArray = require(RoRooms.SourceCode.Shared.ExtPackages.GetPagesFromArray)
+local ShuffleArray = require(Rorooms.SourceCode.Shared.ExtPackages.ShuffleArray)
+local Knit = require(Rorooms.Parent.Knit)
+local t = require(Rorooms.Parent.t)
+local GetPagesFromArray = require(Rorooms.SourceCode.Shared.ExtPackages.GetPagesFromArray)
 
 type World = {
 	PlaceId: number,

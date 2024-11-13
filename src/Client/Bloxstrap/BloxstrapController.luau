@@ -1,9 +1,9 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 local RunService = game:GetService("RunService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
+local Rorooms = script.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
-local BloxstrapRPC = require(RoRooms.Parent.BloxstrapRPC)
+local BloxstrapRPC = require(Rorooms.Parent.BloxstrapRPC)
 
 local BloxstrapController = {
 	Name = "BloxstrapController",
@@ -24,7 +24,7 @@ function BloxstrapController:UpdateRichPresence()
 				},
 				smallImage = {
 					assetId = 15885967339,
-					hoverText = "RoRooms",
+					hoverText = "Rorooms",
 				},
 			})
 		end

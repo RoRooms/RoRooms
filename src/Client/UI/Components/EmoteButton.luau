@@ -1,11 +1,11 @@
 local RunService = game:GetService("RunService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local ColorUtils = require(RoRooms.Parent.ColorUtils)
-local Assets = require(RoRooms.SourceCode.Shared.Assets)
-local EmotesController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Emotes.EmotesController)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local ColorUtils = require(Rorooms.Parent.ColorUtils)
+local Assets = require(Rorooms.SourceCode.Shared.Assets)
+local EmotesController = RunService:IsRunning() and require(Rorooms.SourceCode.Client.Emotes.EmotesController)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util

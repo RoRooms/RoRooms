@@ -1,5 +1,5 @@
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Component = require(RoRooms.Parent.Component)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Component = require(Rorooms.Parent.Component)
 
 local VariantCyclerComponent = Component.new {
 	Tag = `RR_{string.gsub(script.Name, "Component$", "")}`,

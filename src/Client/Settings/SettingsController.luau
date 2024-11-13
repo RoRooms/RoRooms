@@ -1,9 +1,9 @@
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Parent.Knit)
-local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
-local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Knit = require(Rorooms.Parent.Knit)
+local Topbar = require(Rorooms.SourceCode.Client.UI.States.Topbar)
+local UIController = require(Rorooms.SourceCode.Client.UI.UIController)
 
-local SettingsMenu = require(RoRooms.SourceCode.Client.UI.ScreenGuis.SettingsMenu)
+local SettingsMenu = require(Rorooms.SourceCode.Client.UI.ScreenGuis.SettingsMenu)
 
 local SettingsController = {
 	Name = "SettingsController",

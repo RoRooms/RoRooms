@@ -1,12 +1,12 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Parent.Knit)
-local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
-local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
-local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local Future = require(RoRooms.Parent.Future)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Knit = require(Rorooms.Parent.Knit)
+local Topbar = require(Rorooms.SourceCode.Client.UI.States.Topbar)
+local UIController = require(Rorooms.SourceCode.Client.UI.UIController)
+local Prompts = require(Rorooms.SourceCode.Client.UI.States.Prompts)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local Future = require(Rorooms.Parent.Future)
 
 local WorldRegistryService
 
@@ -86,8 +86,8 @@ function WorldsController:KnitStart()
 	UIController = Knit.GetController("UIController")
 	WorldRegistryService = Knit.GetService("WorldRegistryService")
 
-	UIController:MountUI(require(RoRooms.SourceCode.Client.UI.ScreenGuis.WorldsMenu))
-	UIController:MountUI(require(RoRooms.SourceCode.Client.UI.ScreenGuis.WorldPageMenu))
+	UIController:MountUI(require(Rorooms.SourceCode.Client.UI.ScreenGuis.WorldsMenu))
+	UIController:MountUI(require(Rorooms.SourceCode.Client.UI.ScreenGuis.WorldPageMenu))
 
 	Topbar:AddTopbarButton("Worlds", Topbar.NativeButtons.Worlds)
 

@@ -10,8 +10,8 @@ To restrict certain features based on gamepass ownership, apply `GamepassRequire
 
 [> See Easy Loader attributes 📄](/docs/easy-loader/)
 
-## RoRooms Plus ➕
+## Rorooms Plus ➕
 
-- 📆 RoRooms Plus, a player-facing subscription is in consideration, likely to be implemented once Roblox releases third-party subscriptions.
-- ❤️ If Roblox supports affiliate earnings, you will earn a cut of RoRooms Plus revenue when sold from within your world. Roblox's support for this is not guaranteed.
-- ⚙️ As with everything in RoRooms, you will be able to configure or disable this feature.
+- 📆 Rorooms Plus, a player-facing subscription is in consideration, likely to be implemented once Roblox releases third-party subscriptions.
+- ❤️ If Roblox supports affiliate earnings, you will earn a cut of Rorooms Plus revenue when sold from within your world. Roblox's support for this is not guaranteed.
+- ⚙️ As with everything in Rorooms, you will be able to configure or disable this feature.

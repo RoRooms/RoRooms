@@ -2,18 +2,18 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local SocialService = game:GetService("SocialService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local Config = require(RoRooms.Config)
-local Assets = require(RoRooms.SourceCode.Shared.Assets)
-local Components = require(RoRooms.SourceCode.Client.UI.Components)
-local WorldsController = RunService:IsRunning() and require(RoRooms.SourceCode.Client.Worlds.WorldsController)
-local Profiles = require(RoRooms.SourceCode.Client.UI.States.Profiles)
-local Types = require(RoRooms.SourceCode.Shared.Types)
-local DeepCopy = require(RoRooms.SourceCode.Shared.ExtPackages.DeepCopy)
-local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local Config = require(Rorooms.Config)
+local Assets = require(Rorooms.SourceCode.Shared.Assets)
+local Components = require(Rorooms.SourceCode.Client.UI.Components)
+local WorldsController = RunService:IsRunning() and require(Rorooms.SourceCode.Client.Worlds.WorldsController)
+local Profiles = require(Rorooms.SourceCode.Client.UI.States.Profiles)
+local Types = require(Rorooms.SourceCode.Shared.Types)
+local DeepCopy = require(Rorooms.SourceCode.Shared.ExtPackages.DeepCopy)
+local Prompts = require(Rorooms.SourceCode.Client.UI.States.Prompts)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -103,7 +103,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		if Fusion.peek(States.Menus.CurrentMenu) ~= script.Name then
 			States.Menus.ProfileMenu.UserId:set(nil)
 			States.Menus.ProfileMenu.Location.Online:set(false)
-			States.Menus.ProfileMenu.Location.InRoRooms:set(false)
+			States.Menus.ProfileMenu.Location.InRorooms:set(false)
 			States.Menus.ProfileMenu.Location.PlaceId:set(nil)
 			States.Menus.ProfileMenu.Location.JobId:set(nil)
 		end
@@ -201,11 +201,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 										return "Offline"
 									end
 									if Use(States.Menus.ProfileMenu.UserId) == Players.LocalPlayer.UserId then
-										return "RoRooms"
+										return "Rorooms"
 									end
 
-									if Use(States.Menus.ProfileMenu.Location.InRoRooms) then
-										return "RoRooms"
+									if Use(States.Menus.ProfileMenu.Location.InRorooms) then
+										return "Rorooms"
 									elseif Use(States.Menus.ProfileMenu.Location.Online) then
 										return "Online"
 									else
@@ -477,11 +477,11 @@ return function(Scope: Fusion.Scope<any>, Props)
 										Color = OnyxUI.Util.Colors.Green["500"],
 										Visible = Scope:Computed(function(Use)
 											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
-											local InRoRoomsValue = Use(States.Menus.ProfileMenu.Location.InRoRooms)
+											local InRoroomsValue = Use(States.Menus.ProfileMenu.Location.InRorooms)
 											local JobIdValue = Use(States.Menus.ProfileMenu.Location.JobId)
 
 											return (UserIdValue ~= Players.LocalPlayer.UserId)
-												and (InRoRoomsValue and JobIdValue)
+												and (InRoroomsValue and JobIdValue)
 										end),
 
 										OnActivated = function()
@@ -499,9 +499,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 										Name = "InviteButton",
 										Content = { Assets.Icons.General.Mail, "Invite" },
 										Color = Scope:Computed(function(Use)
-											local InRoRoomsValue = Use(States.Menus.ProfileMenu.Location.InRoRooms)
+											local InRoroomsValue = Use(States.Menus.ProfileMenu.Location.InRorooms)
 
-											if InRoRoomsValue then
+											if InRoroomsValue then
 												return Use(Theme.Colors.Neutral.Main)
 											else
 												return Use(Theme.Colors.Primary.Main)

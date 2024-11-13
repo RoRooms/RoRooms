@@ -1,15 +1,15 @@
 local Players = game:GetService("Players")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Knit = require(RoRooms.Parent.Knit)
-local Fusion = require(RoRooms.Parent.Fusion)
-local Signal = require(RoRooms.Parent.Signal)
-local NeoHotbar = require(RoRooms.Parent.NeoHotbar)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local Prompts = require(RoRooms.SourceCode.Client.UI.States.Prompts)
-local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
-local Config = require(RoRooms.Config).Config
-local Assets = require(RoRooms.SourceCode.Shared.Assets)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Knit = require(Rorooms.Parent.Knit)
+local Fusion = require(Rorooms.Parent.Fusion)
+local Signal = require(Rorooms.Parent.Signal)
+local NeoHotbar = require(Rorooms.Parent.NeoHotbar)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local Prompts = require(Rorooms.SourceCode.Client.UI.States.Prompts)
+local UIController = require(Rorooms.SourceCode.Client.UI.UIController)
+local Config = require(Rorooms.Config).Config
+local Assets = require(Rorooms.SourceCode.Shared.Assets)
 
 local Peek = Fusion.peek
 
@@ -102,7 +102,7 @@ function ItemsController:KnitStart()
 		self:_HandleCharacter(ExistingCharacter)
 	end
 
-	UIController:MountUI(require(RoRooms.SourceCode.Client.UI.ScreenGuis.ItemsMenu))
+	UIController:MountUI(require(Rorooms.SourceCode.Client.UI.ScreenGuis.ItemsMenu))
 
 	self:_AddNeoHotbarButton()
 end

@@ -1,7 +1,7 @@
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local ReconcileTable = require(RoRooms.SourceCode.Shared.ExtPackages.ReconcileTable)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local ReconcileTable = require(Rorooms.SourceCode.Shared.ExtPackages.ReconcileTable)
 local States = require(script.Parent)
-local Fusion = require(RoRooms.Parent.Fusion)
+local Fusion = require(Rorooms.Parent.Fusion)
 
 local Peek = Fusion.peek
 

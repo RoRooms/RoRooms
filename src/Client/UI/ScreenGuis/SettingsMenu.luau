@@ -1,12 +1,12 @@
 local StarterGui = game:GetService("StarterGui")
 local Players = game:GetService("Players")
 
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local Version = require(RoRooms.Version)
-local Components = require(RoRooms.SourceCode.Client.UI.Components)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local Version = require(Rorooms.Version)
+local Components = require(Rorooms.SourceCode.Client.UI.Components)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
@@ -70,15 +70,15 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 					Scope:Text {
 						Text = Scope:Computed(function(Use)
-							local VersionStamp = `[RoRooms v{Version}]`
-							if not Use(States.RoRooms.UpToDate) then
+							local VersionStamp = `[Rorooms v{Version}]`
+							if not Use(States.Rorooms.UpToDate) then
 								return `{VersionStamp} - Out of date`
 							else
 								return VersionStamp
 							end
 						end),
 						TextColor3 = Scope:Computed(function(Use)
-							if not Use(States.RoRooms.UpToDate) then
+							if not Use(States.Rorooms.UpToDate) then
 								return Use(Theme.Colors.Warning.Main)
 							else
 								return Use(Theme.Colors.NeutralContent.Dark)

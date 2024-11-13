@@ -1,8 +1,8 @@
 local RunService = game:GetService("RunService")
 local TeleportService = game:GetService("TeleportService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
-local t = require(RoRooms.Parent.t)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local t = require(Rorooms.Parent.t)
 
 local WorldsService = {
 	Name = script.Name,

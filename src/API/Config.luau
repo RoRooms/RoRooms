@@ -127,7 +127,7 @@ local CONFIG_TEMPLATE: Config = {
 			Enabled = true,
 			DiscoveryEnabled = true,
 			FeaturedWorlds = {},
-			RegistryRepository = "RoRooms/Worlds",
+			RegistryRepository = "Rorooms/Worlds",
 		},
 		Friends = {
 			Enabled = true,

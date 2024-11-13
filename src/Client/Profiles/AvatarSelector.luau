@@ -1,7 +1,7 @@
 local Players = game:GetService("Players")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
-local Signal = require(RoRooms.Parent.Signal)
+local Rorooms = script.Parent.Parent.Parent.Parent
+local Signal = require(Rorooms.Parent.Signal)
 
 local AvatarSelector = {
 	AvatarSelected = Signal.new(),

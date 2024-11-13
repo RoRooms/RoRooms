@@ -1,6 +1,6 @@
-local RoRooms = require(script.Parent.Parent.RoRooms)
+local Rorooms = require(script.Parent.Parent.Rorooms)
 local Config = require(script.Parent.Config)
 
-RoRooms.Config:Update(Config)
+Rorooms.Config:Update(Config)
 
-RoRooms:Start()
+Rorooms:Start()

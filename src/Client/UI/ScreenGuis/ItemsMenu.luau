@@ -1,9 +1,9 @@
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local Config = require(RoRooms.Config).Config
-local Components = require(RoRooms.SourceCode.Client.UI.Components)
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local Config = require(Rorooms.Config).Config
+local Components = require(Rorooms.SourceCode.Client.UI.Components)
 
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer

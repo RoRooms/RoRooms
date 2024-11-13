@@ -1,17 +1,17 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Parent.Future)
-local OnyxUI = require(RoRooms.Parent.OnyxUI)
-local Fusion = require(RoRooms.Parent.Fusion)
-local States = require(RoRooms.SourceCode.Client.UI.States)
+local OnyxUI = require(Rorooms.Parent.OnyxUI)
+local Fusion = require(Rorooms.Parent.Fusion)
+local States = require(Rorooms.SourceCode.Client.UI.States)
 
 local Children = Fusion.Children
 local Util = OnyxUI.Util
 local Themer = OnyxUI.Themer
 local Peek = Fusion.peek
 
-local CustomButton = require(RoRooms.SourceCode.Client.UI.Components.CustomButton)
+local CustomButton = require(Rorooms.SourceCode.Client.UI.Components.CustomButton)
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, {
@@ -24,7 +24,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	local DisplayName = Util.Fallback(Props.DisplayName, "DisplayName")
 	local Online = Util.Fallback(Props.Online, false)
 	local JobId = Util.Fallback(Props.JobId, nil)
-	local InRoRooms = Util.Fallback(Props.InRoRooms, false)
+	local InRorooms = Util.Fallback(Props.InRorooms, false)
 
 	local PlaceInfo = Scope:Value({})
 
@@ -48,8 +48,8 @@ return function(Scope: Fusion.Scope<any>, Props)
 	UpdatePlaceInfo()
 
 	local Status = Scope:Computed(function(Use)
-		if Use(InRoRooms) then
-			return "RoRooms"
+		if Use(InRorooms) then
+			return "Rorooms"
 		elseif Use(Online) then
 			return "Online"
 		else
@@ -58,7 +58,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	end)
 	local StatusColor = Scope:Computed(function(Use)
 		local StatusValue = Use(Status)
-		if StatusValue == "RoRooms" then
+		if StatusValue == "Rorooms" then
 			return OnyxUI.Util.Colors.Green["500"]
 		elseif StatusValue == "Online" then
 			return OnyxUI.Util.Colors.Sky["500"]
@@ -82,7 +82,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 		OnActivated = function()
 			States.Menus.ProfileMenu.UserId:set(Peek(UserId))
 			States.Menus.ProfileMenu.Location.Online:set(Peek(Online))
-			States.Menus.ProfileMenu.Location.InRoRooms:set(Peek(InRoRooms))
+			States.Menus.ProfileMenu.Location.InRorooms:set(Peek(InRorooms))
 			States.Menus.ProfileMenu.Location.JobId:set(Peek(JobId))
 			States.Menus.ProfileMenu.Location.PlaceId:set(Peek(PlaceId))
 			States.Menus.CurrentMenu:set("ProfileMenu")
@@ -116,7 +116,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					Scope:Text {
 						Name = "Status",
 						Text = Scope:Computed(function(Use)
-							return (Use(InRoRooms) and Use(PlaceInfo).Name) or "Online"
+							return (Use(InRorooms) and Use(PlaceInfo).Name) or "Online"
 						end),
 						TextColor3 = StatusColor,
 						TextSize = Theme.TextSize["0.875"],

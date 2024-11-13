@@ -1,11 +1,11 @@
-local RoRooms = script.Parent.Parent.Parent.Parent.Parent
+local Rorooms = script.Parent.Parent.Parent.Parent.Parent
 local States = require(script.Parent)
-local Knit = require(RoRooms.Parent.Knit)
+local Knit = require(Rorooms.Parent.Knit)
 
 local RemoteProperties = {}
 
 function RemoteProperties:Start()
-	local ItemsController = require(RoRooms.SourceCode.Client.Items.ItemsController)
+	local ItemsController = require(Rorooms.SourceCode.Client.Items.ItemsController)
 
 	ItemsController.EquippedItemsUpdated:Connect(function(EquippedItems)
 		States.Items.Equipped:set(EquippedItems)
@@ -19,7 +19,7 @@ function RemoteProperties:Start()
 	end)
 
 	UpdatesService.UpToDate:Observe(function(UpToDate)
-		States.RoRooms.UpToDate:set(UpToDate)
+		States.Rorooms.UpToDate:set(UpToDate)
 	end)
 end
 

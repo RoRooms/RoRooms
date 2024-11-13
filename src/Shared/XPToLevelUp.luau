@@ -1,5 +1,5 @@
-local RoRooms = script.Parent.Parent.Parent
-local Config = require(RoRooms.Config).Config
+local Rorooms = script.Parent.Parent.Parent
+local Config = require(Rorooms.Config).Config
 
 local CURVE_MULTIPLIER = 0.85
 

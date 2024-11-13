@@ -25,7 +25,7 @@ description = "A seamless social experience, hopping between worlds with friends
 image = "img/People.png"
 
 [[footer.links]]
-title = "RoRooms"
+title = "Rorooms"
 
 [[footer.links.items]]
 label = "Landing"
@@ -51,4 +51,4 @@ title = "More"
 
 [[footer.links.items]]
 label = "GitHub"
-href = "https://github.com/RoRooms"
+href = "https://github.com/Rorooms"

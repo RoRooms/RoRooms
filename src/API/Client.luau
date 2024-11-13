@@ -17,13 +17,13 @@ local Loader = require(PACKAGES.Loader)
 local FindFeatureFromModule = require(SHARED.FindFeatureFromModule)
 local Prompts = require(SOURCE.Client.UI.States.Prompts)
 
-local RoRoomsClient = {
+local RoroomsClient = {
 	Started = false,
 	Config = Config,
 }
 
-function RoRoomsClient:Start()
-	assert(not self.Started, "RoRooms already started.")
+function RoroomsClient:Start()
+	assert(not self.Started, "Rorooms already started.")
 	self.Started = true
 
 	Loader.LoadDescendants(CLIENT, function(Descendant)
@@ -46,14 +46,14 @@ function RoRoomsClient:Start()
 	Knit.Start()
 end
 
-function RoRoomsClient:Configure(Configuration: Config.Config)
-	assert(not self.Started, "You cannot configure RoRooms after starting it.")
+function RoroomsClient:Configure(Configuration: Config.Config)
+	assert(not self.Started, "You cannot configure Rorooms after starting it.")
 
 	Config:Update(Configuration)
 end
 
-function RoRoomsClient:Prompt(Prompt)
+function RoroomsClient:Prompt(Prompt)
 	Prompts:PushPrompt(Prompt)
 end
 
-return RoRoomsClient
+return RoroomsClient

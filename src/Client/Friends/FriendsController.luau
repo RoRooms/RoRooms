@@ -1,12 +1,12 @@
 local Players = game:GetService("Players")
 
-local RoRooms = script.Parent.Parent.Parent.Parent
+local Rorooms = script.Parent.Parent.Parent.Parent
 local Future = require(script.Parent.Parent.Parent.Parent.Parent.Future)
-local UIController = require(RoRooms.SourceCode.Client.UI.UIController)
-local States = require(RoRooms.SourceCode.Client.UI.States)
-local Knit = require(RoRooms.Parent.Knit)
-local Topbar = require(RoRooms.SourceCode.Client.UI.States.Topbar)
-local Fusion = require(RoRooms.Parent.Fusion)
+local UIController = require(Rorooms.SourceCode.Client.UI.UIController)
+local States = require(Rorooms.SourceCode.Client.UI.States)
+local Knit = require(Rorooms.Parent.Knit)
+local Topbar = require(Rorooms.SourceCode.Client.UI.States.Topbar)
+local Fusion = require(Rorooms.Parent.Fusion)
 
 local Peek = Fusion.peek
 
@@ -18,14 +18,14 @@ local FriendsController = {
 	Name = "FriendsController",
 
 	FriendsOnline = {},
-	FriendsInRoRooms = {},
+	FriendsInRorooms = {},
 	FriendsNotInGame = {},
 	FriendsOnlineLastUpdated = os.time(),
 }
 
-function FriendsController:UpdateFriendsInRoRooms()
-	local FriendsInRoRooms = {}
-	local FriendsNotInRoRooms = {}
+function FriendsController:UpdateFriendsInRorooms()
+	local FriendsInRorooms = {}
+	local FriendsNotInRorooms = {}
 
 	for _, Friend in ipairs(self.FriendsOnline) do
 		local WorldIsRegistered = false
@@ -36,17 +36,17 @@ function FriendsController:UpdateFriendsInRoRooms()
 			end
 		end
 		if WorldIsRegistered then
-			table.insert(FriendsInRoRooms, Friend)
+			table.insert(FriendsInRorooms, Friend)
 		else
-			table.insert(FriendsNotInRoRooms, Friend)
+			table.insert(FriendsNotInRorooms, Friend)
 		end
 	end
 
-	self.FriendsInRoRooms = FriendsInRoRooms
-	States.Friends.InRoRooms:set(FriendsInRoRooms)
+	self.FriendsInRorooms = FriendsInRorooms
+	States.Friends.InRorooms:set(FriendsInRorooms)
 
-	self.FriendsNotInRoRooms = FriendsNotInRoRooms
-	States.Friends.NotInRoRooms:set(FriendsNotInRoRooms)
+	self.FriendsNotInRorooms = FriendsNotInRorooms
+	States.Friends.NotInRorooms:set(FriendsNotInRorooms)
 end
 
 function FriendsController:UpdateFriends(ForceUpdate: boolean?)
@@ -62,7 +62,7 @@ function FriendsController:UpdateFriends(ForceUpdate: boolean?)
 			self.FriendsOnlineLastUpdated = os.time()
 			States.Friends.Online:set(Result)
 
-			self:UpdateFriendsInRoRooms()
+			self:UpdateFriendsInRorooms()
 		else
 			warn(Result)
 		end
@@ -72,7 +72,7 @@ end
 function FriendsController:KnitStart()
 	WorldRegistryService = Knit.GetService("WorldRegistryService")
 
-	UIController:MountUI(require(RoRooms.SourceCode.Client.UI.ScreenGuis.FriendsMenu))
+	UIController:MountUI(require(Rorooms.SourceCode.Client.UI.ScreenGuis.FriendsMenu))
 	Topbar:AddTopbarButton("Friends", Topbar.NativeButtons.Friends)
 
 	self:UpdateFriends(true)
