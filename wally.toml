@@ -1,7 +1,7 @@
 [package]
-name = "rorooms/rorooms"
+name = "imavafe/rorooms"
 description = "Roblox's premiere social framework"
-version = "0.5.2"
+version = "0.5.1"
 license = "MIT"
 authors = ["Avafe"]
 
