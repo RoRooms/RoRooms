@@ -10,6 +10,10 @@ Apply these tags onto Studio instances to add easy, no-code functionality within
 
 Seats that support custom sitting animations, and prompt-to-sit functionality. It's recommended to use this on all seat objects for a better user experience.
 
+<details>
+<summary>Details</summary>
+<br />
+
 | Data        | Value             |
 | ----------- | ----------------- |
 | `Tag`       | `RR_AnimatedSeat` |
@@ -23,9 +27,15 @@ Seats that support custom sitting animations, and prompt-to-sit functionality. I
 
 - "Animation" - `Animation`
 
+</details>
+
 ## Animated Items 🔧
 
 Tools that support click-to-cycle animations.
+
+<details>
+<summary>Details</summary>
+<br />
 
 | Data        | Value             |
 | ----------- | ----------------- |
@@ -41,9 +51,15 @@ Animations must be arranged in numerical order.
 - - "2" - `Animation`
 - - "..." - `Animation`
 
+</details>
+
 ## Item Givers 🫴
 
 Prompt parts that give out items.
+
+<details>
+<summary>Details</summary>
+<br />
 
 | Data        | Value          |
 | ----------- | -------------- |
@@ -54,9 +70,15 @@ Prompt parts that give out items.
 | ----------- | -------- | -------- |
 | `RR_ItemId` | `string` | ❌        |
 
+</details>
+
 ## Variant Cyclers 🔁
 
 Prompt parts that cycle between various models.
+
+<details>
+<summary>Details</summary>
+<br />
 
 | Data        | Value              |
 | ----------- | ------------------ |
@@ -71,9 +93,15 @@ Variant models must be arranged in numerical order.
 - "2" - `Model`
 - "..." - `Model`
 
+</details>
+
 ## Locked Zones 🔒
 
 Locked zones are parts that prevent players from being within them based on certain criteria.
+
+<details>
+<summary>Details</summary>
+<br />
 
 | Data        | Value           |
 | ----------- | --------------- |
@@ -85,9 +113,15 @@ Locked zones are parts that prevent players from being within them based on cert
 | `LevelRequirement`    | `number` | ✅        |
 | `GamepassRequirement` | `number` | ✅        |
 
+</details>
+
 ## Locked Doors 🔒
 
 Locked doors are parts that prevent players from walking through them based on certain criteria.
+
+<details>
+<summary>Details</summary>
+<br />
 
 | Data        | Value           |
 | ----------- | --------------- |
@@ -99,9 +133,15 @@ Locked doors are parts that prevent players from walking through them based on c
 | `LevelRequirement`    | `number` | ✅        |
 | `GamepassRequirement` | `number` | ✅        |
 
+</details>
+
 ## World Teleporters 🌐
 
 Parts that prompt teleports to other RoRooms worlds.
+
+<details>
+<summary>Details</summary>
+<br />
 
 | Data        | Value                |
 | ----------- | -------------------- |
@@ -111,3 +151,5 @@ Parts that prompt teleports to other RoRooms worlds.
 | Attribute    | Type     | Optional |
 | ------------ | -------- | -------- |
 | `RR_PlaceId` | `number` | ❌        |
+
+</details>
