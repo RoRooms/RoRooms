@@ -56,26 +56,6 @@ Roles are `Configuration` objects, and go under `Config.Roles`.
 
 Additionally, you can set a `DefaultRoleId` attribute onto `Config.Roles` itself to give a role to everyone by default.
 
-## Physical 🌍
-
-### Locked Zones ⭕🔒
-
-Locked zones are parts that prevent players from being within them based on certain criteria. To create one, apply the `RR_LockedZone` tag.
-
-| Attribute             | Type     | Optional |
-| --------------------- | -------- | -------- |
-| `LevelRequirement`    | `number` | ✅        |
-| `GamepassRequirement` | `number` | ✅        |
-
-### Locked Doors 🚪🔒
-
-Locked doors are parts that prevent players from walking through them based on certain criteria. To create one, apply the `RR_LockedZone` tag.
-
-| Attribute             | Type     | Optional |
-| --------------------- | -------- | -------- |
-| `LevelRequirement`    | `number` | ✅        |
-| `GamepassRequirement` | `number` | ✅        |
-
 ## Music 🎶
 
 Simply drop `Sound` instances into your `Config.Music` folder!
