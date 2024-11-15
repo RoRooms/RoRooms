@@ -21,6 +21,6 @@ sidebar_position: 1
 
 ## Wally 🐶
 
-1. Copy the Wally details
+1. Copy the [Wally details](https://wally.run/package/rorooms/rorooms)
 2. Paste it into your `wally.toml` dependencies
 3. Run `wally install`
