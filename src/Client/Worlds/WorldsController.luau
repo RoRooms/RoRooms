@@ -14,12 +14,33 @@ local WorldsController = {
 	Name = "WorldsController",
 }
 
-function WorldsController:TeleportToWorld(PlaceId: number, JobId: string?)
+function WorldsController:TeleportToWorld(PlaceId: number, JobId: string?, RequireConfirmation: boolean?)
 	return Future.Try(function()
 		return MarketplaceService:GetProductInfo(PlaceId, Enum.InfoType.Asset)
 	end):After(function(FetchSuccess, PlaceInfo)
 		if FetchSuccess and (PlaceInfo ~= nil) then
-			local function Proceed()
+			local function Teleport()
+				if next(States.Services.WorldsService) ~= nil then
+					States.Services.WorldsService
+						:TeleportToWorld(PlaceId)
+						:andThen(function(TeleportSuccess: boolean, Message: string)
+							States.Menus.CurrentMenu:set(nil)
+
+							if not TeleportSuccess then
+								Prompts:PushPrompt({
+									Title = "Error",
+									Text = Message,
+									Buttons = {
+										{
+											Content = { "Dismiss" },
+										},
+									},
+								})
+							end
+						end)
+				end
+			end
+			local function AskConfirmation()
 				Prompts:PushPrompt({
 					Title = "Teleport",
 					Text = `Do you want to teleport to {PlaceInfo.Name}?`,
@@ -31,25 +52,7 @@ function WorldsController:TeleportToWorld(PlaceId: number, JobId: string?)
 						{
 							Content = { "Teleport" },
 							Callback = function()
-								if next(States.Services.WorldsService) ~= nil then
-									States.Services.WorldsService
-										:TeleportToWorld(PlaceId)
-										:andThen(function(TeleportSuccess: boolean, Message: string)
-											States.Menus.CurrentMenu:set(nil)
-
-											if not TeleportSuccess then
-												Prompts:PushPrompt({
-													Title = "Error",
-													Text = Message,
-													Buttons = {
-														{
-															Content = { "Dismiss" },
-														},
-													},
-												})
-											end
-										end)
-								end
+								Teleport()
 							end,
 						},
 					},
@@ -68,16 +71,18 @@ function WorldsController:TeleportToWorld(PlaceId: number, JobId: string?)
 						{
 							Content = { "Teleport" },
 							Callback = function()
-								Proceed()
+								Teleport()
 							end,
 						},
 					},
 				})
-
-				return
+			else
+				if RequireConfirmation then
+					AskConfirmation()
+				else
+					Teleport()
+				end
 			end
-
-			Proceed()
 		end
 	end)
 end

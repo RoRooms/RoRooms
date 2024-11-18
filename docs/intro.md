@@ -21,6 +21,12 @@ sidebar_position: 1
 
 ## Wally 🐶
 
-1. Copy the Wally details
+1. Copy the [Wally details](https://wally.run/package/rorooms/rorooms)
 2. Paste it into your `wally.toml` dependencies
 3. Run `wally install`
+
+# Game Settings
+
+For Rorooms to properly function, you need to enable a few Security settings within your Game Settings. This allows Rorooms to access the APIs its features rely on.
+
+![Security walkthrough](/docs/Security.png)
