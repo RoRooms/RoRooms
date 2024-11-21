@@ -26,25 +26,7 @@ function RandomWorldsService.Client:GetRandomWorlds(
 	PageCount: number,
 	PageSize: number
 )
-	assert(
-		t.tuple(
-			t.instanceOf("Player")(Player),
-			t.number(StartingPage) or t.none(StartingPage),
-			t.number(PageCount),
-			t.number(PageSize)
-		)
-	)
-
-	if StartingPage == nil then
-		local MaxPages = math.ceil(#self.Server.RandomWorlds / PageSize)
-		local NewStartingPage = math.random(0, MaxPages)
-
-		if NewStartingPage == MaxPages then
-			NewStartingPage -= 1
-		end
-
-		StartingPage = NewStartingPage
-	end
+	assert(t.tuple(t.instanceOf("Player")(Player), t.number(StartingPage), t.number(PageCount), t.number(PageSize)))
 
 	return self.Server:GetRandomWorlds(StartingPage, PageCount, PageSize)
 end
@@ -67,10 +49,10 @@ function RandomWorldsService:_UpdateRandomWorlds(WorldRegistry: { [number]: Worl
 	self.Client.RandomWorldsInitialized:FireAll(self:GetRandomWorlds(0, 10, PAGE_SIZE))
 end
 
-function RandomWorldsService:KnitStart()
-	WorldRegistryService.RegistryUpdated:Connect(function(WorldRegistry: { [number]: World })
-		self:_UpdateRandomWorlds(WorldRegistry)
-	end)
-end
+function RandomWorldsService:KnitStart() end
+
+WorldRegistryService.RegistryUpdated:Connect(function(WorldRegistry: { [number]: World })
+	RandomWorldsService:_UpdateRandomWorlds(WorldRegistry)
+end)
 
 return RandomWorldsService

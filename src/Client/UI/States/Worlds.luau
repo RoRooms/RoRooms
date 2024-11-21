@@ -23,6 +23,13 @@ type WorldPages = {
 
 local Worlds = {}
 
+function Worlds:FetchAssortedWorlds(PageCount: number?)
+	self:FetchRandomWorlds(PageCount, true):await()
+	self:FetchTopWorlds(PageCount, true):await()
+
+	self:LoadAssortedWorlds(PageCount)
+end
+
 function Worlds:LoadAssortedWorlds(PageCount: number?)
 	if PageCount == nil then
 		PageCount = 10
@@ -42,6 +49,7 @@ function Worlds:LoadAssortedWorlds(PageCount: number?)
 			if math.random(1, RANDOM_WORLD_BASIS) == RANDOM_WORLD_BASIS then
 				local RandomWorld = self:GetUnusedRandomWorld(AssortedWorldsValue)
 				if RandomWorld ~= nil then
+					RandomWorld.Random = true
 					table.insert(AssortedWorldsValue, RandomWorld)
 				end
 			else
@@ -59,6 +67,7 @@ function Worlds:LoadAssortedWorlds(PageCount: number?)
 		for _ = FillerStartIndex, FillerEndIndex do
 			local RandomWorld = self:GetUnusedRandomWorld(AssortedWorldsValue)
 			if RandomWorld ~= nil then
+				RandomWorld.Random = true
 				table.insert(AssortedWorldsValue, RandomWorld)
 			else
 				break
@@ -67,6 +76,8 @@ function Worlds:LoadAssortedWorlds(PageCount: number?)
 	end
 
 	States.Worlds.AssortedWorlds:set(AssortedWorldsValue)
+
+	print(#AssortedWorldsValue)
 
 	return AssortedWorldsValue
 end
@@ -133,16 +144,19 @@ function Worlds:FetchRandomWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
 		PageCount = 1
 	end
 
-	if RandomWorldsService then
-		return RandomWorldsService:GetRandomWorlds(nil, PageCount, PAGE_SIZE):andThen(function(RandomWorlds: WorldPages)
-			if OnlyIfEmpty and #Peek(States.Worlds.RandomWorlds) > 0 then
-				return
-			else
-				self:_AddRandomWorlds(RandomWorlds)
-			end
+	local StartingPage = math.floor(#Peek(States.Worlds.RandomWorlds) / PAGE_SIZE)
 
-			return RandomWorlds
-		end)
+	if RandomWorldsService then
+		return RandomWorldsService:GetRandomWorlds(StartingPage, PageCount, PAGE_SIZE)
+			:andThen(function(RandomWorlds: WorldPages)
+				if OnlyIfEmpty and #Peek(States.Worlds.RandomWorlds) > 0 then
+					return
+				else
+					self:_AddRandomWorlds(RandomWorlds)
+				end
+
+				return RandomWorlds
+			end)
 	end
 
 	return nil
@@ -213,15 +227,15 @@ function Worlds:Start()
 			self:LoadAssortedWorlds()
 		end)
 	end
-	if RandomWorldsService then
-		RandomWorldsService.RandomWorldsInitialized:Connect(function(RandomWorlds: WorldPages)
-			self:ClearWorlds(States.Worlds.RandomWorlds)
-			self:_AddRandomWorlds(RandomWorlds)
+	-- if RandomWorldsService then
+	-- 	RandomWorldsService.RandomWorldsInitialized:Connect(function(RandomWorlds: WorldPages)
+	-- 		self:ClearWorlds(States.Worlds.RandomWorlds)
+	-- 		self:_AddRandomWorlds(RandomWorlds)
 
-			self:ClearWorlds(States.Worlds.AssortedWorlds)
-			self:LoadAssortedWorlds()
-		end)
-	end
+	-- 		self:ClearWorlds(States.Worlds.AssortedWorlds)
+	-- 		self:LoadAssortedWorlds()
+	-- 	end)
+	-- end
 
 	self:_InitializeAssortedWorlds()
 end

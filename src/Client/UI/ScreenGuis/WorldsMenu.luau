@@ -22,6 +22,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 		return Use(States.Menus.CurrentMenu) == script.Name
 	end)
 
+	Scope:Observer(MenuOpen):onChange(function()
+		if Fusion.peek(MenuOpen) then
+			Worlds:FetchAssortedWorlds()
+		end
+	end)
+
 	local AbsoluteCanvasSize = Scope:Value(Vector2.new())
 	local AbsoluteWindowSize = Scope:Value(Vector2.new())
 
@@ -142,6 +148,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										return Themer.Theme:is(OnyxUITheme):during(function()
 											return Scope:WorldButton {
 												PlaceId = World.PlaceId,
+												Random = World.Random,
 											}
 										end)
 									end),
@@ -155,7 +162,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 					local CanvasHeight = Fusion.peek(AbsoluteCanvasSize).Y - Fusion.peek(AbsoluteWindowSize).Y
 
 					if CanvasPosition.Y >= CanvasHeight then
-						Worlds:LoadAssortedWorlds()
+						Worlds:FetchAssortedWorlds()
 					end
 				end,
 				[Out "AbsoluteCanvasSize"] = AbsoluteCanvasSize,
