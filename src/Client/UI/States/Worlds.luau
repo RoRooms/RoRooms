@@ -42,8 +42,6 @@ function Worlds:LoadAssortedWorlds(Count: number?)
 	local StartIndex = #AssortedWorldsValue
 	local EndIndex = StartIndex + Count
 
-	print(TopWorldsValue, Peek(States.Worlds.RandomWorlds))
-
 	self:_RemovePlaceIdFromArray(TopWorldsValue, game.PlaceId)
 
 	for Index = StartIndex, EndIndex do
