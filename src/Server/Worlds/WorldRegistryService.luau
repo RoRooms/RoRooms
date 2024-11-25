@@ -9,7 +9,8 @@ local Config = require(Rorooms.Config).Config
 local DeepCopy = require(Rorooms.SourceCode.Shared.ExtPackages.DeepCopy)
 local Knit = require(Rorooms.Parent.Knit)
 
-local REGISTRY_UPDATE_DELAY = 10 * 60
+local UPDATE_DELAY = 10 * 60
+local FAILED_UPDATE_DELAY = 1 * 60
 
 local WorldRegistryService = {
 	Name = "WorldRegistryService",
@@ -50,33 +51,35 @@ function WorldRegistryService:GetWorldDetails(PlaceId: number)
 end
 
 function WorldRegistryService:UpdateRegistry()
-	self:_FetchRegistryVersion():After(function(Success, PublishedAt)
-		if Success and PublishedAt then
-			if PublishedAt ~= self.WorldRegistryLastUpdated then
-				self:_FetchLatestRegistry():After(function(Success2, Response2)
-					if Success2 then
-						self.WorldRegistry = Response2
-						self.WorldRegistryLastUpdated = PublishedAt
+	local Success, Result = self:_FetchRegistryVersion():Await()
 
-						self:_RemoveDelistedWorlds()
+	if Success and (Result ~= nil) and (Result ~= self.WorldRegistryLastUpdated) then
+		local Success2, Result2 = self:_FetchLatestRegistry():Await()
 
-						self.RegistryUpdated:Fire(Response2)
-					else
-						warn(Response2)
-					end
-				end)
-			end
+		if Success2 then
+			self.WorldRegistry = Result2
+			self.WorldRegistryLastUpdated = Result
+
+			self:_RemoveDelistedWorlds()
+
+			self.RegistryUpdated:Fire(Result2)
+
+			return true, Result2
+		else
+			warn(Result2)
 		end
-	end)
+	end
+
+	return false
 end
 
 function WorldRegistryService:_FetchRegistryVersion()
 	return Future.Try(function()
-		local Success, Response =
+		local Success, Result =
 			Fetch(`https://api.github.com/repos/{Config.Systems.Worlds.RegistryRepository}/releases/latest`):Await()
 
 		if Success then
-			local Body = HttpService:JSONDecode(Response.Body)
+			local Body = HttpService:JSONDecode(Result.Body)
 			if Body then
 				return Body["published_at"]
 			end
@@ -117,9 +120,13 @@ end
 function WorldRegistryService:_SpawnRegistryUpdateLoop()
 	return task.spawn(function()
 		while true do
-			self:UpdateRegistry()
+			local Success = self:UpdateRegistry()
 
-			task.wait(REGISTRY_UPDATE_DELAY)
+			if Success then
+				task.wait(UPDATE_DELAY)
+			else
+				task.wait(FAILED_UPDATE_DELAY)
+			end
 		end
 	end)
 end
