@@ -12,15 +12,17 @@ local WorldsService = {
 function WorldsService.Client:TeleportToWorld(Player: Player, PlaceId: number)
 	assert(t.tuple(t.instanceOf("Player")(Player), t.number(PlaceId)))
 
-	return self.Server:TeleportPlayerToWorld(Player, PlaceId)
+	return WorldsService:TeleportPlayerToWorld(Player, PlaceId)
 end
 
 function WorldsService:TeleportPlayerToWorld(Player: Player, PlaceId: number)
 	if RunService:IsStudio() == false then
-		TeleportService:Teleport(PlaceId, Player)
-	end
+		TeleportService:TeleportAsync(PlaceId, { Player })
 
-	return true
+		return true
+	else
+		return false, "Cannot teleport in Roblox Studio."
+	end
 end
 
 return WorldsService

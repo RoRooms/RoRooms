@@ -37,11 +37,7 @@ function ProfilesController:GetProfile(UserId: number)
 	return {}
 end
 
-function ProfilesController:KnitStart()
-	UIController:MountUI(require(Rorooms.SourceCode.Client.UI.ScreenGuis.ProfileMenu))
-
-	Topbar:AddTopbarButton("Profile", Topbar.NativeButtons.Profile)
-
+function ProfilesController:_HandleAvatarSelection()
 	AvatarSelector:Start()
 
 	AvatarSelector.AvatarSelected:Connect(function(Character: Model?)
@@ -71,12 +67,20 @@ function ProfilesController:KnitStart()
 			States.Menus.CurrentMenu:set(nil)
 		end
 	end)
+end
+
+function ProfilesController:KnitStart()
+	UIController:MountUI(require(Rorooms.SourceCode.Client.UI.ScreenGuis.ProfileMenu))
+
+	Topbar:AddTopbarButton("Profile", Topbar.NativeButtons.Profile)
 
 	ProfilesService = Knit.GetService("ProfilesService")
 
 	ProfilesService.ProfileUpdated:Connect(function(UpdatedUserId: number)
 		self.ProfileUpdated:Fire(UpdatedUserId)
 	end)
+
+	self:_HandleAvatarSelection()
 end
 
 return ProfilesController

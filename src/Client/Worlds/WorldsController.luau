@@ -1,4 +1,5 @@
 local MarketplaceService = game:GetService("MarketplaceService")
+local TeleportService = game:GetService("TeleportService")
 
 local Rorooms = script.Parent.Parent.Parent.Parent
 local Knit = require(Rorooms.Parent.Knit)
@@ -25,6 +26,11 @@ function WorldsController:TeleportToWorld(PlaceId: number, JobId: string?, Requi
 						:TeleportToWorld(PlaceId)
 						:andThen(function(TeleportSuccess: boolean, Message: string)
 							States.Menus.CurrentMenu:set(nil)
+							States.Loading:set(true)
+
+							task.wait(5)
+
+							States.Loading:set(false)
 
 							if not TeleportSuccess then
 								Prompts:PushPrompt({
@@ -93,6 +99,9 @@ function WorldsController:KnitStart()
 
 	UIController:MountUI(require(Rorooms.SourceCode.Client.UI.ScreenGuis.WorldsMenu))
 	UIController:MountUI(require(Rorooms.SourceCode.Client.UI.ScreenGuis.WorldPageMenu))
+	local LoadingScreen = UIController:MountUI(require(Rorooms.SourceCode.Client.UI.ScreenGuis.LoadingScreen))
+
+	TeleportService:SetTeleportGui(LoadingScreen)
 
 	Topbar:AddTopbarButton("Worlds", Topbar.NativeButtons.Worlds)
 

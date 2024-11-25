@@ -1,6 +1,7 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local SocialService = game:GetService("SocialService")
+local StarterGui = game:GetService("StarterGui")
 
 local Rorooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(Rorooms.Parent.OnyxUI)
@@ -18,6 +19,8 @@ local Prompts = require(Rorooms.SourceCode.Client.UI.States.Prompts)
 local Children = Fusion.Children
 local Themer = OnyxUI.Themer
 local Peek = Fusion.peek
+
+local LOCAL_USER_ID = ((Players.LocalPlayer ~= nil) and Players.LocalPlayer.UserId) or 1
 
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components, {
@@ -78,6 +81,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 		return Options
 	end)
+	local Player = Scope:Computed(function(Use)
+		local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
+		if UserIdValue then
+			return Players:GetPlayerByUserId(UserIdValue)
+		else
+			return nil
+		end
+	end)
 
 	local NicknameInput = Scope:Value("")
 	local BioInput = Scope:Value("")
@@ -102,6 +113,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 		if Fusion.peek(States.Menus.CurrentMenu) ~= script.Name then
 			States.Menus.ProfileMenu.UserId:set(nil)
+			States.Menus.ProfileMenu.IsFriend:set(false)
 			States.Menus.ProfileMenu.Location.Online:set(false)
 			States.Menus.ProfileMenu.Location.InRorooms:set(false)
 			States.Menus.ProfileMenu.Location.PlaceId:set(nil)
@@ -130,7 +142,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	end)
 
 	if not RunService:IsRunning() then
-		States.Menus.ProfileMenu.UserId:set(Players.LocalPlayer.UserId)
+		States.Menus.ProfileMenu.UserId:set(1)
 	end
 
 	local ProfileMenu = Scope:Menu {
@@ -200,7 +212,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 									if Use(States.Menus.ProfileMenu.EditMode) then
 										return "Offline"
 									end
-									if Use(States.Menus.ProfileMenu.UserId) == Players.LocalPlayer.UserId then
+									if Use(States.Menus.ProfileMenu.UserId) == LOCAL_USER_ID then
 										return "Rorooms"
 									end
 
@@ -434,7 +446,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										end),
 										Color = Theme.Colors.Primary.Main,
 										Visible = Scope:Computed(function(Use)
-											return Use(States.Menus.ProfileMenu.UserId) == Players.LocalPlayer.UserId
+											return Use(States.Menus.ProfileMenu.UserId) == LOCAL_USER_ID
 										end),
 
 										OnActivated = function()
@@ -479,9 +491,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
 											local InRoroomsValue = Use(States.Menus.ProfileMenu.Location.InRorooms)
 											local JobIdValue = Use(States.Menus.ProfileMenu.Location.JobId)
+											local IsFriendValue = Use(States.Menus.ProfileMenu.IsFriend)
 
-											return (UserIdValue ~= Players.LocalPlayer.UserId)
-												and (InRoroomsValue and JobIdValue)
+											return InRoroomsValue
+												and IsFriendValue
+												and (JobIdValue ~= nil)
+												and (JobIdValue ~= game.JobId)
+												and (UserIdValue ~= LOCAL_USER_ID)
 										end),
 
 										OnActivated = function()
@@ -508,7 +524,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 											end
 										end),
 										Visible = Scope:Computed(function(Use)
-											return Use(States.Menus.ProfileMenu.UserId) ~= Players.LocalPlayer.UserId
+											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
+											local IsFriendValue = Use(States.Menus.ProfileMenu.IsFriend)
+											local JobIdValue = Use(States.Menus.ProfileMenu.Location.JobId)
+
+											return IsFriendValue
+												and (JobIdValue ~= game.JobId)
+												and (UserIdValue ~= LOCAL_USER_ID)
 										end),
 
 										OnActivated = function()
@@ -518,6 +540,66 @@ return function(Scope: Fusion.Scope<any>, Props)
 													InviteUser = Peek(States.Menus.ProfileMenu.UserId),
 												}
 											)
+										end,
+									},
+									Scope:Button {
+										Name = "FriendButton",
+										Content = Scope:Computed(function(Use)
+											local IsFriendValue = Use(States.Menus.ProfileMenu.IsFriend)
+
+											if IsFriendValue then
+												return { Assets.Icons.General.PersonDelete, "Unfriend" }
+											else
+												return { Assets.Icons.General.PersonAdd, "Friend" }
+											end
+										end),
+										Color = Scope:Computed(function(Use)
+											local IsFriendValue = Use(States.Menus.ProfileMenu.IsFriend)
+
+											if IsFriendValue then
+												return Use(Theme.Colors.Error.Main)
+											else
+												return Use(Theme.Colors.Primary.Main)
+											end
+										end),
+										Visible = Scope:Computed(function(Use)
+											local PlayerValue = Use(Player)
+											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
+
+											return (PlayerValue ~= nil) and (UserIdValue ~= LOCAL_USER_ID)
+										end),
+
+										OnActivated = function()
+											local PlayerValue = Peek(Player)
+											local IsFriendValue = Peek(States.Menus.ProfileMenu.IsFriend)
+
+											if PlayerValue ~= nil then
+												if IsFriendValue then
+													StarterGui:SetCore("PromptUnfriend", PlayerValue)
+												else
+													StarterGui:SetCore("PromptSendFriendRequest", PlayerValue)
+												end
+											end
+										end,
+									},
+									Scope:Button {
+										Name = "BlockButton",
+										Content = { Assets.Icons.General.Prohibited, "Block" },
+										Color = Theme.Colors.Error.Main,
+										Style = "Outlined",
+										Visible = Scope:Computed(function(Use)
+											local PlayerValue = Use(Player)
+											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
+
+											return (PlayerValue ~= nil) and (UserIdValue ~= LOCAL_USER_ID)
+										end),
+
+										OnActivated = function()
+											local PlayerValue = Peek(Player)
+
+											if PlayerValue ~= nil then
+												StarterGui:SetCore("PromptBlockPlayer", PlayerValue)
+											end
 										end,
 									},
 								},

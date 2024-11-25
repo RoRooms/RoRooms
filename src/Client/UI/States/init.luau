@@ -39,6 +39,7 @@ local States = {
 		ProfileMenu = {
 			UserId = Scope:Value(nil),
 			EditMode = Scope:Value(false),
+			IsFriend = Scope:Value(false),
 			Location = {
 				Online = Scope:Value(false),
 				InRorooms = Scope:Value(false),
@@ -85,6 +86,7 @@ local States = {
 		RandomWorlds = Scope:Value({}),
 		Registered = Scope:Value(false),
 	},
+	Loading = Scope:Value(false),
 	Rorooms = {
 		UpToDate = Scope:Value(),
 	},

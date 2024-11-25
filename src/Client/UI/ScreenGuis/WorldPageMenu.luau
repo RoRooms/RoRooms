@@ -51,36 +51,50 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Open = MenuOpen,
 		Parent = Props.Parent,
 		AutomaticSize = Enum.AutomaticSize.Y,
-		Size = UDim2.fromOffset(340, 0),
+		Size = Scope:Computed(function(Use)
+			return UDim2.fromOffset(Use(Theme.Spacing["24"]), 0)
+		end),
 		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+		ListPadding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0"]))
+		end),
+		Padding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0"]))
+		end),
 
 		[Children] = {
+			Scope:Image {
+				Name = "Thumbnail",
+				Image = Scope:Computed(function(Use)
+					local PlaceIdValue = Use(States.WorldPageMenu.PlaceId)
+					if PlaceIdValue then
+						return `rbxthumb://type=GameThumbnail&id={PlaceIdValue}&w=480&h=270`
+					else
+						return "rbxasset://textures/ui/GuiImagePlaceholder.png"
+					end
+				end),
+				ScaleType = Enum.ScaleType.Crop,
+				CornerRadius = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.CornerRadius["0"]))
+				end),
+				FlexMode = Enum.UIFlexMode.Fill,
+				AspectRatio = 3,
+				DominantAxis = Enum.DominantAxis.Width,
+				AspectType = Enum.AspectType.ScaleWithParentSize,
+			},
 			Scope:Frame {
-				Name = "Contents",
+				Name = "Content",
 				AutomaticSize = Enum.AutomaticSize.Y,
 				ListEnabled = true,
 				ListPadding = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.Spacing["1"]))
 				end),
 				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["1"]))
+				end),
 
 				[Children] = {
-					Scope:Image {
-						Name = "Thumbnail",
-						Image = Scope:Computed(function(Use)
-							local PlaceIdValue = Use(States.WorldPageMenu.PlaceId)
-							if PlaceIdValue then
-								return `rbxthumb://type=GameThumbnail&id={PlaceIdValue}&w=480&h=270`
-							else
-								return "rbxasset://textures/ui/GuiImagePlaceholder.png"
-							end
-						end),
-						Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 80)),
-						ScaleType = Enum.ScaleType.Crop,
-						CornerRadius = Scope:Computed(function(Use)
-							return UDim.new(0, Use(Theme.CornerRadius["1"]))
-						end),
-					},
 					Scope:Frame {
 						Name = "Details",
 						AutomaticSize = Enum.AutomaticSize.Y,
@@ -120,11 +134,12 @@ return function(Scope: Fusion.Scope<any>, Props)
 								end),
 								AutomaticSize = Enum.AutomaticSize.Y,
 								TextTruncate = Enum.TextTruncate.AtEnd,
-								TextWrapped = true,
+								TextWrapped = false,
 								RichText = false,
 								AutoLocalize = false,
+								ClipsDescendants = true,
 								MaxSize = Scope:Computed(function(Use)
-									return Vector2.new(math.huge, Use(Theme.TextSize["1"]) * 2)
+									return Vector2.new(math.huge, Use(Theme.TextSize["1"]))
 								end),
 							},
 						},

@@ -1,4 +1,6 @@
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
 
 local Rorooms = script.Parent.Parent.Parent.Parent
 local Signal = require(Rorooms.Parent.Signal)
@@ -22,7 +24,7 @@ function AvatarSelector:Start()
 
 	local Mouse = Players.LocalPlayer:GetMouse()
 
-	self._AvatarSelectionConnection = Mouse.Move:Connect(function()
+	self._AvatarSelectionConnection = RunService.RenderStepped:Connect(function()
 		self._AvatarHovering = nil
 		self._AvatarSelectionHighlight.Adornee = nil
 
@@ -40,12 +42,22 @@ function AvatarSelector:Start()
 		end
 	end)
 
-	Mouse.Button1Down:Connect(function()
-		local Character = self._AvatarHovering
-		if Character then
-			self._AvatarSelecting = Character
-			self.AvatarSelected:Fire(Character)
-		else
+	UserInputService.InputEnded:Connect(function(Input, AlreadyProcessed)
+		local AcceptableInputTypes = { Enum.UserInputType.MouseButton1, Enum.UserInputType.Touch }
+		if (not AlreadyProcessed) and table.find(AcceptableInputTypes, Input.UserInputType) then
+			if Mouse.Target then
+				local Character = Mouse.Target:FindFirstAncestorOfClass("Model")
+				if Character then
+					local Player = Players:GetPlayerFromCharacter(Character)
+					if (Player ~= nil) and (Player ~= Players.LocalPlayer) then
+						self._AvatarSelecting = Character
+						self.AvatarSelected:Fire(Character)
+
+						return
+					end
+				end
+			end
+
 			if self._AvatarSelecting then
 				self.AvatarDeselected:Fire(self._AvatarSelecting)
 			end
