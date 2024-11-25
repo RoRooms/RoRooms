@@ -102,6 +102,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 		if Fusion.peek(States.Menus.CurrentMenu) ~= script.Name then
 			States.Menus.ProfileMenu.UserId:set(nil)
+			States.Menus.ProfileMenu.IsFriend:set(false)
 			States.Menus.ProfileMenu.Location.Online:set(false)
 			States.Menus.ProfileMenu.Location.InRorooms:set(false)
 			States.Menus.ProfileMenu.Location.PlaceId:set(nil)
@@ -479,9 +480,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
 											local InRoroomsValue = Use(States.Menus.ProfileMenu.Location.InRorooms)
 											local JobIdValue = Use(States.Menus.ProfileMenu.Location.JobId)
+											local IsFriendValue = Use(States.Menus.ProfileMenu.IsFriend)
 
-											return (UserIdValue ~= Players.LocalPlayer.UserId)
-												and (InRoroomsValue and JobIdValue)
+											return InRoroomsValue
+												and IsFriendValue
+												and (JobIdValue ~= nil)
+												and (JobIdValue ~= game.JobId)
+												and (UserIdValue ~= Players.LocalPlayer.UserId)
 										end),
 
 										OnActivated = function()
@@ -508,7 +513,13 @@ return function(Scope: Fusion.Scope<any>, Props)
 											end
 										end),
 										Visible = Scope:Computed(function(Use)
-											return Use(States.Menus.ProfileMenu.UserId) ~= Players.LocalPlayer.UserId
+											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
+											local IsFriendValue = Use(States.Menus.ProfileMenu.IsFriend)
+											local JobIdValue = Use(States.Menus.ProfileMenu.Location.JobId)
+
+											return IsFriendValue
+												and (JobIdValue ~= game.JobId)
+												and (UserIdValue ~= Players.LocalPlayer.UserId)
 										end),
 
 										OnActivated = function()

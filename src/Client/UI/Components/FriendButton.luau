@@ -81,6 +81,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 		OnActivated = function()
 			States.Menus.ProfileMenu.UserId:set(Peek(UserId))
+			States.Menus.ProfileMenu.IsFriend:set(true)
 			States.Menus.ProfileMenu.Location.Online:set(Peek(Online))
 			States.Menus.ProfileMenu.Location.InRorooms:set(Peek(InRorooms))
 			States.Menus.ProfileMenu.Location.JobId:set(Peek(JobId))
