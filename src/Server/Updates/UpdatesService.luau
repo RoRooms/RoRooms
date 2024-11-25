@@ -9,10 +9,10 @@ local LATEST_RELEASE_URL = "https://api.github.com/repos/Rorooms/Rorooms/release
 local UpdatesService = {
 	Name = script.Name,
 	Client = {
-		UpToDate = Knit.CreateProperty(),
+		UpToDate = Knit.CreateProperty(nil),
 	},
 
-	UpToDate = false,
+	UpToDate = nil,
 }
 
 function UpdatesService:IsUpToDate()
@@ -20,7 +20,6 @@ function UpdatesService:IsUpToDate()
 		local Success, Result = self:GetLatestVersion():Await()
 
 		if Success then
-			Result = nil
 			local UpToDate = nil
 
 			if Result ~= nil then
@@ -53,7 +52,10 @@ function UpdatesService:GetLatestVersion()
 end
 
 function UpdatesService:KnitStart()
-	self:IsUpToDate()
+	while self.UpToDate == nil do
+		self:IsUpToDate():Await()
+		task.wait(3)
+	end
 end
 
 return UpdatesService
