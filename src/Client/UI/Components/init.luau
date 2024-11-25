@@ -20,6 +20,7 @@ local Components = {
 	PlayerAvatar = require(script.PlayerAvatar),
 	ProfileBadges = require(script.ProfileBadges),
 	LevelBadge = require(script.LevelBadge),
+	RoroomsLogo = require(script.RoroomsLogo),
 }
 
 for _, Child in ipairs(script:GetChildren()) do
