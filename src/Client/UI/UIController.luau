@@ -18,10 +18,12 @@ local UIController = {
 }
 
 function UIController:MountUI(Component)
-	Themer.Theme:is(OnyxUITheme):during(function()
-		Component(self.Scope, {
+	return Themer.Theme:is(OnyxUITheme):during(function()
+		local UIObject = Component(self.Scope, {
 			Parent = self.RoroomsUI,
 		})
+
+		return UIObject
 	end)
 end
 

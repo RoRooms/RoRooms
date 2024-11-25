@@ -86,6 +86,7 @@ local States = {
 		RandomWorlds = Scope:Value({}),
 		Registered = Scope:Value(false),
 	},
+	Loading = Scope:Value(false),
 	Rorooms = {
 		UpToDate = Scope:Value(),
 	},
