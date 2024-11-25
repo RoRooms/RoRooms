@@ -17,7 +17,7 @@ function UpdatesController:KnitStart()
 	if RunService:IsStudio() then
 		self.Scope:Observer(States.Rorooms.UpToDate):onChange(function()
 			local UpToDate = Peek(States.Rorooms.UpToDate)
-			if not UpToDate and (LastUpToDate ~= UpToDate) then
+			if (UpToDate == false) and (LastUpToDate ~= UpToDate) then
 				Prompts:PushPrompt({
 					Title = "Update available ✨",
 					Text = "Rorooms is out of date. Please update to receive the latest bug-fixes and improvements.",

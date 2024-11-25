@@ -70,15 +70,18 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 					Scope:Text {
 						Text = Scope:Computed(function(Use)
+							local UpToDateValue = Use(States.Rorooms.UpToDate)
 							local VersionStamp = `[Rorooms v{Version}]`
-							if not Use(States.Rorooms.UpToDate) then
+
+							if UpToDateValue == false then
 								return `{VersionStamp} - Out of date`
 							else
 								return VersionStamp
 							end
 						end),
 						TextColor3 = Scope:Computed(function(Use)
-							if not Use(States.Rorooms.UpToDate) then
+							local UpToDateValue = Use(States.Rorooms.UpToDate)
+							if UpToDateValue == false then
 								return Use(Theme.Colors.Warning.Main)
 							else
 								return Use(Theme.Colors.NeutralContent.Dark)

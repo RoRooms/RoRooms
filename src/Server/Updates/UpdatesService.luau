@@ -20,7 +20,13 @@ function UpdatesService:IsUpToDate()
 		local Success, Result = self:GetLatestVersion():Await()
 
 		if Success then
-			local UpToDate = Version == Result
+			Result = nil
+			local UpToDate = nil
+
+			if Result ~= nil then
+				UpToDate = (Version == Result)
+			end
+
 			self.UpToDate = UpToDate
 			self.Client.UpToDate:Set(UpToDate)
 
