@@ -50,16 +50,7 @@ function WorldRegistryService:GetWorldDetails(PlaceId: number)
 end
 
 function WorldRegistryService:UpdateRegistry()
-	Future.Try(function()
-		local Success, Response =
-			Fetch(`https://api.github.com/repos/{Config.Systems.Worlds.RegistryRepository}/releases/latest`):Await()
-		if Success then
-			local Body = HttpService:JSONDecode(Response.Body)
-			if Body then
-				return Body["published_at"]
-			end
-		end
-	end):After(function(Success, PublishedAt)
+	self:_FetchRegistryVersion():After(function(Success, PublishedAt)
 		if Success and PublishedAt then
 			if PublishedAt ~= self.WorldRegistryLastUpdated then
 				self:_FetchLatestRegistry():After(function(Success2, Response2)
@@ -74,6 +65,20 @@ function WorldRegistryService:UpdateRegistry()
 						warn(Response2)
 					end
 				end)
+			end
+		end
+	end)
+end
+
+function WorldRegistryService:_FetchRegistryVersion()
+	return Future.Try(function()
+		local Success, Response =
+			Fetch(`https://api.github.com/repos/{Config.Systems.Worlds.RegistryRepository}/releases/latest`):Await()
+
+		if Success then
+			local Body = HttpService:JSONDecode(Response.Body)
+			if Body then
+				return Body["published_at"]
 			end
 		end
 	end)

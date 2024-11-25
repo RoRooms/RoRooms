@@ -5,8 +5,9 @@ local Knit = require(Rorooms.Parent.Knit)
 
 local Peek = Fusion.peek
 
-local PAGE_SIZE = 3
-local RANDOM_WORLD_BASIS = PAGE_SIZE * 3
+local ROW_SIZE = 3
+local RANDOM_WORLD_BASIS = ROW_SIZE * 3
+local DEFAULT_WORLD_COUNT = 10 * ROW_SIZE
 
 local TopWorldsService
 local RandomWorldsService
@@ -14,32 +15,32 @@ local RandomWorldsService
 type World = {
 	PlaceId: number,
 }
-type WorldPage = {
+type Worlds = {
 	[number]: World,
-}
-type WorldPages = {
-	[number]: WorldPage,
 }
 
 local Worlds = {}
 
-function Worlds:FetchAssortedWorlds(PageCount: number?)
-	self:FetchRandomWorlds(PageCount, true):await()
-	self:FetchTopWorlds(PageCount, true):await()
+function Worlds:FetchAssortedWorlds(Count: number?)
+	if Count == nil then
+		Count = DEFAULT_WORLD_COUNT
+	end
 
-	self:LoadAssortedWorlds(PageCount)
+	self:FetchRandomWorlds(Count, true):await()
+	self:FetchTopWorlds(Count, true):await()
+
+	self:LoadAssortedWorlds(Count)
 end
 
-function Worlds:LoadAssortedWorlds(PageCount: number?)
-	if PageCount == nil then
-		PageCount = 10
+function Worlds:LoadAssortedWorlds(Count: number?)
+	if Count == nil then
+		Count = DEFAULT_WORLD_COUNT
 	end
 
 	local AssortedWorldsValue = Peek(States.Worlds.AssortedWorlds)
 	local TopWorldsValue = Peek(States.Worlds.TopWorlds)
-	local TotalWorlds = PageCount * PAGE_SIZE
 	local StartIndex = #AssortedWorldsValue
-	local EndIndex = StartIndex + TotalWorlds
+	local EndIndex = StartIndex + Count
 
 	self:_RemovePlaceIdFromArray(TopWorldsValue, game.PlaceId)
 
@@ -77,12 +78,10 @@ function Worlds:LoadAssortedWorlds(PageCount: number?)
 
 	States.Worlds.AssortedWorlds:set(AssortedWorldsValue)
 
-	print(#AssortedWorldsValue)
-
 	return AssortedWorldsValue
 end
 
-function Worlds:GetUnusedRandomWorld(UsedWorlds: WorldPage)
+function Worlds:GetUnusedRandomWorld(UsedWorlds: Worlds)
 	local RandomWorldsValue = Peek(States.Worlds.RandomWorlds)
 
 	self:_RemovePlaceIdFromArray(RandomWorldsValue, game.PlaceId)
@@ -103,73 +102,66 @@ function Worlds:GetUnusedRandomWorld(UsedWorlds: WorldPage)
 	end
 end
 
-function Worlds:FetchTopWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
-	if PageCount == nil then
-		PageCount = 10
+function Worlds:FetchTopWorlds(Count: number?, OnlyIfEmpty: boolean?)
+	if Count == nil then
+		Count = DEFAULT_WORLD_COUNT
 	end
 
 	if TopWorldsService then
-		return TopWorldsService
-			:GetTopWorlds(math.floor(#Peek(States.Worlds.TopWorlds) / PAGE_SIZE), PageCount, PAGE_SIZE)
-			:andThen(function(TopWorlds: WorldPages?)
-				if OnlyIfEmpty and #Peek(States.Worlds.TopWorlds) > 0 then
-					return
-				else
-					self:_AddTopWorlds(TopWorlds)
-				end
+		return TopWorldsService:GetTopWorlds(#Peek(States.Worlds.TopWorlds), Count):andThen(function(TopWorlds: Worlds?)
+			if OnlyIfEmpty and #Peek(States.Worlds.TopWorlds) > 0 then
+				return
+			else
+				self:_AddTopWorlds(TopWorlds)
+			end
 
-				return TopWorlds
-			end)
+			return TopWorlds
+		end)
 	end
 
 	return nil
 end
 
-function Worlds:_AddTopWorlds(TopWorlds: WorldPages)
+function Worlds:_AddTopWorlds(TopWorlds: Worlds)
 	local NewTopWorlds = Peek(States.Worlds.TopWorlds)
 
-	for _, Page in ipairs(TopWorlds) do
-		for _, World in ipairs(Page) do
-			if self:_FindPlaceIdInWorldsArray(NewTopWorlds, World.PlaceId) == nil then
-				table.insert(NewTopWorlds, World)
-			end
+	for _, World in ipairs(TopWorlds) do
+		if self:_FindPlaceIdInWorldsArray(NewTopWorlds, World.PlaceId) == nil then
+			table.insert(NewTopWorlds, World)
 		end
 	end
 
 	States.Worlds.TopWorlds:set(NewTopWorlds)
 end
 
-function Worlds:FetchRandomWorlds(PageCount: number?, OnlyIfEmpty: boolean?)
-	if PageCount == nil then
-		PageCount = 1
+function Worlds:FetchRandomWorlds(Count: number?, OnlyIfEmpty: boolean?)
+	if Count == nil then
+		Count = DEFAULT_WORLD_COUNT
 	end
 
-	local StartingPage = math.floor(#Peek(States.Worlds.RandomWorlds) / PAGE_SIZE)
+	local StartIndex = #Peek(States.Worlds.RandomWorlds)
 
 	if RandomWorldsService then
-		return RandomWorldsService:GetRandomWorlds(StartingPage, PageCount, PAGE_SIZE)
-			:andThen(function(RandomWorlds: WorldPages)
-				if OnlyIfEmpty and #Peek(States.Worlds.RandomWorlds) > 0 then
-					return
-				else
-					self:_AddRandomWorlds(RandomWorlds)
-				end
+		return RandomWorldsService:GetRandomWorlds(StartIndex, Count):andThen(function(RandomWorlds: Worlds)
+			if OnlyIfEmpty and #Peek(States.Worlds.RandomWorlds) > 0 then
+				return
+			else
+				self:_AddRandomWorlds(RandomWorlds)
+			end
 
-				return RandomWorlds
-			end)
+			return RandomWorlds
+		end)
 	end
 
 	return nil
 end
 
-function Worlds:_AddRandomWorlds(RandomWorlds: WorldPages)
+function Worlds:_AddRandomWorlds(RandomWorlds: Worlds)
 	local NewRandomWorlds = Peek(States.Worlds.RandomWorlds)
 
-	for _, Page in ipairs(RandomWorlds) do
-		for _, World in ipairs(Page) do
-			if self:_FindPlaceIdInWorldsArray(NewRandomWorlds, World.PlaceId) == nil then
-				table.insert(NewRandomWorlds, World)
-			end
+	for _, World in ipairs(RandomWorlds) do
+		if self:_FindPlaceIdInWorldsArray(NewRandomWorlds, World.PlaceId) == nil then
+			table.insert(NewRandomWorlds, World)
 		end
 	end
 
@@ -193,7 +185,7 @@ function Worlds:_FindPlaceIdInWorldsArray(WorldsArray: { [number]: World }, Plac
 	return nil
 end
 
-function Worlds:ClearWorlds(WorldsObject: Fusion.Value<Fusion.Scope<any>, WorldPage>)
+function Worlds:ClearWorlds(WorldsObject: Fusion.Value<Fusion.Scope<any>, Worlds>)
 	WorldsObject:set({})
 end
 
@@ -219,7 +211,7 @@ function Worlds:Start()
 	RandomWorldsService = Knit.GetService("RandomWorldsService")
 
 	if TopWorldsService then
-		TopWorldsService.TopWorldsInitialized:Connect(function(TopWorlds: WorldPages)
+		TopWorldsService.TopWorldsInitialized:Connect(function(TopWorlds: Worlds)
 			self:ClearWorlds(States.Worlds.TopWorlds)
 			self:_AddTopWorlds(TopWorlds)
 
@@ -227,15 +219,15 @@ function Worlds:Start()
 			self:LoadAssortedWorlds()
 		end)
 	end
-	-- if RandomWorldsService then
-	-- 	RandomWorldsService.RandomWorldsInitialized:Connect(function(RandomWorlds: WorldPages)
-	-- 		self:ClearWorlds(States.Worlds.RandomWorlds)
-	-- 		self:_AddRandomWorlds(RandomWorlds)
+	if RandomWorldsService then
+		RandomWorldsService.RandomWorldsInitialized:Connect(function(RandomWorlds: Worlds)
+			self:ClearWorlds(States.Worlds.RandomWorlds)
+			self:_AddRandomWorlds(RandomWorlds)
 
-	-- 		self:ClearWorlds(States.Worlds.AssortedWorlds)
-	-- 		self:LoadAssortedWorlds()
-	-- 	end)
-	-- end
+			self:ClearWorlds(States.Worlds.AssortedWorlds)
+			self:LoadAssortedWorlds()
+		end)
+	end
 
 	self:_InitializeAssortedWorlds()
 end

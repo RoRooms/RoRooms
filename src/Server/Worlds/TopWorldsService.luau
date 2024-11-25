@@ -5,8 +5,8 @@ local Rorooms = script.Parent.Parent.Parent.Parent
 local Future = require(Rorooms.Parent.Future)
 local WorldRegistryService = require(Rorooms.SourceCode.Server.Worlds.WorldRegistryService)
 local Knit = require(Rorooms.Parent.Knit)
-local GetPagesFromArray = require(Rorooms.SourceCode.Shared.ExtPackages.GetPagesFromArray)
 local t = require(Rorooms.Parent.t)
+local GetEntriesFromArray = require(Rorooms.SourceCode.Shared.ExtPackages.GetEntriesFromArray)
 
 type TopWorld = {
 	PlaceId: number,
@@ -19,7 +19,7 @@ type Page = {
 local DATASTORE_NAME = "RR_WorldTeleports"
 local PAGE_ADVANCE_DELAY = 60
 local REINITIALIZATION_DELAY = 30 * 60
-local PAGE_SIZE = 3
+local ROW_SIZE = 3
 local WORLD_PERSISTENCE_TIME = (((60 * 60) * 24) * 7)
 
 local TopWorldsService = {
@@ -39,14 +39,14 @@ local TopWorldsService = {
 	),
 }
 
-function TopWorldsService.Client:GetTopWorlds(Player: Player, StartingPage: number, PageCount: number, PageSize: number)
-	assert(t.tuple(t.instanceOf("Player")(Player), t.number(StartingPage), t.number(PageCount), t.number(PageSize)))
+function TopWorldsService.Client:GetTopWorlds(Player: Player, StartIndex: number, EndIndex: number)
+	assert(t.tuple(t.instanceOf("Player")(Player), t.number(StartIndex), t.number(EndIndex)))
 
-	return self.Server:GetTopWorlds(StartingPage, PageCount, PageSize)
+	return TopWorldsService:GetTopWorlds(StartIndex, EndIndex)
 end
 
-function TopWorldsService:GetTopWorlds(StartingPage: number, PageCount: number, PageSize: number)
-	return GetPagesFromArray(TopWorldsService.TopWorlds, StartingPage, PageCount, PageSize)
+function TopWorldsService:GetTopWorlds(StartIndex: number, EndIndex: number)
+	return GetEntriesFromArray(TopWorldsService.TopWorlds, StartIndex, EndIndex)
 end
 
 function TopWorldsService:_SpawnInitializationLoop()
@@ -79,7 +79,7 @@ function TopWorldsService:_SpawnUpdateLoop()
 		self:_LoadPage(Pages:GetCurrentPage())
 		AdvancedLastCheck = self:_AdvanceToNextPage(Pages)
 
-		self.Client.TopWorldsInitialized:FireAll(self:GetTopWorlds(0, 10, PAGE_SIZE))
+		self.Client.TopWorldsInitialized:FireAll(self:GetTopWorlds(0, 10 * ROW_SIZE))
 
 		while task.wait(PAGE_ADVANCE_DELAY) do
 			if AdvancedLastCheck then
