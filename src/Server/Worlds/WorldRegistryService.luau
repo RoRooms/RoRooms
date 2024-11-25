@@ -9,7 +9,7 @@ local Config = require(Rorooms.Config).Config
 local DeepCopy = require(Rorooms.SourceCode.Shared.ExtPackages.DeepCopy)
 local Knit = require(Rorooms.Parent.Knit)
 
-local UPDATE_DELAY = 10 * 60
+local UPDATE_DELAY = 30 * 60
 local FAILED_UPDATE_DELAY = 1 * 60
 
 local WorldRegistryService = {
