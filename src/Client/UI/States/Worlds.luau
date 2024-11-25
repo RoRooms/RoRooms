@@ -193,43 +193,9 @@ function Worlds:ClearRandomWorlds()
 	States.Worlds.RandomWorlds:set({})
 end
 
-function Worlds:_InitializeAssortedWorlds()
-	if #Peek(States.Worlds.RandomWorlds) == 0 then
-		self:FetchRandomWorlds(nil, true):await()
-	end
-
-	if #Peek(States.Worlds.TopWorlds) == 0 then
-		self:FetchTopWorlds(nil, true):await()
-	end
-
-	self:ClearWorlds(States.Worlds.AssortedWorlds)
-	self:LoadAssortedWorlds()
-end
-
 function Worlds:Start()
 	TopWorldsService = Knit.GetService("TopWorldsService")
 	RandomWorldsService = Knit.GetService("RandomWorldsService")
-
-	if TopWorldsService then
-		TopWorldsService.TopWorldsInitialized:Connect(function(TopWorlds: Worlds)
-			self:ClearWorlds(States.Worlds.TopWorlds)
-			self:_AddTopWorlds(TopWorlds)
-
-			self:ClearWorlds(States.Worlds.AssortedWorlds)
-			self:LoadAssortedWorlds()
-		end)
-	end
-	if RandomWorldsService then
-		RandomWorldsService.RandomWorldsInitialized:Connect(function(RandomWorlds: Worlds)
-			self:ClearWorlds(States.Worlds.RandomWorlds)
-			self:_AddRandomWorlds(RandomWorlds)
-
-			self:ClearWorlds(States.Worlds.AssortedWorlds)
-			self:LoadAssortedWorlds()
-		end)
-	end
-
-	self:_InitializeAssortedWorlds()
 end
 
 return Worlds
