@@ -20,6 +20,8 @@ local Children = Fusion.Children
 local Themer = OnyxUI.Themer
 local Peek = Fusion.peek
 
+local LOCAL_USER_ID = ((Players.LocalPlayer ~= nil) and Players.LocalPlayer.UserId) or 1
+
 return function(Scope: Fusion.Scope<any>, Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, Components, {
 		Profile = Profiles.ProfileValue,
@@ -140,7 +142,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 	end)
 
 	if not RunService:IsRunning() then
-		States.Menus.ProfileMenu.UserId:set(Players.LocalPlayer.UserId)
+		States.Menus.ProfileMenu.UserId:set(1)
 	end
 
 	local ProfileMenu = Scope:Menu {
@@ -210,7 +212,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 									if Use(States.Menus.ProfileMenu.EditMode) then
 										return "Offline"
 									end
-									if Use(States.Menus.ProfileMenu.UserId) == Players.LocalPlayer.UserId then
+									if Use(States.Menus.ProfileMenu.UserId) == LOCAL_USER_ID then
 										return "Rorooms"
 									end
 
@@ -444,7 +446,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 										end),
 										Color = Theme.Colors.Primary.Main,
 										Visible = Scope:Computed(function(Use)
-											return Use(States.Menus.ProfileMenu.UserId) == Players.LocalPlayer.UserId
+											return Use(States.Menus.ProfileMenu.UserId) == LOCAL_USER_ID
 										end),
 
 										OnActivated = function()
@@ -495,7 +497,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 												and IsFriendValue
 												and (JobIdValue ~= nil)
 												and (JobIdValue ~= game.JobId)
-												and (UserIdValue ~= Players.LocalPlayer.UserId)
+												and (UserIdValue ~= LOCAL_USER_ID)
 										end),
 
 										OnActivated = function()
@@ -528,7 +530,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 
 											return IsFriendValue
 												and (JobIdValue ~= game.JobId)
-												and (UserIdValue ~= Players.LocalPlayer.UserId)
+												and (UserIdValue ~= LOCAL_USER_ID)
 										end),
 
 										OnActivated = function()
@@ -564,7 +566,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 											local PlayerValue = Use(Player)
 											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
 
-											return (PlayerValue ~= nil) and (UserIdValue ~= Players.LocalPlayer.UserId)
+											return (PlayerValue ~= nil) and (UserIdValue ~= LOCAL_USER_ID)
 										end),
 
 										OnActivated = function()
@@ -589,7 +591,7 @@ return function(Scope: Fusion.Scope<any>, Props)
 											local PlayerValue = Use(Player)
 											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
 
-											return (PlayerValue ~= nil) and (UserIdValue ~= Players.LocalPlayer.UserId)
+											return (PlayerValue ~= nil) and (UserIdValue ~= LOCAL_USER_ID)
 										end),
 
 										OnActivated = function()

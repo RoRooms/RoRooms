@@ -44,7 +44,7 @@ Topbar.NativeButtons = {
 		IconFilled = Assets.Icons.Topbar.Profile.Filled,
 		LayoutOrder = 1,
 		Callback = function()
-			States.Menus.ProfileMenu.UserId:set(Players.LocalPlayer.UserId)
+			-- States.Menus.ProfileMenu.UserId:set(Players.LocalPlayer.UserId)
 		end,
 	},
 	Worlds = {
