@@ -1,6 +1,7 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local SocialService = game:GetService("SocialService")
+local StarterGui = game:GetService("StarterGui")
 
 local Rorooms = script.Parent.Parent.Parent.Parent.Parent
 local OnyxUI = require(Rorooms.Parent.OnyxUI)
@@ -77,6 +78,14 @@ return function(Scope: Fusion.Scope<any>, Props)
 		end
 
 		return Options
+	end)
+	local Player = Scope:Computed(function(Use)
+		local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
+		if UserIdValue then
+			return Players:GetPlayerByUserId(UserIdValue)
+		else
+			return nil
+		end
 	end)
 
 	local NicknameInput = Scope:Value("")
@@ -529,6 +538,47 @@ return function(Scope: Fusion.Scope<any>, Props)
 													InviteUser = Peek(States.Menus.ProfileMenu.UserId),
 												}
 											)
+										end,
+									},
+									Scope:Button {
+										Name = "FriendButton",
+										Content = { Assets.Icons.General.People, "Friend" },
+										Color = Theme.Colors.Primary.Main,
+										Visible = Scope:Computed(function(Use)
+											local PlayerValue = Use(Player)
+											local IsFriendValue = Use(States.Menus.ProfileMenu.IsFriend)
+											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
+
+											return (PlayerValue ~= nil)
+												and (IsFriendValue == false)
+												and (UserIdValue ~= Players.LocalPlayer.UserId)
+										end),
+
+										OnActivated = function()
+											local PlayerValue = Peek(Player)
+
+											if PlayerValue ~= nil then
+												StarterGui:SetCore("PromptSendFriendRequest", PlayerValue)
+											end
+										end,
+									},
+									Scope:Button {
+										Name = "BlockButton",
+										Content = { Assets.Icons.General.Warning, "Block" },
+										Color = Theme.Colors.Primary.Neutral,
+										Visible = Scope:Computed(function(Use)
+											local PlayerValue = Use(Player)
+											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
+
+											return (PlayerValue ~= nil) and (UserIdValue ~= Players.LocalPlayer.UserId)
+										end),
+
+										OnActivated = function()
+											local PlayerValue = Peek(Player)
+
+											if PlayerValue ~= nil then
+												StarterGui:SetCore("PromptBlockPlayer", PlayerValue)
+											end
 										end,
 									},
 								},
