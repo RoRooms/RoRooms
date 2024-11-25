@@ -51,7 +51,9 @@ return function(Scope: Fusion.Scope<any>, Props)
 		Open = MenuOpen,
 		Parent = Props.Parent,
 		AutomaticSize = Enum.AutomaticSize.Y,
-		Size = UDim2.fromOffset(340, 0),
+		Size = Scope:Computed(function(Use)
+			return UDim2.fromOffset(Use(Theme.Spacing["24"]), 0)
+		end),
 		ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 		ListPadding = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.Spacing["0"]))
