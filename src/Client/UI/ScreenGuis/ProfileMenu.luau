@@ -542,30 +542,49 @@ return function(Scope: Fusion.Scope<any>, Props)
 									},
 									Scope:Button {
 										Name = "FriendButton",
-										Content = { Assets.Icons.General.People, "Friend" },
-										Color = Theme.Colors.Primary.Main,
+										Content = Scope:Computed(function(Use)
+											local IsFriendValue = Use(States.Menus.ProfileMenu.IsFriend)
+
+											if IsFriendValue then
+												return { Assets.Icons.General.PersonDelete, "Unfriend" }
+											else
+												return { Assets.Icons.General.PersonAdd, "Friend" }
+											end
+										end),
+										Color = Scope:Computed(function(Use)
+											local IsFriendValue = Use(States.Menus.ProfileMenu.IsFriend)
+
+											if IsFriendValue then
+												return Use(Theme.Colors.Error.Main)
+											else
+												return Use(Theme.Colors.Primary.Main)
+											end
+										end),
 										Visible = Scope:Computed(function(Use)
 											local PlayerValue = Use(Player)
-											local IsFriendValue = Use(States.Menus.ProfileMenu.IsFriend)
 											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)
 
-											return (PlayerValue ~= nil)
-												and (IsFriendValue == false)
-												and (UserIdValue ~= Players.LocalPlayer.UserId)
+											return (PlayerValue ~= nil) and (UserIdValue ~= Players.LocalPlayer.UserId)
 										end),
 
 										OnActivated = function()
 											local PlayerValue = Peek(Player)
+											local IsFriendValue = Peek(States.Menus.ProfileMenu.IsFriend)
 
 											if PlayerValue ~= nil then
-												StarterGui:SetCore("PromptSendFriendRequest", PlayerValue)
+												if IsFriendValue then
+													StarterGui:SetCore("PromptUnfriend", PlayerValue)
+												else
+													StarterGui:SetCore("PromptSendFriendRequest", PlayerValue)
+												end
 											end
 										end,
 									},
 									Scope:Button {
 										Name = "BlockButton",
-										Content = { Assets.Icons.General.Warning, "Block" },
-										Color = Theme.Colors.Primary.Neutral,
+										Content = { Assets.Icons.General.Prohibited, "Block" },
+										Color = Theme.Colors.Error.Main,
+										Style = "Outlined",
 										Visible = Scope:Computed(function(Use)
 											local PlayerValue = Use(Player)
 											local UserIdValue = Use(States.Menus.ProfileMenu.UserId)

@@ -47,6 +47,9 @@ local Icons = {
 		Toolbox = "rbxassetid://129909469212402",
 		Mail = "rbxassetid://72239383814067",
 		Globe = "rbxassetid://85205640937837",
+		Prohibited = "rbxassetid://106523129055233",
+		PersonDelete = "rbxassetid://128704748965733",
+		PersonAdd = "rbxassetid://76229670394218",
 	},
 }
 
