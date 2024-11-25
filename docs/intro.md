@@ -29,4 +29,4 @@ sidebar_position: 1
 
 For Rorooms to properly function, you need to enable a few Security settings within your Game Settings. This allows Rorooms to access the APIs its features rely on.
 
-![Security walkthrough](/docs/Security.png)
+![Security walkthrough](Security.png)
