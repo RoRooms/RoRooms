@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[952],{63891:s=>{s.exports=JSON.parse('{"sourceUrl":"https://github.com/Rorooms/Rorooms/blob/main","baseUrl":"/","classOrder":[],"apiCategories":[]}')}}]);
