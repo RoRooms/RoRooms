@@ -79,7 +79,7 @@ function ConfigUtils:CompileEmotes(Folder: Folder)
 	local Emotes = {}
 
 	for _, EmoteAnimation in ipairs(Folder:GetChildren()) do
-		local EmoteId = EmoteAnimation:GetAttribute("EmoteId")
+		local EmoteId = EmoteAnimation:GetAttribute("EmoteId") or EmoteAnimation.Name
 		if typeof(EmoteId) == "string" then
 			assert(Emotes[EmoteId] == nil, `Duplicate EmoteId {EmoteId} detected. Please use unique Ids.`)
 
@@ -96,7 +96,7 @@ function ConfigUtils:CompileItems(Folder: Folder)
 	local Items = {}
 
 	for _, ItemTool in ipairs(Folder:GetChildren()) do
-		local ItemId = ItemTool:GetAttribute("ItemId")
+		local ItemId = ItemTool:GetAttribute("ItemId") or ItemTool.Name
 		if typeof(ItemId) == "string" then
 			assert(Items[ItemId] == nil, `Duplicate ItemId {ItemId} detected. Please use unique Ids.`)
 
@@ -113,7 +113,7 @@ function ConfigUtils:CompileRoles(Folder: Folder)
 	local Roles = {}
 
 	for _, RoleConfiguration in ipairs(Folder:GetChildren()) do
-		local RoleId = RoleConfiguration:GetAttribute("RoleId")
+		local RoleId = RoleConfiguration:GetAttribute("RoleId") or RoleConfiguration.Name
 		if typeof(RoleId) == "string" then
 			assert(Roles[RoleId] == nil, `Duplicate RoleId {RoleId} detected. Please use unique Ids.`)
 
